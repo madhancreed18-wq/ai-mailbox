@@ -1,0 +1,15 @@
+Start button-ai press pannittom. Aanaa conveyor udane odala. Anju second kazhichu dhaan odudhu. Yen?
+
+Pona episode-la holding logic paathom. Adhu Run command-ai ON-la vechukkum. Ippo andha command-ku aduthadhaa oru ON-delay timer add panrom.
+
+Indha timer-ku anju second set panrom. Run command ON aanadhum timer count panna aarambikkum. Indha nerathula conveyor output OFF-la dhaan irukkum.
+
+Anju second mudinjadhum timer-oda done signal ON aagum. Adhai use panni conveyor output-ai ON panrom.
+
+Aanaa count nadakkumbodhe Stop press panninaa? Run command OFF aagum. Timer zero-ku reset aagum. Conveyor start aagaadhu.
+
+Marubadiyum Start press panninaa, pudhusaa zero-lendhu anju second count aagum. Pona rendu second-ai serthukkaadhu.
+
+Idhudhaan non-retentive ON-delay timer. Command thodarndhu ON-la irundhaa mattum, set panna neram mudinjadhum output ON aagum.
+
+Adutha example-la timer-ai enga use pannalaam? Comment-la sollunga!
