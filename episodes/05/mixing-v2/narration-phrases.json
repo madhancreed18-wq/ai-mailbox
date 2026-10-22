@@ -1,0 +1,1202 @@
+[
+{
+"line": 0,
+"start": 0.0,
+"end": 6.86,
+"text": "Start button-ai press panninaa mixer odum. Stop button-ai press panninaa ninnudum. Idhai pona episode-la holding logic vechu paathom."
+},
+{
+"line": 1,
+"start": 7.66,
+"end": 11.17,
+"text": "ipo namma oru tank-la irukkura product-ai oru kurippitta nerathukku mix pannanum."
+},
+{
+"line": 1,
+"start": 11.84,
+"end": 13.93,
+"text": "Neram mudinjadhum mixer thaanaave nindranum."
+},
+{
+"line": 1,
+"start": 14.79,
+"end": 17.17,
+"text": "Operator pakkathula ninnu stopwatch paathutte irukkanumaa?"
+},
+{
+"line": 2,
+"start": 18.02,
+"end": 18.37,
+"text": "Thevai illa."
+},
+{
+"line": 2,
+"start": 18.84,
+"end": 20.93,
+"text": "Indha velaiyai PLC timer vechu pannalaam."
+},
+{
+"line": 3,
+"start": 22.02,
+"end": 23.63,
+"text": "Oru batch mixing tank-ai eduthukkalaam."
+},
+{
+"line": 3,
+"start": 24.19,
+"end": 25.92,
+"text": "Ingredients ellam tank-la add panniyaachu."
+},
+{
+"line": 3,
+"start": 26.35,
+"end": 27.7,
+"text": "Ippo Start press panninaa,"
+},
+{
+"line": 3,
+"start": 27.81,
+"end": 29.42,
+"text": "mixer muppadhu second odanum."
+},
+{
+"line": 3,
+"start": 30.1,
+"end": 32.44,
+"text": "Muppadhu second mudinjadhum automaticah stop aaganum."
+},
+{
+"line": 4,
+"start": 33.34,
+"end": 36.12,
+"text": "Inga muppadhu second-nguradhu namma explanation-kaana example."
+},
+{
+"line": 4,
+"start": 36.75,
+"end": 38.54,
+"text": "Actual factory-la mixing time,"
+},
+{
+"line": 4,
+"start": 38.75,
+"end": 40.65,
+"text": "product recipe-ku etha maadhiri set pannuvaanga."
+},
+{
+"line": 5,
+"start": 41.75,
+"end": 44.83,
+"text": "Aanaa mixing nadakkumbodhe operator Stop press pannittaa?"
+},
+{
+"line": 6,
+"start": 45.89,
+"end": 47.07,
+"text": "Marubadi Start pannumbodhu,"
+},
+{
+"line": 6,
+"start": 47.32,
+"end": 48.66,
+"text": "full muppadhu second mix pannanumaa?"
+},
+{
+"line": 6,
+"start": 49.13,
+"end": 50.63,
+"text": "Illa already mix pannina neram poga,"
+},
+{
+"line": 6,
+"start": 50.73,
+"end": 52.81,
+"text": "meedhi neram mattum mix panninaa podhumaa?"
+},
+{
+"line": 7,
+"start": 53.91,
+"end": 56.18,
+"text": "Indha rendu behaviour-aiyum non-retentive,"
+},
+{
+"line": 7,
+"start": 56.35,
+"end": 57.59,
+"text": "retentive timers vechu paakkalaam."
+},
+{
+"line": 8,
+"start": 58.7,
+"end": 61.35,
+"text": "Mudhal-la indha process-ku enna thevai-nu paarppom."
+},
+{
+"line": 9,
+"start": 62.12,
+"end": 62.88,
+"text": "Oru Start button."
+},
+{
+"line": 9,
+"start": 63.47,
+"end": 64.19,
+"text": "Oru Stop button."
+},
+{
+"line": 9,
+"start": 64.87,
+"end": 66.44,
+"text": "Mixer-ai control panna oru output."
+},
+{
+"line": 9,
+"start": 67.15,
+"end": 70.05,
+"text": "Mixing nadakkudhunu remember panna oru internal bit."
+},
+{
+"line": 9,
+"start": 70.73,
+"end": 71.89,
+"text": "Adhukku aduthadhaa oru timer."
+},
+{
+"line": 10,
+"start": 72.81,
+"end": 75.05,
+"text": "Indha internal bit-ai Mixing Run-nu koopiduvom."
+},
+{
+"line": 11,
+"start": 76.14,
+"end": 78.8,
+"text": "Start button-ai press pannumbodhu Mixing Run ON aagum."
+},
+{
+"line": 11,
+"start": 79.45,
+"end": 81.7,
+"text": "Pona episode-la paatha holding logic maadhiriye,"
+},
+{
+"line": 11,
+"start": 81.8,
+"end": 83.44,
+"text": "button-ai vittaalum indha bit ON-la irukkum."
+},
+{
+"line": 12,
+"start": 84.37,
+"end": 87.51,
+"text": "Indha Mixing Run bit-ai use panni mixer output-ai ON panrom."
+},
+{
+"line": 12,
+"start": 88.09,
+"end": 90.24,
+"text": "Adhe bit-ai timer-oda input-kum kudukkurom."
+},
+{
+"line": 13,
+"start": 91.15,
+"end": 93.79,
+"text": "Adhanaala mixing start aagumbodhu mixer-um odum,"
+},
+{
+"line": 13,
+"start": 94.17,
+"end": 95.25,
+"text": "timer-um count panna aarambikkum."
+},
+{
+"line": 14,
+"start": 96.39,
+"end": 99.26,
+"text": "Timer-la namma set pannura nerathai preset time-nu solluvom."
+},
+{
+"line": 14,
+"start": 99.84,
+"end": 101.47,
+"text": "Inga preset time muppadhu second."
+},
+{
+"line": 15,
+"start": 102.54,
+"end": 105.48,
+"text": "Timer idhuvaraikkum count pannina nerathai elapsed time-nu solluvom."
+},
+{
+"line": 15,
+"start": 106.22,
+"end": 107.29,
+"text": "Pathu second count aayirundhaa,"
+},
+{
+"line": 15,
+"start": 107.44,
+"end": 108.56,
+"text": "elapsed time pathu second."
+},
+{
+"line": 16,
+"start": 109.42,
+"end": 110.11,
+"text": "Elapsed time,"
+},
+{
+"line": 16,
+"start": 110.22,
+"end": 113.48,
+"text": "preset time-ai reach pannumbodhu timer-oda done signal ON aagum."
+},
+{
+"line": 16,
+"start": 114.06,
+"end": 114.41,
+"text": "Adhaavadhu,"
+},
+{
+"line": 16,
+"start": 114.51,
+"end": 116.22,
+"text": "set panna neram mudinjiduchunu indicate pannum."
+},
+{
+"line": 17,
+"start": 116.78,
+"end": 120.19,
+"text": "Ippo mudhal-la non-retentive ON-delay timer-ai paakkalaam."
+},
+{
+"line": 18,
+"start": 121.22,
+"end": 122.16,
+"text": "ON-delay-naa,"
+},
+{
+"line": 18,
+"start": 122.44,
+"end": 126.46,
+"text": "timer input ON aanadhum done signal udane ON aagaadhu."
+},
+{
+"line": 18,
+"start": 126.99,
+"end": 129.45,
+"text": "Set panna neram mudinja piraguthaan ON aagum."
+},
+{
+"line": 19,
+"start": 130.57,
+"end": 132.31,
+"text": "Aanaa inga mixer udane odudhe?"
+},
+{
+"line": 19,
+"start": 132.82,
+"end": 133.75,
+"text": "Appo delay enga irukku?"
+},
+{
+"line": 20,
+"start": 134.67,
+"end": 135.73,
+"text": "Idhudhaan mukkiyamaana point."
+},
+{
+"line": 21,
+"start": 136.95,
+"end": 140.32,
+"text": "Mixer-ai timer done signal moolamaa start pannala."
+},
+{
+"line": 21,
+"start": 141.01,
+"end": 143.3,
+"text": "Mixing Run bit moolamaa start panrom."
+},
+{
+"line": 22,
+"start": 143.95,
+"end": 145.74,
+"text": "Timer done signal-ai,"
+},
+{
+"line": 22,
+"start": 146.07,
+"end": 148.79,
+"text": "mixing time mudinjiduchunu therinjukkaradhukku use panrom."
+},
+{
+"line": 22,
+"start": 149.44,
+"end": 152.6,
+"text": "Andha signal vandhadhum mixer-ai stop panna program panrom."
+},
+{
+"line": 23,
+"start": 153.57,
+"end": 154.72,
+"text": "Ippo full working-ai paarunga."
+},
+{
+"line": 24,
+"start": 155.89,
+"end": 157.52,
+"text": "Operator Start press pannuraar."
+},
+{
+"line": 24,
+"start": 158.03,
+"end": 159.21,
+"text": "Mixing Run ON aagudhu."
+},
+{
+"line": 24,
+"start": 160.0,
+"end": 160.55,
+"text": "Mixer output ON aagudhu."
+},
+{
+"line": 24,
+"start": 160.65,
+"end": 164.73,
+"text": "Tank-kulla blades rotate aagi ingredients mix aaga aarambikkudhu."
+},
+{
+"line": 25,
+"start": 165.5,
+"end": 169.03,
+"text": "Adhe nerathula timer zero-lendhu count panna aarambikkudhu."
+},
+{
+"line": 26,
+"start": 170.14,
+"end": 170.82,
+"text": "Pathu second aayiduchu."
+},
+{
+"line": 26,
+"start": 171.25,
+"end": 172.08,
+"text": "Mixer odikitte irukku."
+},
+{
+"line": 26,
+"start": 172.67,
+"end": 174.27,
+"text": "Timer done signal innum OFF."
+},
+{
+"line": 27,
+"start": 175.6,
+"end": 176.41,
+"text": "Irubadhu second aayiduchu."
+},
+{
+"line": 27,
+"start": 176.94,
+"end": 178.01,
+"text": "Mixer innum odikitte irukku."
+},
+{
+"line": 27,
+"start": 178.6,
+"end": 180.05,
+"text": "Yennaa namma set pannadhu muppadhu second."
+},
+{
+"line": 28,
+"start": 181.09,
+"end": 182.11,
+"text": "Muppadhu second reach aagudhu."
+},
+{
+"line": 29,
+"start": 182.8,
+"end": 185.51,
+"text": "Ippo timer-oda done signal ON aagum."
+},
+{
+"line": 29,
+"start": 186.04,
+"end": 189.25,
+"text": "Indha signal-ai use panni Mixing Run bit-ai OFF panrom."
+},
+{
+"line": 30,
+"start": 190.23,
+"end": 192.92,
+"text": "Mixing Run OFF aanadhum mixer output-um OFF aagum."
+},
+{
+"line": 30,
+"start": 193.56,
+"end": 194.84,
+"text": "Motor-ku run command ninnudum."
+},
+{
+"line": 30,
+"start": 195.32,
+"end": 196.68,
+"text": "Blades slow aagi stop aagum."
+},
+{
+"line": 31,
+"start": 197.6,
+"end": 200.43,
+"text": "Idhula timer mixer power-ai direct-aa cut pannala."
+},
+{
+"line": 31,
+"start": 201.24,
+"end": 203.1,
+"text": "Timer time mudinjadhai indicate pannudhu."
+},
+{
+"line": 31,
+"start": 203.76,
+"end": 206.21,
+"text": "Namma PLC logic dhaan mixer output-ai OFF pannudhu."
+},
+{
+"line": 32,
+"start": 207.0,
+"end": 207.01,
+"text": "Seri,"
+},
+{
+"line": 32,
+"start": 207.3,
+"end": 208.85,
+"text": "Mixing Run OFF aagiduchu."
+},
+{
+"line": 32,
+"start": 209.31,
+"end": 210.92,
+"text": "Appo timer-oda input-um OFF aagume?"
+},
+{
+"line": 33,
+"start": 211.69,
+"end": 211.94,
+"text": "Aamaam."
+},
+{
+"line": 33,
+"start": 212.36,
+"end": 216.51,
+"text": "Adhanaala indha non-retentive timer-oda elapsed time zero-ku reset aagum."
+},
+{
+"line": 33,
+"start": 217.05,
+"end": 218.11,
+"text": "Done signal-um OFF aagidum."
+},
+{
+"line": 34,
+"start": 219.21,
+"end": 221.96,
+"text": "Appo done signal OFF aanadhum mixer marubadi start aagidumaa?"
+},
+{
+"line": 35,
+"start": 222.8,
+"end": 223.14,
+"text": "Aagaadhu."
+},
+{
+"line": 35,
+"start": 223.68,
+"end": 225.41,
+"text": "Mixing Run bit already OFF aagiduchu."
+},
+{
+"line": 35,
+"start": 225.92,
+"end": 228.58,
+"text": "Adhai marubadi ON panna pudhusaana Start request thevai."
+},
+{
+"line": 36,
+"start": 229.2,
+"end": 233.21,
+"text": "Namma example-la ovvoru Start request-kum oru mixing cycle dhaan."
+},
+{
+"line": 37,
+"start": 234.31,
+"end": 235.52,
+"text": "Ippo innoru situation paarppom."
+},
+{
+"line": 38,
+"start": 236.45,
+"end": 238.79,
+"text": "Mixing start panni pathinainju second aayirukku."
+},
+{
+"line": 38,
+"start": 239.42,
+"end": 241.15,
+"text": "Aanaa operator Stop press pannuraar."
+},
+{
+"line": 39,
+"start": 242.13,
+"end": 244.24,
+"text": "Ippo muppadhu second mudiyura varaikkum mixer odumaa?"
+},
+{
+"line": 40,
+"start": 245.3,
+"end": 245.63,
+"text": "Odaadhu."
+},
+{
+"line": 40,
+"start": 246.22,
+"end": 248.87,
+"text": "Stop command vandhadhum Mixing Run OFF aagum."
+},
+{
+"line": 40,
+"start": 249.26,
+"end": 250.39,
+"text": "Mixer output-um OFF aagum."
+},
+{
+"line": 40,
+"start": 250.87,
+"end": 252.61,
+"text": "Timer input OFF aaguradhaala,"
+},
+{
+"line": 40,
+"start": 252.79,
+"end": 257.34,
+"text": "count pannina pathinainju second-um reset aagum."
+},
+{
+"line": 41,
+"start": 257.95,
+"end": 259.91,
+"text": "Marubadiyum Start press panninaa enna aagum?"
+},
+{
+"line": 42,
+"start": 260.42,
+"end": 262.79,
+"text": "Meedhi pathinainju second mattum count aagaadhu."
+},
+{
+"line": 42,
+"start": 263.38,
+"end": 265.8,
+"text": "Zero-lendhu pudhusaa muppadhu second count aagum."
+},
+{
+"line": 43,
+"start": 266.44,
+"end": 267.42,
+"text": "Yennaa namma use pannuradhu non-retentive timer."
+},
+{
+"line": 43,
+"start": 267.55,
+"end": 269.42,
+"text": "Input OFF aanadhum count pannina time-ai adhu retain pannaadhu."
+},
+{
+"line": 44,
+"start": 270.45,
+"end": 272.63,
+"text": "Aanaa namma process requirement vera maadhiri irundhaa?"
+},
+{
+"line": 45,
+"start": 273.22,
+"end": 273.76,
+"text": "“Mixer mothamaa muppadhu second odinaa podhum."
+},
+{
+"line": 45,
+"start": 273.87,
+"end": 275.28,
+"text": "Naduvula stop panninaalum,"
+},
+{
+"line": 45,
+"start": 275.78,
+"end": 279.18,
+"text": "already mix pannina nerathai marakka vendaam” nu sonnaa?"
+},
+{
+"line": 46,
+"start": 279.9,
+"end": 281.72,
+"text": "Appodhaan retentive timer use pannalaam."
+},
+{
+"line": 47,
+"start": 282.63,
+"end": 283.52,
+"text": "Adhe mixing tank."
+},
+{
+"line": 47,
+"start": 283.78,
+"end": 285.1,
+"text": "Adhe muppadhu-second preset."
+},
+{
+"line": 47,
+"start": 285.56,
+"end": 287.45,
+"text": "Indha murai retentive timer vechu paakkalaam."
+},
+{
+"line": 48,
+"start": 288.15,
+"end": 289.03,
+"text": "Start press panrom."
+},
+{
+"line": 48,
+"start": 289.48,
+"end": 290.65,
+"text": "Mixing Run ON aagudhu."
+},
+{
+"line": 48,
+"start": 290.97,
+"end": 291.67,
+"text": "Mixer odudhu."
+},
+{
+"line": 48,
+"start": 292.34,
+"end": 294.08,
+"text": "Timer zero-lendhu count panna aarambikkudhu."
+},
+{
+"line": 49,
+"start": 294.91,
+"end": 296.55,
+"text": "Pathinainju second-la Stop press panrom."
+},
+{
+"line": 50,
+"start": 297.4,
+"end": 298.62,
+"text": "Mixing Run OFF aagum."
+},
+{
+"line": 50,
+"start": 299.23,
+"end": 300.64,
+"text": "Mixer output-um OFF aagum."
+},
+{
+"line": 50,
+"start": 300.99,
+"end": 302.42,
+"text": "Timer count pannuradhu ninnudum."
+},
+{
+"line": 51,
+"start": 303.03,
+"end": 305.4,
+"text": "Aanaa elapsed time zero-ku pogaadhu."
+},
+{
+"line": 51,
+"start": 305.74,
+"end": 307.32,
+"text": "Pathinainju second-la appadiye irukkum."
+},
+{
+"line": 52,
+"start": 308.69,
+"end": 309.89,
+"text": "Inga mixer ninnuduchu."
+},
+{
+"line": 52,
+"start": 310.12,
+"end": 312.27,
+"text": "Timer mattum count pannitte irukkum-nu purinjukka vendaam."
+},
+{
+"line": 53,
+"start": 312.79,
+"end": 314.54,
+"text": "Timer-um count pannuradhai niruthum."
+},
+{
+"line": 53,
+"start": 314.91,
+"end": 317.74,
+"text": "Already count pannina pathinainju second-ai mattum remember pannum."
+},
+{
+"line": 54,
+"start": 318.63,
+"end": 320.02,
+"text": "Ippo marubadiyum Start press panrom."
+},
+{
+"line": 55,
+"start": 320.61,
+"end": 321.43,
+"text": "Mixer odum."
+},
+{
+"line": 55,
+"start": 321.8,
+"end": 323.34,
+"text": "Timer zero-lendhu aarambikkaadhu."
+},
+{
+"line": 55,
+"start": 323.66,
+"end": 325.19,
+"text": "Pathinainju second-lendhu continue aagum."
+},
+{
+"line": 56,
+"start": 325.79,
+"end": 329.2,
+"text": "Innum pathinainju second mix pannadhum total muppadhu second complete aagum."
+},
+{
+"line": 57,
+"start": 329.84,
+"end": 331.39,
+"text": "Timer done signal ON aagum."
+},
+{
+"line": 57,
+"start": 331.96,
+"end": 334.5,
+"text": "Namma logic Mixing Run-ai OFF panni mixer-ai stop pannum."
+},
+{
+"line": 58,
+"start": 335.36,
+"end": 336.58,
+"text": "Mudhal-la pathinainju second."
+},
+{
+"line": 58,
+"start": 336.93,
+"end": 338.43,
+"text": "Restart-ku appuram pathinainju second."
+},
+{
+"line": 58,
+"start": 338.68,
+"end": 340.13,
+"text": "Mothamaa muppadhu second mixing."
+},
+{
+"line": 59,
+"start": 340.85,
+"end": 343.78,
+"text": "Naduvula mixer ninnirundha nerathai indha mixing time-la serkka maattom."
+},
+{
+"line": 60,
+"start": 344.65,
+"end": 347.1,
+"text": "Idhudhaan retentive timer-oda mukkiyamaana difference."
+},
+{
+"line": 60,
+"start": 347.52,
+"end": 349.07,
+"text": "Timer input OFF aanaalum,"
+},
+{
+"line": 60,
+"start": 349.36,
+"end": 351.35,
+"text": "already count pannina time retain aagum."
+},
+{
+"line": 61,
+"start": 352.26,
+"end": 352.49,
+"text": "Seri,"
+},
+{
+"line": 61,
+"start": 352.59,
+"end": 354.2,
+"text": "andha saved time-ai clear pannanumnaa?"
+},
+{
+"line": 62,
+"start": 354.78,
+"end": 356.39,
+"text": "Separate Reset command thevai."
+},
+{
+"line": 62,
+"start": 356.92,
+"end": 359.87,
+"text": "intha concept ku nama extra oru reset push button add pannanum"
+},
+{
+"line": 63,
+"start": 360.73,
+"end": 363.87,
+"text": "Namma example-la mixer stop-la irukkumbodhu Reset press panninaa,"
+},
+{
+"line": 63,
+"start": 363.98,
+"end": 365.21,
+"text": "elapsed time zero aagum."
+},
+{
+"line": 63,
+"start": 365.47,
+"end": 367.35,
+"text": "Timer-oda done status-um clear aagum."
+},
+{
+"line": 64,
+"start": 367.97,
+"end": 369.4,
+"text": "Adhukku appuram Start press panninaa,"
+},
+{
+"line": 64,
+"start": 369.57,
+"end": 371.1,
+"text": "fresh-aa muppadhu second count pannum."
+},
+{
+"line": 65,
+"start": 371.73,
+"end": 376.33,
+"text": "Adhe maadhiri,"
+},
+{
+"line": 65,
+"start": 376.44,
+"end": 377.21,
+"text": "batch complete aagi adutha batch-ku pogumbodhum old timer value-ai reset panna logic irukkanum."
+},
+{
+"line": 66,
+"start": 377.84,
+"end": 378.6,
+"text": "Namma sequence-la,"
+},
+{
+"line": 66,
+"start": 378.96,
+"end": 383.55,
+"text": "pudhusaana batch start pannumbodhu timer-ai reset pannittu fresh cycle start panna arrange pannalaam."
+},
+{
+"line": 67,
+"start": 384.34,
+"end": 386.99,
+"text": "Appo Stop-um Reset-um ore velai illa."
+},
+{
+"line": 68,
+"start": 387.75,
+"end": 390.66,
+"text": "Indha retentive example-la Stop press panninaa mixer nikkum."
+},
+{
+"line": 68,
+"start": 390.76,
+"end": 393.09,
+"text": "Count pannina time appadiye irukkum."
+},
+{
+"line": 69,
+"start": 393.89,
+"end": 396.23,
+"text": "Reset command kuduthaa, saved time-um clear aagum."
+},
+{
+"line": 70,
+"start": 397.02,
+"end": 398.92,
+"text": "Ippo rendu timer-aiyum pakkathula vechu paarunga."
+},
+{
+"line": 71,
+"start": 399.41,
+"end": 401.1,
+"text": "Rendulayum preset muppadhu second."
+},
+{
+"line": 71,
+"start": 401.56,
+"end": 403.7,
+"text": "Rendulayum pathinainju second-la Stop press panrom."
+},
+{
+"line": 72,
+"start": 404.41,
+"end": 406.47,
+"text": "Non-retentive timer zero-ku reset aagum."
+},
+{
+"line": 73,
+"start": 406.99,
+"end": 408.92,
+"text": "Retentive timer pathinainju second-la nikkum."
+},
+{
+"line": 74,
+"start": 409.71,
+"end": 412.43,
+"text": "Marubadi Start press panninaa,"
+},
+{
+"line": 74,
+"start": 412.6,
+"end": 414.11,
+"text": "non-retentive example-la full muppadhu second mixing nadakkum."
+},
+{
+"line": 75,
+"start": 414.81,
+"end": 417.57,
+"text": "Retentive example-la meedhi pathinainju second mixing nadakkum."
+},
+{
+"line": 76,
+"start": 418.37,
+"end": 419.25,
+"text": "Appo edhu better?"
+},
+{
+"line": 77,
+"start": 420.12,
+"end": 421.62,
+"text": "Namma process-ku edhu thevaiyo,"
+},
+{
+"line": 77,
+"start": 421.74,
+"end": 422.42,
+"text": "adhu dhaan correct."
+},
+{
+"line": 78,
+"start": 423.21,
+"end": 426.03,
+"text": "Naduvula stop aana fresh full mixing cycle venumnaa,"
+},
+{
+"line": 78,
+"start": 426.3,
+"end": 427.55,
+"text": "adhukku etha logic use pannanum."
+},
+{
+"line": 79,
+"start": 428.29,
+"end": 431.26,
+"text": "Already odina mixing time-ai serthu calculate pannanumnaa,"
+},
+{
+"line": 79,
+"start": 431.57,
+"end": 433.21,
+"text": "adhukku etha retentive logic use pannanum."
+},
+{
+"line": 80,
+"start": 434.1,
+"end": 437.11,
+"text": "Actual factory-la indha decision product recipe-ai poruthadhu."
+},
+{
+"line": 81,
+"start": 437.97,
+"end": 439.28,
+"text": "Inga innoru vishayam gavanikkanum."
+},
+{
+"line": 82,
+"start": 440.03,
+"end": 444.34,
+"text": "PLC output ON irukkuradhu mattum mixer nijamaave odudhunguradhukku proof illa."
+},
+{
+"line": 82,
+"start": 444.97,
+"end": 446.22,
+"text": "Drive fault aagirukkalaam,"
+},
+{
+"line": 82,
+"start": 446.47,
+"end": 447.88,
+"text": "illa motor run aagaama irukkalaam."
+},
+{
+"line": 83,
+"start": 448.57,
+"end": 450.89,
+"text": "Adhanaala actual machine-la running feedback thevai-na,"
+},
+{
+"line": 83,
+"start": 450.99,
+"end": 454.63,
+"text": "adhaiyum check panni mixing time count panna logic design pannanum."
+},
+{
+"line": 83,
+"start": 455.38,
+"end": 458.55,
+"text": "Namma basic example-la mixer normal-aa run aagudhunu assume panrom."
+},
+{
+"line": 84,
+"start": 459.44,
+"end": 464.52,
+"text": "Retentive-naa power OFF aanaalum ellaa PLC-layum time kandippaa save aagum-nu artham illa."
+},
+{
+"line": 84,
+"start": 465.21,
+"end": 466.24,
+"text": "Adhu PLC model,"
+},
+{
+"line": 84,
+"start": 466.54,
+"end": 467.45,
+"text": "timer instruction,"
+},
+{
+"line": 84,
+"start": 467.55,
+"end": 468.82,
+"text": "memory settings-ai poruthadhu."
+},
+{
+"line": 84,
+"start": 469.45,
+"end": 473.17,
+"text": "Inga namma compare pannadhu timer input OFF aagumbodhu enna nadakkudhunguradhai."
+},
+{
+"line": 85,
+"start": 473.91,
+"end": 474.87,
+"text": "Ippo ungalukku oru question."
+},
+{
+"line": 86,
+"start": 475.78,
+"end": 477.88,
+"text": "Muppadhu-second retentive mixing cycle-la,"
+},
+{
+"line": 86,
+"start": 478.24,
+"end": 480.29,
+"text": "pathinainju second mudinjadhum Stop press pannittom."
+},
+{
+"line": 87,
+"start": 481.06,
+"end": 482.65,
+"text": "Reset press pannala."
+},
+{
+"line": 87,
+"start": 482.8,
+"end": 484.47,
+"text": "Marubadi Start mattum press panrom."
+},
+{
+"line": 88,
+"start": 485.15,
+"end": 486.61,
+"text": "Mixer innum evlo neram odum?"
+},
+{
+"line": 89,
+"start": 487.69,
+"end": 490.05,
+"text": "Option A — Meedhi pathinainju second."
+},
+{
+"line": 90,
+"start": 490.68,
+"end": 493.02,
+"text": "Option B — Pudhusaa muppadhu second."
+},
+{
+"line": 91,
+"start": 493.52,
+"end": 495.84,
+"text": "Option C — Start aana udane ninnudum."
+},
+{
+"line": 92,
+"start": 496.66,
+"end": 499.07,
+"text": "Unga answer-ai A, B, illa C-nu comment pannunga!"
+},
+{
+"line": 93,
+"start": 499.77,
+"end": 499.96,
+"text": "Seri,"
+},
+{
+"line": 93,
+"start": 500.45,
+"end": 502.09,
+"text": "timer vechu nerathai measure pannittom."
+},
+{
+"line": 93,
+"start": 502.72,
+"end": 505.98,
+"text": "Aanaa oru box-la sariyaa aaru bottles pack pannanumnaa,"
+},
+{
+"line": 93,
+"start": 506.27,
+"end": 507.43,
+"text": "PLC epdi count pannum?"
+},
+{
+"line": 94,
+"start": 508.18,
+"end": 510.38,
+"text": "Adutha episode-la PLC counter-ai paakkalaam!"
+},
+{
+"line": 95,
+"start": 511.15,
+"end": 513.72,
+"text": "PLC concepts-ai indha maadhiri practical examples-oda kathukka,"
+},
+{
+"line": 95,
+"start": 514.03,
+"end": 516.01,
+"text": "Factory Decode Tamil channel-ai subscribe pannunga!"
+}
+]

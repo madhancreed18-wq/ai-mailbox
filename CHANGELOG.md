@@ -1,5 +1,13 @@
 # Changelog – Inkstroke
 
+## v10 – Two-character performance + drawing-hand fixes (from ChatGPT 009/010)
+- Idle dancing removed: still pose + small breathing
+- Two stickmen: learner/operator and explainer (hair tuft); gestures: reach-press-release, point, present (palm up), ask, nod, head-shake
+- Speech-timed mouths: only the assigned speaker talks; opening follows the narration loudness (not phoneme lip sync)
+- Drawing hand: pen tip follows the stroke end through the camera zoom; panel border traced with the pen; one hand only; never over finished art
+- Hand-drawn emphasis loop element; button darkens on contact; narration offset for excerpts
+- Template "EP05 excerpt: retentive timer, two characters" (55 s, default)
+
 ## v9 – Episode 5 long-form mixing tank, NR + RTO (from ChatGPT 007)
 - 16:9 template "EP05 Mixing tank timers (16:9 long-form)", 5 scenes cut on narration line boundaries
 - Whole-video narration track (owner recording) plays from 0:00 and is included in export
