@@ -1498,7 +1498,7 @@ $('openIn').onchange=ev=>{const f=ev.target.files[0];ev.target.value='';if(!f)re
 
 /* ---------- Templates ---------- */
 const TPL={
- mixrto:{name:'EP05 excerpt: retentive timer, two characters',desc:'55 s quality sample · gestures · speech-timed mouths · load narration',style:'white',scenes:[]},
+ mixrto:{name:'EP05 excerpt: retentive timer (presenter)',desc:'55 s quality sample · one presenter · gestures · speech-timed mouth · load narration',style:'white',scenes:[]},
  mixep:{name:'EP05 Mixing tank timers (16:9 long-form)',desc:'5 scenes · non-retentive vs retentive · timed to narration',style:'white',scenes:[]},
  ep5:{name:'EP05 ON-delay timer (vertical)',desc:'9:16 · stickman, conveyor, TON timer, state-driven effects',style:'white',scenes:[]},
  pumptank:{name:'Pump + tank with PLC (prototype)',desc:'2 scenes · manual overflow, then automatic level control',style:'white',scenes:[]},
@@ -1869,7 +1869,7 @@ async function buildMixEp(){
 }
 
 const EP5_PHR_RTO=[[46,279.9,281.72,"Appodhaan retentive timer use pannalaam."],[47,282.63,283.52,"Adhe mixing tank."],[47,283.78,285.1,"Adhe muppadhu-second preset."],[47,285.56,287.45,"Indha murai retentive timer vechu paakkalaam."],[48,288.15,289.03,"Start press panrom."],[48,289.48,290.65,"Mixing Run ON aagudhu."],[48,290.97,291.67,"Mixer odudhu."],[48,292.34,294.08,"Timer zero-lendhu count panna aarambikkudhu."],[49,294.91,296.55,"Pathinainju second-la Stop press panrom."],[50,297.4,298.62,"Mixing Run OFF aagum."],[50,299.23,300.64,"Mixer output-um OFF aagum."],[50,300.99,302.42,"Timer count pannuradhu ninnudum."],[51,303.03,305.4,"Aanaa elapsed time zero-ku pogaadhu."],[51,305.74,307.32,"Pathinainju second-la appadiye irukkum."],[52,308.69,309.89,"Inga mixer ninnuduchu."],[52,310.12,312.27,"Timer mattum count pannitte irukkum-nu purinjukka vendaam."],[53,312.79,314.54,"Timer-um count pannuradhai niruthum."],[53,314.91,317.74,"Already count pannina pathinainju second-ai mattum remember pannum."],[54,318.63,320.02,"Ippo marubadiyum Start press panrom."],[55,320.61,321.43,"Mixer odum."],[55,321.8,323.34,"Timer zero-lendhu aarambikkaadhu."],[55,323.66,325.19,"Pathinainju second-lendhu continue aagum."],[56,325.79,329.2,"Innum pathinainju second mix pannadhum total muppadhu second complete aagum."],[57,329.84,331.39,"Timer done signal ON aagum."],[57,331.96,334.5,"Namma logic Mixing Run-ai OFF panni mixer-ai stop pannum."]];
-/* ---------- EP05 quality excerpt (009/010): retentive timer, two characters, 4:39.4–5:34.6 of the narration ---------- */
+/* ---------- EP05 quality excerpt (009/010, owner: one presenter): retentive timer, 4:39.4–5:34.6 of the narration ---------- */
 async function buildMixRto(){
   stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('16:9');
   const OFF=279.4,END=334.7,g=t=>t-OFF,PH=EP5_PHR_RTO;S.narrOff=OFF;
@@ -1897,33 +1897,27 @@ async function buildMixRto(){
   E.push({t:g(285.5),k:'mode',v:'rto'},{t:st1,k:'start'},{t:st1,k:'rate',v:15/(sp1-st1)},{t:sp1,k:'stop',snap:15},
     {t:st2,k:'start'},{t:st2,k:'rate',v:15/(dn-st2)},{t:dn-.05,k:'slow',v:true},{t:g(332.6),k:'clearRun'},{t:g(332.65),k:'slow',v:false});
   s.els.push(c);
-  /* two characters: A = learner/operator (plain head), B = explainer (small hair tuft) */
-  const A=addStick({scene:s,quiet:true,look:'stick',action:'idle',size:290,x:SB[0]+19,y:280,facing:-1,entrance:'none',delay:0,withPrev:true,draw:.1});A.name='Learner (A)';
-  const Bm=addStick({scene:s,quiet:true,look:'stick',action:'idle',size:290,x:672,y:280,facing:1,entrance:'none',delay:0,withPrev:true,draw:.1});Bm.name='Explainer (B)';Bm.tuft=true;
-  const spk=(who)=>PH.filter(x=>who.includes(x[0])).map(x=>[g(x[1]),g(x[2])]);
-  A.speak=spk([49,54]);Bm.speak=spk([46,47,48,50,51,52,53,55,56,57]);
-  const HA=[A.x+A.w/2,335],HB=[Bm.x+Bm.w/2,335],ACC=[px+110,py+286],RUN=[px+320,py+127],OUT=[px+320,py+167],PRE=[px+90,py+228],TTL=[px+150,py+40],DN=[px+52,py+384],BAR=[px+250,py+316],IMP=[260,430],TANK=[300,330];
-  const a=(t,o)=>({t:g(t),act:'idle',facing:-1,face:'neutral',...o});
-  const reach=(L,t,tg)=>L.push(a(t-.35,{act:'reach',target:tg,gaze:tg}),a(t+.55,{gaze:tg}));
-  const LA=[a(279.4,{gaze:HB}),a(282.7,{gaze:TANK}),a(283.8,{gaze:PRE}),a(285.5,{gaze:TTL}),a(287.6,{gaze:SB}),
-    a(289.15,{gaze:IMP,face:'smile'}),a(292.3,{gaze:ACC}),a(294.85,{gaze:ACC}),a(296.45,{gaze:IMP}),a(300.9,{gaze:ACC}),
-    a(303.0,{gaze:ACC}),a(305.85,{gaze:ACC,face:'o'}),a(307.35,{act:'ask',facing:1,gaze:HB,face:'confused'}),a(307.95,{act:'ask',facing:1,gaze:ACC,face:'confused'}),
-    a(308.6,{facing:1,gaze:HB}),a(310.1,{facing:1,gaze:ACC}),a(315.0,{act:'nod',facing:1,gaze:ACC,face:'smile'}),a(316.3,{facing:1,gaze:HB,face:'smile'}),a(318.4,{gaze:SB}),
-    a(320.15,{gaze:IMP}),a(321.8,{gaze:ACC,face:'o'}),a(323.7,{gaze:ACC,face:'smile'}),a(325.8,{gaze:IMP}),a(327.5,{gaze:ACC}),
-    a(329.3,{gaze:DN}),a(332.0,{gaze:IMP}),a(333.3,{act:'nod',gaze:HB,face:'smile'})];
-  reach(LA,288.6,SB);reach(LA,295.9,SP);reach(LA,319.6,SB);
-  const b=(t,o)=>({t:g(t),act:'idle',facing:1,face:'smile',...o});
-  const LB=[b(279.4,{act:'present',target:[px+20,py+200],gaze:HA}),b(281.8,{gaze:HA}),b(282.6,{act:'present',facing:-1,target:TANK,gaze:TANK}),b(283.8,{act:'point',target:PRE,gaze:PRE}),
-    b(285.5,{act:'point',target:[px+60,py+40],gaze:TTL}),b(287.4,{facing:-1,gaze:SB,face:'neutral'}),b(289.45,{act:'point',target:RUN,gaze:RUN}),b(290.95,{act:'present',facing:-1,target:IMP,gaze:IMP}),
-    b(292.3,{act:'point',target:ACC,gaze:ACC}),b(294.1,{facing:-1,gaze:HA,face:'neutral'}),b(295.5,{facing:-1,gaze:SP,face:'neutral'}),
-    b(297.4,{act:'point',target:RUN,gaze:RUN}),b(299.2,{act:'point',target:OUT,gaze:OUT}),b(300.95,{act:'point',target:BAR,gaze:BAR}),
-    b(303.0,{act:'present',target:ACC,gaze:ACC}),b(305.7,{act:'point',target:ACC,gaze:ACC}),b(306.6,{gaze:HA}),b(307.35,{facing:-1,gaze:HA,face:'neutral'}),
-    b(308.6,{act:'present',facing:-1,target:IMP,gaze:IMP}),b(310.1,{act:'shake',facing:-1,gaze:HA,face:'neutral'}),b(311.0,{act:'point',target:ACC,gaze:ACC}),
-    b(312.8,{act:'point',target:BAR,gaze:BAR}),b(314.9,{act:'present',target:ACC,gaze:ACC}),b(316.6,{facing:-1,act:'nod',gaze:HA}),
-    b(318.6,{facing:-1,gaze:SB,face:'neutral'}),b(320.6,{act:'present',facing:-1,target:IMP,gaze:IMP}),b(321.8,{act:'point',target:ACC,gaze:ACC}),
-    b(323.65,{act:'present',target:ACC,gaze:ACC}),b(325.8,{act:'present',facing:-1,target:IMP,gaze:IMP}),b(327.5,{act:'point',target:BAR,gaze:BAR}),
-    b(329.84,{act:'point',target:DN,gaze:DN}),b(331.95,{act:'point',target:RUN,gaze:RUN}),b(333.2,{act:'present',facing:-1,target:IMP,gaze:IMP}),b(334.0,{facing:-1,act:'nod',gaze:HA})];
-  A.beats=LA.sort((p,q)=>p.t-q.t);Bm.beats=LB.sort((p,q)=>p.t-q.t);
+  /* one presenter: presses the buttons and explains to the viewer */
+  const A=addStick({scene:s,quiet:true,look:'stick',action:'idle',size:290,x:SB[0]+19,y:280,facing:-1,entrance:'none',delay:0,withPrev:true,draw:.1});A.name='Presenter';
+  A.speak=PH.map(x=>[g(x[1]),g(x[2])]);
+  const ACC=[px+110,py+286],RUN=[px+320,py+127],OUT=[px+320,py+167],PRE=[px+90,py+228],TTL=[px+150,py+40],DN=[px+52,py+384],BAR=[px+250,py+316],IMP=[260,430],TANK=[300,330],V='viewer';
+  const a=(t,o)=>({t:g(t),act:'idle',facing:1,face:'smile',...o});
+  const LA=[a(279.4,{act:'present',target:[px+20,py+200],gaze:V}),a(281.8,{gaze:V}),a(282.6,{act:'point',facing:-1,target:[330,110],gaze:TANK}),a(283.8,{act:'point',target:PRE,gaze:PRE}),
+    a(285.5,{act:'point',target:[px+60,py+40],gaze:TTL}),a(287.6,{facing:-1,gaze:SB,face:'neutral'}),
+    a(289.45,{act:'point',target:RUN,gaze:RUN}),a(290.95,{act:'point',facing:-1,target:[330,110],gaze:IMP}),a(292.3,{act:'point',target:ACC,gaze:ACC}),
+    a(294.6,{facing:-1,gaze:SP,face:'neutral'}),
+    a(297.4,{act:'point',target:RUN,gaze:RUN}),a(299.2,{act:'point',target:OUT,gaze:OUT}),a(300.95,{act:'point',target:BAR,gaze:BAR}),
+    a(303.0,{act:'present',target:ACC,gaze:ACC}),a(305.7,{act:'point',target:ACC,gaze:ACC,face:'o'}),a(306.6,{gaze:V}),
+    a(307.35,{act:'ask',gaze:V,face:'confused'}),
+    a(308.6,{act:'point',facing:-1,target:[330,110],gaze:IMP}),a(310.1,{act:'shake',gaze:V,face:'neutral'}),a(311.0,{act:'point',target:ACC,gaze:ACC}),
+    a(312.8,{act:'point',target:BAR,gaze:BAR}),a(314.9,{act:'present',target:ACC,gaze:ACC}),a(316.6,{act:'nod',gaze:V}),
+    a(318.4,{facing:-1,gaze:SB,face:'neutral'}),
+    a(320.6,{act:'point',facing:-1,target:[330,110],gaze:IMP}),a(321.8,{act:'point',target:ACC,gaze:ACC}),a(323.65,{act:'present',target:ACC,gaze:ACC}),
+    a(325.8,{act:'point',facing:-1,target:[330,110],gaze:IMP}),a(327.5,{act:'point',target:BAR,gaze:BAR}),
+    a(329.84,{act:'point',target:DN,gaze:DN}),a(331.95,{act:'point',target:RUN,gaze:RUN}),a(333.2,{act:'point',facing:-1,target:[330,110],gaze:IMP}),a(334.0,{act:'nod',gaze:V})];
+  const reach=(t,tg)=>LA.push(a(t-.35,{act:'reach',facing:-1,target:tg,gaze:tg,face:'neutral'}),a(t+.55,{facing:-1,gaze:tg,face:'neutral'}));
+  reach(288.6,SB);reach(295.9,SP);reach(319.6,SB);
+  A.beats=LA.sort((p,q)=>p.t-q.t);
   /* camera: focus changes only between presses */
   const full={x:W/2,y:H/2,z:1};
   s.cam=[{t:g(285.4),d:.6,x:990,y:300,z:1.18},{t:g(287.3),d:.6,...full},{t:g(303.0),d:.6,x:960,y:340,z:1.3},{t:g(308.5),d:.6,...full},

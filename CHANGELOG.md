@@ -1,5 +1,9 @@
 # Changelog – Inkstroke
 
+## v10.1 – One presenter (owner decision)
+- Excerpt template uses a single presenter: explains to the viewer, presses the buttons, asks the viewer in the question pause
+- Points up over the station toward the tank (never reads as a button press)
+
 ## v10 – Two-character performance + drawing-hand fixes (from ChatGPT 009/010)
 - Idle dancing removed: still pose + small breathing
 - Two stickmen: learner/operator and explainer (hair tuft); gestures: reach-press-release, point, present (palm up), ask, nod, head-shake
