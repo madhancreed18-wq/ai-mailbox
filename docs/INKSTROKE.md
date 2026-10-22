@@ -45,6 +45,11 @@ Animaker, InstaDoodle and AnkonAI-style explainers look and move, using the
 - Ideas: light bulb, gear, rocket, bar chart, heart, cloud, star, pet bowl, factory, check badge, arrow, person, warning sign, wrench, clock, padlock, target, sun
 - Industry: PLC, pump, tank, switch, level sensor, valve, worker, lightning, water drop
 
+### Industrial process (v7)
+- Equipment: pump + motor, motor, cutaway tank, level sensor, PLC, contactor, start/stop station, with connection anchors
+- Process control element: manual or PLC high/low with drain; linked pump, liquid, pipes, sensors, PLC, contactor and signal cables follow its state
+- Process pipes vs dashed signal cables; overflow spill; live LEDs and ON/OFF status
+
 ### Video
 - Scenes with thumbnails; transitions: camera pan, eraser wipe, fade, zoom, cut
 - Boards: whiteboard, paper, chalkboard, glassboard

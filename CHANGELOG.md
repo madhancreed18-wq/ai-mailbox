@@ -1,5 +1,17 @@
 # Changelog – Inkstroke
 
+## v7 – Industrial process prototype (from ChatGPT review 002)
+- SVG path roles (`data-role`: outline, detail, fill, annotation); fill-only shapes no longer traced
+- Per-path stroke widths preserved when tracing; optional flat color (no shading)
+- Industrial asset library with connection anchors: pump + motor, motor, cutaway tank, level sensor, PLC, contactor, start/stop station
+- Process pipes (solid, water core) vs dashed signal cables; rounded multi-point routing
+- Deterministic process controller: manual mode (overflow) and PLC high/low hysteresis with drain
+- Live indicators: pump ON/OFF + impeller, sensor LEDs, PLC I/O LEDs, contactor I/O
+- Overflow spill and puddle; labels that appear on overflow
+- Operator presses Start exactly on the button, then walks away
+- Template "Pump + tank with PLC (prototype)"; save/open keeps all links
+
+
 ## v6 – Image drawing and artist-style characters
 - Uploaded images are drawn stroke by stroke (centerline tracing for line art, edge tracing for photos)
 - Drawing styles: lines + cartoon color, lines then photo, line art only, pencil
