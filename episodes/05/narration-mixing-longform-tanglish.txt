@@ -1,0 +1,191 @@
+Start button-ai press panninaa mixer odum. Stop button-ai press panninaa ninnudum. Idhai pona episode-la holding logic vechu paathom.
+
+ipo namma oru tank-la irukkura product-ai oru kurippitta nerathukku mix pannanum. Neram mudinjadhum mixer thaanaave nindranum. Operator pakkathula ninnu stopwatch paathutte irukkanumaa?
+
+Thevai illa. Indha velaiyai PLC timer vechu pannalaam.
+
+Oru batch mixing tank-ai eduthukkalaam. Ingredients ellam tank-la add panniyaachu. Ippo Start press panninaa, mixer muppadhu second odanum. Muppadhu second mudinjadhum automaticah stop aaganum.
+
+Inga muppadhu second-nguradhu namma explanation-kaana example. Actual factory-la mixing time, product recipe-ku etha maadhiri set pannuvaanga.
+
+Aanaa mixing nadakkumbodhe operator Stop press pannittaa?
+
+Marubadi Start pannumbodhu, full muppadhu second mix pannanumaa? Illa already mix pannina neram poga, meedhi neram mattum mix panninaa podhumaa?
+
+Indha rendu behaviour-aiyum non-retentive, retentive timers vechu paakkalaam.
+
+Mudhal-la indha process-ku enna thevai-nu paarppom.
+
+Oru Start button. Oru Stop button. Mixer-ai control panna oru output. Mixing nadakkudhunu remember panna oru internal bit. Adhukku aduthadhaa oru timer.
+
+Indha internal bit-ai Mixing Run-nu koopiduvom.
+
+Start button-ai press pannumbodhu Mixing Run ON aagum. Pona episode-la paatha holding logic maadhiriye, button-ai vittaalum indha bit ON-la irukkum.
+
+Indha Mixing Run bit-ai use panni mixer output-ai ON panrom. Adhe bit-ai timer-oda input-kum kudukkurom.
+
+Adhanaala mixing start aagumbodhu mixer-um odum, timer-um count panna aarambikkum.
+
+Timer-la namma set pannura nerathai preset time-nu solluvom. Inga preset time muppadhu second.
+
+Timer idhuvaraikkum count pannina nerathai elapsed time-nu solluvom. Pathu second count aayirundhaa, elapsed time pathu second.
+
+Elapsed time, preset time-ai reach pannumbodhu timer-oda done signal ON aagum. Adhaavadhu, set panna neram mudinjiduchunu indicate pannum.
+
+Ippo mudhal-la non-retentive ON-delay timer-ai paakkalaam.
+
+ON-delay-naa, timer input ON aanadhum done signal udane ON aagaadhu. Set panna neram mudinja piraguthaan ON aagum.
+
+Aanaa inga mixer udane odudhe? Appo delay enga irukku?
+
+Idhudhaan mukkiyamaana point.
+
+Mixer-ai timer done signal moolamaa start pannala. Mixing Run bit moolamaa start panrom.
+
+Timer done signal-ai, mixing time mudinjiduchunu therinjukkaradhukku use panrom. Andha signal vandhadhum mixer-ai stop panna program panrom.
+
+Ippo full working-ai paarunga.
+
+Operator Start press pannuraar. Mixing Run ON aagudhu. Mixer output ON aagudhu. Tank-kulla blades rotate aagi ingredients mix aaga aarambikkudhu.
+
+Adhe nerathula timer zero-lendhu count panna aarambikkudhu.
+
+Pathu second aayiduchu. Mixer odikitte irukku. Timer done signal innum OFF.
+
+Irubadhu second aayiduchu. Mixer innum odikitte irukku. Yennaa namma set pannadhu muppadhu second.
+
+Muppadhu second reach aagudhu.
+
+Ippo timer-oda done signal ON aagum. Indha signal-ai use panni Mixing Run bit-ai OFF panrom.
+
+Mixing Run OFF aanadhum mixer output-um OFF aagum. Motor-ku run command ninnudum. Blades slow aagi stop aagum.
+
+Idhula timer mixer power-ai direct-aa cut pannala. Timer time mudinjadhai indicate pannudhu. Namma PLC logic dhaan mixer output-ai OFF pannudhu.
+
+Seri, Mixing Run OFF aagiduchu. Appo timer-oda input-um OFF aagume?
+
+Aamaam. Adhanaala indha non-retentive timer-oda elapsed time zero-ku reset aagum. Done signal-um OFF aagidum.
+
+Appo done signal OFF aanadhum mixer marubadi start aagidumaa?
+
+Aagaadhu. Mixing Run bit already OFF aagiduchu. Adhai marubadi ON panna pudhusaana Start request thevai.
+
+Namma example-la ovvoru Start request-kum oru mixing cycle dhaan.
+
+Ippo innoru situation paarppom.
+
+Mixing start panni pathinainju second aayirukku. Aanaa operator Stop press pannuraar.
+
+Ippo muppadhu second mudiyura varaikkum mixer odumaa?
+
+Odaadhu. Stop command vandhadhum Mixing Run OFF aagum. Mixer output-um OFF aagum. Timer input OFF aaguradhaala, count pannina pathinainju second-um reset aagum.
+
+Marubadiyum Start press panninaa enna aagum?
+
+Meedhi pathinainju second mattum count aagaadhu. Zero-lendhu pudhusaa muppadhu second count aagum.
+
+Yennaa namma use pannuradhu non-retentive timer. Input OFF aanadhum count pannina time-ai adhu retain pannaadhu.
+
+Aanaa namma process requirement vera maadhiri irundhaa?
+
+“Mixer mothamaa muppadhu second odinaa podhum. Naduvula stop panninaalum, already mix pannina nerathai marakka vendaam” nu sonnaa?
+
+Appodhaan retentive timer use pannalaam.
+
+Adhe mixing tank. Adhe muppadhu-second preset. Indha murai retentive timer vechu paakkalaam.
+
+Start press panrom. Mixing Run ON aagudhu. Mixer odudhu. Timer zero-lendhu count panna aarambikkudhu.
+
+Pathinainju second-la Stop press panrom.
+
+Mixing Run OFF aagum. Mixer output-um OFF aagum. Timer count pannuradhu ninnudum.
+
+Aanaa elapsed time zero-ku pogaadhu. Pathinainju second-la appadiye irukkum.
+
+Inga mixer ninnuduchu. Timer mattum count pannitte irukkum-nu purinjukka vendaam.
+
+Timer-um count pannuradhai niruthum. Already count pannina pathinainju second-ai mattum remember pannum.
+
+Ippo marubadiyum Start press panrom.
+
+Mixer odum. Timer zero-lendhu aarambikkaadhu. Pathinainju second-lendhu continue aagum.
+
+Innum pathinainju second mix pannadhum total muppadhu second complete aagum.
+
+Timer done signal ON aagum. Namma logic Mixing Run-ai OFF panni mixer-ai stop pannum.
+
+Mudhal-la pathinainju second. Restart-ku appuram pathinainju second. Mothamaa muppadhu second mixing.
+
+Naduvula mixer ninnirundha nerathai indha mixing time-la serkka maattom.
+
+Idhudhaan retentive timer-oda mukkiyamaana difference. Timer input OFF aanaalum, already count pannina time retain aagum.
+
+Seri, andha saved time-ai clear pannanumnaa?
+
+Separate Reset command thevai. intha concept ku nama extra oru reset push button add pannanum
+
+Namma example-la mixer stop-la irukkumbodhu Reset press panninaa, elapsed time zero aagum. Timer-oda done status-um clear aagum.
+
+Adhukku appuram Start press panninaa, fresh-aa muppadhu second count pannum.
+
+Adhe maadhiri, batch complete aagi adutha batch-ku pogumbodhum old timer value-ai reset panna logic irukkanum.
+
+Namma sequence-la, pudhusaana batch start pannumbodhu timer-ai reset pannittu fresh cycle start panna arrange pannalaam.
+
+Appo Stop-um Reset-um ore velai illa.
+
+Indha retentive example-la Stop press panninaa mixer nikkum. Count pannina time appadiye irukkum.
+
+Reset command kuduthaa, saved time-um clear aagum.
+
+Ippo rendu timer-aiyum pakkathula vechu paarunga.
+
+Rendulayum preset muppadhu second. Rendulayum pathinainju second-la Stop press panrom.
+
+Non-retentive timer zero-ku reset aagum.
+
+Retentive timer pathinainju second-la nikkum.
+
+Marubadi Start press panninaa, non-retentive example-la full muppadhu second mixing nadakkum.
+
+Retentive example-la meedhi pathinainju second mixing nadakkum.
+
+Appo edhu better?
+
+Namma process-ku edhu thevaiyo, adhu dhaan correct.
+
+Naduvula stop aana fresh full mixing cycle venumnaa, adhukku etha logic use pannanum.
+
+Already odina mixing time-ai serthu calculate pannanumnaa, adhukku etha retentive logic use pannanum.
+
+Actual factory-la indha decision product recipe-ai poruthadhu.
+
+Inga innoru vishayam gavanikkanum.
+
+PLC output ON irukkuradhu mattum mixer nijamaave odudhunguradhukku proof illa. Drive fault aagirukkalaam, illa motor run aagaama irukkalaam.
+
+Adhanaala actual machine-la running feedback thevai-na, adhaiyum check panni mixing time count panna logic design pannanum. Namma basic example-la mixer normal-aa run aagudhunu assume panrom.
+
+Retentive-naa power OFF aanaalum ellaa PLC-layum time kandippaa save aagum-nu artham illa. Adhu PLC model, timer instruction, memory settings-ai poruthadhu. Inga namma compare pannadhu timer input OFF aagumbodhu enna nadakkudhunguradhai.
+
+Ippo ungalukku oru question.
+
+Muppadhu-second retentive mixing cycle-la, pathinainju second mudinjadhum Stop press pannittom.
+
+Reset press pannala. Marubadi Start mattum press panrom.
+
+Mixer innum evlo neram odum?
+
+Option A — Meedhi pathinainju second.
+
+Option B — Pudhusaa muppadhu second.
+
+Option C — Start aana udane ninnudum.
+
+Unga answer-ai A, B, illa C-nu comment pannunga!
+
+Seri, timer vechu nerathai measure pannittom. Aanaa oru box-la sariyaa aaru bottles pack pannanumnaa, PLC epdi count pannum?
+
+Adutha episode-la PLC counter-ai paakkalaam!
+
+PLC concepts-ai indha maadhiri practical examples-oda kathukka, Factory Decode Tamil channel-ai subscribe pannunga!
