@@ -1,5 +1,14 @@
 # Changelog – Inkstroke
 
+## v8 – Episode 5 ON-delay prototype (from ChatGPT 004/005)
+- Vertical 9:16 projects (720×1280, export 1080×1920); timed captions
+- Stickman v3: outlined eyes with pupils and eyelids, gaze, face turn, brows, black palms with thumb/finger, black oval feet
+- Character beats (time, action, face, gaze, facing, target) with pose blending; two-bone arm IK to real button anchors
+- Non-retentive TON controller with Start/Stop events at finger contact; TON panel (Run, PRE, ACC fill, DN contact, DONE pulse)
+- Conveyor with geared motor; belt and pulleys move only with output ON; crate exits the frame and respawns after stop
+- Button ripples, travelling signal dots, attention arrows in time windows, one camera focus move
+- Template "EP05 ON-delay timer (vertical)"
+
 ## v7 – Industrial process prototype (from ChatGPT review 002)
 - SVG path roles (`data-role`: outline, detail, fill, annotation); fill-only shapes no longer traced
 - Per-path stroke widths preserved when tracing; optional flat color (no shading)
