@@ -1,15 +1,17 @@
-Start button-ai press pannittom. Aanaa conveyor udane odala. Anju second kazhichu dhaan odudhu. Yen?
+Start button-ai press pannittom. Aanaa conveyor udane odala. Anju second kazhichu dhaan odudhu. Idhu epdi?
 
-Pona episode-la holding logic paathom. Adhu Run command-ai ON-la vechukkum. Ippo andha command-ku aduthadhaa oru ON-delay timer add panrom.
+Pona episode-la holding logic paathom. Adhu Run command-ai ON-la vechukkum. Ippo andha command-ai oru ON-delay timer-ku kudukkurom.
 
-Indha timer-ku anju second set panrom. Run command ON aanadhum timer count panna aarambikkum. Indha nerathula conveyor output OFF-la dhaan irukkum.
+Timer-la anju second set panrom. Run command ON aanadhum timer count panna aarambikkum. Aanaa conveyor output innum OFF-la dhaan irukkum.
 
-Anju second mudinjadhum timer-oda done signal ON aagum. Adhai use panni conveyor output-ai ON panrom.
+Anju second mudinjadhum timer-oda done signal ON aagum. Andha signal-ai use panni conveyor-ai start panrom.
 
-Aanaa count nadakkumbodhe Stop press panninaa? Run command OFF aagum. Timer zero-ku reset aagum. Conveyor start aagaadhu.
+Ippo innoru murai try pannuvom. Rendu second count aanadhum Stop press panrom. Run command OFF aagudhu. Timer zero-ku reset aagudhu. Conveyor start aagala.
 
-Marubadiyum Start press panninaa, pudhusaa zero-lendhu anju second count aagum. Pona rendu second-ai serthukkaadhu.
+Marubadiyum Start press panninaa, meedhi moonu second mattum count aagumaa?
 
-Idhudhaan non-retentive ON-delay timer. Command thodarndhu ON-la irundhaa mattum, set panna neram mudinjadhum output ON aagum.
+Aagaadhu! Zero-lendhu pudhusaa anju second count aagum. Adhukku appuram dhaan conveyor start aagum.
 
-Adutha example-la timer-ai enga use pannalaam? Comment-la sollunga!
+Idhudhaan non-retentive ON-delay timer. Command thodarndhu ON-la irundhaa mattum, set panna neram mudinjadhum done signal ON aagum.
+
+Indha timer-ai unga factory-la enga use pannalaam? Comment-la sollunga!
