@@ -1,0 +1,60 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Factory Decode · Episode 05 · ON delay</title>
+<style>*{box-sizing:border-box}body{margin:0;background:#e9edf0;font:16px system-ui;color:#151719}main{max-width:1140px;margin:auto;padding:22px;display:grid;grid-template-columns:minmax(300px,540px) 1fr;gap:22px}svg{width:100%;background:white;box-shadow:0 12px 45px #18222c20;border-radius:12px}aside{padding:12px}h1{font-size:26px}button{border:0;border-radius:8px;padding:12px 18px;margin:6px 4px 6px 0;background:#18202a;color:white;cursor:pointer}input{width:100%;margin:20px 0}small{color:#53616b}.note{background:#fff;padding:16px;border-radius:12px;margin-top:18px;line-height:1.5}#voice{line-height:1.7;font-size:19px}a{color:#156a91}@media(max-width:740px){main{display:block;padding:12px}aside{padding:12px 0}}svg text{font-family:'Comic Sans MS','Chalkboard SE',sans-serif;fill:#111}svg .ink{stroke:#111;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;fill:none}svg .detail{stroke-width:3}svg .signal{stroke-width:5;stroke-linecap:round;fill:none}svg .label{font-size:23px;font-weight:bold}svg .title{font-size:37px;font-weight:bold}</style>
+<main><svg id="board" viewBox="0 0 720 1280" xmlns="http://www.w3.org/2000/svg" aria-label="Animated conveyor with PLC on-delay timer">
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M1 1L9 5L1 9" fill="none" stroke="#111" stroke-width="2"/></marker><clipPath id="trackclip"><rect x="257" y="506" width="402" height="28" rx="14"/></clipPath></defs>
+<text x="36" y="47" font-size="20" font-weight="bold">FACTORY DECODE TAMIL · EP 05</text><text id="headline" x="36" y="114" class="title">START... AANAA WAIT!</text><path d="M36 140Q230 133 478 141" stroke="#111" stroke-width="7" stroke-linecap="round" fill="none"/>
+<text x="36" y="191" font-size="24">PLC ON-DELAY TIMER</text><text x="36" y="229" font-size="18">5-second example · generic teaching model</text>
+<!-- same worker throughout, with articulated arm -->
+<g id="worker" class="ink"><path d="M84 407Q75 367 113 357Q150 357 151 407Z" fill="#ffd34b"/><path d="M75 407H159"/><path d="M91 413Q88 450 114 455Q142 452 142 413" fill="white"/><circle cx="105" cy="426" r="2" fill="#111"/><circle cx="130" cy="426" r="2" fill="#111"/><path d="M109 440Q118 447 128 438" class="detail"/>
+<path d="M95 455L76 470L79 543L145 543L148 470L131 455" fill="white"/><path d="M95 455L111 477L131 455" class="detail"/><path d="M87 471V540M136 471V540" stroke="#ddac28" stroke-width="9"/><path d="M87 544L84 624H101L114 565L127 624H145L141 544" fill="white"/><path d="M83 624Q66 625 69 635H104V625M128 625V635H160Q160 625 145 624" fill="white"/>
+<path d="M77 475L53 508L64 530M145 475L169 492L196 453" stroke-width="10"/><path id="arm" d="M145 475L169 492L196 453" stroke="white" stroke-width="4"/><path d="M194 455L202 447M195 455L204 454M195 457L201 462" class="detail"/></g>
+<!-- Physical Start / Stop station -->
+<g class="ink"><rect x="177" y="387" width="61" height="100" rx="5" fill="white"/><circle id="start" cx="207" cy="417" r="13" fill="#d9e8df"/><circle id="stop" cx="207" cy="457" r="13" fill="#f1dedf"/></g><text x="176" y="372" font-size="18">START / STOP</text>
+<!-- Conveyor: guarded rollers and external geared motor -->
+<g class="ink"><rect x="249" y="496" width="420" height="48" rx="24" fill="white"/><rect x="257" y="506" width="402" height="28" rx="14" stroke-width="3"/><path d="M275 546L267 625H291L304 546M614 546L627 625H651L643 546" fill="white"/><path d="M263 625H299M620 625H658"/><path d="M300 574H626" class="detail"/></g>
+<g clip-path="url(#trackclip)" id="belt" stroke="#111" stroke-width="3"></g>
+<g id="crate"><rect x="376" y="446" width="70" height="49" rx="3" fill="white" stroke="#111" stroke-width="5"/><path d="M401 449V467H420V449" fill="none" stroke="#111" stroke-width="3"/></g>
+<g class="ink"><rect x="467" y="563" width="103" height="48" rx="7" fill="white"/><rect x="570" y="570" width="25" height="33" fill="white"/><rect x="500" y="552" width="30" height="11" fill="white"/><path d="M478 574V600M490 574V600M503 574V600M516 574V600M529 574V600" class="detail"/><path d="M476 613H569"/><path d="M582 570V543"/></g>
+<circle id="runLight" cx="636" cy="582" r="11" fill="#d8dcdf" stroke="#111" stroke-width="3"/><text id="motorLabel" x="257" y="668" class="label">CONVEYOR OFF</text>
+<circle id="touchRing" cx="207" cy="417" r="19" fill="none" stroke="#13855b" stroke-width="4" opacity="0"/>
+<circle id="signalDot" cx="70" cy="822" r="7" fill="#13855b"/>
+<circle id="doneRing" cx="636" cy="582" r="18" fill="none" stroke="#13855b" stroke-width="4" opacity="0"/>
+<!-- timer and logical signal flow -->
+<text x="36" y="729" class="label">INSIDE THE PLC</text><rect x="35" y="750" width="650" height="247" rx="12" fill="white" stroke="#111" stroke-width="5"/>
+<text x="60" y="790" font-size="19">HELD RUN COMMAND</text><path id="inWire" class="signal" d="M64 822H177" stroke="#b9c0c4"/><circle id="input" cx="65" cy="822" r="8" fill="#b9c0c4"/>
+<rect x="181" y="802" width="297" height="131" rx="5" fill="white" stroke="#111" stroke-width="4"/><text x="202" y="838" class="label">TON · ON DELAY</text><text x="202" y="873" font-size="22">SET: 5.0 s</text><text id="elapsed" x="202" y="909" font-size="24">TIME: 0.0 s</text>
+<path id="outWire" class="signal" d="M478 855H548V891H649" stroke="#b9c0c4"/><text x="505" y="835" font-size="19">DONE</text><circle id="done" cx="548" cy="855" r="9" fill="#b9c0c4"/><rect x="594" y="873" width="63" height="36" rx="5" fill="white" stroke="#111" stroke-width="3"/><text id="q" x="604" y="897" font-size="17">OFF</text>
+<rect x="62" y="954" width="592" height="15" rx="7" fill="#e9ecef"/><rect id="progress" x="62" y="954" width="0" height="15" rx="7" fill="#13855b"/>
+<text id="event" x="36" y="1055" font-size="28" font-weight="bold">Run command ON → timing starts</text><text id="caption1" x="36" y="1110" font-size="25"></text><text id="caption2" x="36" y="1151" font-size="25"></text>
+<text x="36" y="1234" font-size="17">Silent draft · timing will follow final narration</text></svg>
+<aside><h1>Episode 5: PLC ON-delay timer</h1><p>Holding logic-ku adutha lesson. Start command stays ON; the conveyor waits for a continuous 5 seconds.</p><button id="play">Pause</button><button id="restart">Restart</button><input id="seek" aria-label="Episode timeline" type="range" min="0" max="60" step="0.01" value="0"><small id="time">0.0 / 60.0 s</small><div class="note"><strong>Narration beat</strong><p id="voice"></p></div><div class="note"><strong>What is demonstrated</strong><p>Normal delay → output ON → Stop → interrupted delay resets → full fresh delay → output ON.</p><p>This is a generic non-retentive TON model, not brand-specific wiring or a machine safety function. No audio is included.</p></div></aside></main>
+<script>
+const DURATION=60;
+const beats=[
+[0,'Start button-ai press pannittom. Aanaa conveyor udane odala. Anju second kazhichu dhaan odudhu. Yen?'],
+[8,'Pona episode-la holding logic paathom. Adhu Run command-ai ON-la vechukkum. Ippo andha command-ku aduthadhaa oru ON-delay timer add panrom.'],
+[18,'Indha timer-ku anju second set panrom. Run command ON aanadhum timer count panna aarambikkum. Indha nerathula conveyor output OFF-la dhaan irukkum.'],
+[27,'Anju second mudinjadhum timer-oda done signal ON aagum. Adhai use panni conveyor output-ai ON panrom.'],
+[34,'Aanaa count nadakkumbodhe Stop press panninaa? Run command OFF aagum. Timer zero-ku reset aagum. Conveyor start aagaadhu.'],
+[41,'Marubadiyum Start press panninaa, pudhusaa zero-lendhu anju second count aagum. Pona rendu second-ai serthukkaadhu.'],
+[49,'Idhudhaan non-retentive ON-delay timer. Command thodarndhu ON-la irundhaa mattum, set panna neram mudinjadhum output ON aagum.'],
+[56,'Adutha example-la timer-ai enga use pannalaam? Comment-la sollunga!']];
+// Maintained run request intervals. The first hook and explanation use independent demonstrations.
+const intervals=[[1,7],[19,32],[35,37],[42,54]];
+function stateAt(t){let start=null;for(const [a,b] of intervals)if(t>=a&&t<b)start=a;const run=start!==null,et=run?Math.min(5,t-start):0;return {run,et,done:run&&et>=5};}
+function distanceAt(t){let v=0;for(const [a,b] of intervals)v+=Math.max(0,Math.min(t,b)-(a+5));return v*38;}
+function frameAt(t){const s=stateAt(t);const interrupted=t>=37&&t<42;let beat=beats[0][1];for(const [a,b]of beats)if(t>=a)beat=b;
+return {...s,beat,headline:t<8?'START... AANAA WAIT!':t<18?'HOLD + TIMER':interrupted?'STOP = RESET':t>=56?'UNGA EXAMPLE ENNA?':'5 SECONDS CONTINUOUS',event:interrupted?'STOP → TIME RESETS TO ZERO':s.done?'DONE ON → CONVEYOR ON':s.run?'RUN ON → TIMER COUNTING':'RUN OFF → TIMER RESET',c1:s.done?'Timer done contact enables output.':s.run?'Conveyor waits. Output is still OFF.':'No held command. No conveyor output.',c2:interrupted?'Restart begins from 0.0 seconds.':t>=56?'Comment-la sollunga!':'RUN → TON (5 s) → DONE → OUTPUT'};}
+function set(id,v){document.getElementById(id).textContent=v;}function attr(id,k,v){document.getElementById(id).setAttribute(k,v);}
+function render(t){const s=frameAt(t),green='#13855b',grey='#b9c0c4';set('headline',s.headline);set('event',s.event);set('caption1',s.c1);set('caption2',s.c2);set('elapsed','TIME: '+s.et.toFixed(1)+' s');set('q',s.done?'ON':'OFF');set('motorLabel','CONVEYOR '+(s.done?'ON':'OFF'));set('voice',s.beat);set('time',t.toFixed(1)+' / 60.0 s');attr('progress','width',592*s.et/5);attr('inWire','stroke',s.run?green:grey);attr('input','fill',s.run?green:grey);attr('outWire','stroke',s.done?green:grey);attr('done','fill',s.done?green:grey);attr('runLight','fill',s.done?green:'#d8dcdf');
+const activeStart=intervals.find(([a,b])=>t>=a&&t<b);
+const doneAge=activeStart?t-activeStart[0]-5:-1;
+const hit=intervals.flatMap(([a,b])=>[{at:a,y:417,color:'#13855b'},{at:b,y:457,color:'#df3437'}]).find(e=>t>=e.at&&t<e.at+.5);
+attr('touchRing','opacity',hit?1-(t-hit.at)*2:0);if(hit){attr('touchRing','cy',hit.y);attr('touchRing','r',16+(t-hit.at)*32);attr('touchRing','stroke',hit.color);}
+attr('doneRing','opacity',doneAge>=0&&doneAge<.7?1-doneAge/.7:0);attr('doneRing','r',18+Math.max(0,Math.min(.7,doneAge))*32);
+attr('signalDot','opacity',s.run?1:0);attr('signalDot','cx',64+((t*1.4)%1)*106);
+const armPath=hit?'M145 475L169 460L202 '+hit.y:'M145 475L169 492L196 453';attr('arm','d',armPath);document.getElementById('arm').previousElementSibling.setAttribute('d',armPath);
+const startPulse=intervals.some(([a])=>t>=a&&t<a+.5),stopPulse=intervals.some(([,b])=>t>=b&&t<b+.5);attr('start','fill',startPulse?'#13855b':'#d9e8df');attr('stop','fill',stopPulse?'#df3437':'#f1dedf');attr('crate','transform','translate('+((distanceAt(t)%170)-70)+' 0)');let bars='';for(let i=0;i<21;i++){const x=250+((i*23+distanceAt(t))%430);bars+='<path d="M'+x+' 506l-12 28"/>';}document.getElementById('belt').innerHTML=bars;document.getElementById('seek').value=t;}
+let playing=true,t=0,last=null;function tick(now){if(last!==null&&playing)t=Math.min(DURATION,t+(now-last)/1000);last=now;if(t>=DURATION){playing=false;set('play','Play');}render(t);requestAnimationFrame(tick);}document.getElementById('play').onclick=()=>{if(t>=DURATION)t=0;playing=!playing;set('play',playing?'Pause':'Play');};document.getElementById('restart').onclick=()=>{t=0;playing=true;set('play','Pause');};document.getElementById('seek').oninput=e=>{t=Number(e.target.value);render(t);};requestAnimationFrame(tick);
+window.episode05={stateAt,distanceAt,frameAt};
+</script></html>
