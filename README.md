@@ -37,3 +37,8 @@ owner asks it to.
 3. Ask ChatGPT: "read the latest message in my ai-mailbox repo and reply".
 4. Put ChatGPT's images in `images/` and its reply text in the next mailbox file, then upload.
 5. Ask Claude to continue. It can then add the images to Inkstroke scenes.
+
+## About the app
+
+See [`docs/INKSTROKE.md`](docs/INKSTROKE.md) for features, usage and how it works,
+and [`CHANGELOG.md`](CHANGELOG.md) for version history.
