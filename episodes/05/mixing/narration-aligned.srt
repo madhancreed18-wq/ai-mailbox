@@ -1,0 +1,384 @@
+1
+00:00:00,000 --> 00:00:06,860
+Start button-ai press panninaa mixer odum. Stop button-ai press panninaa ninnudum. Idhai pona episode-la holding logic vechu paathom.
+
+2
+00:00:07,660 --> 00:00:17,160
+ipo namma oru tank-la irukkura product-ai oru kurippitta nerathukku mix pannanum. Neram mudinjadhum mixer thaanaave nindranum. Operator pakkathula ninnu stopwatch paathutte irukkanumaa?
+
+3
+00:00:18,020 --> 00:00:20,930
+Thevai illa. Indha velaiyai PLC timer vechu pannalaam.
+
+4
+00:00:21,810 --> 00:00:32,440
+Oru batch mixing tank-ai eduthukkalaam. Ingredients ellam tank-la add panniyaachu. Ippo Start press panninaa, mixer muppadhu second odanum. Muppadhu second mudinjadhum automaticah stop aaganum.
+
+5
+00:00:33,340 --> 00:00:40,960
+Inga muppadhu second-nguradhu namma explanation-kaana example. Actual factory-la mixing time, product recipe-ku etha maadhiri set pannuvaanga.
+
+6
+00:00:41,750 --> 00:00:44,840
+Aanaa mixing nadakkumbodhe operator Stop press pannittaa?
+
+7
+00:00:45,890 --> 00:00:52,800
+Marubadi Start pannumbodhu, full muppadhu second mix pannanumaa? Illa already mix pannina neram poga, meedhi neram mattum mix panninaa podhumaa?
+
+8
+00:00:53,920 --> 00:00:57,590
+Indha rendu behaviour-aiyum non-retentive, retentive timers vechu paakkalaam.
+
+9
+00:00:58,700 --> 00:01:01,350
+Mudhal-la indha process-ku enna thevai-nu paarppom.
+
+10
+00:01:02,130 --> 00:01:11,970
+Oru Start button. Oru Stop button. Mixer-ai control panna oru output. Mixing nadakkudhunu remember panna oru internal bit. Adhukku aduthadhaa oru timer.
+
+11
+00:01:12,810 --> 00:01:15,050
+Indha internal bit-ai Mixing Run-nu koopiduvom.
+
+12
+00:01:16,130 --> 00:01:23,440
+Start button-ai press pannumbodhu Mixing Run ON aagum. Pona episode-la paatha holding logic maadhiriye, button-ai vittaalum indha bit ON-la irukkum.
+
+13
+00:01:24,350 --> 00:01:30,250
+Indha Mixing Run bit-ai use panni mixer output-ai ON panrom. Adhe bit-ai timer-oda input-kum kudukkurom.
+
+14
+00:01:31,150 --> 00:01:35,240
+Adhanaala mixing start aagumbodhu mixer-um odum, timer-um count panna aarambikkum.
+
+15
+00:01:36,390 --> 00:01:41,510
+Timer-la namma set pannura nerathai preset time-nu solluvom. Inga preset time muppadhu second.
+
+16
+00:01:42,550 --> 00:01:48,560
+Timer idhuvaraikkum count pannina nerathai elapsed time-nu solluvom. Pathu second count aayirundhaa, elapsed time pathu second.
+
+17
+00:01:49,420 --> 00:01:56,220
+Elapsed time, preset time-ai reach pannumbodhu timer-oda done signal ON aagum. Adhaavadhu, set panna neram mudinjiduchunu indicate pannum.
+
+18
+00:01:56,780 --> 00:02:00,250
+Ippo mudhal-la non-retentive ON-delay timer-ai paakkalaam.
+
+19
+00:02:00,770 --> 00:02:09,450
+ON-delay-naa, timer input ON aanadhum done signal udane ON aagaadhu. Set panna neram mudinja piraguthaan ON aagum.
+
+20
+00:02:10,560 --> 00:02:13,740
+Aanaa inga mixer udane odudhe? Appo delay enga irukku?
+
+21
+00:02:14,680 --> 00:02:15,720
+Idhudhaan mukkiyamaana point.
+
+22
+00:02:16,320 --> 00:02:23,290
+Mixer-ai timer done signal moolamaa start pannala. Mixing Run bit moolamaa start panrom.
+
+23
+00:02:23,950 --> 00:02:32,600
+Timer done signal-ai, mixing time mudinjiduchunu therinjukkaradhukku use panrom. Andha signal vandhadhum mixer-ai stop panna program panrom.
+
+24
+00:02:33,570 --> 00:02:34,720
+Ippo full working-ai paarunga.
+
+25
+00:02:35,320 --> 00:02:44,730
+Operator Start press pannuraar. Mixing Run ON aagudhu. Mixer output ON aagudhu. Tank-kulla blades rotate aagi ingredients mix aaga aarambikkudhu.
+
+26
+00:02:45,500 --> 00:02:49,030
+Adhe nerathula timer zero-lendhu count panna aarambikkudhu.
+
+27
+00:02:50,150 --> 00:02:54,440
+Pathu second aayiduchu. Mixer odikitte irukku. Timer done signal innum OFF.
+
+28
+00:02:55,170 --> 00:03:00,090
+Irubadhu second aayiduchu. Mixer innum odikitte irukku. Yennaa namma set pannadhu muppadhu second.
+
+29
+00:03:00,700 --> 00:03:02,110
+Muppadhu second reach aagudhu.
+
+30
+00:03:02,800 --> 00:03:09,250
+Ippo timer-oda done signal ON aagum. Indha signal-ai use panni Mixing Run bit-ai OFF panrom.
+
+31
+00:03:09,910 --> 00:03:16,680
+Mixing Run OFF aanadhum mixer output-um OFF aagum. Motor-ku run command ninnudum. Blades slow aagi stop aagum.
+
+32
+00:03:17,320 --> 00:03:26,210
+Idhula timer mixer power-ai direct-aa cut pannala. Timer time mudinjadhai indicate pannudhu. Namma PLC logic dhaan mixer output-ai OFF pannudhu.
+
+33
+00:03:26,980 --> 00:03:30,920
+Seri, Mixing Run OFF aagiduchu. Appo timer-oda input-um OFF aagume?
+
+34
+00:03:31,670 --> 00:03:38,120
+Aamaam. Adhanaala indha non-retentive timer-oda elapsed time zero-ku reset aagum. Done signal-um OFF aagidum.
+
+35
+00:03:38,890 --> 00:03:41,960
+Appo done signal OFF aanadhum mixer marubadi start aagidumaa?
+
+36
+00:03:42,760 --> 00:03:48,570
+Aagaadhu. Mixing Run bit already OFF aagiduchu. Adhai marubadi ON panna pudhusaana Start request thevai.
+
+37
+00:03:49,200 --> 00:03:53,210
+Namma example-la ovvoru Start request-kum oru mixing cycle dhaan.
+
+38
+00:03:54,240 --> 00:03:55,520
+Ippo innoru situation paarppom.
+
+39
+00:03:56,020 --> 00:04:01,150
+Mixing start panni pathinainju second aayirukku. Aanaa operator Stop press pannuraar.
+
+40
+00:04:02,130 --> 00:04:04,240
+Ippo muppadhu second mudiyura varaikkum mixer odumaa?
+
+41
+00:04:05,210 --> 00:04:17,350
+Odaadhu. Stop command vandhadhum Mixing Run OFF aagum. Mixer output-um OFF aagum. Timer input OFF aaguradhaala, count pannina pathinainju second-um reset aagum.
+
+42
+00:04:17,960 --> 00:04:19,910
+Marubadiyum Start press panninaa enna aagum?
+
+43
+00:04:20,420 --> 00:04:26,150
+Meedhi pathinainju second mattum count aagaadhu. Zero-lendhu pudhusaa muppadhu second count aagum.
+
+44
+00:04:26,450 --> 00:04:29,440
+Yennaa namma use pannuradhu non-retentive timer. Input OFF aanadhum count pannina time-ai adhu retain pannaadhu.
+
+45
+00:04:30,020 --> 00:04:32,630
+Aanaa namma process requirement vera maadhiri irundhaa?
+
+46
+00:04:33,220 --> 00:04:39,180
+“Mixer mothamaa muppadhu second odinaa podhum. Naduvula stop panninaalum, already mix pannina nerathai marakka vendaam” nu sonnaa?
+
+47
+00:04:39,900 --> 00:04:42,060
+Appodhaan retentive timer use pannalaam.
+
+48
+00:04:42,630 --> 00:04:47,470
+Adhe mixing tank. Adhe muppadhu-second preset. Indha murai retentive timer vechu paakkalaam.
+
+49
+00:04:47,900 --> 00:04:54,080
+Start press panrom. Mixing Run ON aagudhu. Mixer odudhu. Timer zero-lendhu count panna aarambikkudhu.
+
+50
+00:04:54,820 --> 00:04:56,550
+Pathinainju second-la Stop press panrom.
+
+51
+00:04:57,400 --> 00:05:02,440
+Mixing Run OFF aagum. Mixer output-um OFF aagum. Timer count pannuradhu ninnudum.
+
+52
+00:05:03,030 --> 00:05:07,320
+Aanaa elapsed time zero-ku pogaadhu. Pathinainju second-la appadiye irukkum.
+
+53
+00:05:08,400 --> 00:05:12,270
+Inga mixer ninnuduchu. Timer mattum count pannitte irukkum-nu purinjukka vendaam.
+
+54
+00:05:12,790 --> 00:05:17,730
+Timer-um count pannuradhai niruthum. Already count pannina pathinainju second-ai mattum remember pannum.
+
+55
+00:05:18,450 --> 00:05:20,020
+Ippo marubadiyum Start press panrom.
+
+56
+00:05:20,620 --> 00:05:25,190
+Mixer odum. Timer zero-lendhu aarambikkaadhu. Pathinainju second-lendhu continue aagum.
+
+57
+00:05:25,790 --> 00:05:29,200
+Innum pathinainju second mix pannadhum total muppadhu second complete aagum.
+
+58
+00:05:29,850 --> 00:05:34,500
+Timer done signal ON aagum. Namma logic Mixing Run-ai OFF panni mixer-ai stop pannum.
+
+59
+00:05:35,370 --> 00:05:40,130
+Mudhal-la pathinainju second. Restart-ku appuram pathinainju second. Mothamaa muppadhu second mixing.
+
+60
+00:05:40,850 --> 00:05:43,790
+Naduvula mixer ninnirundha nerathai indha mixing time-la serkka maattom.
+
+61
+00:05:44,250 --> 00:05:51,350
+Idhudhaan retentive timer-oda mukkiyamaana difference. Timer input OFF aanaalum, already count pannina time retain aagum.
+
+62
+00:05:51,940 --> 00:05:54,210
+Seri, andha saved time-ai clear pannanumnaa?
+
+63
+00:05:54,750 --> 00:05:59,870
+Separate Reset command thevai. intha concept ku nama extra oru reset push button add pannanum
+
+64
+00:06:00,310 --> 00:06:07,350
+Namma example-la mixer stop-la irukkumbodhu Reset press panninaa, elapsed time zero aagum. Timer-oda done status-um clear aagum.
+
+65
+00:06:07,980 --> 00:06:11,130
+Adhukku appuram Start press panninaa, fresh-aa muppadhu second count pannum.
+
+66
+00:06:11,730 --> 00:06:17,210
+Adhe maadhiri, batch complete aagi adutha batch-ku pogumbodhum old timer value-ai reset panna logic irukkanum.
+
+67
+00:06:17,850 --> 00:06:23,550
+Namma sequence-la, pudhusaana batch start pannumbodhu timer-ai reset pannittu fresh cycle start panna arrange pannalaam.
+
+68
+00:06:24,340 --> 00:06:26,990
+Appo Stop-um Reset-um ore velai illa.
+
+69
+00:06:27,750 --> 00:06:33,090
+Indha retentive example-la Stop press panninaa mixer nikkum. Count pannina time appadiye irukkum.
+
+70
+00:06:33,890 --> 00:06:36,230
+Reset command kuduthaa, saved time-um clear aagum.
+
+71
+00:06:37,020 --> 00:06:38,920
+Ippo rendu timer-aiyum pakkathula vechu paarunga.
+
+72
+00:06:39,420 --> 00:06:43,700
+Rendulayum preset muppadhu second. Rendulayum pathinainju second-la Stop press panrom.
+
+73
+00:06:44,410 --> 00:06:46,470
+Non-retentive timer zero-ku reset aagum.
+
+74
+00:06:46,990 --> 00:06:48,920
+Retentive timer pathinainju second-la nikkum.
+
+75
+00:06:49,710 --> 00:06:54,110
+Marubadi Start press panninaa, non-retentive example-la full muppadhu second mixing nadakkum.
+
+76
+00:06:54,670 --> 00:06:57,570
+Retentive example-la meedhi pathinainju second mixing nadakkum.
+
+77
+00:06:58,370 --> 00:06:59,270
+Appo edhu better?
+
+78
+00:07:00,120 --> 00:07:02,420
+Namma process-ku edhu thevaiyo, adhu dhaan correct.
+
+79
+00:07:03,220 --> 00:07:07,540
+Naduvula stop aana fresh full mixing cycle venumnaa, adhukku etha logic use pannanum.
+
+80
+00:07:08,290 --> 00:07:13,210
+Already odina mixing time-ai serthu calculate pannanumnaa, adhukku etha retentive logic use pannanum.
+
+81
+00:07:14,100 --> 00:07:17,110
+Actual factory-la indha decision product recipe-ai poruthadhu.
+
+82
+00:07:17,970 --> 00:07:19,280
+Inga innoru vishayam gavanikkanum.
+
+83
+00:07:20,040 --> 00:07:27,880
+PLC output ON irukkuradhu mattum mixer nijamaave odudhunguradhukku proof illa. Drive fault aagirukkalaam, illa motor run aagaama irukkalaam.
+
+84
+00:07:28,510 --> 00:07:38,550
+Adhanaala actual machine-la running feedback thevai-na, adhaiyum check panni mixing time count panna logic design pannanum. Namma basic example-la mixer normal-aa run aagudhunu assume panrom.
+
+85
+00:07:39,440 --> 00:07:53,180
+Retentive-naa power OFF aanaalum ellaa PLC-layum time kandippaa save aagum-nu artham illa. Adhu PLC model, timer instruction, memory settings-ai poruthadhu. Inga namma compare pannadhu timer input OFF aagumbodhu enna nadakkudhunguradhai.
+
+86
+00:07:53,910 --> 00:07:54,870
+Ippo ungalukku oru question.
+
+87
+00:07:55,780 --> 00:08:00,290
+Muppadhu-second retentive mixing cycle-la, pathinainju second mudinjadhum Stop press pannittom.
+
+88
+00:08:01,060 --> 00:08:04,490
+Reset press pannala. Marubadi Start mattum press panrom.
+
+89
+00:08:05,160 --> 00:08:06,610
+Mixer innum evlo neram odum?
+
+90
+00:08:07,690 --> 00:08:10,050
+Option A — Meedhi pathinainju second.
+
+91
+00:08:10,660 --> 00:08:13,060
+Option B — Pudhusaa muppadhu second.
+
+92
+00:08:13,520 --> 00:08:15,840
+Option C — Start aana udane ninnudum.
+
+93
+00:08:16,420 --> 00:08:19,070
+Unga answer-ai A, B, illa C-nu comment pannunga!
+
+94
+00:08:19,750 --> 00:08:27,420
+Seri, timer vechu nerathai measure pannittom. Aanaa oru box-la sariyaa aaru bottles pack pannanumnaa, PLC epdi count pannum?
+
+95
+00:08:28,060 --> 00:08:30,390
+Adutha episode-la PLC counter-ai paakkalaam!
+
+96
+00:08:31,150 --> 00:08:36,380
+PLC concepts-ai indha maadhiri practical examples-oda kathukka, Factory Decode Tamil channel-ai subscribe pannunga!
+

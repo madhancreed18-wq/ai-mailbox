@@ -1,5 +1,13 @@
 # Changelog – Inkstroke
 
+## v9 – Episode 5 long-form mixing tank, NR + RTO (from ChatGPT 007)
+- 16:9 template "EP05 Mixing tank timers (16:9 long-form)", 5 scenes cut on narration line boundaries
+- Whole-video narration track (owner recording) plays from 0:00 and is included in export
+- Timer state machine: off / non-retentive / retentive; start, stop, reset at finger contact; Paused state keeps ACC
+- Agitator tank (constant level, impeller spins only with output ON), 3-button station, Reset push button
+- Timer panel: inputs, Mixing Run bit, output, PRE, ACC bar, DN, State; FAST-FORWARD and SLOW-MOTION labels
+- Captions from aligned narration (pause-based alignment; spot-check needed)
+
 ## v8 – Episode 5 ON-delay prototype (from ChatGPT 004/005)
 - Vertical 9:16 projects (720×1280, export 1080×1920); timed captions
 - Stickman v3: outlined eyes with pupils and eyelids, gaze, face turn, brows, black palms with thumb/finger, black oval feet

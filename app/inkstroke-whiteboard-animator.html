@@ -1,5 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body>
-<title>Inkstroke Whiteboard Studio</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body><title>Inkstroke Whiteboard Studio</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Patrick+Hand&family=Caveat:wght@600&family=Permanent+Marker&family=Gochi+Hand&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
@@ -145,6 +144,7 @@ textarea{resize:vertical;min-height:64px}
 <div id="svgwork"></div>
 <input id="voiceIn" type="file" accept="audio/*" hidden>
 <input id="musicIn" type="file" accept="audio/*" hidden>
+<input id="narrIn" type="file" accept="audio/*" hidden>
 <input id="openIn" type="file" accept=".json,application/json" hidden>
 <div class="toast" id="toast" hidden></div>
 
@@ -250,13 +250,14 @@ function ctrlState(c,lt,scene){
   const r={pump,level:lvl,on:lt>=tOn,tOn,highWet:lvl>=c.high,lowWet:lvl>=c.low,overflow:ovT!==null?Math.max(0,lt-ovT):0,drain:!!c.drain&&lt>=tOn};
   _cs.set(key,r);return r;
 }
-let CS={};
+let CS={},CSnow=0;
 const bst=e=>e.bind&&CS[e.bind.ctrl];
-function bindActive(e){const s=bst(e);if(!s)return true;switch(e.bind.role){case'inflow':return s.pump;case'outflow':return s.drain;case'sigHigh':return s.highWet;case'sigLow':return!s.lowWet;case'cmd':case'power':return s.pump;case'run':return s.run;case'out':return s.out;default:return true}}
+function bindActive(e){const s=bst(e);if(!s)return true;switch(e.bind.role){case'inflow':return s.pump;case'outflow':return s.drain;case'sigHigh':return s.highWet;case'sigLow':return!s.lowWet;case'cmd':case'power':return s.pump;case'run':return s.run;case'out':return s.out;case'pb':return s.presses?s.presses.some(E=>CSnow-E.t>=0&&CSnow-E.t<.9):false;default:return true}}
 function anchorPt(e,name){const a=e.data&&e.data.anchors&&e.data.anchors[name];return a?[e.x+a[0]*e.w,e.y+a[1]*e.h]:null}
 function drawBound(e,st,lt){
   const s=bst(e);if(!s)return;const r=e.bind.role,u=e.w/(e.data?e.data.vbW:200);
-  if(r==='station'){drawRipples(e,s,lt);return}if(r==='conveyor'){drawConveyorFx(e,s,lt);return}
+  if(r==='station'||r==='resetbtn'){drawRipples(e,s,lt);return}
+  if(r==='mixmotor'){const p=anchorPt(e,'status');if(p){ctx.save();const w=118,h=32;ctx.beginPath();ctx.roundRect(p[0]-w/2,p[1]-h/2,w,h,16);ctx.fillStyle=s.out?'#2fbf4a':'#eef1f4';ctx.fill();ctx.lineWidth=3;ctx.strokeStyle='#1d1d1f';ctx.stroke();ctx.fillStyle=s.out?'#fff':'#1d1d1f';ctx.font='22px "Gochi Hand", cursive';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(s.out?'Motor ON':'Motor OFF',p[0],p[1]+1);ctx.restore()}return}if(r==='conveyor'){drawConveyorFx(e,s,lt);return}
   ctx.save();ctx.lineWidth=2;ctx.strokeStyle='#1d1d1f';
   const led=(name,on,col='#2fbf4a')=>{const p=anchorPt(e,name);if(!p)return;ctx.beginPath();ctx.arc(p[0],p[1],5.5*u,0,7);ctx.fillStyle=on?col:'#5b616b';ctx.fill();ctx.stroke();if(on){ctx.globalAlpha=.35+.25*Math.sin(lt*8);ctx.beginPath();ctx.arc(p[0],p[1],9*u,0,7);ctx.fillStyle=col;ctx.fill();ctx.globalAlpha=1}};
   if(r==='pump'){const p=anchorPt(e,'status')||[e.x+e.w*.75,e.y],w=74,h=30;ctx.beginPath();ctx.roundRect(p[0]-w/2,p[1]-h/2,w,h,h/2);ctx.fillStyle=s.pump?'#2fbf4a':'#8e98a3';ctx.fill();ctx.stroke();
@@ -311,8 +312,8 @@ function drawTonView(e,l,st,tl){
   return p<1?{x:x+(w)*p,y:y+h*.45,color:ink}:null;
 }
 function drawRipples(e,s,tl){
-  if(!s.presses)return;s.presses.forEach(E=>{const k=tl-E.t;if(k<0||k>.5)return;const p=anchorPt(e,E.k==='stop'?'stop':'start');if(!p)return;
-    ctx.save();ctx.globalAlpha=1-k/.5;ctx.strokeStyle=E.k==='stop'?'#e5383b':'#2fbf4a';ctx.lineWidth=5;ctx.beginPath();ctx.arc(p[0],p[1],14+k*90,0,7);ctx.stroke();ctx.globalAlpha=.9*(1-k/.5);ctx.lineWidth=3;ctx.beginPath();ctx.arc(p[0],p[1],10+k*50,0,7);ctx.stroke();ctx.restore()})}
+  if(!s.presses)return;s.presses.forEach(E=>{const k=tl-E.t;if(k<0||k>.5)return;const p=anchorPt(e,E.k);if(!p)return;
+    ctx.save();ctx.globalAlpha=1-k/.5;ctx.strokeStyle=E.k==='stop'?'#e5383b':E.k==='reset'?'#3d7bfd':'#2fbf4a';ctx.lineWidth=5;ctx.beginPath();ctx.arc(p[0],p[1],14+k*90,0,7);ctx.stroke();ctx.globalAlpha=.9*(1-k/.5);ctx.lineWidth=3;ctx.beginPath();ctx.arc(p[0],p[1],10+k*50,0,7);ctx.stroke();ctx.restore()})}
 function drawConveyorFx(e,s,tl){
   const L=anchorPt(e,'beltL'),Rr=anchorPt(e,'beltR'),pl=anchorPt(e,'pulL'),pr=anchorPt(e,'pulR');if(!L||!Rr)return;const sc=e.w/640;
   ctx.save();ctx.beginPath();ctx.rect(L[0],L[1]-2,Rr[0]-L[0],12*sc+4);ctx.clip();ctx.strokeStyle='#cfd6de';ctx.lineWidth=4*sc;const sp=34*sc,off=s.belt%sp;
@@ -321,6 +322,81 @@ function drawConveyorFx(e,s,tl){
   const st_=anchorPt(e,'status');if(st_){ctx.save();const w=110,h=34;ctx.beginPath();ctx.roundRect(st_[0]-w/2,st_[1]-h/2,w,h,h/2);ctx.fillStyle=s.out?'#2fbf4a':'#eef1f4';ctx.fill();ctx.lineWidth=3;ctx.strokeStyle='#1d1d1f';ctx.stroke();ctx.fillStyle=s.out?'#fff':'#1d1d1f';ctx.font='24px "Gochi Hand", cursive';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(s.out?'Motor ON':'Motor OFF',st_[0],st_[1]+1);ctx.restore()}
 }
 function camAt(s,lt){let cur={x:W/2,y:H/2,z:1};if(!s.cam)return cur;for(const k of s.cam){if(lt<k.t)break;const p=ease(clamp((lt-k.t)/(k.d||.8)));cur={x:cur.x+(k.x-cur.x)*p,y:cur.y+(k.y-cur.y)*p,z:cur.z+(k.z-cur.z)*p}}return cur}
+
+/* ---------- EP05 long-form: mixing tank, non-retentive vs retentive timers ---------- */
+Object.assign(PROC,{
+ agitank:['Mixing tank + top agitator',AW('0 0 300 420',`<rect x="56" y="360" width="16" height="56" fill="#6b7480"/><rect x="228" y="360" width="16" height="56" fill="#6b7480"/><rect x="142" y="384" width="16" height="16" fill="#9aa3ad"/><path d="M40 122 L40 330 Q40 382 150 386 Q260 382 260 330 L260 122 Z" fill="#c9d3dd"/><rect x="70" y="136" width="160" height="222" rx="6" fill="#ffffff"/><rect x="30" y="106" width="240" height="16" rx="4" fill="#aeb9c5"/><rect x="100" y="92" width="100" height="14" rx="3" fill="#8e98a3"/><rect x="118" y="58" width="64" height="34" rx="5" fill="#9fb3c8"/><rect x="124" y="10" width="52" height="50" rx="8" fill="#4f7fb3"/><rect x="132" y="2" width="36" height="10" rx="3" fill="#3f6a96"/><rect x="176" y="20" width="20" height="22" rx="2" fill="#6c8fb8"/>`+DET(`<path d="M136 18 L136 54 M150 18 L150 54 M164 18 L164 54 M40 200 L70 200 M230 200 L260 200 M40 290 L70 290 M230 290 L260 290 M126 75 L174 75" fill="none"/>`)+ANC('winTL',70,136)+ANC('winBR',230,358)+ANC('shaftX',150,136)+ANC('terminal',196,31)+ANC('status',250,64)+ANC('motor',150,34))],
+ station3:['Start / Stop station',AW('0 0 90 150',`<rect x="10" y="6" width="70" height="138" rx="7" fill="#ffcc33"/><circle cx="45" cy="44" r="15" fill="#39c07f"/><circle cx="45" cy="100" r="15" fill="#e5383b"/>`+ANC('start',45,44)+ANC('stop',45,100)+ANC('top',45,6))],
+ resetbtn:['Reset push button',AW('0 0 90 90',`<rect x="10" y="8" width="70" height="74" rx="7" fill="#ffcc33"/><circle cx="45" cy="45" r="15" fill="#3d7bfd"/>`+ANC('reset',45,45))],
+ bottle:['Bottle',AW('0 0 60 140',`<rect x="22" y="4" width="16" height="14" rx="2" fill="#e5383b"/><path d="M24 18 L24 34 Q10 44 10 60 L10 128 Q10 136 18 136 L42 136 Q50 136 50 128 L50 60 Q50 44 36 34 L36 18 Z" fill="#cfe8ff"/><rect x="10" y="72" width="40" height="30" fill="#ffffff"/>`)],
+});
+['agitank','station3','resetbtn','bottle'].forEach(k=>DOODLES[k]=[PROC[k][0],PROC[k][1],true]);
+function tmrState(c,lt){
+  const key='tm'+c.id+':'+lt.toFixed(3);if(_cs.has(key))return _cs.get(key);if(_cs.size>800)_cs.clear();
+  const ev=(c.events||[]).slice().sort((a,b)=>a.t-b.t),dt=1/30,n=Math.floor(Math.max(0,lt)/dt),P=c.preset;
+  let mode=c.mode0||'off',run=false,acc=0,done=false,rate=1,slow=false,speed=0,ang=0,ei=0,doneAt=null,flashAt=null,lastReset=null;
+  for(let i=0;i<=n;i++){const t=i*dt;
+    while(ei<ev.length&&ev[ei].t<=t){const E=ev[ei++];
+      if(E.k==='mode'){mode=E.v;acc=0;done=false;run=false}
+      else if(E.k==='rate')rate=E.v;else if(E.k==='slow')slow=E.v;
+      else if(E.k==='start'){if(mode==='rto'){if(!done)run=true}else if(!run){run=true;if(mode==='nr'){acc=0;done=false}}}
+      else if(E.k==='stop'){run=false;if(E.snap!=null&&mode==='rto')acc=E.snap}
+      else if(E.k==='reset'){if(mode==='rto'&&!run){acc=0;done=false;lastReset=E.t}}
+      else if(E.k==='clearRun')run=false;
+      else if(E.k==='nrReset'){acc=0;done=false;lastReset=E.t}}
+    if(i<n){if(run&&mode!=='off'){acc+=dt*rate;if(acc>=P){acc=P;if(!done){done=true;doneAt=t}if(!slow){run=false;if(mode==='nr'){flashAt=t}}}}
+      if(mode==='nr'&&!run&&!slow&&acc>0){acc=0;done=false}
+      speed+=((run?1:0)-speed)*Math.min(1,dt*(run?3.2:1.3));ang+=speed*dt*9}}
+  const stateL=mode==='off'?(run?'Running':'Stopped'):run?'Mixing':mode==='rto'&&acc>0&&acc<P?'Paused':done?'Complete':'Ready';
+  const r={kind:'tmr',mode,run,out:run,acc,done,rate,slow,speed,ang,state:stateL,doneAt,flashAt,lastReset,presses:ev.filter(E=>E.t<=lt&&(E.k==='start'||E.k==='stop'||E.k==='reset'))};
+  _cs.set(key,r);return r;
+}
+function drawMixView(e,l,st,tl){
+  const s=bst(e);if(!s)return null;const p=clamp(l/e.draw),x=e.x,y=e.y,w=e.w,h=e.h;
+  ctx.save();ctx.beginPath();ctx.roundRect(x,y,w,h,5);ctx.clip();
+  const lvl=.74,top=y+h*(1-lvl),A=2+s.speed*3,dip=s.speed*h*.07;
+  ctx.globalAlpha=p;ctx.beginPath();ctx.moveTo(x,y+h);ctx.lineTo(x,top);
+  for(let k=0;k<=w;k+=5){const u=k/w,yy=top+A*Math.sin(u*12+tl*(1+s.speed*4))+dip*Math.exp(-((u-.5)**2)/.03);ctx.lineTo(x+k,yy)}
+  ctx.lineTo(x+w,y+h);ctx.closePath();ctx.fillStyle='#2f8cff';ctx.fill();
+  ctx.strokeStyle='rgba(255,255,255,.55)';ctx.lineWidth=3;ctx.lineCap='round';
+  if(s.speed>.02){const cx=x+w/2,cy=top+(y+h-top)*.55;[-1,1].forEach(sd=>{const rx=w*.2,ry=(y+h-top)*.34,ox=cx+sd*w*.24;for(let k=0;k<3;k++){const a0=s.ang*.35*sd+k*2.1;ctx.globalAlpha=p*Math.min(1,s.speed*1.4)*.8;ctx.beginPath();ctx.ellipse(ox,cy,rx,ry,0,a0,a0+1.1);ctx.stroke()}})}
+  ctx.globalAlpha=p;const sx=x+w/2,iy=y+h*.8;ctx.strokeStyle='#1d1d1f';ctx.lineWidth=6;ctx.beginPath();ctx.moveTo(sx,y-2);ctx.lineTo(sx,iy);ctx.stroke();
+  const bw=w*.26,c=Math.cos(s.ang),bh=8;ctx.fillStyle='#9aa3ad';ctx.lineWidth=3;
+  [1,-1].forEach(sd=>{const ex=sx+sd*bw*c;ctx.beginPath();ctx.moveTo(sx,iy-bh/2);ctx.lineTo(ex,iy-bh/2-3*sd*Math.sin(s.ang));ctx.lineTo(ex,iy+bh/2-3*sd*Math.sin(s.ang));ctx.lineTo(sx,iy+bh/2);ctx.closePath();ctx.fill();ctx.stroke()});
+  ctx.beginPath();ctx.arc(sx,iy,7,0,7);ctx.fillStyle='#6b7480';ctx.fill();ctx.stroke();
+  ctx.restore();
+  ctx.save();ctx.strokeStyle='#1d1d1f';ctx.lineWidth=4;ctx.beginPath();ctx.roundRect(x,y,w,h,5);ctx.stroke();ctx.restore();
+  return null;
+}
+function drawTPanel(e,l,st,tl){
+  const s=bst(e);if(!s)return null;const p=clamp(l/e.draw),x=e.x,y=e.y,w=e.w,h=e.h,ink=st.ink,P=e.preset||30;
+  ctx.save();if(p<1){ctx.beginPath();ctx.rect(x-20,y-20,(w+40)*p,h+40);ctx.clip()}
+  ctx.lineJoin='round';ctx.lineCap='round';ctx.strokeStyle=ink;ctx.fillStyle='#fff';ctx.lineWidth=5;ctx.beginPath();ctx.roundRect(x,y,w,h,16);ctx.fill();ctx.stroke();
+  const F=sz=>`${sz}px "Gochi Hand","Patrick Hand",cursive`,T=(t,xx,yy,sz,col=ink)=>{ctx.font=F(sz);ctx.fillStyle=col;ctx.textAlign='left';ctx.textBaseline='alphabetic';ctx.fillText(t,xx,yy)};
+  const pill=(px,py,on,txt,col='#2fbf4a')=>{ctx.font=F(22);const tw=ctx.measureText(txt).width+24;ctx.beginPath();ctx.roundRect(px,py-16,tw,30,15);ctx.fillStyle=on?col:'#eef1f4';ctx.fill();ctx.lineWidth=3;ctx.strokeStyle=ink;ctx.stroke();ctx.fillStyle=on?'#fff':ink;ctx.fillText(txt,px+12,py+7);return tw};
+  const title=s.mode==='nr'?'Non-retentive timer':s.mode==='rto'?'Retentive timer':'PLC logic';T(title,x+18,y+44,36);
+  if(s.mode!=='off'){ctx.font=F(22);const sub=s.mode==='nr'?'TON':'RTO';T(sub,x+w-60,y+42,26,'#5d6b7a')}
+  ctx.lineWidth=2.5;ctx.strokeStyle=ink;ctx.beginPath();ctx.moveTo(x+16,y+58);ctx.lineTo(x+w-16,y+58);ctx.stroke();
+  const recent=k=>s.presses.some(E=>E.k===k&&tl-E.t>=0&&tl-E.t<.6);
+  T('Inputs',x+18,y+92,24);let px=x+100;px+=pill(px,y+85,recent('start'),'Start')+8;px+=pill(px,y+85,recent('stop'),'Stop','#e5383b')+8;if(e.showReset==null||tl>=e.showReset)pill(px,y+85,recent('reset'),'Reset','#3d7bfd');
+  T('Mixing Run (bit)',x+18,y+134,26);pill(x+w-96,y+127,s.run,s.run?'ON':'OFF');
+  T('Mixer output',x+18,y+174,26);pill(x+w-96,y+167,s.out,s.out?'ON':'OFF');
+  ctx.lineWidth=2;ctx.setLineDash([6,6]);ctx.beginPath();ctx.moveTo(x+16,y+194);ctx.lineTo(x+w-16,y+194);ctx.stroke();ctx.setLineDash([]);
+  if(s.mode==='off'){T('Timer: not added yet',x+18,y+240,26,'#9aa3ad')}
+  else{T('PRE',x+18,y+234,24);T(P+' s',x+70,y+236,32);T('(recipe example)',x+150,y+234,20,'#5d6b7a');
+    T('ACC',x+18,y+282,24);T(s.acc.toFixed(1)+' s',x+70,y+286,44,s.run?'#1f5fd1':ink);
+    const bx=x+18,bw=w-36,by=y+302,bh=28;ctx.beginPath();ctx.roundRect(bx,by,bw,bh,8);ctx.save();ctx.clip();ctx.fillStyle=s.done?'#2fbf4a':'#2f8cff';ctx.fillRect(bx,by,bw*s.acc/P,bh);ctx.restore();ctx.lineWidth=4;ctx.strokeStyle=ink;ctx.stroke();
+    ctx.lineWidth=2;[10,20].forEach(v=>{const tx=bx+bw*v/P;ctx.beginPath();ctx.moveTo(tx,by);ctx.lineTo(tx,by+bh);ctx.stroke();T(v+'',tx-8,by+bh+20,18,'#5d6b7a')});T(P+'',bx+bw-14,by+bh+20,18,'#5d6b7a');
+    const cy=y+384,cx=x+52;ctx.lineWidth=4;ctx.strokeStyle=s.done?'#1a9a3a':ink;ctx.beginPath();ctx.moveTo(cx-34,cy);ctx.lineTo(cx-9,cy);ctx.moveTo(cx-9,cy-16);ctx.lineTo(cx-9,cy+16);ctx.moveTo(cx+9,cy-16);ctx.lineTo(cx+9,cy+16);ctx.moveTo(cx+9,cy);ctx.lineTo(cx+34,cy);ctx.stroke();
+    if(s.done){ctx.fillStyle='#2fbf4a';ctx.fillRect(cx-7,cy-14,14,28)}T('DN',cx-14,cy-22,22);pill(x+108,cy,s.done,s.done?'DONE':'not done');
+    const fl=s.done&&s.doneAt!=null?tl-s.doneAt:s.flashAt!=null?tl-s.flashAt:9;if(fl>=0&&fl<.7){ctx.globalAlpha=1-fl/.7;ctx.strokeStyle='#2fbf4a';ctx.lineWidth=5;ctx.beginPath();ctx.arc(cx,cy,22+fl*70,0,7);ctx.stroke();ctx.globalAlpha=1}
+    if(s.lastReset!=null&&tl-s.lastReset>=0&&tl-s.lastReset<.8){const k=(tl-s.lastReset)/.8;ctx.globalAlpha=1-k;ctx.strokeStyle='#e5383b';ctx.lineWidth=5;ctx.beginPath();ctx.roundRect(x+10-k*8,y+262-k*8,w-20+k*16,80+k*16,12);ctx.stroke();ctx.globalAlpha=1}}
+  const sc={Ready:'#eef1f4',Mixing:'#2fbf4a',Paused:'#ffb020',Complete:'#1f5fd1',Running:'#2fbf4a',Stopped:'#eef1f4'}[s.state];
+  T('State',x+18,y+h-22,24);ctx.font=F(24);const tw=ctx.measureText(s.state).width+28;ctx.beginPath();ctx.roundRect(x+92,y+h-44,tw,32,16);ctx.fillStyle=sc;ctx.fill();ctx.lineWidth=3;ctx.strokeStyle=ink;ctx.stroke();ctx.fillStyle=s.state==='Ready'||s.state==='Stopped'?ink:'#fff';ctx.fillText(s.state,x+106,y+h-20);
+  let bx2=x+18;const by2=s.mode==='off'?y+h-84:y+418;const badge=(txt,col)=>{ctx.font=F(20);const bw2=ctx.measureText(txt).width+18;ctx.beginPath();ctx.roundRect(bx2,by2,bw2,28,8);ctx.fillStyle=col;ctx.fill();ctx.fillStyle='#fff';ctx.fillText(txt,bx2+9,by2+21);bx2+=bw2+6};
+  if(s.run&&s.rate>1.05)badge('FAST-FORWARD ×'+s.rate.toFixed(1),'#5d6b7a');if(s.slow)badge('SLOW-MOTION: one PLC scan','#7a4fd1');
+  ctx.restore();return p<1?{x:x+w*p,y:y+h*.4,color:ink}:null;
+}
 
 function drawSpill(e,s,lt){
   if(!s||!s.overflow)return;const ov=s.overflow,k=Math.min(1,ov/1.2),wo=e.wallOut||30,rimY=e.y-(e.rimDy||20),floor=e.floorY||e.y+e.h+40;
@@ -936,7 +1012,7 @@ function layout(){
     let t=s.trDur+.3,prev=null;
     for(const e of s.els){e.start=(e.withPrev&&prev?prev.start:t)+(+e.delay||0);e.dur=(+e.draw||.1)+(hasColor(e)&&(!e.entrance||e.entrance==='draw')?(+e.color||.1):0);t=Math.max(t,e.start+e.dur);prev=e}
     let end=t+(+s.hold||0);
-    s.els.forEach(c=>{if(c.type==='ctrl'&&c.kind!=='ton')end=Math.max(end,ctrlTOn(c,s)+(+c.minEnd||0));if(c.win)end=Math.max(end,c.win[1])});if(s.minDur)end=Math.max(end,+s.minDur);
+    s.els.forEach(c=>{if(c.type==='ctrl'&&c.kind!=='ton')end=Math.max(end,ctrlTOn(c,s)+(+c.minEnd||0));if(c.win&&!s.minDur)end=Math.max(end,c.win[1])});if(s.minDur)end=Math.max(end,+s.minDur);
     if(s.voice&&s.fitVoice)end=Math.max(end,s.trDur+.2+s.voice.duration+.4);
     s.dur=Math.max(end,.5);T+=s.dur;
   });
@@ -952,6 +1028,8 @@ function drawEl(e,l,st,tl){
   if(e.type==='liquid')return drawLiquid(e,l,st,tl);
   if(e.type==='stick')return drawStick(e,l,st,tl);
   if(e.type==='tonview')return drawTonView(e,l,st,tl);
+  if(e.type==='mixview')return drawMixView(e,l,st,tl);
+  if(e.type==='tpanel')return drawTPanel(e,l,st,tl);
   const p1=clamp(l/e.draw),p2=hasColor(e)?clamp((l-e.draw)/e.color):0,bf=boilF(tl),jx=S.ink.boil?Math.sin(bf*12.9+e.id)*.6:0,jy=S.ink.boil?Math.cos(bf*7.3+e.id)*.6:0;
   if(e.type==='svg'){let hand=null;const cl=e.flat?e.data.flat:e.data.layer;if(p2>0){const t=revealTo(cl,colorRev(e,cl),p2,e,jx,jy);if(t)hand={...t,color:e.data.accent}}const t=traceTo(e,p1,st,tl);if(t)hand=t;return hand}
   if(e.type==='image'){
@@ -967,7 +1045,7 @@ function drawScene(c,s,lt,scale,opt={}){
   const prev=ctx,ps=curScale;ctx=c;curScale=scale;c.save();c.setTransform(scale,0,0,scale,0,0);
   const st=styleOf(s);drawBoard(st);let hand=null;
   if(s.cam&&!opt.overlay){const cm=camAt(s,lt);c.setTransform(scale*cm.z,0,0,scale*cm.z,scale*(W/2-cm.x*cm.z),scale*(H/2-cm.y*cm.z))}
-  CS={};s.els.forEach(x=>{if(x.type==='ctrl')CS[x.id]=x.kind==='ton'?tonState(x,lt):ctrlState(x,lt,s)});
+  CSnow=lt;CS={};s.els.forEach(x=>{if(x.type==='ctrl')CS[x.id]=x.kind==='ton'?tonState(x,lt):x.kind==='tmr'?tmrState(x,lt):ctrlState(x,lt,s)});
   for(const e of s.els){let l=lt-e.start;if(l<=0||e.type==='ctrl')continue;
     if(e.win){if(lt<e.win[0]||lt>e.win[1])continue;l=Math.min(l,lt-e.win[0]);if(l<=0)continue}
     if(e.bind&&e.bind.role==='crate'){const cs_=CS[e.bind.ctrl];if(!cs_||!cs_.crateVis)continue}
@@ -1017,10 +1095,10 @@ function drawCaption(c,s,lt){
   else{const ch=capChunks(s);if(!ch.length)return;const a=s.trDur+.15,b=s.dur-.15;if(lt<a||lt>b)return;
     const words=ch.map(x=>x.split(' ').length),tot=words.reduce((m,v)=>m+v,0);let acc=0,idx=0;const f=(lt-a)/(b-a)*tot;
     for(let i=0;i<ch.length;i++){acc+=words[i];if(f<acc){idx=i;break}idx=i}text=ch[idx]}
-  if(!text)return;const vert=H>W,fs=vert?34:30,maxW=Math.min(1000,W-90);
+  if(!text)return;const vert=H>W,fs=vert?34:27,maxW=Math.min(1180,W-90);
   c.font=`600 ${fs}px "IBM Plex Sans", system-ui, sans-serif`;c.textAlign='center';c.textBaseline='middle';
   const lines=[];let line='';text.split(' ').forEach(w=>{const tl=line?line+' '+w:w;if(c.measureText(tl).width>maxW&&line){lines.push(line);line=w}else line=tl});if(line)lines.push(line);
-  const lh=fs*1.32,bw=Math.min(W-40,Math.max(...lines.map(l=>c.measureText(l).width))+44),bh=lines.length*lh+20,by=H-(vert?70:30)-bh;
+  const lh=fs*1.32,bw=Math.min(W-40,Math.max(...lines.map(l=>c.measureText(l).width))+44),bh=lines.length*lh+20,by=H-(vert?70:14)-bh;
   c.fillStyle='rgba(10,12,16,.78)';c.beginPath();c.roundRect((W-bw)/2,by,bw,bh,10);c.fill();
   c.fillStyle='#ffffff';lines.forEach((l,i)=>c.fillText(l,W/2,by+10+lh*(i+.5)));
 }
@@ -1197,6 +1275,8 @@ function renderInspector(){
   h+=s.voice?`<div class="file"><b>${esc(s.voice.name)}</b><span class="time">${s.voice.duration.toFixed(1)}s</span><button id="s-vrm" type="button" aria-label="Remove voice-over">✕</button></div><label class="c"><input id="s-fit" type="checkbox" ${s.fitVoice?'checked':''}> Make scene as long as the voice</label>`:`<button id="s-vadd" type="button">+ Add voice-over audio</button><p class="hint">Record on your phone or PC, then upload (MP3, M4A, WAV). It starts when the scene starts.</p>`;
   h+=`<div class="row"><button id="s-dup" type="button">Duplicate</button><button id="s-left" type="button" aria-label="Move scene earlier">←</button><button id="s-right" type="button" aria-label="Move scene later">→</button><button id="s-del" type="button" class="warn">Delete</button></div><hr class="sep">`;
   h+=`<div class="label">Video</div>`;
+  h+=`<div class="label" style="text-transform:none;letter-spacing:0">Narration (whole video, plays from 0:00)</div>`;
+  h+=S.narr?`<div class="file"><b>${esc(S.narr.name)}</b><span class="time">${fmt(S.narr.duration)}</span><button id="n-rm" type="button" aria-label="Remove narration">✕</button></div>`:`<button id="n-add" type="button">+ Add narration audio</button>`;
   h+=`<div class="label" style="text-transform:none;letter-spacing:0">Background music</div>`;
   h+=S.music?`<div class="file"><b>${esc(S.music.name)}</b><button id="m-rm" type="button" aria-label="Remove music">✕</button></div>${field('Music volume',`<input id="m-vol" type="range" min="0" max="1" step="0.05" value="${S.music.vol}">`)}<p class="hint">Loops for the whole video, dips under voice-over, fades at the end.</p>`:`<button id="m-add" type="button">+ Add music</button>`;
   h+=`<div class="grid2">`+field('Line style',`<select id="v-wob">${[['0','Clean'],['1','Hand-drawn'],['2','Extra wobbly']].map(([v,n])=>opt(v,n,String(S.ink.wobble))).join('')}</select>`)+field('Pen weight',`<select id="v-wt">${[['0.8','Fine'],['1','Normal'],['1.3','Marker'],['1.7','Bold']].map(([v,n])=>opt(v,n,String(S.ink.weight))).join('')}</select>`)+`</div><label class="c"><input id="v-boil" type="checkbox" ${S.ink.boil?'checked':''}> Living lines (gentle jitter)</label>`;
@@ -1248,6 +1328,7 @@ function renderInspector(){
   on('s-vrm','click',()=>{s.voice=null;refresh()});
   on('s-fit','change',ev=>{s.fitVoice=ev.target.checked;refresh()});
   on('s-dup','click',dupScene);on('s-del','click',delScene);on('s-left','click',()=>moveScene(-1));on('s-right','click',()=>moveScene(1));
+  on('n-add','click',()=>$('narrIn').click());on('n-rm','click',()=>{S.narr=null;renderInspector()});
   on('m-add','click',()=>$('musicIn').click());on('m-rm','click',()=>{S.music=null;renderInspector()});
   on('m-vol','input',ev=>{S.music.vol=parseFloat(ev.target.value)});
   on('v-cap','change',ev=>{S.captions=ev.target.checked;show()});
@@ -1266,9 +1347,11 @@ async function loadAudio(file){const [buf,src]=await Promise.all([readAs(file,'r
 let voiceTarget=null;
 $('voiceIn').onchange=ev=>{const f=ev.target.files[0];ev.target.value='';if(!f||!voiceTarget)return;guard(async()=>{voiceTarget.voice=await loadAudio(f);voiceTarget.fitVoice=true;refresh();toast('Voice-over added to '+voiceTarget.name+'.')})};
 $('musicIn').onchange=ev=>{const f=ev.target.files[0];ev.target.value='';if(!f)return;guard(async()=>{const a=await loadAudio(f);S.music={...a,vol:S.music?S.music.vol:.35};renderInspector();toast('Music added.')})};
-const hasAudio=()=>!!S.music||S.scenes.some(s=>s.voice);
+$('narrIn').onchange=ev=>{const f=ev.target.files[0];ev.target.value='';if(!f)return;guard(async()=>{S.narr=await loadAudio(f);renderInspector();toast('Narration added ('+fmt(S.narr.duration)+').')})};
+const hasAudio=()=>!!S.music||!!S.narr||S.scenes.some(s=>s.voice);
 function startAudio(from,dest){
   stopAudio();if(!hasAudio())return;const c=ac();if(c.state==='suspended')c.resume();const now=c.currentTime+.05,left=S.total-from;if(left<=0)return;
+  if(S.narr&&from<S.narr.duration){const src=c.createBufferSource();src.buffer=S.narr.buffer;src.connect(dest);src.start(now,from);nodes.push(src)}
   const wins=S.scenes.filter(s=>s.voice).map(s=>[s.t0+s.trDur+.2,s.t0+s.trDur+.2+s.voice.duration]);
   if(S.music){const src=c.createBufferSource();src.buffer=S.music.buffer;src.loop=true;const g=c.createGain();const v=S.music.vol;g.gain.setValueAtTime(v,now);
     wins.forEach(([a,b])=>{if(b<=from)return;const ra=Math.max(0,a-from-.3),rb=b-from;g.gain.setValueAtTime(v,now+ra);g.gain.linearRampToValueAtTime(v*.3,now+ra+.3);g.gain.setValueAtTime(v*.3,now+rb);g.gain.linearRampToValueAtTime(v,now+rb+.4)});
@@ -1363,10 +1446,10 @@ $('closeResult').onclick=()=>{$('exportBox').hidden=true};
 
 /* ---------- Save / open project ---------- */
 function saveProject(){
-  const ser=e=>{if(e.type==='tonview'||e.type==='ctrl'&&e.kind==='ton'){const{_g,_gk,...rest}=e;return JSON.parse(JSON.stringify(rest))}const b={id:e.id,bind:e.bind,showWhen:e.showWhen,flat:e.flat,beats:e.beats,win:e.win,dot:e.dot,type:e.type,name:e.name,x:e.x,y:e.y,w:e.w,h:e.h,draw:e.draw,color:e.color,delay:e.delay,colorOn:e.colorOn,withPrev:e.withPrev,entrance:e.entrance,motion:e.motion,fillMode:e.fillMode};
+  const ser=e=>{if(e.type==='tonview'||e.type==='tpanel'||e.type==='mixview'||e.type==='ctrl'&&(e.kind==='ton'||e.kind==='tmr')){const{_g,_gk,...rest}=e;return JSON.parse(JSON.stringify(rest))}const b={id:e.id,bind:e.bind,showWhen:e.showWhen,flat:e.flat,beats:e.beats,win:e.win,dot:e.dot,type:e.type,name:e.name,x:e.x,y:e.y,w:e.w,h:e.h,draw:e.draw,color:e.color,delay:e.delay,colorOn:e.colorOn,withPrev:e.withPrev,entrance:e.entrance,motion:e.motion,fillMode:e.fillMode};
     if(e.type==='arrow')Object.assign(b,{x1:e.x1,y1:e.y1,x2:e.x2,y2:e.y2,path:e.path,line:e.line,bend:e.bend,width:e.width,head:e.head,via:e.via,radius:e.radius,acolor:e.color});if(e.type==='liquid')Object.assign(b,{level:e.level,bubbles:e.bubbles,lcolor:e.color,rimDy:e.rimDy,wallOut:e.wallOut,floorY:e.floorY});if(e.type==='ctrl')Object.assign(b,{mode:e.mode,L0:e.L0,rate:e.rate,drainRate:e.drainRate,high:e.high,low:e.low,drain:e.drain,minEnd:e.minEnd,onAfter:e.onAfter,onDelay:e.onDelay});if(e.type==='stick')Object.assign(b,{action:e.action,action2:e.action2,switchAt:e.switchAt,expr:e.expr,acc:e.acc,facing:e.facing,travel:e.travel,travel2:e.travel2,pen:e.pen,look:e.look,outfit:e.outfit,shirt:e.shirt,pants:e.pants,skin:e.skin,hair:e.hair,hairStyle:e.hairStyle});
     if(e.type==='svg')Object.assign(b,{svgText:e.svgText,key:e.key,pen:e.pen});if(e.type==='image')Object.assign(b,{src:e.src,imgStyle:e.imgStyle,detail:e.detail});if(e.type==='text')Object.assign(b,{text:e.text,font:e.font,size:e.size,fill:e.fill,outline:e.outline});return b};
-  const data={app:'inkstroke',v:5,aspect:S.aspect||'16:9',ink:S.ink,captions:S.captions,showHand:S.showHand,grid:S.grid,music:S.music?{name:S.music.name,src:S.music.src,vol:S.music.vol}:null,
+  const data={app:'inkstroke',v:5,aspect:S.aspect||'16:9',ink:S.ink,captions:S.captions,showHand:S.showHand,grid:S.grid,narr:S.narr?{name:S.narr.name,src:S.narr.src}:null,music:S.music?{name:S.music.name,src:S.music.src,vol:S.music.vol}:null,
     scenes:S.scenes.map(s=>({cam:s.cam,capBeats:s.capBeats,minDur:s.minDur,name:s.name,style:s.style,transition:s.transition,trans:s.trans,hold:s.hold,caption:s.caption,fitVoice:s.fitVoice,voice:s.voice?{name:s.voice.name,src:s.voice.src}:null,els:s.els.map(ser)}))};
   offer('inkstroke-project.json',new Blob([JSON.stringify(data)],{type:'application/json'}));
 }
@@ -1375,18 +1458,19 @@ async function loadProject(d){
   if(!d||d.app!=='inkstroke'||!Array.isArray(d.scenes))throw new Error('That file is not an Inkstroke project.');
   stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.cur=0;const idMap={};setAspect(d.aspect||'16:9');
   for(const sd of d.scenes){const s=newScene(sd);s.cam=sd.cam;s.capBeats=sd.capBeats;s.minDur=sd.minDur;s.fitVoice=sd.fitVoice!==false;if(sd.voice)s.voice=await audioFromSrc(sd.voice);S.scenes.push(s);S.cur=S.scenes.length-1;
-    for(const ed of sd.els){let e;if(ed.type==='tonview'){e={...ed,id:uid++};s.els.push(e);idMap[ed.id]=e.id;continue}if(ed.type==='ctrl'){e={...ed,id:uid++,draw:.1,delay:0,withPrev:true,entrance:'draw',motion:'none'};s.els.push(e);idMap[ed.id]=e.id;continue}
+    for(const ed of sd.els){let e;if(ed.type==='tonview'||ed.type==='tpanel'||ed.type==='mixview'){e={...ed,id:uid++};s.els.push(e);idMap[ed.id]=e.id;continue}if(ed.type==='ctrl'){e={...ed,id:uid++,draw:.1,delay:0,withPrev:true,entrance:'draw',motion:'none'};s.els.push(e);idMap[ed.id]=e.id;continue}
       const o={bind:ed.bind,showWhen:ed.showWhen,flat:ed.flat,scene:s,quiet:true,x:ed.x,y:ed.y,draw:ed.draw,color:ed.color,delay:ed.delay,colorOn:ed.colorOn,withPrev:ed.withPrev,entrance:ed.entrance,motion:ed.motion,fillMode:ed.fillMode};
       if(ed.type==='svg')e=await addSvg(ed.svgText,ed.name,{...o,key:ed.key,pen:ed.pen});else if(ed.type==='image')e=await addImageSrc(ed.src,ed.name,{...o,imgStyle:ed.imgStyle,detail:ed.detail});else if(ed.type==='arrow')e=addArrow({...ed,...o,name:ed.name,color:ed.acolor});else if(ed.type==='liquid'){e=addLiquid({...ed,...o,w:ed.w,h:ed.h,color:ed.lcolor});Object.assign(e,{rimDy:ed.rimDy,wallOut:ed.wallOut,floorY:ed.floorY})}else if(ed.type==='stick')e=addStick({...ed,...o,h:ed.h,look:ed.look||'stick'});else e=addText({...o,text:ed.text,font:ed.font,size:ed.size,fill:ed.fill,outline:ed.outline});
       if(e.type==='svg'||e.type==='image'){e.w=ed.w;e.h=ed.h}e.name=ed.name||e.name;if(ed.beats)e.beats=ed.beats;if(ed.win)e.win=ed.win;if(ed.dot)e.dot=true;if(ed.id!=null)idMap[ed.id]=e.id}}
   const fx=v=>v!=null&&idMap[v]!=null?idMap[v]:v;S.scenes.forEach(s=>s.els.forEach(e=>{if(e.bind)e.bind={...e.bind,ctrl:fx(e.bind.ctrl)};if(e.showWhen)e.showWhen={...e.showWhen,ctrl:fx(e.showWhen.ctrl)};if(e.type==='ctrl'&&e.onAfter)e.onAfter=fx(e.onAfter)}));
-  if(d.ink)S.ink={...S.ink,...d.ink};S.captions=d.captions!==false;S.showHand=d.showHand!==false;S.grid=!!d.grid;S.music=d.music?{...(await audioFromSrc(d.music)),vol:d.music.vol??.35}:null;
+  if(d.ink)S.ink={...S.ink,...d.ink};S.captions=d.captions!==false;S.showHand=d.showHand!==false;S.grid=!!d.grid;S.narr=d.narr?await audioFromSrc(d.narr):null;S.music=d.music?{...(await audioFromSrc(d.music)),vol:d.music.vol??.35}:null;
   S.cur=0;S.pin=true;refresh();
 }
 $('openIn').onchange=ev=>{const f=ev.target.files[0];ev.target.value='';if(!f)return;guard(async()=>{await loadProject(JSON.parse(await f.text()));toast('Project opened.')})};
 
 /* ---------- Templates ---------- */
 const TPL={
+ mixep:{name:'EP05 Mixing tank timers (16:9 long-form)',desc:'5 scenes · non-retentive vs retentive · timed to narration',style:'white',scenes:[]},
  ep5:{name:'EP05 ON-delay timer (vertical)',desc:'9:16 · stickman, conveyor, TON timer, state-driven effects',style:'white',scenes:[]},
  pumptank:{name:'Pump + tank with PLC (prototype)',desc:'2 scenes · manual overflow, then automatic level control',style:'white',scenes:[]},
  stick:{name:'Character explainer',desc:'4 scenes · walking, thinking, pointing, cheering',style:'white',scenes:[
@@ -1623,7 +1707,140 @@ async function buildEp5(){
   S.captions=true;S.showHand=true;s.minDur=66;S.cur=0;S.pin=true;S.t=0;refresh();
 }
 
+const EP5_LINES=[[0.0, 6.86, "Start button-ai press panninaa mixer odum. Stop button-ai press panninaa ninnudum. Idhai pona episode-la holding logic vechu paathom."], [7.66, 17.16, "ipo namma oru tank-la irukkura product-ai oru kurippitta nerathukku mix pannanum. Neram mudinjadhum mixer thaanaave nindranum. Operator pakkathula ninnu stopwatch paathutte irukkanumaa?"], [18.02, 20.93, "Thevai illa. Indha velaiyai PLC timer vechu pannalaam."], [21.81, 32.44, "Oru batch mixing tank-ai eduthukkalaam. Ingredients ellam tank-la add panniyaachu. Ippo Start press panninaa, mixer muppadhu second odanum. Muppadhu second mudinjadhum automaticah stop aaganum."], [33.34, 40.96, "Inga muppadhu second-nguradhu namma explanation-kaana example. Actual factory-la mixing time, product recipe-ku etha maadhiri set pannuvaanga."], [41.75, 44.84, "Aanaa mixing nadakkumbodhe operator Stop press pannittaa?"], [45.89, 52.8, "Marubadi Start pannumbodhu, full muppadhu second mix pannanumaa? Illa already mix pannina neram poga, meedhi neram mattum mix panninaa podhumaa?"], [53.92, 57.59, "Indha rendu behaviour-aiyum non-retentive, retentive timers vechu paakkalaam."], [58.7, 61.35, "Mudhal-la indha process-ku enna thevai-nu paarppom."], [62.13, 71.97, "Oru Start button. Oru Stop button. Mixer-ai control panna oru output. Mixing nadakkudhunu remember panna oru internal bit. Adhukku aduthadhaa oru timer."], [72.81, 75.05, "Indha internal bit-ai Mixing Run-nu koopiduvom."], [76.13, 83.44, "Start button-ai press pannumbodhu Mixing Run ON aagum. Pona episode-la paatha holding logic maadhiriye, button-ai vittaalum indha bit ON-la irukkum."], [84.35, 90.25, "Indha Mixing Run bit-ai use panni mixer output-ai ON panrom. Adhe bit-ai timer-oda input-kum kudukkurom."], [91.15, 95.24, "Adhanaala mixing start aagumbodhu mixer-um odum, timer-um count panna aarambikkum."], [96.39, 101.51, "Timer-la namma set pannura nerathai preset time-nu solluvom. Inga preset time muppadhu second."], [102.55, 108.56, "Timer idhuvaraikkum count pannina nerathai elapsed time-nu solluvom. Pathu second count aayirundhaa, elapsed time pathu second."], [109.42, 116.22, "Elapsed time, preset time-ai reach pannumbodhu timer-oda done signal ON aagum. Adhaavadhu, set panna neram mudinjiduchunu indicate pannum."], [116.78, 120.25, "Ippo mudhal-la non-retentive ON-delay timer-ai paakkalaam."], [120.77, 129.45, "ON-delay-naa, timer input ON aanadhum done signal udane ON aagaadhu. Set panna neram mudinja piraguthaan ON aagum."], [130.56, 133.74, "Aanaa inga mixer udane odudhe? Appo delay enga irukku?"], [134.68, 135.72, "Idhudhaan mukkiyamaana point."], [136.32, 143.29, "Mixer-ai timer done signal moolamaa start pannala. Mixing Run bit moolamaa start panrom."], [143.95, 152.6, "Timer done signal-ai, mixing time mudinjiduchunu therinjukkaradhukku use panrom. Andha signal vandhadhum mixer-ai stop panna program panrom."], [153.57, 154.72, "Ippo full working-ai paarunga."], [155.32, 164.73, "Operator Start press pannuraar. Mixing Run ON aagudhu. Mixer output ON aagudhu. Tank-kulla blades rotate aagi ingredients mix aaga aarambikkudhu."], [165.5, 169.03, "Adhe nerathula timer zero-lendhu count panna aarambikkudhu."], [170.15, 174.44, "Pathu second aayiduchu. Mixer odikitte irukku. Timer done signal innum OFF."], [175.17, 180.09, "Irubadhu second aayiduchu. Mixer innum odikitte irukku. Yennaa namma set pannadhu muppadhu second."], [180.7, 182.11, "Muppadhu second reach aagudhu."], [182.8, 189.25, "Ippo timer-oda done signal ON aagum. Indha signal-ai use panni Mixing Run bit-ai OFF panrom."], [189.91, 196.68, "Mixing Run OFF aanadhum mixer output-um OFF aagum. Motor-ku run command ninnudum. Blades slow aagi stop aagum."], [197.32, 206.21, "Idhula timer mixer power-ai direct-aa cut pannala. Timer time mudinjadhai indicate pannudhu. Namma PLC logic dhaan mixer output-ai OFF pannudhu."], [206.98, 210.92, "Seri, Mixing Run OFF aagiduchu. Appo timer-oda input-um OFF aagume?"], [211.67, 218.12, "Aamaam. Adhanaala indha non-retentive timer-oda elapsed time zero-ku reset aagum. Done signal-um OFF aagidum."], [218.89, 221.96, "Appo done signal OFF aanadhum mixer marubadi start aagidumaa?"], [222.76, 228.57, "Aagaadhu. Mixing Run bit already OFF aagiduchu. Adhai marubadi ON panna pudhusaana Start request thevai."], [229.2, 233.21, "Namma example-la ovvoru Start request-kum oru mixing cycle dhaan."], [234.24, 235.52, "Ippo innoru situation paarppom."], [236.02, 241.15, "Mixing start panni pathinainju second aayirukku. Aanaa operator Stop press pannuraar."], [242.13, 244.24, "Ippo muppadhu second mudiyura varaikkum mixer odumaa?"], [245.21, 257.35, "Odaadhu. Stop command vandhadhum Mixing Run OFF aagum. Mixer output-um OFF aagum. Timer input OFF aaguradhaala, count pannina pathinainju second-um reset aagum."], [257.96, 259.91, "Marubadiyum Start press panninaa enna aagum?"], [260.42, 266.15, "Meedhi pathinainju second mattum count aagaadhu. Zero-lendhu pudhusaa muppadhu second count aagum."], [266.45, 269.44, "Yennaa namma use pannuradhu non-retentive timer. Input OFF aanadhum count pannina time-ai adhu retain pannaadhu."], [270.02, 272.63, "Aanaa namma process requirement vera maadhiri irundhaa?"], [273.22, 279.18, "“Mixer mothamaa muppadhu second odinaa podhum. Naduvula stop panninaalum, already mix pannina nerathai marakka vendaam” nu sonnaa?"], [279.9, 282.06, "Appodhaan retentive timer use pannalaam."], [282.63, 287.47, "Adhe mixing tank. Adhe muppadhu-second preset. Indha murai retentive timer vechu paakkalaam."], [287.9, 294.08, "Start press panrom. Mixing Run ON aagudhu. Mixer odudhu. Timer zero-lendhu count panna aarambikkudhu."], [294.82, 296.55, "Pathinainju second-la Stop press panrom."], [297.4, 302.44, "Mixing Run OFF aagum. Mixer output-um OFF aagum. Timer count pannuradhu ninnudum."], [303.03, 307.32, "Aanaa elapsed time zero-ku pogaadhu. Pathinainju second-la appadiye irukkum."], [308.4, 312.27, "Inga mixer ninnuduchu. Timer mattum count pannitte irukkum-nu purinjukka vendaam."], [312.79, 317.73, "Timer-um count pannuradhai niruthum. Already count pannina pathinainju second-ai mattum remember pannum."], [318.45, 320.02, "Ippo marubadiyum Start press panrom."], [320.62, 325.19, "Mixer odum. Timer zero-lendhu aarambikkaadhu. Pathinainju second-lendhu continue aagum."], [325.79, 329.2, "Innum pathinainju second mix pannadhum total muppadhu second complete aagum."], [329.85, 334.5, "Timer done signal ON aagum. Namma logic Mixing Run-ai OFF panni mixer-ai stop pannum."], [335.37, 340.13, "Mudhal-la pathinainju second. Restart-ku appuram pathinainju second. Mothamaa muppadhu second mixing."], [340.85, 343.79, "Naduvula mixer ninnirundha nerathai indha mixing time-la serkka maattom."], [344.25, 351.35, "Idhudhaan retentive timer-oda mukkiyamaana difference. Timer input OFF aanaalum, already count pannina time retain aagum."], [351.94, 354.21, "Seri, andha saved time-ai clear pannanumnaa?"], [354.75, 359.87, "Separate Reset command thevai. intha concept ku nama extra oru reset push button add pannanum"], [360.31, 367.35, "Namma example-la mixer stop-la irukkumbodhu Reset press panninaa, elapsed time zero aagum. Timer-oda done status-um clear aagum."], [367.98, 371.13, "Adhukku appuram Start press panninaa, fresh-aa muppadhu second count pannum."], [371.73, 377.21, "Adhe maadhiri, batch complete aagi adutha batch-ku pogumbodhum old timer value-ai reset panna logic irukkanum."], [377.85, 383.55, "Namma sequence-la, pudhusaana batch start pannumbodhu timer-ai reset pannittu fresh cycle start panna arrange pannalaam."], [384.34, 386.99, "Appo Stop-um Reset-um ore velai illa."], [387.75, 393.09, "Indha retentive example-la Stop press panninaa mixer nikkum. Count pannina time appadiye irukkum."], [393.89, 396.23, "Reset command kuduthaa, saved time-um clear aagum."], [397.02, 398.92, "Ippo rendu timer-aiyum pakkathula vechu paarunga."], [399.42, 403.7, "Rendulayum preset muppadhu second. Rendulayum pathinainju second-la Stop press panrom."], [404.41, 406.47, "Non-retentive timer zero-ku reset aagum."], [406.99, 408.92, "Retentive timer pathinainju second-la nikkum."], [409.71, 414.11, "Marubadi Start press panninaa, non-retentive example-la full muppadhu second mixing nadakkum."], [414.67, 417.57, "Retentive example-la meedhi pathinainju second mixing nadakkum."], [418.37, 419.27, "Appo edhu better?"], [420.12, 422.42, "Namma process-ku edhu thevaiyo, adhu dhaan correct."], [423.22, 427.54, "Naduvula stop aana fresh full mixing cycle venumnaa, adhukku etha logic use pannanum."], [428.29, 433.21, "Already odina mixing time-ai serthu calculate pannanumnaa, adhukku etha retentive logic use pannanum."], [434.1, 437.11, "Actual factory-la indha decision product recipe-ai poruthadhu."], [437.97, 439.28, "Inga innoru vishayam gavanikkanum."], [440.04, 447.88, "PLC output ON irukkuradhu mattum mixer nijamaave odudhunguradhukku proof illa. Drive fault aagirukkalaam, illa motor run aagaama irukkalaam."], [448.51, 458.55, "Adhanaala actual machine-la running feedback thevai-na, adhaiyum check panni mixing time count panna logic design pannanum. Namma basic example-la mixer normal-aa run aagudhunu assume panrom."], [459.44, 473.18, "Retentive-naa power OFF aanaalum ellaa PLC-layum time kandippaa save aagum-nu artham illa. Adhu PLC model, timer instruction, memory settings-ai poruthadhu. Inga namma compare pannadhu timer input OFF aagumbodhu enna nadakkudhunguradhai."], [473.91, 474.87, "Ippo ungalukku oru question."], [475.78, 480.29, "Muppadhu-second retentive mixing cycle-la, pathinainju second mudinjadhum Stop press pannittom."], [481.06, 484.49, "Reset press pannala. Marubadi Start mattum press panrom."], [485.16, 486.61, "Mixer innum evlo neram odum?"], [487.69, 490.05, "Option A — Meedhi pathinainju second."], [490.66, 493.06, "Option B — Pudhusaa muppadhu second."], [493.52, 495.84, "Option C — Start aana udane ninnudum."], [496.42, 499.07, "Unga answer-ai A, B, illa C-nu comment pannunga!"], [499.75, 507.42, "Seri, timer vechu nerathai measure pannittom. Aanaa oru box-la sariyaa aaru bottles pack pannanumnaa, PLC epdi count pannum?"], [508.06, 510.39, "Adutha episode-la PLC counter-ai paakkalaam!"], [511.15, 516.38, "PLC concepts-ai indha maadhiri practical examples-oda kathukka, Factory Decode Tamil channel-ai subscribe pannunga!"]];
+/* ---------- EP05 long-form builder: 16:9, timed to the owner's narration (EP5_LINES = aligned line times) ---------- */
+async function buildMixEp(){
+  stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('16:9');
+  const L=EP5_LINES,at=(i,f=0)=>L[i][0]+(L[i][1]-L[i][0])*f,TOTAL=516.384;
+  const bounds=[0,L[70][0],L[81][0],L[85][0],L[93][0],TOTAL];
+  const G='Gochi Hand';
+  function mkScene(k,name){const s=newScene({name,style:'white',transition:k?'fade':'cut',trans:.5,hold:0});s.minDur=bounds[k+1]-bounds[k];s.off=bounds[k];
+    s.capBeats=L.map((x,i)=>({t:x[0]-s.off,end:(i<L.length-1?L[i+1][0]:TOTAL)-s.off,text:x[2]})).filter(c=>c.end>0&&c.t<s.minDur);S.scenes.push(s);S.cur=S.scenes.length-1;return s}
+  const Tx=(s,o)=>addText({font:G,fill:'#1d1d1f',size:30,draw:.5,scene:s,quiet:true,...o});
+  const put=async(s,k,o)=>addSvg(doodleSvg(k),DOODLES[k][0],{key:k,flat:true,scene:s,quiet:true,...o});
+  const callout=(s,text,i0,i1,o={})=>Tx(s,{text,size:30,x:40,y:20,draw:.6,win:[at(i0,o.f0||0)-s.off,(i1==null?at(i0,1):at(i1,1))-s.off],...o});
+  const look=(s,x1,y1,x2,y2,i0,i1,bend=.4,o={})=>addArrow({scene:s,quiet:true,name:'Look',path:'curve',bend,x1,y1,x2,y2,width:6,draw:.4,win:[at(i0,o.f0||0)-s.off,(i1==null?at(i0,1):at(i1,1))-s.off]});
+  const char=(s,o)=>{const m=addStick({scene:s,quiet:true,look:'stick',action:'idle',size:300,draw:.7,delay:0,withPrev:true,...o});m.name='Presenter (stickman)';return m};
+  const press=(ev,k,t)=>ev.push({t,k});
+  /* ===== Scene 1: tank, controls, PLC logic (lines 0–69) ===== */
+  const s1=mkScene(0,'Mixing tank: timers');
+  const c1={id:uid++,type:'ctrl',kind:'tmr',name:'Mixing logic',preset:30,mode0:'off',x:40,y:612,w:260,h:28,draw:.1,delay:0,withPrev:true,entrance:'draw',motion:'none',events:[]};
+  const tank=await put(s1,'agitank',{x:110,y:150,size:420,draw:.8,color:.3,delay:0,bind:{ctrl:c1.id,role:'mixmotor'}});
+  const wtl=anchorPt(tank,'winTL'),wbr=anchorPt(tank,'winBR');
+  s1.els.push({id:uid++,type:'mixview',name:'Tank contents',x:wtl[0]+3,y:wtl[1]+3,w:wbr[0]-wtl[0]-6,h:wbr[1]-wtl[1]-6,draw:.5,delay:.1,withPrev:true,entrance:'draw',motion:'none',bind:{ctrl:c1.id,role:'mix'}});
+  const stn=await put(s1,'station3',{x:452,y:300,size:150,draw:.5,color:.2,withPrev:true,delay:.05,bind:{ctrl:c1.id,role:'station'}});
+  const panel={id:uid++,type:'tpanel',name:'PLC logic panel',x:860,y:60,w:390,h:500,preset:30,showReset:at(62,.3),draw:.7,delay:.05,withPrev:true,entrance:'draw',motion:'none',bind:{ctrl:c1.id,role:'panel'}};s1.els.push(panel);
+  const SB=anchorPt(stn,'start'),SP=anchorPt(stn,'stop'),top=anchorPt(stn,'top'),term=anchorPt(tank,'terminal');
+  const man=char(s1,{x:SB[0]+112-93,y:280,size:290,facing:-1});
+  addArrow({scene:s1,quiet:true,name:'Push buttons → PLC',line:'dashed',path:'poly',radius:14,color:'#2fbf4a',width:2.4,head:true,dot:true,draw:.5,withPrev:true,delay:.05,x1:top[0],y1:top[1]-2,via:[[top[0],262],[822,262],[822,panel.y+85]],x2:panel.x-2,y2:panel.y+85,bind:{ctrl:c1.id,role:'pb'}});
+  addArrow({scene:s1,quiet:true,name:'Output → motor',line:'dashed',path:'poly',radius:14,color:'#2fbf4a',width:2.4,head:true,dot:true,draw:.5,withPrev:true,delay:.05,x1:panel.x-2,y1:panel.y+167,via:[[840,panel.y+167],[840,40],[term[0]+40,40],[term[0]+40,term[1]]],x2:term[0]+2,y2:term[1],bind:{ctrl:c1.id,role:'out'}});
+  const rb=await put(s1,'resetbtn',{x:462,y:462,size:80,draw:.5,color:.2,win:[at(62,.3),1e6],bind:{ctrl:c1.id,role:'resetbtn'}});
+  const RB=anchorPt(rb,'reset');
+  addArrow({scene:s1,quiet:true,name:'Reset → PLC',line:'dashed',path:'poly',radius:12,color:'#3d7bfd',width:2.4,head:true,draw:.5,x1:rb.x+rb.w,y1:RB[1],via:[[800,RB[1]],[800,panel.y+85]],x2:panel.x-2,y2:panel.y+92,win:[at(62,.45),1e6]});
+  Tx(s1,{text:'RESET',size:24,x:rb.x-2,y:rb.y+rb.h+2,win:[at(62,.35),1e6]});
+  Tx(s1,{text:'START',size:22,x:stn.x-64,y:SB[1]-14,draw:.3,withPrev:true});Tx(s1,{text:'STOP',size:22,x:stn.x-58,y:SP[1]-14,draw:.3,withPrev:true});
+  const clk=await put(s1,'clock',{x:400,y:120,size:80,draw:.4,color:.2,win:[at(1,.45),at(2,.6)]});
+  /* events (finger contact times) */
+  const E=c1.events,TANK=[260,330],PAN=[panel.x+200,panel.y+280],ACC=[panel.x+150,panel.y+286],t=(i,f)=>at(i,f);
+  press(E,'start',1.15);press(E,'stop',3.45);
+  E.push({t:t(14,0),k:'mode',v:'nr'});
+  const tS=t(24,.1),t10=t(26,.12),t20=t(27,.12),t30=t(28,.55);
+  press(E,'start',tS);E.push({t:tS,k:'slow',v:true},{t:tS,k:'rate',v:10/(t10-tS)},{t:t10,k:'rate',v:10/(t20-t10)},{t:t20,k:'rate',v:10/(t30-t20)});
+  E.push({t:t(29,.6),k:'clearRun'},{t:t(33,.3),k:'nrReset'},{t:t(33,.3),k:'slow',v:false});
+  const a1=t(37,.35),a15=t(38,.62);press(E,'start',a1);E.push({t:a1,k:'rate',v:15/(a15-a1)});press(E,'stop',a15+.04);
+  const b1=t(42,.55),b30=t(43,.95);press(E,'start',b1);E.push({t:b1,k:'rate',v:30/(b30-b1)});
+  E.push({t:t(47,.3),k:'mode',v:'rto'});
+  const r1=t(48,.08),r15=t(49,.55);press(E,'start',r1);E.push({t:r1,k:'rate',v:15/(r15-r1)});E.push({t:r15,k:'stop',snap:15});
+  const r2=t(54,.5),r30=t(56,.85);press(E,'start',r2);E.push({t:r2,k:'rate',v:15/(r30-r2)});
+  press(E,'reset',t(63,.5));
+  const f1=t(64,.55),f30=t(66,.6);press(E,'start',f1);E.push({t:f1,k:'rate',v:30/(f30-f1)});
+  s1.els.push(c1);
+  /* character beats: reach 0.35 s before each contact */
+  const B=[{t:0,act:'idle',facing:-1,face:'smile',gaze:TANK}];
+  const reachAt=(tt,tgt)=>B.push({t:tt-.35,act:'reach',facing:-1,target:tgt,face:'neutral',gaze:tgt},{t:tt+.55,act:'idle',facing:-1,face:'smile',gaze:TANK});
+  const beat=(tt,o)=>B.push({t:tt,act:'idle',facing:1,...o});
+  E.filter(x=>x.k==='start'||x.k==='stop'||x.k==='reset').forEach(x=>reachAt(x.t,x.k==='start'?SB:x.k==='stop'?SP:RB));
+  beat(4.3,{act:'talk',face:'smile',gaze:'viewer'});
+  beat(t(1,.3),{facing:-1,face:'neutral',gaze:TANK});beat(t(1,.62),{face:'confused',gaze:[440,160],tilt:8,facing:-1});
+  beat(t(2,0),{act:'talk',face:'smile',gaze:'viewer'});beat(t(3,.1),{act:'point',facing:-1,target:[300,300],face:'smile',gaze:TANK});
+  beat(t(4,0),{act:'talk',face:'smile',gaze:'viewer'});beat(t(5,0),{face:'o',gaze:SP,facing:-1});beat(t(6,0),{act:'think',face:'think',gaze:'viewer'});
+  beat(t(7,0),{act:'talk',face:'smile',gaze:'viewer'});beat(t(9,0),{act:'point',target:[panel.x+40,panel.y+130],face:'smile',gaze:PAN});
+  beat(t(13,0),{act:'talk',face:'smile',gaze:'viewer'});beat(t(14,.2),{act:'point',target:[panel.x+40,panel.y+236],face:'smile',gaze:PAN});
+  beat(t(17,0),{act:'talk',face:'smile',gaze:'viewer'});beat(t(19,0),{face:'confused',gaze:TANK,facing:-1,tilt:8});beat(t(21,0),{act:'talk',face:'grin',gaze:'viewer'});
+  beat(tS+.6,{face:'neutral',gaze:ACC});beat(t(28,.55),{face:'grin',gaze:ACC});beat(t(30,0),{face:'neutral',gaze:TANK,facing:-1});
+  beat(t(31,0),{act:'talk',face:'smile',gaze:'viewer'});beat(t(32,0),{act:'think',face:'think',gaze:ACC});beat(t(33,0),{act:'talk',face:'grin',gaze:'viewer'});
+  beat(t(34,0),{face:'confused',gaze:TANK,facing:-1});beat(t(35,0),{act:'talk',face:'smile',gaze:'viewer'});
+  beat(a1+.6,{face:'neutral',gaze:ACC});beat(t(39,0),{act:'think',face:'think',gaze:'viewer'});beat(t(40,.4),{face:'o',gaze:ACC});beat(t(41,0),{act:'think',face:'think',gaze:'viewer'});
+  beat(b1+.6,{face:'neutral',gaze:ACC});beat(t(44,0),{act:'talk',face:'smile',gaze:'viewer'});beat(t(46,0),{act:'talk',face:'grin',gaze:'viewer'});
+  beat(r1+.6,{face:'neutral',gaze:ACC});beat(t(50,0),{face:'neutral',gaze:TANK,facing:-1});beat(t(51,0),{face:'o',gaze:ACC});beat(t(52,0),{act:'talk',face:'smile',gaze:'viewer'});
+  beat(r2+.6,{face:'neutral',gaze:ACC});beat(t(56,.85),{face:'grin',gaze:ACC});beat(t(58,0),{act:'talk',face:'smile',gaze:'viewer'});
+  beat(t(61,0),{act:'think',face:'think',gaze:'viewer'});beat(t(62,0),{face:'neutral',gaze:[RB[0],RB[1]],facing:-1});
+  beat(t(63,.5)+.6,{face:'grin',gaze:ACC});beat(f1+.6,{face:'neutral',gaze:ACC});beat(t(65,0),{act:'talk',face:'smile',gaze:'viewer'});beat(t(67,0),{act:'talk',face:'grin',gaze:'viewer'});
+  B.sort((a,b)=>a.t-b.t);man.beats=B;
+  s1.cam=[{t:t(9,0),d:.9,x:panel.x+230,y:panel.y+200,z:1.25},{t:t(17,0),d:.9,x:W/2,y:H/2,z:1},{t:t(25,0),d:.9,x:panel.x+230,y:panel.y+250,z:1.2},{t:t(29,.6),d:.9,x:W/2,y:H/2,z:1},{t:t(51,0),d:.8,x:panel.x+230,y:panel.y+250,z:1.2},{t:t(54,.2),d:.8,x:W/2,y:H/2,z:1}];
+  /* keyword callouts (one at a time) + attention arrows */
+  callout(s1,'Ingredients already loaded',3,null);callout(s1,'30 s = example. Real time comes from the recipe.',4,null);
+  callout(s1,'Mixing Run = internal bit (holding)',10,11);callout(s1,'Output ON → mixer runs',12,null);
+  callout(s1,'Preset = set time (30 s)',14,null);callout(s1,'Elapsed = counted time',15,null);callout(s1,'DONE = set time finished',16,null);
+  callout(s1,'ON-delay: DONE comes after the set time',18,null);callout(s1,'Mixer starts from Mixing Run, not from DONE',21,null);callout(s1,'DONE → logic clears Mixing Run → mixer stops',22,null);
+  callout(s1,'Timer does not cut power. PLC logic turns the output OFF.',31,null);callout(s1,'1 Start request = 1 mixing cycle',36,null);
+  callout(s1,'Non-retentive: input OFF → time is lost',43,null);callout(s1,'Retentive: input OFF → time is kept',60,null);callout(s1,'STOP ≠ RESET',67,69);
+  look(s1,panel.x-60,panel.y+190,panel.x+20,panel.y+135,10,11,.4);look(s1,panel.x-60,panel.y+230,panel.x+20,panel.y+172,12,null,.4);
+  look(s1,panel.x-50,panel.y+280,panel.x+16,panel.y+230,14,null,.4);look(s1,panel.x-50,panel.y+330,panel.x+16,panel.y+280,15,null,.4);look(s1,panel.x-50,panel.y+440,panel.x+20,panel.y+390,16,null,.4);
+  look(s1,520,640,330,470,30,null,-.4);look(s1,panel.x-50,panel.y+340,panel.x+16,panel.y+286,51,52,.4);look(s1,620,620,rb.x+rb.w+4,rb.y+rb.h/2,62,null,.45);
+  /* ===== Scene 2: side-by-side comparison (lines 70–80) ===== */
+  const s2=mkScene(1,'Side by side');const o2=s2.off;
+  const mk=(mode)=>({id:uid++,type:'ctrl',kind:'tmr',name:mode==='nr'?'Non-retentive logic':'Retentive logic',preset:30,mode0:mode,x:40,y:612,w:240,h:28,draw:.1,delay:0,withPrev:true,entrance:'draw',motion:'none',events:[]});
+  const cn=mk('nr'),cr=mk('rto');
+  const pn={id:uid++,type:'tpanel',name:'Non-retentive panel',x:110,y:60,w:390,h:500,preset:30,draw:.6,delay:0,entrance:'draw',motion:'none',bind:{ctrl:cn.id,role:'panel'}};
+  const pr={id:uid++,type:'tpanel',name:'Retentive panel',x:780,y:60,w:390,h:500,preset:30,draw:.6,delay:.1,withPrev:true,entrance:'draw',motion:'none',bind:{ctrl:cr.id,role:'panel'}};s2.els.push(pn,pr);
+  const m2=char(s2,{x:640-93,y:270,size:290,facing:1});
+  const z1=at(71,.12)-o2,z15=at(71,.78)-o2,z2=at(74,.12)-o2,z30=at(75,.92)-o2;
+  [cn,cr].forEach(c=>{c.events.push({t:z1,k:'start'},{t:z1,k:'rate',v:15/(z15-z1)},{t:z15,k:'stop',snap:15},{t:z2,k:'start'},{t:z2,k:'rate',v:(c===cn?30:15)/(z30-z2)})});
+  s2.els.push(cn,cr);
+  const NP=[pn.x+200,pn.y+290],RP=[pr.x+190,pr.y+290];
+  m2.beats=[{t:0,act:'talk',facing:1,face:'smile',gaze:'viewer'},{t:at(71,0)-o2,act:'point',facing:-1,target:NP,face:'smile',gaze:NP},{t:at(71,.5)-o2,act:'point',facing:1,target:RP,face:'smile',gaze:RP},
+    {t:at(72,0)-o2,act:'point',facing:-1,target:NP,face:'o',gaze:NP},{t:at(73,0)-o2,act:'point',facing:1,target:RP,face:'grin',gaze:RP},{t:at(74,0)-o2,act:'point',facing:-1,target:NP,face:'neutral',gaze:NP},
+    {t:at(75,0)-o2,act:'point',facing:1,target:RP,face:'neutral',gaze:RP},{t:at(76,0)-o2,act:'think',facing:1,face:'think',gaze:'viewer'},{t:at(77,0)-o2,act:'talk',facing:1,face:'smile',gaze:'viewer'},
+    {t:at(78,0)-o2,act:'point',facing:-1,target:NP,face:'smile',gaze:NP},{t:at(79,0)-o2,act:'point',facing:1,target:RP,face:'smile',gaze:RP},{t:at(80,0)-o2,act:'talk',facing:1,face:'smile',gaze:'viewer'}];
+  callout(s2,'Same preset (30 s) · same Stop at 15 s',71,73,{x:'c',y:14});callout(s2,'Start again: full 30 s  vs  remaining 15 s',74,75,{x:'c',y:14});callout(s2,'Choose by process requirement (recipe)',77,80,{x:'c',y:14});
+  /* ===== Scene 3: practical notes (lines 81–84) ===== */
+  const s3=mkScene(2,'Practical notes');const o3=s3.off;
+  const c3={id:uid++,type:'ctrl',kind:'tmr',name:'Mixer (demo running)',preset:30,mode0:'off',x:40,y:612,w:240,h:28,draw:.1,delay:0,withPrev:true,entrance:'draw',motion:'none',events:[{t:.6,k:'start'}]};
+  const tank3=await put(s3,'agitank',{x:110,y:150,size:420,draw:.5,color:.2,delay:0,bind:{ctrl:c3.id,role:'mixmotor'}});
+  const w1=anchorPt(tank3,'winTL'),w2=anchorPt(tank3,'winBR');
+  s3.els.push({id:uid++,type:'mixview',name:'Tank contents',x:w1[0]+3,y:w1[1]+3,w:w2[0]-w1[0]-6,h:w2[1]-w1[1]-6,draw:.4,delay:.05,withPrev:true,entrance:'draw',motion:'none',bind:{ctrl:c3.id,role:'mix'}},c3);
+  const m3=char(s3,{x:470,y:270,size:290,facing:1});
+  Tx(s3,{text:'PLC output ON  ≠  proof the motor runs',size:36,x:560,y:80,win:[at(82,0)-o3,1e6]});
+  Tx(s3,{text:'Drive fault?  Motor not turning?',size:30,x:600,y:140,win:[at(82,.45)-o3,1e6],fill:'#e5383b'});
+  Tx(s3,{text:'Real machine: check a running feedback\nbefore counting mixing time',size:30,x:600,y:210,win:[at(83,0)-o3,1e6]});
+  Tx(s3,{text:'Retention after power loss depends on:\nPLC model · timer instruction · memory settings',size:30,x:600,y:330,win:[at(84,0)-o3,1e6],fill:'#1f5fd1'});
+  look(s3,620,260,anchorPt(tank3,'motor')[0]+40,anchorPt(tank3,'motor')[1],82,83,.4);
+  m3.beats=[{t:0,act:'talk',facing:1,face:'smile',gaze:'viewer'},{t:at(82,0)-o3,act:'point',facing:-1,target:anchorPt(tank3,'motor'),face:'think',gaze:anchorPt(tank3,'motor')},{t:at(83,0)-o3,act:'talk',facing:1,face:'smile',gaze:'viewer'},{t:at(84,0)-o3,act:'think',facing:1,face:'think',gaze:'viewer'},{t:at(84,.5)-o3,act:'talk',facing:1,face:'smile',gaze:'viewer'}];
+  /* ===== Scene 4: quiz (lines 85–92) ===== */
+  const s4=mkScene(3,'Quiz');const o4=s4.off;
+  Tx(s4,{text:'Quiz',font:'Permanent Marker',size:64,x:60,y:30,draw:.5});
+  Tx(s4,{text:'Retentive timer · PRESET 30 s\nStopped at 15 s\nRESET not pressed\nSTART pressed again',size:34,x:60,y:130,win:[at(86,0)-o4,1e6]});
+  Tx(s4,{text:'Mixer innum evlo neram odum?',size:44,x:60,y:330,win:[at(88,0)-o4,1e6],fill:'#1f5fd1'});
+  [[89,'A — Meedhi 15 seconds'],[90,'B — Pudhusaa 30 seconds'],[91,'C — Udane ninnudum']].forEach(([i,txt],k)=>Tx(s4,{text:txt,size:36,x:90,y:410+k*62,win:[at(i,0)-o4,1e6],outline:false}));
+  Tx(s4,{text:'Comment: A, B or C?',size:40,x:640,y:500,win:[at(92,0)-o4,1e6],fill:'#e5383b'});
+  const m4=char(s4,{x:1010,y:250,size:290,facing:-1});
+  m4.beats=[{t:0,act:'talk',facing:-1,face:'grin',gaze:'viewer'},{t:at(86,0)-o4,act:'point',facing:-1,target:[420,200],face:'smile',gaze:[420,200]},{t:at(88,0)-o4,act:'think',facing:-1,face:'think',gaze:'viewer'},
+    {t:at(89,0)-o4,act:'point',facing:-1,target:[520,430],face:'neutral',gaze:[400,430]},{t:at(92,0)-o4,act:'talk',facing:-1,face:'grin',gaze:'viewer'}];
+  /* ===== Scene 5: next episode + subscribe (lines 93–95) ===== */
+  const s5=mkScene(4,'Next episode');const o5=s5.off;
+  const box=await put(s5,'crate',{x:120,y:250,size:260,draw:.6,color:.3});
+  for(let k=0;k<6;k++)await put(s5,'bottle',{x:440+k*70,y:250,size:150,draw:.25,color:.15,withPrev:k>0,delay:.12});
+  Tx(s5,{text:'1 box = exactly 6 bottles. How does a PLC count?',size:36,x:60,y:60,draw:.7});
+  Tx(s5,{text:'Next episode: PLC counter',size:48,x:60,y:150,win:[at(94,0)-o5,1e6],fill:'#1f5fd1'});
+  Tx(s5,{text:'Subscribe · Factory Decode Tamil',size:44,x:'c',y:470,win:[at(95,.2)-o5,1e6],fill:'#e5383b'});
+  const m5=char(s5,{x:1000,y:240,size:280,facing:-1});
+  m5.beats=[{t:0,act:'point',facing:-1,target:[600,370],face:'smile',gaze:[600,370]},{t:at(94,0)-o5,act:'talk',facing:-1,face:'grin',gaze:'viewer'},{t:at(95,.2)-o5,act:'wave',facing:1,face:'grin',gaze:'viewer'},{t:at(95,.75)-o5,act:'idle',facing:1,face:'smile',gaze:'viewer'}];
+  S.captions=true;S.showHand=true;S.cur=0;S.pin=true;S.t=0;refresh();
+}
+
 async function loadTemplate(key){
+  if(key==='mixep')return buildMixEp();
   if(key==='ep5')return buildEp5();
   setAspect('16:9');
   if(key==='pumptank')return buildPumpTank();
@@ -1641,7 +1858,7 @@ Object.entries(TPL).forEach(([k,T])=>{const b=document.createElement('button');b
 S.scenes=[newScene({name:'Scene 1',style:'white',transition:'cut'})];renderStickIcons();refresh();
 (async()=>{
   try{await Promise.all(['Gochi Hand','Patrick Hand','Kalam','Caveat','Permanent Marker','IBM Plex Sans'].map(f=>document.fonts.load(`40px "${f}"`)))}catch(_){}
-  await guard(()=>loadTemplate('ep5'));S.cur=0;S.pin=true;refresh();
+  await guard(()=>loadTemplate('mixep'));S.cur=0;S.pin=true;refresh();
 })();
 })();
 </script>
