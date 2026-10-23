@@ -1,0 +1,590 @@
+[
+ {
+  "para": 0,
+  "start": 0.24,
+  "end": 5.94,
+  "method": "forced-align",
+  "text": "In the previous episode, we used a PLC timer to run a mixer for a set amount of time, then stop it."
+ },
+ {
+  "para": 1,
+  "start": 6.56,
+  "end": 15.06,
+  "method": "forced-align",
+  "text": "But at this packing station, time is not the target. Each box needs exactly six bottles. Five is too few. Seven is too many."
+ },
+ {
+  "para": 2,
+  "start": 15.85,
+  "end": 19.17,
+  "method": "forced-align",
+  "text": "So how does the PLC know when six bottles have arrived?"
+ },
+ {
+  "para": 3,
+  "start": 20.03,
+  "end": 21.66,
+  "method": "forced-align",
+  "text": "That is where a counter comes in."
+ },
+ {
+  "para": 4,
+  "start": 22.51,
+  "end": 29.2,
+  "method": "forced-align",
+  "text": "Bottles move along a conveyor, one at a time. A box sits at the end, and a sensor detects each bottle as it enters the packing area."
+ },
+ {
+  "para": 5,
+  "start": 30.04,
+  "end": 33.47,
+  "method": "forced-align",
+  "text": "For this example, assume the sensor detects every bottle correctly."
+ },
+ {
+  "para": 6,
+  "start": 34.41,
+  "end": 43.31,
+  "method": "forced-align",
+  "text": "With no bottle in front of it, the sensor signal is off. A bottle arrives, and the signal turns on. As the bottle moves past, the signal turns off again."
+ },
+ {
+  "para": 7,
+  "start": 44.22,
+  "end": 49.41,
+  "method": "forced-align",
+  "text": "The next bottle creates another new detection. The PLC uses those events to count."
+ },
+ {
+  "para": 8,
+  "start": 50.21,
+  "end": 51.32,
+  "method": "forced-align",
+  "text": "First bottle: one."
+ },
+ {
+  "para": 9,
+  "start": 52.02,
+  "end": 53.19,
+  "method": "forced-align",
+  "text": "Second bottle: two."
+ },
+ {
+  "para": 10,
+  "start": 54.0,
+  "end": 55.13,
+  "method": "forced-align",
+  "text": "Third bottle: three."
+ },
+ {
+  "para": 11,
+  "start": 56.05,
+  "end": 58.78,
+  "method": "forced-align",
+  "text": "Each new bottle detection adds one to the count."
+ },
+ {
+  "para": 12,
+  "start": 59.68,
+  "end": 67.16,
+  "method": "forced-align",
+  "text": "We are using a count-up counter, often called a CTU. Instruction names vary between PLC brands, but this is the basic idea."
+ },
+ {
+  "para": 13,
+  "start": 68.06,
+  "end": 69.56,
+  "method": "forced-align",
+  "text": "There are two important values."
+ },
+ {
+  "para": 14,
+  "start": 70.35,
+  "end": 74.57,
+  "method": "forced-align",
+  "text": "The preset is our target. We need six bottles, so the preset is six."
+ },
+ {
+  "para": 15,
+  "start": 75.44,
+  "end": 81.22,
+  "method": "forced-align",
+  "text": "The accumulated count tells us how many events have already been counted. You may see this labelled ACC."
+ },
+ {
+  "para": 16,
+  "start": 82.21,
+  "end": 86.65,
+  "method": "forced-align",
+  "text": "After two bottles, the accumulated count is two. The preset is still six."
+ },
+ {
+  "para": 17,
+  "start": 87.67,
+  "end": 90.9,
+  "method": "forced-align",
+  "text": "When the count reaches the preset, the counter's done signal turns on."
+ },
+ {
+  "para": 18,
+  "start": 91.9,
+  "end": 93.53,
+  "method": "forced-align",
+  "text": "Now here is an important question."
+ },
+ {
+  "para": 19,
+  "start": 94.43,
+  "end": 98.46,
+  "method": "forced-align",
+  "text": "What if one bottle stops in front of the sensor, keeping its signal on for two seconds?"
+ },
+ {
+  "para": 20,
+  "start": 99.22,
+  "end": 101.56,
+  "method": "forced-align",
+  "text": "Will the PLC count that same bottle over and over?"
+ },
+ {
+  "para": 21,
+  "start": 102.51,
+  "end": 103.03,
+  "method": "forced-align",
+  "text": "It should not."
+ },
+ {
+  "para": 22,
+  "start": 103.55,
+  "end": 108.97,
+  "method": "forced-align",
+  "text": "This counter responds to a new change from off to on. That change is called a rising edge."
+ },
+ {
+  "para": 23,
+  "start": 109.77,
+  "end": 112.3,
+  "method": "forced-align",
+  "text": "A signal staying on is not another new event."
+ },
+ {
+  "para": 24,
+  "start": 113.03,
+  "end": 120.84,
+  "method": "forced-align",
+  "text": "So one bottle blocking the sensor produces one count. The signal must go off, then turn on again for the next detection to add another count."
+ },
+ {
+  "para": 25,
+  "start": 121.71,
+  "end": 123.41,
+  "method": "forced-align",
+  "text": "Let's follow a complete packing cycle."
+ },
+ {
+  "para": 26,
+  "start": 124.25,
+  "end": 128.96,
+  "method": "forced-align",
+  "text": "An empty box is in position. The count is zero. The operator presses Start."
+ },
+ {
+  "para": 27,
+  "start": 129.66,
+  "end": 140.11,
+  "method": "forced-align",
+  "text": "Our Packing Run bit turns on, and the conveyor receives a run command. Holding logic keeps it running after the Start button is released."
+ },
+ {
+  "para": 28,
+  "start": 140.12,
+  "end": 148.75,
+  "method": "forced-align",
+  "text": "The first bottle reaches the sensor. The input turns on. The count becomes one, and the bottle moves into the box."
+ },
+ {
+  "para": 29,
+  "start": 148.76,
+  "end": 159.05,
+  "method": "forced-align",
+  "text": "As the bottle clears the sensor, the input turns off. The count stays at one. Turning the sensor off does not reset the counter."
+ },
+ {
+  "para": 30,
+  "start": 160.18,
+  "end": 163.83,
+  "method": "forced-align",
+  "text": "The next bottle creates a new detection. The count becomes two."
+ },
+ {
+  "para": 31,
+  "start": 164.73,
+  "end": 167.45,
+  "method": "forced-align",
+  "text": "Then three, four and five."
+ },
+ {
+  "para": 32,
+  "start": 168.4,
+  "end": 171.94,
+  "method": "forced-align",
+  "text": "The conveyor is still running because we have not reached our target of six."
+ },
+ {
+  "para": 33,
+  "start": 173.05,
+  "end": 178.43,
+  "method": "forced-align",
+  "text": "The sixth bottle is detected. The count becomes six, and the done signal turns on."
+ },
+ {
+  "para": 34,
+  "start": 179.15,
+  "end": 185.27,
+  "method": "forced-align",
+  "text": "Our PLC logic uses that signal to turn off Packing Run. The conveyor's run command turns off too."
+ },
+ {
+  "para": 35,
+  "start": 186.38,
+  "end": 194.71,
+  "method": "forced-align",
+  "text": "The counter does not directly disconnect motor power. It tells the program that the target has been reached. The program then commands the conveyor to stop."
+ },
+ {
+  "para": 36,
+  "start": 195.82,
+  "end": 200.77,
+  "method": "forced-align",
+  "text": "And setting the preset to six does not mean the counter is physically unable to count beyond six."
+ },
+ {
+  "para": 37,
+  "start": 201.37,
+  "end": 208.2,
+  "method": "forced-align",
+  "text": "More valid pulses can produce more counts. We still need control logic to prevent another bottle from entering the completed batch."
+ },
+ {
+  "para": 38,
+  "start": 209.29,
+  "end": 217.03,
+  "method": "forced-align",
+  "text": "A real conveyor also has a stopping distance. A seventh bottle already moving toward the box must not slip through after the stop command."
+ },
+ {
+  "para": 39,
+  "start": 217.73,
+  "end": 225.97,
+  "method": "forced-align",
+  "text": "That is why bottle spacing, sensor position and controlled feeding are part of the machine design. Our demonstration assumes those arrangements are correct."
+ },
+ {
+  "para": 40,
+  "start": 227.08,
+  "end": 233.2,
+  "method": "forced-align",
+  "text": "The box now contains six bottles. The conveyor is stopped. The count is six, and Done is on."
+ },
+ {
+  "para": 41,
+  "start": 234.03,
+  "end": 236.79,
+  "method": "forced-align",
+  "text": "Should pressing Start immediately begin another cycle?"
+ },
+ {
+  "para": 42,
+  "start": 237.62,
+  "end": 243.54,
+  "method": "forced-align",
+  "text": "Not in this sequence. This box is already complete. Our logic blocks a new cycle while Done is on."
+ },
+ {
+  "para": 43,
+  "start": 244.52,
+  "end": 248.02,
+  "method": "forced-align",
+  "text": "The operator removes the full box and puts an empty box in position."
+ },
+ {
+  "para": 44,
+  "start": 248.7,
+  "end": 251.39,
+  "method": "forced-align",
+  "text": "With the conveyor stopped, the operator presses Reset."
+ },
+ {
+  "para": 45,
+  "start": 252.02,
+  "end": 255.44,
+  "method": "forced-align",
+  "text": "The accumulated count returns to zero, and Done turns off."
+ },
+ {
+  "para": 46,
+  "start": 256.32,
+  "end": 262.7,
+  "method": "forced-align",
+  "text": "But Reset must not automatically start the conveyor. Reset clears the count. It does not issue a Start command."
+ },
+ {
+  "para": 47,
+  "start": 263.42,
+  "end": 266.59,
+  "method": "forced-align",
+  "text": "A fresh press of Start begins the next six-bottle cycle."
+ },
+ {
+  "para": 48,
+  "start": 267.95,
+  "end": 269.54,
+  "method": "forced-align",
+  "text": "Now consider a different situation."
+ },
+ {
+  "para": 49,
+  "start": 270.36,
+  "end": 273.91,
+  "method": "forced-align",
+  "text": "Three bottles have entered the box, and the operator presses Stop."
+ },
+ {
+  "para": 50,
+  "start": 274.37,
+  "end": 280.67,
+  "method": "forced-align",
+  "text": "The conveyor stops, but the count stays at three. This counter retains the value it has already counted."
+ },
+ {
+  "para": 51,
+  "start": 281.37,
+  "end": 289.74,
+  "method": "forced-align",
+  "text": "The same box still contains those three bottles. If the operator presses Start without pressing Reset, the next bottle makes the count four."
+ },
+ {
+  "para": 52,
+  "start": 290.33,
+  "end": 293.48,
+  "method": "forced-align",
+  "text": "Then five, then six. The batch is complete."
+ },
+ {
+  "para": 53,
+  "start": 294.24,
+  "end": 297.45,
+  "method": "forced-align",
+  "text": "In that case, we need three more bottles, not another six."
+ },
+ {
+  "para": 54,
+  "start": 298.15,
+  "end": 300.38,
+  "method": "forced-align",
+  "text": "Stop and Reset do different jobs."
+ },
+ {
+  "para": 55,
+  "start": 300.82,
+  "end": 305.37,
+  "method": "forced-align",
+  "text": "Stop interrupts the process. Reset clears the accumulated count."
+ },
+ {
+  "para": 56,
+  "start": 306.25,
+  "end": 310.16,
+  "method": "forced-align",
+  "text": "What if someone resets the counter while leaving a box with three bottles in place?"
+ },
+ {
+  "para": 57,
+  "start": 310.17,
+  "end": 316.76,
+  "method": "forced-align",
+  "text": "The PLC could count another six bottles. Added to the three already in the box, that could produce nine."
+ },
+ {
+  "para": 58,
+  "start": 317.5,
+  "end": 327.46,
+  "method": "forced-align",
+  "text": "The physical quantity and the PLC's count must agree. Reset belongs in a defined batch-change sequence, not on a button that gets pressed without checking the process."
+ },
+ {
+  "para": 59,
+  "start": 328.11,
+  "end": 329.74,
+  "method": "forced-align",
+  "text": "The sensor signal matters too."
+ },
+ {
+  "para": 60,
+  "start": 330.38,
+  "end": 339.01,
+  "method": "forced-align",
+  "text": "Two false pulses from one bottle can produce an extra count. Two bottles touching each other may look like one continuous detection, causing a missed count."
+ },
+ {
+  "para": 61,
+  "start": 339.63,
+  "end": 347.26,
+  "method": "forced-align",
+  "text": "A counter instruction alone cannot guarantee accurate packing. We also need a reliable signal and proper separation between bottles."
+ },
+ {
+  "para": 62,
+  "start": 348.17,
+  "end": 355.53,
+  "method": "forced-align",
+  "text": "That is the basic difference between a timer and a counter. A timer measures time. A counter counts the events we define."
+ },
+ {
+  "para": 63,
+  "start": 356.36,
+  "end": 362.42,
+  "method": "forced-align",
+  "text": "So far, we have demonstrated a count-up counter, or CTU. Each bottle increased the count by one."
+ },
+ {
+  "para": 64,
+  "start": 363.25,
+  "end": 365.53,
+  "method": "forced-align",
+  "text": "Let's briefly look at some other counter concepts."
+ },
+ {
+  "para": 65,
+  "start": 366.32,
+  "end": 372.4,
+  "method": "forced-align",
+  "text": "A count-down counter, or CTD, starts from a loaded value and subtracts one for each new event."
+ },
+ {
+  "para": 66,
+  "start": 373.11,
+  "end": 383.83,
+  "method": "forced-align",
+  "text": "For example, we can start with six bottles remaining. One bottle arrives, and five remain. The next leaves four remaining. We can count down to zero to show how many more are needed."
+ },
+ {
+  "para": 67,
+  "start": 384.65,
+  "end": 390.35,
+  "method": "forced-align",
+  "text": "An up-down counter, or CTUD, has separate inputs for increasing and decreasing a count."
+ },
+ {
+  "para": 68,
+  "start": 391.07,
+  "end": 402.53,
+  "method": "forced-align",
+  "text": "A bottle entering a buffer area adds one. A bottle leaving subtracts one. This lets us track the quantity in that area, provided the starting count matches the actual quantity."
+ },
+ {
+  "para": 69,
+  "start": 403.72,
+  "end": 406.76,
+  "method": "forced-align",
+  "text": "Then there is the high-speed counter, or HSC."
+ },
+ {
+  "para": 70,
+  "start": 407.67,
+  "end": 416.45,
+  "method": "forced-align",
+  "text": "An encoder can produce pulses too quickly for an ordinary program scan to capture reliably. Suitable high-speed counter hardware can handle those signals."
+ },
+ {
+  "para": 71,
+  "start": 417.19,
+  "end": 428.57,
+  "method": "forced-align",
+  "text": "But notice the difference in classification. CTU, CTD and CTUD describe the direction of counting. HSC describes the ability to capture fast pulses."
+ },
+ {
+  "para": 72,
+  "start": 429.42,
+  "end": 440.03,
+  "method": "forced-align",
+  "text": "A high-speed counter can also support up and down counting, depending on the PLC and its configuration. These are not four mutually exclusive types that apply identically to every PLC."
+ },
+ {
+  "para": 73,
+  "start": 441.3,
+  "end": 445.28,
+  "method": "forced-align",
+  "text": "Our detailed demonstration in this episode is the CTU bottle-packing example."
+ },
+ {
+  "para": 74,
+  "start": 446.24,
+  "end": 447.2,
+  "method": "forced-align",
+  "text": "Now a question for you."
+ },
+ {
+  "para": 75,
+  "start": 447.76,
+  "end": 458.92,
+  "method": "forced-align",
+  "text": "We are packing six bottles per box. After the count reaches three, the operator presses Stop. The same box remains in place. Reset is not pressed. Then the operator presses Start again."
+ },
+ {
+  "para": 76,
+  "start": 459.69,
+  "end": 461.73,
+  "method": "forced-align",
+  "text": "How many more bottles are needed to complete the cycle?"
+ },
+ {
+  "para": 77,
+  "start": 462.55,
+  "end": 464.19,
+  "method": "forced-align",
+  "text": "Option A: three more bottles."
+ },
+ {
+  "para": 78,
+  "start": 464.72,
+  "end": 466.58,
+  "method": "forced-align",
+  "text": "Option B: another six bottles."
+ },
+ {
+  "para": 79,
+  "start": 467.2,
+  "end": 469.02,
+  "method": "forced-align",
+  "text": "Option C: no more bottles."
+ },
+ {
+  "para": 80,
+  "start": 469.92,
+  "end": 472.46,
+  "method": "forced-align",
+  "text": "Comment A, B or C, and tell us why."
+ },
+ {
+  "para": 81,
+  "start": 473.89,
+  "end": 481.67,
+  "method": "forced-align",
+  "text": "We can now stop the conveyor when the count is complete. But what if the box is missing or out of position? Should pressing Start still run the conveyor?"
+ },
+ {
+  "para": 82,
+  "start": 482.54,
+  "end": 488.25,
+  "method": "forced-align",
+  "text": "In the next episode, we will look at interlocks: the conditions that must be satisfied before a machine is allowed to run."
+ },
+ {
+  "para": 83,
+  "start": 489.22,
+  "end": 493.19,
+  "method": "forced-align",
+  "text": "For practical PLC explanations like this, subscribe to Factory Decode Tamil."
+ }
+]

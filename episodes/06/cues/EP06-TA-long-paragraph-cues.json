@@ -1,0 +1,590 @@
+[
+ {
+  "para": 0,
+  "start": 0.18,
+  "end": 4.81,
+  "method": "forced-align",
+  "text": "Pona episode-la timer vechu mixer-ai kurippitta nerathukku run panni stop pannuradhai paathom."
+ },
+ {
+  "para": 1,
+  "start": 5.58,
+  "end": 13.06,
+  "method": "forced-align",
+  "text": "Aanaa indha packing station-la neram mukkiyam illa. Oru box-kulla sariyaa aaru bottles poganum. Anju ponaalum thappu. Ezhu ponaalum thappu."
+ },
+ {
+  "para": 2,
+  "start": 14.01,
+  "end": 16.47,
+  "method": "forced-align",
+  "text": "Appo PLC-ku aaru bottles vandhuduchunu epdi theriyum?"
+ },
+ {
+  "para": 3,
+  "start": 17.23,
+  "end": 18.76,
+  "method": "forced-align",
+  "text": "Idhukkudhaan counter use panrom."
+ },
+ {
+  "para": 4,
+  "start": 19.68,
+  "end": 26.82,
+  "method": "forced-align",
+  "text": "Indha conveyor-la bottles ovvonnaa varudhu. Conveyor mudivula oru box irukku. Bottle box-kulla pogura idathula oru sensor irukku."
+ },
+ {
+  "para": 5,
+  "start": 27.57,
+  "end": 30.99,
+  "method": "forced-align",
+  "text": "Namma example-la ovvoru bottle-aiyum sensor correct-aa detect pannudhunu vechukkalaam."
+ },
+ {
+  "para": 6,
+  "start": 31.74,
+  "end": 38.15,
+  "method": "forced-align",
+  "text": "Bottle illaadhappo sensor signal OFF. Bottle vandhaa ON. Bottle kadandhu ponaa marubadi OFF."
+ },
+ {
+  "para": 7,
+  "start": 38.96,
+  "end": 40.66,
+  "method": "forced-align",
+  "text": "Adutha bottle varumbodhu marubadi ON."
+ },
+ {
+  "para": 8,
+  "start": 41.37,
+  "end": 45.01,
+  "method": "forced-align",
+  "text": "Indha pudhusaana detection-ai vechu PLC ovvoru bottle-aiyum count pannum."
+ },
+ {
+  "para": 9,
+  "start": 45.65,
+  "end": 47.11,
+  "method": "forced-align",
+  "text": "Mudhal bottle — count onnu."
+ },
+ {
+  "para": 10,
+  "start": 47.74,
+  "end": 49.33,
+  "method": "forced-align",
+  "text": "Rendaavadhu bottle — count rendu."
+ },
+ {
+  "para": 11,
+  "start": 50.0,
+  "end": 51.55,
+  "method": "forced-align",
+  "text": "Moonaavadhu bottle — count moonu."
+ },
+ {
+  "para": 12,
+  "start": 52.2,
+  "end": 55.38,
+  "method": "forced-align",
+  "text": "Ippadi ovvoru bottle varumbodhum count onnu onnaa adhigarikkum."
+ },
+ {
+  "para": 13,
+  "start": 56.35,
+  "end": 65.47,
+  "method": "forced-align",
+  "text": "Inga namma use pannuradhu count-up counter. Idhai CTU-nu solluvaanga. PLC brand-ku etha maadhiri instruction peyar maaralaam; basic counting concept idhudhaan."
+ },
+ {
+  "para": 14,
+  "start": 66.31,
+  "end": 67.87,
+  "method": "forced-align",
+  "text": "Counter-la rendu values-ai gavaninga."
+ },
+ {
+  "para": 15,
+  "start": 68.54,
+  "end": 76.23,
+  "method": "forced-align",
+  "text": "Onnu, namakku thevaiyaana target count. Idhai preset-nu solluvom. Namma box-ku aaru bottles venum; adhanaala preset aaru."
+ },
+ {
+  "para": 16,
+  "start": 77.27,
+  "end": 83.9,
+  "method": "forced-align",
+  "text": "Innoru value, idhuvaraikkum count pannina value. Idhai accumulated count-nu solluvom. Display-la ACC-nu kaattalaam."
+ },
+ {
+  "para": 17,
+  "start": 84.89,
+  "end": 89.48,
+  "method": "forced-align",
+  "text": "Rendu bottles detect aayirundhaa, accumulated count rendu. Preset innum aaru dhaan."
+ },
+ {
+  "para": 18,
+  "start": 90.54,
+  "end": 93.84,
+  "method": "forced-align",
+  "text": "Count preset-ai reach pannumbodhu counter-oda done signal ON aagum."
+ },
+ {
+  "para": 19,
+  "start": 94.67,
+  "end": 95.9,
+  "method": "forced-align",
+  "text": "Aanaa inga oru mukkiyamaana question."
+ },
+ {
+  "para": 20,
+  "start": 96.84,
+  "end": 101.17,
+  "method": "forced-align",
+  "text": "Oru bottle sensor munnadiye ninnuduchunu vechukkonga. Signal rendu second ON-la irukku."
+ },
+ {
+  "para": 21,
+  "start": 101.89,
+  "end": 104.62,
+  "method": "forced-align",
+  "text": "Appo PLC andha ore bottle-ai thirumba thirumba count pannumaa?"
+ },
+ {
+  "para": 22,
+  "start": 105.39,
+  "end": 105.88,
+  "method": "forced-align",
+  "text": "Pannakoodaadhu."
+ },
+ {
+  "para": 23,
+  "start": 106.69,
+  "end": 112.17,
+  "method": "forced-align",
+  "text": "Indha counter pudhusaa OFF-lendhu ON aagura change-ai count pannum. Idhai rising edge-nu solluvom."
+ },
+ {
+  "para": 24,
+  "start": 112.82,
+  "end": 115.48,
+  "method": "forced-align",
+  "text": "Signal ON-la appadiye irukkuradhu pudhusaana event illa."
+ },
+ {
+  "para": 25,
+  "start": 116.25,
+  "end": 125.2,
+  "method": "forced-align",
+  "text": "Adhanaala ore bottle sensor-ai block pannittu ninnaa, count onnu dhaan. Signal OFF aagi, adutha bottle vandhu marubadi ON aagumbodhu dhaan next count."
+ },
+ {
+  "para": 26,
+  "start": 126.1,
+  "end": 127.61,
+  "method": "forced-align",
+  "text": "Ippo full packing cycle-ai paakkalaam."
+ },
+ {
+  "para": 27,
+  "start": 128.35,
+  "end": 133.5,
+  "method": "forced-align",
+  "text": "Empty box correct position-la irukku. Counter zero-la irukku. Start press panrom."
+ },
+ {
+  "para": 28,
+  "start": 134.14,
+  "end": 138.54,
+  "method": "forced-align",
+  "text": "Packing Run bit ON aagudhu. Adhai vechu conveyor run command-ai ON panrom."
+ },
+ {
+  "para": 29,
+  "start": 139.46,
+  "end": 143.82,
+  "method": "forced-align",
+  "text": "Pona episode-la paatha holding logic maadhiri, Start button-ai vittaalum conveyor odum."
+ },
+ {
+  "para": 30,
+  "start": 144.89,
+  "end": 151.09,
+  "method": "forced-align",
+  "text": "Mudhal bottle sensor-ai cross pannudhu. Input ON aagudhu. Count onnu. Bottle box-kulla pogudhu."
+ },
+ {
+  "para": 31,
+  "start": 152.12,
+  "end": 159.83,
+  "method": "forced-align (window fix)",
+  "text": "Bottle kadandha piragu input OFF aagudhu. Count onnu-la appadiye irukku. Sensor OFF aanadhunaala count zero aagaadhu."
+ },
+ {
+  "para": 32,
+  "start": 161.06,
+  "end": 165.17,
+  "method": "forced-align (window fix)",
+  "text": "Adutha bottle varudhu. Pudhusaa input ON. Count rendu."
+ },
+ {
+  "para": 33,
+  "start": 166.15,
+  "end": 170.8,
+  "method": "forced-align",
+  "text": "Moonaavadhu, naalaavadhu, anjaavadhu bottles varudhu. Count moonu, naalu, anju."
+ },
+ {
+  "para": 34,
+  "start": 171.67,
+  "end": 174.07,
+  "method": "forced-align",
+  "text": "Innum conveyor odudhu. Yennaa target aaru."
+ },
+ {
+  "para": 35,
+  "start": 175.04,
+  "end": 181.02,
+  "method": "forced-align",
+  "text": "Aaraavadhu bottle detect aagudhu. Count aaru aagudhu. Ippo counter done signal ON aagum."
+ },
+ {
+  "para": 36,
+  "start": 181.98,
+  "end": 188.4,
+  "method": "forced-align",
+  "text": "Andha done signal-ai use panni namma logic Packing Run bit-ai OFF pannum. Conveyor run command-um OFF aagum."
+ },
+ {
+  "para": 37,
+  "start": 189.53,
+  "end": 198.06,
+  "method": "forced-align",
+  "text": "Inga counter motor power-ai direct-aa cut pannala. Target reach aayiduchunu signal kudukkudhu. Namma PLC program dhaan conveyor-ai stop panna command kudukkudhu."
+ },
+ {
+  "para": 38,
+  "start": 199.14,
+  "end": 203.31,
+  "method": "forced-align",
+  "text": "Counter-la aaru set panninaa, adhu aaru-ku mela count pannave pannaadhunu artham illa."
+ },
+ {
+  "para": 39,
+  "start": 203.96,
+  "end": 212.12,
+  "method": "forced-align",
+  "text": "Pudhusaana valid pulses vandhaa, counter innum count pannalaam. Adhanaala done signal vandhadhum adutha bottle varradhai niruthura control logic thevai."
+ },
+ {
+  "para": 40,
+  "start": 213.13,
+  "end": 219.68,
+  "method": "pause-based",
+  "text": "Actual machine-la conveyor-ku stopping distance irukkum. Already move aagittu irukkura ezhaavadhu bottle box-kulla pogakoodaadhu."
+ },
+ {
+  "para": 41,
+  "start": 220.15,
+  "end": 230.88,
+  "method": "forced-align",
+  "text": "Adhanaala bottle spacing, sensor position, controlled feeding ellathaiyum serthu design pannanum. Namma animation-la andha arrangement correct-aa irukkura simple packing station-ai demonstrate panrom."
+ },
+ {
+  "para": 42,
+  "start": 231.77,
+  "end": 236.78,
+  "method": "forced-align",
+  "text": "Ippo box-la aaru bottles irukku. Conveyor ninnuduchu. Count aaru, done ON."
+ },
+ {
+  "para": 43,
+  "start": 237.78,
+  "end": 240.22,
+  "method": "forced-align",
+  "text": "Marubadi Start press panninaa conveyor odanumaa?"
+ },
+ {
+  "para": 44,
+  "start": 241.1,
+  "end": 248.76,
+  "method": "pause-based",
+  "text": "Namma sequence-la oda koodaadhu. Indha box already complete. Done ON irukkumbodhu pudhusaana cycle start aagaadha maadhiri logic irukkanum."
+ },
+ {
+  "para": 45,
+  "start": 249.32,
+  "end": 253.06,
+  "method": "forced-align",
+  "text": "Operator full box-ai eduthuttu empty box-ai correct position-la vaikkuraaru."
+ },
+ {
+  "para": 46,
+  "start": 253.6,
+  "end": 256.67,
+  "method": "forced-align",
+  "text": "Adhukku appuram, conveyor stop-la irukkumbodhu Reset press panraaru."
+ },
+ {
+  "para": 47,
+  "start": 257.31,
+  "end": 260.13,
+  "method": "forced-align",
+  "text": "Counter value zero aagum. Done signal OFF aagum."
+ },
+ {
+  "para": 48,
+  "start": 260.97,
+  "end": 267.48,
+  "method": "forced-align",
+  "text": "Aanaa Reset press pannadhum conveyor thaanaave oda koodaadhu. Reset count-ai clear pannum; Start command-ai kudukkaadhu."
+ },
+ {
+  "para": 49,
+  "start": 268.01,
+  "end": 271.45,
+  "method": "forced-align",
+  "text": "Pudhusaana Start press panninaa dhaan adutha six-bottle cycle aarambikkum."
+ },
+ {
+  "para": 50,
+  "start": 272.28,
+  "end": 273.75,
+  "method": "forced-align",
+  "text": "Inga innoru situation paarppom."
+ },
+ {
+  "para": 51,
+  "start": 274.42,
+  "end": 277.22,
+  "method": "forced-align",
+  "text": "Moonaavadhu bottle mudinjadhum operator Stop press panraaru."
+ },
+ {
+  "para": 52,
+  "start": 277.81,
+  "end": 283.82,
+  "method": "forced-align",
+  "text": "Conveyor nikkum. Aanaa counter-la irukkura moonu clear aagaadhu. Indha counter count pannina value-ai retain pannum."
+ },
+ {
+  "para": 53,
+  "start": 284.53,
+  "end": 294.64,
+  "method": "forced-align",
+  "text": "Adhe box-la moonu bottles irukku. Reset press pannaama marubadi Start panninaa, adutha bottle count naalu. Adhukku aduthadhu anju. Adutha bottle aaru aana batch complete."
+ },
+ {
+  "para": 54,
+  "start": 295.03,
+  "end": 297.64,
+  "method": "forced-align",
+  "text": "Appo indha situation-la innum moonu bottles dhaan venum."
+ },
+ {
+  "para": 55,
+  "start": 298.29,
+  "end": 300.14,
+  "method": "forced-align",
+  "text": "Stop-um Reset-um ore velai illa."
+ },
+ {
+  "para": 56,
+  "start": 300.61,
+  "end": 304.61,
+  "method": "forced-align",
+  "text": "Stop-naa process-ai niruthuradhu. Reset-naa count pannina value-ai clear pannuradhu."
+ },
+ {
+  "para": 57,
+  "start": 305.3,
+  "end": 309.5,
+  "method": "forced-align",
+  "text": "Already moonu bottles irukkura box-ai appadiye vechuttu count mattum zero pannittaa enna aagum?"
+ },
+ {
+  "para": 58,
+  "start": 310.05,
+  "end": 316.02,
+  "method": "forced-align",
+  "text": "PLC pudhusaa aaru bottles count pannalaam. Aanaa box-la already irundha moonum serndhu onbadhu bottles aagidalaam."
+ },
+ {
+  "para": 59,
+  "start": 316.65,
+  "end": 324.87,
+  "method": "forced-align",
+  "text": "Adhanaala physical box-la irukkura quantity-um PLC count-um match aaganum. Reset-ai summa press panna koodaadhu; batch change-ku etha sequence thevai."
+ },
+ {
+  "para": 60,
+  "start": 325.69,
+  "end": 336.14,
+  "method": "forced-align",
+  "text": "Sensor-um correct-aa work aaganum. Oru bottle-ku rendu false pulses vandhaa extra count aagum. Rendu bottles gap illaama serndhu vandhaa sensor rendu separate events-aa detect pannaama pogalaam."
+ },
+ {
+  "para": 61,
+  "start": 336.8,
+  "end": 342.89,
+  "method": "forced-align",
+  "text": "Adhanaala nalla counting-ku counter instruction mattum podhaadhu. Sensor signal-um bottle separation-um correct-aa irukkanum."
+ },
+ {
+  "para": 62,
+  "start": 343.67,
+  "end": 350.78,
+  "method": "forced-align",
+  "text": "Idhudhaan timer-kum counter-kum basic difference. Timer nerathai measure pannum. Counter namma define pannina events-ai count pannum."
+ },
+ {
+  "para": 63,
+  "start": 351.54,
+  "end": 357.21,
+  "method": "forced-align",
+  "text": "Ithuvaraikkum namma paathadhu count-up counter, CTU. Bottle varumbodhu count onnu onnaa adhigarichadhu."
+ },
+ {
+  "para": 64,
+  "start": 357.89,
+  "end": 360.14,
+  "method": "forced-align",
+  "text": "Innum sila counter concepts-ai short-aa paakkalaam."
+ },
+ {
+  "para": 65,
+  "start": 360.69,
+  "end": 366.94,
+  "method": "forced-align",
+  "text": "Count-down counter, CTD-naa, oru value-ai load panni angirundhu ovvoru event-kum onnu onnaa kuraippom."
+ },
+ {
+  "para": 66,
+  "start": 367.61,
+  "end": 377.84,
+  "method": "forced-align",
+  "text": "Udharanathukku, innum aaru bottles venumnu aaru-la aarambikkalaam. Oru bottle vandhaa meedhi anju. Adutha bottle vandhaa naalu. Ippadi zero varaikkum kuraichu, remaining quantity-ai kaattalaam."
+ },
+ {
+  "para": 67,
+  "start": 378.67,
+  "end": 384.95,
+  "method": "forced-align",
+  "text": "Aduthadhu up-down counter, CTUD. Oru input count-ai increase pannum; innoru input decrease pannum."
+ },
+ {
+  "para": 68,
+  "start": 385.56,
+  "end": 396.28,
+  "method": "forced-align",
+  "text": "Oru buffer area-kulla bottle vandhaa plus onnu. Angirundhu veliya ponaa minus onnu. Ippadi andha area-la ethana bottles irukkunu track pannalaam. Aarambathula irukkura quantity-um count-um match aaganum."
+ },
+ {
+  "para": 69,
+  "start": 397.13,
+  "end": 398.96,
+  "method": "forced-align",
+  "text": "Appuram high-speed counter, HSC."
+ },
+ {
+  "para": 70,
+  "start": 399.61,
+  "end": 410.32,
+  "method": "pause-based",
+  "text": "Encoder-lendhu romba vegamaa pulses varumbodhu, normal program scan-la ella pulses-aiyum capture panna mudiyaama pogalaam. Indha maadhiri signal-ku suitable high-speed counter hardware-ai use pannuvom."
+ },
+ {
+  "para": 71,
+  "start": 411.11,
+  "end": 422.26,
+  "method": "forced-align",
+  "text": "Inga oru difference gavaninga. CTU, CTD, CTUD-nguradhu count endha direction-la maarudhunguradhai solludhu. HSC-nguradhu fast pulses-ai capture pannura capability-ai solludhu."
+ },
+ {
+  "para": 72,
+  "start": 422.81,
+  "end": 431.76,
+  "method": "forced-align (window fix)",
+  "text": "Adhanaala HSC-um up/down count pannalaam; adhu PLC model, configuration-ai poruthadhu. Counter-naa exactly naalu separate types mattum dhaannu purinjukka vendaam."
+ },
+ {
+  "para": 73,
+  "start": 432.49,
+  "end": 437.19,
+  "method": "forced-align",
+  "text": "Namma indha episode-la detailed-aa demonstrate pannadhu CTU bottle-packing example."
+ },
+ {
+  "para": 74,
+  "start": 437.83,
+  "end": 438.77,
+  "method": "forced-align",
+  "text": "Ippo ungalukku oru question."
+ },
+ {
+  "para": 75,
+  "start": 439.52,
+  "end": 448.06,
+  "method": "forced-align",
+  "text": "Six-bottle cycle-la count moonu aana piragu Stop press pannittom. Adhe box dhaan irukku. Reset press pannala. Marubadi Start panrom."
+ },
+ {
+  "para": 76,
+  "start": 448.63,
+  "end": 451.26,
+  "method": "forced-align",
+  "text": "Cycle complete aaga innum ethana bottles venum?"
+ },
+ {
+  "para": 77,
+  "start": 451.94,
+  "end": 453.8,
+  "method": "forced-align",
+  "text": "Option A — Innum moonu bottles."
+ },
+ {
+  "para": 78,
+  "start": 454.13,
+  "end": 456.13,
+  "method": "forced-align",
+  "text": "Option B — Pudhusaa aaru bottles."
+ },
+ {
+  "para": 79,
+  "start": 456.41,
+  "end": 458.41,
+  "method": "forced-align",
+  "text": "Option C — Oru bottle-um thevai illa."
+ },
+ {
+  "para": 80,
+  "start": 458.23,
+  "end": 461.59,
+  "method": "forced-align",
+  "text": "Unga answer-ai A, B, illa C-nu comment pannunga!"
+ },
+ {
+  "para": 81,
+  "start": 462.34,
+  "end": 470.16,
+  "method": "forced-align",
+  "text": "Seri, count complete aanadhum conveyor-ai stop pannittom. Aanaa box-e correct position-la illa-naa, Start press pannumbodhu conveyor odalaamaa?"
+ },
+ {
+  "para": 82,
+  "start": 470.83,
+  "end": 474.98,
+  "method": "forced-align",
+  "text": "Adutha episode-la indha maadhiri conditions-ai check pannura interlock concept-ai paakkalaam."
+ },
+ {
+  "para": 83,
+  "start": 475.49,
+  "end": 480.21,
+  "method": "forced-align",
+  "text": "PLC concepts-ai practical examples-oda kathukka Factory Decode Tamil channel-ai subscribe pannunga!"
+ }
+]

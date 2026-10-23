@@ -1,5 +1,11 @@
 # Changelog – Inkstroke
 
+## v14 – EP06 counters (from ChatGPT 020 + production pack)
+- Packing-line simulation: belt, bottle sensor (beam/LED), 6-slot box with physical count, rising-edge counting, DONE stop, blocked Start, box swap, Reset at rest
+- Flat CTU panel, counter cards (CTU/CTD/CTUD), buffer area, encoder + HSC, signal traces, 3-button station (Start/Stop/Reset)
+- Forced alignment of each recording (pocketsphinx; Tamil via approximate Tanglish phones) → per-language event anchors
+- Templates: EP06 Counters EN / TA (16:9), EP06 promo Short EN / TA (9:16)
+
 ## v13.1 – EP05 promo Short final (owner audio)
 - Promo retimed to the owner's 36 s narration (pause-based beat placement); mouth level normalised per recording
 - Gestures no longer cross the face; hidden restart never completes before the end card

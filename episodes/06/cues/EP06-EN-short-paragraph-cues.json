@@ -1,0 +1,37 @@
+[
+ {
+  "para": 0,
+  "start": 0.24,
+  "end": 6.05,
+  "method": "forced-align",
+  "text": "One bottle stops in front of a sensor for two seconds. How many bottles will the PLC count?"
+ },
+ {
+  "para": 1,
+  "start": 6.69,
+  "end": 10.39,
+  "method": "forced-align",
+  "text": "Just one? Or will the count keep climbing while the signal stays on?"
+ },
+ {
+  "para": 2,
+  "start": 11.58,
+  "end": 19.82,
+  "method": "forced-align",
+  "text": "Each box needs exactly six bottles. How does the conveyor stop at six? And after changing the box, is pressing Start enough?"
+ },
+ {
+  "para": 3,
+  "start": 20.83,
+  "end": 24.86,
+  "method": "forced-align",
+  "text": "Find the answers in the full Episode 6 from Factory Decode Tamil."
+ },
+ {
+  "para": 4,
+  "start": 25.31,
+  "end": 27.74,
+  "method": "forced-align",
+  "text": "Subscribe for practical PLC explanations!"
+ }
+]
