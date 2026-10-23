@@ -253,9 +253,10 @@ function ctrlState(c,lt,scene){
 let CS={},CSnow=0,RT=0;
 /* speech-timed mouth: RMS envelope of the narration (not phoneme lip-sync) */
 function narrEnv(){const n=S.narr;if(!n||!n.buffer)return null;if(n._env)return n._env;const d=n.buffer.getChannelData(0),sr=n.buffer.sampleRate,hop=Math.round(sr/100),m=Math.floor(d.length/hop),env=new Float32Array(m);
-  for(let i=0;i<m;i++){let q=0;for(let j=i*hop,k=j+hop;j<k;j++)q+=d[j]*d[j];env[i]=10*Math.log10(q/hop+1e-12)}return n._env=env}
+  for(let i=0;i<m;i++){let q=0;for(let j=i*hop,k=j+hop;j<k;j++)q+=d[j]*d[j];env[i]=10*Math.log10(q/hop+1e-12)}
+  const sp=[...env].filter(v=>v>-50).sort((a,b)=>a-b);n._p90=sp.length?sp[Math.floor(sp.length*.9)]:-14;return n._env=env}
 function mouthAmt(T,tl){const env=narrEnv(),t=T+(+S.narrOff||0);
-  if(env){const i=Math.round(t*100);let v=-90;for(let k=i-2;k<=i+1;k++)if(k>=0&&k<env.length)v=Math.max(v,env[k]);return Math.max(0,Math.min(1,(v+42)/24))}
+  if(env){const i=Math.round(t*100);let v=-90;for(let k=i-2;k<=i+1;k++)if(k>=0&&k<env.length)v=Math.max(v,env[k]);const p9=S.narr._p90??-14;return Math.max(0,Math.min(1,(v-(p9-24))/30))}
   const syl=Math.sin(t*Math.PI*2*4.2)*.5+.5,gap=Math.sin(t*1.7)>-.55?1:0;return syl*gap*.85}
 const bst=e=>e.bind&&CS[e.bind.ctrl];
 function bindActive(e){const s=bst(e);if(!s)return true;switch(e.bind.role){case'inflow':return s.pump;case'outflow':return s.drain;case'sigHigh':return s.highWet;case'sigLow':return!s.lowWet;case'cmd':case'power':return s.pump;case'run':return s.run;case'out':return s.out;case'pb':return s.presses?s.presses.some(E=>CSnow-E.t>=0&&CSnow-E.t<.9):false;default:return true}}
@@ -1610,7 +1611,7 @@ $('openIn').onchange=ev=>{const f=ev.target.files[0];ev.target.value='';if(!f)re
 
 /* ---------- Templates ---------- */
 const TPL={
- promo05:{name:'EP05 promo Short (9:16, no captions)',desc:'2.5D tank + presenter · 15s? / 30s? question · draft timing until narration arrives',style:'white',scenes:[]},
+ promo05:{name:'EP05 promo Short (9:16, no captions)',desc:'2.5D tank + presenter · 15s? / 30s? question · load the Shorts narration',style:'white',scenes:[]},
  styledemo:{name:'Style test: ladder logic + whiteboard',desc:'24 s · live ladder rungs (green power flow), focus boxes · next-episode look',style:'white',scenes:[]},
  mixfull:{name:'EP05 Mixing tank timers – full (presenter)',desc:'8:36 · one presenter · gestures · speech-timed mouth · load narration',style:'white',scenes:[]},
  mixrto:{name:'EP05 excerpt: retentive timer (presenter)',desc:'55 s quality sample · one presenter · gestures · speech-timed mouth · load narration',style:'white',scenes:[]},
@@ -2264,7 +2265,9 @@ async function buildStyleDemo(){
 /* ---------- EP05 portrait promo (015/016): 9:16, no captions, 2.5D, one presenter. Silent draft timing – retime to the owner's narration ---------- */
 async function buildPromo(o={}){
   stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('9:16');S.narrOff=0;
-  const T=o.T||{start:.9,stop:5.9,ask:7.9,restart:9.6,q:10.4,c1:11.6,c2:13.2,choose:14.6,mem:18.0,card:23.0,sub:27.4,end:30.5};
+  /* timed to the owner's Shorts narration (36.0 s) by speech/pause segments – no transcript available, so beat-to-phrase mapping is estimated */
+  const SEG=[[.29,3.45],[3.85,4.68],[5.24,8.42],[9.17,10.87],[11.2,13.15],[14.11,15.23],[15.71,17.47],[18.47,21.33],[21.74,22.46],[23.52,25.9],[26.17,26.99],[27.77,31.9],[32.19,34.11],[34.55,35.96]];
+  const T=o.T||{start:1.0,stop:7.6,ask:8.5,restart:12.4,q:13.3,c1:14.15,c2:15.75,choose:17.5,mem:18.5,card:23.5,sub:32.2,end:36.0};
   const s=newScene({name:'EP05 promo (portrait)',style:'white',transition:'cut',trans:0,hold:0});s.minDur=T.end;S.scenes.push(s);S.cur=0;
   const pre={entrance:'none',scene:s,quiet:true,delay:0,withPrev:true,draw:.1};
   const c={id:uid++,type:'ctrl',kind:'tmr',name:'Mixing logic',preset:30,mode0:'rto',x:20,y:1240,w:200,h:24,draw:.1,delay:0,withPrev:true,entrance:'draw',motion:'none',events:[]};
@@ -2276,9 +2279,9 @@ async function buildPromo(o={}){
   const SB=anchorPt(stn,'start'),SP=anchorPt(stn,'stop');
   addText({font:'IBM Plex Sans',fill:'#1d1d1f',size:24,x:stn.x+6,y:stn.y-38,...pre,text:'START'});addText({font:'IBM Plex Sans',fill:'#e5383b',size:24,x:stn.x+12,y:stn.y+stn.h+6,...pre,text:'STOP'});
   const tf={id:uid++,type:'tface',name:'Timer face',x:60,y:76,w:600,h:170,preset:30,hideFrom:T.restart,draw:.1,delay:0,withPrev:true,entrance:'none',motion:'none',bind:{ctrl:c.id,role:'tface'}};s.els.push(tf);
-  const E=c.events;E.push({t:T.start,k:'start'},{t:T.start,k:'rate',v:15/(T.stop-T.start)},{t:T.stop,k:'stop',snap:15},{t:T.restart,k:'start'},{t:T.restart,k:'rate',v:3});
+  const E=c.events;E.push({t:T.start,k:'start'},{t:T.start,k:'rate',v:15/(T.stop-T.start)},{t:T.stop,k:'stop',snap:15},{t:T.restart,k:'start'},{t:T.restart,k:'rate',v:.6}/* hidden: never completes before the end card, so the answer stays open */);
   s.els.push(c);
-  const man=addStick({scene:s,quiet:true,look:'stick',action:'idle',size:470,x:236-145,y:610,facing:-1,entrance:'none',delay:0,withPrev:true,draw:.1});man.name='Presenter';man.vol=true;man.speak=o.speak||[];
+  const man=addStick({scene:s,quiet:true,look:'stick',action:'idle',size:470,x:236-145,y:610,facing:-1,entrance:'none',delay:0,withPrev:true,draw:.1});man.name='Presenter';man.vol=true;man.speak=o.speak||SEG.map(x=>[x[0]-.02,x[1]+.02]);
   const TK=[420,520],TF=[360,160],V='viewer';
   const C=(a,b,oo)=>s.els.push({id:uid++,type:'card',name:'Card',draw:.1,delay:0,withPrev:true,entrance:'draw',motion:'none',win:[a,b],...oo});
   C(T.c1,T.mem,{x:300,y:340,w:340,h:190,text:'15s?',size:96,from:'right',bg:'#ffffff'});
@@ -2286,17 +2289,17 @@ async function buildPromo(o={}){
   C(T.mem,T.card-.1,{x:300,y:360,w:340,h:150,text:'↺  15 s ?',size:64,pop:true,colors:['#1f5fd1']});
   C(T.mem+1.4,T.card-.1,{x:300,y:540,w:340,h:150,text:'0 s ?',size:64,pop:true,colors:['#e5383b']});
   C(T.card,1e6,{x:60,y:120,w:600,h:420,text:'Factory Decode Tamil\nEPISODE 05\nFULL VIDEO',sizes:[40,84,64],weights:[700,800,800],colors:['#5d6b7a','#1d1d1f','#1f5fd1'],pop:true,slide:.5});
-  C(T.sub,1e6,{x:310,y:570,w:350,h:96,text:'SUBSCRIBE',size:46,bg:'#e5383b',edge:'#9b1c1f',colors:['#ffffff'],pop:true,r:48});
+  C(T.sub,1e6,{x:310,y:760,w:350,h:96,text:'SUBSCRIBE',size:46,bg:'#e5383b',edge:'#9b1c1f',colors:['#ffffff'],pop:true,r:48});
   s.els.push({id:uid++,type:'focus',name:'Freeze outline',x:330,y:100,w:316,h:110,draw:.3,delay:0,withPrev:true,entrance:'draw',motion:'none',win:[T.stop+.15,T.ask],color:'#e5383b'});
   const a=(t,oo)=>({t,act:'idle',facing:-1,face:'neutral',gaze:TK,...oo});
   const reach=(t,tg)=>[a(t-.4,{act:'reach',target:tg,gaze:tg}),a(t+.55,{gaze:tg})];
-  man.beats=[a(0,{gaze:TK,face:'smile'}),...reach(T.start,SB),a(T.start+1.2,{gaze:TK,face:'smile'}),a(T.start+2.6,{act:'point',facing:1,target:TF,gaze:TF,face:'smile'}),
-    a(T.stop-1.2,{gaze:SP}),...reach(T.stop,SP),a(T.stop+.9,{gaze:TK,face:'o'}),a(T.stop+1.8,{act:'point',facing:1,target:TF,gaze:TF,face:'o'}),
+  man.beats=[a(0,{gaze:TK,face:'smile'}),...reach(T.start,SB),a(T.start+1.2,{gaze:TK,face:'smile'}),a(T.start+2.6,{act:'present',facing:1,target:[430,520],gaze:TF,face:'smile'}),
+    a(T.stop-1.2,{gaze:SP}),...reach(T.stop,SP),a(T.stop+.9,{gaze:TK,face:'o'}),a(T.stop+1.8,{facing:1,gaze:TF,face:'o'}),
     a(T.ask,{act:'ask',facing:1,gaze:V,face:'confused'}),a(T.restart-.9,{gaze:SB}),...reach(T.restart,SB),a(T.q,{act:'ask',facing:1,gaze:TF,face:'confused'}),
     a(T.c1+.1,{facing:1,gaze:[470,430],face:'o'}),a(T.c2+.1,{facing:1,gaze:[470,650],face:'o'}),a(T.choose,{act:'ask',facing:1,gaze:V,face:'confused'}),a(T.choose+1.4,{facing:1,gaze:[470,430],face:'think'}),a(T.choose+2.4,{facing:1,gaze:[470,650],face:'think'}),
     a(T.mem,{act:'think',facing:1,gaze:[470,430],face:'think'}),a(T.mem+1.5,{act:'think',facing:1,gaze:[470,620],face:'think'}),a(T.mem+3,{act:'ask',facing:1,gaze:V,face:'confused'}),
-    a(T.card+.5,{act:'point',facing:1,target:[360,330],gaze:V,face:'smile'}),a(T.card+2.6,{facing:1,gaze:V,face:'smile'}),
-    a(T.sub,{act:'point',facing:1,target:[480,620],gaze:[480,620],face:'smile'}),a(T.sub+1.4,{act:'nod',facing:1,gaze:V,face:'grin'})].sort((p,q)=>p.t-q.t);
+    a(T.card+.5,{act:'present',facing:1,target:[520,560],gaze:[400,330],face:'smile'}),a(T.card+1.6,{act:'present',facing:1,target:[520,560],gaze:V,face:'smile'}),a(T.card+2.6,{facing:1,gaze:V,face:'smile'}),
+    a(T.sub,{act:'point',facing:1,target:[470,808],gaze:[470,808],face:'smile'}),a(T.sub+1.4,{act:'nod',facing:1,gaze:V,face:'grin'})].sort((p,q)=>p.t-q.t);
   const FULL={x:W/2,y:H/2,z:1};
   s.cam=[{t:T.stop-1.4,d:.5,x:250,y:700,z:1.55},{t:T.stop+.9,d:.45,x:360,y:250,z:1.18},{t:T.ask-.2,d:.5,...FULL},{t:T.restart-1.0,d:.5,x:250,y:700,z:1.5},{t:T.q-.15,d:.45,x:360,y:250,z:1.18},{t:T.c1-.2,d:.5,...FULL}];
   S.captions=false;S.showHand=true;S.cur=0;S.pin=false;S.t=0;refresh();

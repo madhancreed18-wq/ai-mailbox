@@ -1,5 +1,9 @@
 # Changelog – Inkstroke
 
+## v13.1 – EP05 promo Short final (owner audio)
+- Promo retimed to the owner's 36 s narration (pause-based beat placement); mouth level normalised per recording
+- Gestures no longer cross the face; hidden restart never completes before the end card
+
 ## v13 – Portrait promo tools (from ChatGPT 015/016)
 - Cartoon hands for all stickmen: palm silhouette, separate thumb, rounded fingers (rest, point, open, palm-up, press)
 - 2.5D assets: shaded mixing tank (cutaway) and push-button station with contact shadows; shaded presenter head + ground shadow
