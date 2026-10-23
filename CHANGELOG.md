@@ -1,5 +1,10 @@
 # Changelog – Inkstroke
 
+## v11 – EP05 full episode, one presenter
+- Template "EP05 Mixing tank timers – full (presenter)" (8:36, default): 5 scenes, 15 compositions from beat-sheet-v2
+- Panel title segments (titles rewritten by the drawing hand), custom slow-motion labels, SLOW-MOTION ×n badge when counting slower than real time
+- Wipe / fade transitions only at topic changes; Reset button drawn within the presenter's reach
+
 ## v10.1 – One presenter (owner decision)
 - Excerpt template uses a single presenter: explains to the viewer, presses the buttons, asks the viewer in the question pause
 - Points up over the station toward the tank (never reads as a button press)

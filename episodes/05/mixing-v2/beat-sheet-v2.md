@@ -4,7 +4,7 @@ Times = owner recording. Phrase times come from pause detection inside each alig
 
 One presenter stickman (owner decision after 010): presses the buttons, points, asks the viewer. Mouth timed to the narration loudness (not phoneme lip sync).
 
-Status: compositions 8–9 (4:39.4–5:34.7) are implemented as the quality excerpt. The rest is the plan for the full revision.
+Status: implemented for the whole episode (template 'EP05 Mixing tank timers – full (presenter)'). Rows are the plan; small timing differences in the build are listed in mailbox 013.
 
 
 ## 1 · Recap of previous episode
@@ -169,7 +169,7 @@ Reason: Presenter states the need that NR cannot meet
 | 4:33.9 | Naduvula stop panninaalum, | P | Presenter mimes Stop | — | — |
 | 4:35.8 | already mix pannina nerathai marakka vendaam” nu sonnaa? | P | Presenter palm-up | — | Pause hold |
 
-## 8 · RTO interrupted cycle  (EXCERPT, implemented)
+## 8 · RTO interrupted cycle
 
 Reason: Same composition, same Stop point, value is kept
 
@@ -194,7 +194,7 @@ Reason: Same composition, same Stop point, value is kept
 | 5:12.8 | Timer-um count pannuradhai niruthum. | P | Close-up again; Presenter points frozen bar | Paused 15.0 | Focus ease |
 | 5:14.9 | Already count pannina pathinainju second-ai mattum remember pannum. | P | Presenter presents kept 15, nods | Paused 15.0 | — |
 
-## 9 · Resume  (EXCERPT, implemented)
+## 9 · Resume
 
 Reason: Remaining 15 completes the cycle
 

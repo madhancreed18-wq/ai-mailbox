@@ -341,11 +341,11 @@ Object.assign(PROC,{
 function tmrState(c,lt){
   const key='tm'+c.id+':'+lt.toFixed(3);if(_cs.has(key))return _cs.get(key);if(_cs.size>800)_cs.clear();
   const ev=(c.events||[]).slice().sort((a,b)=>a.t-b.t),dt=1/30,n=Math.floor(Math.max(0,lt)/dt),P=c.preset;
-  let mode=c.mode0||'off',run=false,acc=0,done=false,rate=1,slow=false,speed=0,ang=0,ei=0,doneAt=null,flashAt=null,lastReset=null;
+  let slowL=null,mode=c.mode0||'off',run=false,acc=0,done=false,rate=1,slow=false,speed=0,ang=0,ei=0,doneAt=null,flashAt=null,lastReset=null;
   for(let i=0;i<=n;i++){const t=i*dt;
     while(ei<ev.length&&ev[ei].t<=t){const E=ev[ei++];
       if(E.k==='mode'){mode=E.v;acc=0;done=false;run=false}
-      else if(E.k==='rate')rate=E.v;else if(E.k==='slow')slow=E.v;
+      else if(E.k==='rate')rate=E.v;else if(E.k==='slow'){slow=E.v;slowL=E.label||null}
       else if(E.k==='start'){if(mode==='rto'){if(!done)run=true}else if(!run){run=true;if(mode==='nr'){acc=0;done=false}}}
       else if(E.k==='stop'){run=false;if(E.snap!=null&&mode==='rto')acc=E.snap}
       else if(E.k==='reset'){if(mode==='rto'&&!run){acc=0;done=false;lastReset=E.t}}
@@ -355,7 +355,7 @@ function tmrState(c,lt){
       if(mode==='nr'&&!run&&!slow&&acc>0){acc=0;done=false}
       speed+=((run?1:0)-speed)*Math.min(1,dt*(run?3.2:1.3));ang+=speed*dt*9}}
   const stateL=mode==='off'?(run?'Running':'Stopped'):run?'Mixing':mode==='rto'&&acc>0&&acc<P?'Paused':done?'Complete':'Ready';
-  const r={kind:'tmr',mode,run,out:run,acc,done,rate,slow,speed,ang,state:stateL,doneAt,flashAt,lastReset,presses:ev.filter(E=>E.t<=lt&&(E.k==='start'||E.k==='stop'||E.k==='reset'))};
+  const r={slowL,kind:'tmr',mode,run,out:run,acc,done,rate,slow,speed,ang,state:stateL,doneAt,flashAt,lastReset,presses:ev.filter(E=>E.t<=lt&&(E.k==='start'||E.k==='stop'||E.k==='reset'))};
   _cs.set(key,r);return r;
 }
 function drawMark(e,l,st,tl){
@@ -388,8 +388,9 @@ function drawTPanel(e,l,st,tl){
   ctx.lineJoin='round';ctx.lineCap='round';ctx.strokeStyle=ink;ctx.fillStyle='#fff';ctx.lineWidth=5;ctx.beginPath();ctx.roundRect(x,y,w,h,16);ctx.fill();ctx.stroke();
   const F=sz=>`${sz}px "Gochi Hand","Patrick Hand",cursive`,T=(t,xx,yy,sz,col=ink)=>{ctx.font=F(sz);ctx.fillStyle=col;ctx.textAlign='left';ctx.textBaseline='alphabetic';ctx.fillText(t,xx,yy)};
   const pill=(px,py,on,txt,col='#2fbf4a')=>{ctx.font=F(22);const tw=ctx.measureText(txt).width+24;ctx.beginPath();ctx.roundRect(px,py-16,tw,30,15);ctx.fillStyle=on?col:'#eef1f4';ctx.fill();ctx.lineWidth=3;ctx.strokeStyle=ink;ctx.stroke();ctx.fillStyle=on?'#fff':ink;ctx.fillText(txt,px+12,py+7);return tw};
-  const title=s.mode==='nr'?'Non-retentive timer':s.mode==='rto'?'Retentive timer':'PLC logic';if(!(e.hideTitleFrom!=null&&tl>=e.hideTitleFrom))T(title,x+18,y+44,36);
-  if(s.mode!=='off'){ctx.font=F(22);const sub=s.mode==='nr'?'TON':'RTO';T(sub,x+w-60,y+42,26,'#5d6b7a')}
+  let title=s.mode==='nr'?'Non-retentive timer':s.mode==='rto'?'Retentive timer':'PLC logic',showSub=true;if(e.titleSegs)for(const g of e.titleSegs)if(tl>=g[0]&&tl<g[1]){title=g[2];showSub=!!g[3]}
+  if(title&&!(e.hideTitleFrom!=null&&tl>=e.hideTitleFrom))T(title,x+18,y+44,36);
+  if(s.mode!=='off'&&showSub){ctx.font=F(22);const sub=s.mode==='nr'?'TON':'RTO';T(sub,x+w-60,y+42,26,'#5d6b7a')}
   ctx.lineWidth=2.5;ctx.strokeStyle=ink;ctx.beginPath();ctx.moveTo(x+16,y+58);ctx.lineTo(x+w-16,y+58);ctx.stroke();
   const recent=k=>s.presses.some(E=>E.k===k&&tl-E.t>=0&&tl-E.t<.6);
   T('Inputs',x+18,y+92,24);let px=x+100;px+=pill(px,y+85,recent('start'),'Start')+8;px+=pill(px,y+85,recent('stop'),'Stop','#e5383b')+8;if(e.showReset==null||tl>=e.showReset)pill(px,y+85,recent('reset'),'Reset','#3d7bfd');
@@ -408,7 +409,7 @@ function drawTPanel(e,l,st,tl){
   const sc={Ready:'#eef1f4',Mixing:'#2fbf4a',Paused:'#ffb020',Complete:'#1f5fd1',Running:'#2fbf4a',Stopped:'#eef1f4'}[s.state];
   T('State',x+18,y+h-22,24);ctx.font=F(24);const tw=ctx.measureText(s.state).width+28;ctx.beginPath();ctx.roundRect(x+92,y+h-44,tw,32,16);ctx.fillStyle=sc;ctx.fill();ctx.lineWidth=3;ctx.strokeStyle=ink;ctx.stroke();ctx.fillStyle=s.state==='Ready'||s.state==='Stopped'?ink:'#fff';ctx.fillText(s.state,x+106,y+h-20);
   let bx2=x+18;const by2=s.mode==='off'?y+h-84:y+418;const badge=(txt,col)=>{ctx.font=F(20);const bw2=ctx.measureText(txt).width+18;ctx.beginPath();ctx.roundRect(bx2,by2,bw2,28,8);ctx.fillStyle=col;ctx.fill();ctx.fillStyle='#fff';ctx.fillText(txt,bx2+9,by2+21);bx2+=bw2+6};
-  if(s.slow&&s.done)badge('SLOW-MOTION: one PLC scan','#7a4fd1');else if(s.run&&s.rate>1.05)badge('FAST-FORWARD ×'+s.rate.toFixed(1),'#5d6b7a');else if(s.slow)badge('SLOW-MOTION: one PLC scan','#7a4fd1');
+  const sl=s.slowL||'SLOW-MOTION: one PLC scan';if(s.slow&&s.done)badge(sl,'#7a4fd1');else if(s.run&&s.rate>1.05)badge('FAST-FORWARD ×'+s.rate.toFixed(1),'#5d6b7a');else if(s.run&&s.rate<.95)badge('SLOW-MOTION ×'+s.rate.toFixed(1),'#7a4fd1');else if(s.slow&&s.run&&!s.done&&false)badge(sl,'#7a4fd1');
   ctx.restore();return null;
 }
 
@@ -1498,6 +1499,7 @@ $('openIn').onchange=ev=>{const f=ev.target.files[0];ev.target.value='';if(!f)re
 
 /* ---------- Templates ---------- */
 const TPL={
+ mixfull:{name:'EP05 Mixing tank timers – full (presenter)',desc:'8:36 · one presenter · gestures · speech-timed mouth · load narration',style:'white',scenes:[]},
  mixrto:{name:'EP05 excerpt: retentive timer (presenter)',desc:'55 s quality sample · one presenter · gestures · speech-timed mouth · load narration',style:'white',scenes:[]},
  mixep:{name:'EP05 Mixing tank timers (16:9 long-form)',desc:'5 scenes · non-retentive vs retentive · timed to narration',style:'white',scenes:[]},
  ep5:{name:'EP05 ON-delay timer (vertical)',desc:'9:16 · stickman, conveyor, TON timer, state-driven effects',style:'white',scenes:[]},
@@ -1924,7 +1926,194 @@ async function buildMixRto(){
     {t:g(312.75),d:.6,x:960,y:340,z:1.3},{t:g(318.3),d:.55,...full},{t:g(321.75),d:.6,x:980,y:330,z:1.22},{t:g(325.7),d:.6,...full}];
   S.captions=true;S.showHand=true;S.cur=0;S.pin=false;S.t=0;refresh();
 }
+const EP5_PHR=[[0,0.0,6.86,"Start button-ai press panninaa mixer odum. Stop button-ai press panninaa ninnudum. Idhai pona episode-la holding logic vechu paathom."],[1,7.66,11.17,"ipo namma oru tank-la irukkura product-ai oru kurippitta nerathukku mix pannanum."],[1,11.84,13.93,"Neram mudinjadhum mixer thaanaave nindranum."],[1,14.79,17.17,"Operator pakkathula ninnu stopwatch paathutte irukkanumaa?"],[2,18.02,18.37,"Thevai illa."],[2,18.84,20.93,"Indha velaiyai PLC timer vechu pannalaam."],[3,22.02,23.63,"Oru batch mixing tank-ai eduthukkalaam."],[3,24.19,25.92,"Ingredients ellam tank-la add panniyaachu."],[3,26.35,27.7,"Ippo Start press panninaa,"],[3,27.81,29.42,"mixer muppadhu second odanum."],[3,30.1,32.44,"Muppadhu second mudinjadhum automaticah stop aaganum."],[4,33.34,36.12,"Inga muppadhu second-nguradhu namma explanation-kaana example."],[4,36.75,38.54,"Actual factory-la mixing time,"],[4,38.75,40.65,"product recipe-ku etha maadhiri set pannuvaanga."],[5,41.75,44.83,"Aanaa mixing nadakkumbodhe operator Stop press pannittaa?"],[6,45.89,47.07,"Marubadi Start pannumbodhu,"],[6,47.32,48.66,"full muppadhu second mix pannanumaa?"],[6,49.13,50.63,"Illa already mix pannina neram poga,"],[6,50.73,52.81,"meedhi neram mattum mix panninaa podhumaa?"],[7,53.91,56.18,"Indha rendu behaviour-aiyum non-retentive,"],[7,56.35,57.59,"retentive timers vechu paakkalaam."],[8,58.7,61.35,"Mudhal-la indha process-ku enna thevai-nu paarppom."],[9,62.12,62.88,"Oru Start button."],[9,63.47,64.19,"Oru Stop button."],[9,64.87,66.44,"Mixer-ai control panna oru output."],[9,67.15,70.05,"Mixing nadakkudhunu remember panna oru internal bit."],[9,70.73,71.89,"Adhukku aduthadhaa oru timer."],[10,72.81,75.05,"Indha internal bit-ai Mixing Run-nu koopiduvom."],[11,76.14,78.8,"Start button-ai press pannumbodhu Mixing Run ON aagum."],[11,79.45,81.7,"Pona episode-la paatha holding logic maadhiriye,"],[11,81.8,83.44,"button-ai vittaalum indha bit ON-la irukkum."],[12,84.37,87.51,"Indha Mixing Run bit-ai use panni mixer output-ai ON panrom."],[12,88.09,90.24,"Adhe bit-ai timer-oda input-kum kudukkurom."],[13,91.15,93.79,"Adhanaala mixing start aagumbodhu mixer-um odum,"],[13,94.17,95.25,"timer-um count panna aarambikkum."],[14,96.39,99.26,"Timer-la namma set pannura nerathai preset time-nu solluvom."],[14,99.84,101.47,"Inga preset time muppadhu second."],[15,102.54,105.48,"Timer idhuvaraikkum count pannina nerathai elapsed time-nu solluvom."],[15,106.22,107.29,"Pathu second count aayirundhaa,"],[15,107.44,108.56,"elapsed time pathu second."],[16,109.42,110.11,"Elapsed time,"],[16,110.22,113.48,"preset time-ai reach pannumbodhu timer-oda done signal ON aagum."],[16,114.06,114.41,"Adhaavadhu,"],[16,114.51,116.22,"set panna neram mudinjiduchunu indicate pannum."],[17,116.78,120.19,"Ippo mudhal-la non-retentive ON-delay timer-ai paakkalaam."],[18,121.22,122.16,"ON-delay-naa,"],[18,122.44,126.46,"timer input ON aanadhum done signal udane ON aagaadhu."],[18,126.99,129.45,"Set panna neram mudinja piraguthaan ON aagum."],[19,130.57,132.31,"Aanaa inga mixer udane odudhe?"],[19,132.82,133.75,"Appo delay enga irukku?"],[20,134.67,135.73,"Idhudhaan mukkiyamaana point."],[21,136.95,140.32,"Mixer-ai timer done signal moolamaa start pannala."],[21,141.01,143.3,"Mixing Run bit moolamaa start panrom."],[22,143.95,145.74,"Timer done signal-ai,"],[22,146.07,148.79,"mixing time mudinjiduchunu therinjukkaradhukku use panrom."],[22,149.44,152.6,"Andha signal vandhadhum mixer-ai stop panna program panrom."],[23,153.57,154.72,"Ippo full working-ai paarunga."],[24,155.89,157.52,"Operator Start press pannuraar."],[24,158.03,159.21,"Mixing Run ON aagudhu."],[24,160.0,160.55,"Mixer output ON aagudhu."],[24,160.65,164.73,"Tank-kulla blades rotate aagi ingredients mix aaga aarambikkudhu."],[25,165.5,169.03,"Adhe nerathula timer zero-lendhu count panna aarambikkudhu."],[26,170.14,170.82,"Pathu second aayiduchu."],[26,171.25,172.08,"Mixer odikitte irukku."],[26,172.67,174.27,"Timer done signal innum OFF."],[27,175.6,176.41,"Irubadhu second aayiduchu."],[27,176.94,178.01,"Mixer innum odikitte irukku."],[27,178.6,180.05,"Yennaa namma set pannadhu muppadhu second."],[28,181.09,182.11,"Muppadhu second reach aagudhu."],[29,182.8,185.51,"Ippo timer-oda done signal ON aagum."],[29,186.04,189.25,"Indha signal-ai use panni Mixing Run bit-ai OFF panrom."],[30,190.23,192.92,"Mixing Run OFF aanadhum mixer output-um OFF aagum."],[30,193.56,194.84,"Motor-ku run command ninnudum."],[30,195.32,196.68,"Blades slow aagi stop aagum."],[31,197.6,200.43,"Idhula timer mixer power-ai direct-aa cut pannala."],[31,201.24,203.1,"Timer time mudinjadhai indicate pannudhu."],[31,203.76,206.21,"Namma PLC logic dhaan mixer output-ai OFF pannudhu."],[32,207.0,207.01,"Seri,"],[32,207.3,208.85,"Mixing Run OFF aagiduchu."],[32,209.31,210.92,"Appo timer-oda input-um OFF aagume?"],[33,211.69,211.94,"Aamaam."],[33,212.36,216.51,"Adhanaala indha non-retentive timer-oda elapsed time zero-ku reset aagum."],[33,217.05,218.11,"Done signal-um OFF aagidum."],[34,219.21,221.96,"Appo done signal OFF aanadhum mixer marubadi start aagidumaa?"],[35,222.8,223.14,"Aagaadhu."],[35,223.68,225.41,"Mixing Run bit already OFF aagiduchu."],[35,225.92,228.58,"Adhai marubadi ON panna pudhusaana Start request thevai."],[36,229.2,233.21,"Namma example-la ovvoru Start request-kum oru mixing cycle dhaan."],[37,234.31,235.52,"Ippo innoru situation paarppom."],[38,236.45,238.79,"Mixing start panni pathinainju second aayirukku."],[38,239.42,241.15,"Aanaa operator Stop press pannuraar."],[39,242.13,244.24,"Ippo muppadhu second mudiyura varaikkum mixer odumaa?"],[40,245.3,245.63,"Odaadhu."],[40,246.22,248.87,"Stop command vandhadhum Mixing Run OFF aagum."],[40,249.26,250.39,"Mixer output-um OFF aagum."],[40,250.87,252.61,"Timer input OFF aaguradhaala,"],[40,252.79,257.34,"count pannina pathinainju second-um reset aagum."],[41,257.95,259.91,"Marubadiyum Start press panninaa enna aagum?"],[42,260.42,262.79,"Meedhi pathinainju second mattum count aagaadhu."],[42,263.38,265.8,"Zero-lendhu pudhusaa muppadhu second count aagum."],[43,266.44,267.42,"Yennaa namma use pannuradhu non-retentive timer."],[43,267.55,269.42,"Input OFF aanadhum count pannina time-ai adhu retain pannaadhu."],[44,270.45,272.63,"Aanaa namma process requirement vera maadhiri irundhaa?"],[45,273.22,273.76,"“Mixer mothamaa muppadhu second odinaa podhum."],[45,273.87,275.28,"Naduvula stop panninaalum,"],[45,275.78,279.18,"already mix pannina nerathai marakka vendaam” nu sonnaa?"],[46,279.9,281.72,"Appodhaan retentive timer use pannalaam."],[47,282.63,283.52,"Adhe mixing tank."],[47,283.78,285.1,"Adhe muppadhu-second preset."],[47,285.56,287.45,"Indha murai retentive timer vechu paakkalaam."],[48,288.15,289.03,"Start press panrom."],[48,289.48,290.65,"Mixing Run ON aagudhu."],[48,290.97,291.67,"Mixer odudhu."],[48,292.34,294.08,"Timer zero-lendhu count panna aarambikkudhu."],[49,294.91,296.55,"Pathinainju second-la Stop press panrom."],[50,297.4,298.62,"Mixing Run OFF aagum."],[50,299.23,300.64,"Mixer output-um OFF aagum."],[50,300.99,302.42,"Timer count pannuradhu ninnudum."],[51,303.03,305.4,"Aanaa elapsed time zero-ku pogaadhu."],[51,305.74,307.32,"Pathinainju second-la appadiye irukkum."],[52,308.69,309.89,"Inga mixer ninnuduchu."],[52,310.12,312.27,"Timer mattum count pannitte irukkum-nu purinjukka vendaam."],[53,312.79,314.54,"Timer-um count pannuradhai niruthum."],[53,314.91,317.74,"Already count pannina pathinainju second-ai mattum remember pannum."],[54,318.63,320.02,"Ippo marubadiyum Start press panrom."],[55,320.61,321.43,"Mixer odum."],[55,321.8,323.34,"Timer zero-lendhu aarambikkaadhu."],[55,323.66,325.19,"Pathinainju second-lendhu continue aagum."],[56,325.79,329.2,"Innum pathinainju second mix pannadhum total muppadhu second complete aagum."],[57,329.84,331.39,"Timer done signal ON aagum."],[57,331.96,334.5,"Namma logic Mixing Run-ai OFF panni mixer-ai stop pannum."],[58,335.36,336.58,"Mudhal-la pathinainju second."],[58,336.93,338.43,"Restart-ku appuram pathinainju second."],[58,338.68,340.13,"Mothamaa muppadhu second mixing."],[59,340.85,343.78,"Naduvula mixer ninnirundha nerathai indha mixing time-la serkka maattom."],[60,344.65,347.1,"Idhudhaan retentive timer-oda mukkiyamaana difference."],[60,347.52,349.07,"Timer input OFF aanaalum,"],[60,349.36,351.35,"already count pannina time retain aagum."],[61,352.26,352.49,"Seri,"],[61,352.59,354.2,"andha saved time-ai clear pannanumnaa?"],[62,354.78,356.39,"Separate Reset command thevai."],[62,356.92,359.87,"intha concept ku nama extra oru reset push button add pannanum"],[63,360.73,363.87,"Namma example-la mixer stop-la irukkumbodhu Reset press panninaa,"],[63,363.98,365.21,"elapsed time zero aagum."],[63,365.47,367.35,"Timer-oda done status-um clear aagum."],[64,367.97,369.4,"Adhukku appuram Start press panninaa,"],[64,369.57,371.1,"fresh-aa muppadhu second count pannum."],[65,371.73,376.33,"Adhe maadhiri,"],[65,376.44,377.21,"batch complete aagi adutha batch-ku pogumbodhum old timer value-ai reset panna logic irukkanum."],[66,377.84,378.6,"Namma sequence-la,"],[66,378.96,383.55,"pudhusaana batch start pannumbodhu timer-ai reset pannittu fresh cycle start panna arrange pannalaam."],[67,384.34,386.99,"Appo Stop-um Reset-um ore velai illa."],[68,387.75,390.66,"Indha retentive example-la Stop press panninaa mixer nikkum."],[68,390.76,393.09,"Count pannina time appadiye irukkum."],[69,393.89,396.23,"Reset command kuduthaa, saved time-um clear aagum."],[70,397.02,398.92,"Ippo rendu timer-aiyum pakkathula vechu paarunga."],[71,399.41,401.1,"Rendulayum preset muppadhu second."],[71,401.56,403.7,"Rendulayum pathinainju second-la Stop press panrom."],[72,404.41,406.47,"Non-retentive timer zero-ku reset aagum."],[73,406.99,408.92,"Retentive timer pathinainju second-la nikkum."],[74,409.71,412.43,"Marubadi Start press panninaa,"],[74,412.6,414.11,"non-retentive example-la full muppadhu second mixing nadakkum."],[75,414.81,417.57,"Retentive example-la meedhi pathinainju second mixing nadakkum."],[76,418.37,419.25,"Appo edhu better?"],[77,420.12,421.62,"Namma process-ku edhu thevaiyo,"],[77,421.74,422.42,"adhu dhaan correct."],[78,423.21,426.03,"Naduvula stop aana fresh full mixing cycle venumnaa,"],[78,426.3,427.55,"adhukku etha logic use pannanum."],[79,428.29,431.26,"Already odina mixing time-ai serthu calculate pannanumnaa,"],[79,431.57,433.21,"adhukku etha retentive logic use pannanum."],[80,434.1,437.11,"Actual factory-la indha decision product recipe-ai poruthadhu."],[81,437.97,439.28,"Inga innoru vishayam gavanikkanum."],[82,440.03,444.34,"PLC output ON irukkuradhu mattum mixer nijamaave odudhunguradhukku proof illa."],[82,444.97,446.22,"Drive fault aagirukkalaam,"],[82,446.47,447.88,"illa motor run aagaama irukkalaam."],[83,448.57,450.89,"Adhanaala actual machine-la running feedback thevai-na,"],[83,450.99,454.63,"adhaiyum check panni mixing time count panna logic design pannanum."],[83,455.38,458.55,"Namma basic example-la mixer normal-aa run aagudhunu assume panrom."],[84,459.44,464.52,"Retentive-naa power OFF aanaalum ellaa PLC-layum time kandippaa save aagum-nu artham illa."],[84,465.21,466.24,"Adhu PLC model,"],[84,466.54,467.45,"timer instruction,"],[84,467.55,468.82,"memory settings-ai poruthadhu."],[84,469.45,473.17,"Inga namma compare pannadhu timer input OFF aagumbodhu enna nadakkudhunguradhai."],[85,473.91,474.87,"Ippo ungalukku oru question."],[86,475.78,477.88,"Muppadhu-second retentive mixing cycle-la,"],[86,478.24,480.29,"pathinainju second mudinjadhum Stop press pannittom."],[87,481.06,482.65,"Reset press pannala."],[87,482.8,484.47,"Marubadi Start mattum press panrom."],[88,485.15,486.61,"Mixer innum evlo neram odum?"],[89,487.69,490.05,"Option A — Meedhi pathinainju second."],[90,490.68,493.02,"Option B — Pudhusaa muppadhu second."],[91,493.52,495.84,"Option C — Start aana udane ninnudum."],[92,496.66,499.07,"Unga answer-ai A, B, illa C-nu comment pannunga!"],[93,499.77,499.96,"Seri,"],[93,500.45,502.09,"timer vechu nerathai measure pannittom."],[93,502.72,505.98,"Aanaa oru box-la sariyaa aaru bottles pack pannanumnaa,"],[93,506.27,507.43,"PLC epdi count pannum?"],[94,508.18,510.38,"Adutha episode-la PLC counter-ai paakkalaam!"],[95,511.15,513.72,"PLC concepts-ai indha maadhiri practical examples-oda kathukka,"],[95,514.03,516.01,"Factory Decode Tamil channel-ai subscribe pannunga!"]];
+/* ---------- EP05 full episode v2: one presenter, beat sheet v2 (009/010 + owner: one stickman) ---------- */
+async function buildMixFull(){
+  stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('16:9');S.narrOff=0;
+  const PHR=EP5_PHR,TOTAL=516.384,bounds=[0,397.02,437.97,473.91,499.75,TOTAL],G='Gochi Hand';
+  function mkScene(k,name,tr,trd){const s=newScene({name,style:'white',transition:tr||'cut',trans:trd||0,hold:0});s.minDur=bounds[k+1]-bounds[k];s.off=bounds[k];
+    const ph=PHR.filter(x=>x[2]>bounds[k]&&x[1]<bounds[k+1]);
+    s.capBeats=ph.map((x,i)=>({t:x[1]-s.off,end:(i<ph.length-1?Math.min(ph[i+1][1],x[2]+1.2):x[2]+.6)-s.off,text:x[3]}));
+    s._spk=ph.map(x=>[x[1]-s.off,x[2]-s.off]);S.scenes.push(s);S.cur=S.scenes.length-1;return s}
+  const pre=s=>({entrance:'none',scene:s,quiet:true,delay:0,withPrev:true,draw:.1});
+  const put=(s,k,o)=>addSvg(doodleSvg(k),DOODLES[k][0],{key:k,flat:true,scene:s,quiet:true,delay:0,withPrev:true,...o});
+  const Tx=(s,o)=>addText({font:G,fill:'#1d1d1f',size:28,scene:s,quiet:true,delay:0,withPrev:true,draw:.9,...o});
+  const W_=(s,a,b)=>[a-s.off,b-s.off];
+  const note=(s,a,b,text,o={})=>Tx(s,{text,x:520,y:84,fill:'#1f5fd1',win:W_(s,a,b),...o});
+  const head=(s,a,b,text,o={})=>Tx(s,{text,x:60,y:84,size:30,win:W_(s,a,b),...o});
+  const mark=(s,a,b,x,y,w,h,col='#e5383b')=>s.els.push({id:uid++,type:'mark',name:'Emphasis loop',x,y,w,h,color:col,width:5,draw:.7,delay:0,withPrev:true,entrance:'draw',motion:'none',win:W_(s,a,b)});
+  const presenter=(s,x,y,facing)=>{const m=addStick({scene:s,quiet:true,look:'stick',action:'idle',size:290,x,y,facing,entrance:'none',delay:0,withPrev:true,draw:.1});m.name='Presenter';m.speak=s._spk;return m};
+  /* beat helpers (global times) */
+  function Beats(s,PX){const L=[],P=[];const fc=t=>!t||t==='viewer'?1:(t[0]<PX?-1:1);
+    const add=(t,o)=>L.push({t:t-s.off,act:'idle',face:'smile',gaze:'viewer',...o,facing:o.facing??fc(o.target||o.gaze)});
+    return{L,P,add,
+      idle:(t,gaze='viewer',o={})=>add(t,{gaze,...o}),
+      pt:(t,tg,o={})=>add(t,{act:'point',target:tg,gaze:o.gaze||tg,...o}),
+      pr:(t,tg,o={})=>add(t,{act:'present',target:tg,gaze:o.gaze||tg,...o}),
+      ask:(t,o={})=>add(t,{act:'ask',face:'confused',...o}),
+      nod:(t,o={})=>add(t,{act:'nod',...o}),shake:(t,o={})=>add(t,{act:'shake',face:'neutral',...o}),think:(t,o={})=>add(t,{act:'think',face:'think',...o}),
+      press:(t,tg)=>{P.push(t-s.off);add(t-.35,{act:'reach',target:tg,gaze:tg,face:'neutral'});add(t+.55,{gaze:tg,face:'neutral'})},
+      done(m){const pw=P.map(t=>[t-.36,t+.54]);m.beats=L.filter(b=>b.act==='reach'||!pw.some(w=>b.t>w[0]&&b.t<w[1])).sort((a,b)=>a.t-b.t)}}}
+  const FULL={x:W/2,y:H/2,z:1},TANKF={x:330,y:330,z:1.25},PANF={x:980,y:320,z:1.22},ACCF={x:960,y:330,z:1.3},MANF={x:560,y:330,z:1.3};
+  const cam=(s,list)=>s.cam=list.map(([t,v,d])=>({t:t-s.off,d:d||.6,...v}));
+
+  /* ===== Scene 1: tank + station + PLC panel (0:00–6:37) ===== */
+  const s1=mkScene(0,'Mixing tank: timers');
+  const c={id:uid++,type:'ctrl',kind:'tmr',name:'Mixing logic',preset:30,mode0:'off',x:40,y:612,w:260,h:28,draw:.1,delay:0,withPrev:true,entrance:'draw',motion:'none',events:[]};
+  const tank=await put(s1,'agitank',{...pre(s1),x:110,y:150,size:420,color:.1,bind:{ctrl:c.id,role:'mixmotor'}});
+  const wtl=anchorPt(tank,'winTL'),wbr=anchorPt(tank,'winBR');
+  s1.els.push({id:uid++,type:'mixview',name:'Tank contents',x:wtl[0]+3,y:wtl[1]+3,w:wbr[0]-wtl[0]-6,h:wbr[1]-wtl[1]-6,draw:.1,delay:0,withPrev:true,entrance:'none',motion:'none',bind:{ctrl:c.id,role:'mix'}});
+  const stn=await put(s1,'station3',{...pre(s1),x:452,y:300,size:150,color:.1,bind:{ctrl:c.id,role:'station'}});
+  const panel={id:uid++,type:'tpanel',name:'PLC logic panel',x:860,y:60,w:390,h:500,preset:30,showReset:357.8,titleSegs:[[70.7,116.85,'PLC logic',false],[116.85,1e6,null,true]],draw:.1,delay:0,withPrev:true,entrance:'none',motion:'none',bind:{ctrl:c.id,role:'panel'}};s1.els.push(panel);
+  const SB=anchorPt(stn,'start'),SP=anchorPt(stn,'stop'),top=anchorPt(stn,'top'),term=anchorPt(tank,'terminal'),px=panel.x,py=panel.y;
+  addArrow({...pre(s1),name:'Push buttons → PLC',line:'dashed',path:'poly',radius:14,color:'#2fbf4a',width:2.4,head:true,dot:true,x1:top[0],y1:top[1]-2,via:[[top[0],262],[822,262],[822,py+85]],x2:px-2,y2:py+85,bind:{ctrl:c.id,role:'pb'}});
+  addArrow({...pre(s1),name:'Output → motor',line:'dashed',path:'poly',radius:14,color:'#2fbf4a',width:2.4,head:true,dot:true,x1:px-2,y1:py+167,via:[[840,py+167],[840,40],[term[0]+40,40],[term[0]+40,term[1]]],x2:term[0]+2,y2:term[1],bind:{ctrl:c.id,role:'out'}});
+  Tx(s1,{text:'START',size:22,x:stn.x-64,y:SB[1]-14,entrance:'none'});Tx(s1,{text:'STOP',size:22,x:stn.x-58,y:SP[1]-14,entrance:'none'});
+  const clk=await put(s1,'clock',{x:400,y:120,size:80,draw:.7,color:.2,win:[14.85,21.8]});
+  /* titles written by the drawing hand when the topic changes */
+  Tx(s1,{text:'Non-retentive timer',size:36,x:px+14,y:py+12,draw:1.2,win:[116.9,285.5]});
+  Tx(s1,{text:'Retentive timer',size:36,x:px+14,y:py+12,draw:1.1,win:[285.6,1e6]});
+  /* Reset push button: drawn when the narration introduces it, within the presenter's reach */
+  const rb=await put(s1,'resetbtn',{x:672,y:360,size:50,draw:.7,color:.2,win:[355.0,1e6],bind:{ctrl:c.id,role:'resetbtn'}});const RB=anchorPt(rb,'reset');
+  Tx(s1,{text:'RESET',size:20,x:668,y:412,draw:.5,win:[355.9,1e6]});
+  addArrow({scene:s1,quiet:true,name:'Reset → PLC',line:'dashed',path:'poly',radius:12,color:'#3d7bfd',width:2.4,head:true,draw:.8,delay:0,withPrev:true,x1:rb.x+rb.w,y1:RB[1],via:[[800,RB[1]],[800,py+92]],x2:px-2,y2:py+92,win:[356.9,1e6]});
+  /* process events at finger contact */
+  const E=c.events,ev=(t,k,o={})=>E.push({t,k,...o});
+  ev(1.15,'start');ev(3.45,'stop');ev(70.8,'mode',{v:'nr'});
+  ev(156.6,'start');ev(156.6,'slow',{v:true,label:'Step by step (real PLC: one scan)'});ev(156.6,'rate',{v:10/(170.4-156.6)});ev(170.4,'rate',{v:10/(175.9-170.4)});ev(175.9,'rate',{v:10/(181.4-175.9)});
+  ev(187.6,'clearRun');ev(212.9,'nrReset');ev(212.9,'slow',{v:false});
+  ev(236.7,'start');ev(236.7,'rate',{v:15/(240.3-236.7)});ev(240.3,'stop');
+  ev(258.9,'start');ev(258.9,'rate',{v:30/(265.6-258.9)});
+  ev(285.5,'mode',{v:'rto'});ev(288.6,'start');ev(288.6,'rate',{v:15/(295.9-288.6)});ev(295.9,'stop',{snap:15});
+  ev(319.6,'start');ev(319.6,'rate',{v:15/(329.3-319.6)});ev(329.25,'slow',{v:true});ev(332.6,'clearRun');ev(332.65,'slow',{v:false});
+  ev(362.8,'reset');ev(368.8,'start');ev(368.8,'rate',{v:30/(377.0-368.8)});
+  s1.els.push(c);
+  const man=presenter(s1,SB[0]+19,280,-1),PX=SB[0]+19+man.w/2;
+  const ACC=[px+110,py+286],RUN=[px+320,py+127],OUT=[px+320,py+167],PRE=[px+90,py+228],TTL=[px+60,py+40],DN=[px+52,py+384],BAR=[px+250,py+316],BARE=[px+372,py+316],INP=[px+200,py+85],TMR=[px+60,py+300],TK=[330,110],IMP=[260,430],CLK=[440,160];
+  const b=Beats(s1,PX);const{idle,pt,pr,ask,nod,shake,think,press}=b;
+  const mRun=[px+8,py+110,380,36],mOut=[px+8,py+150,380,36],mPre=[px+10,py+210,140,44],mAcc=[px+60,py+250,140,56],mDn=[px+14,py+360,180,50],mTmr=[px+6,py+200,378,220],mBtn=p=>[p[0]-27,p[1]-27,54,54];
+  const M=(a,bb,r,col)=>mark(s1,a,bb,...r,col);
+  /* 1 recap */
+  idle(0,SB,{face:'smile'});press(1.15,SB);pt(1.9,TK,{gaze:IMP});press(3.45,SP);pr(4.4,[px+20,py+200]);idle(5.8);
+  head(s1,4.4,7.6,'Recap: holding logic (last episode)');
+  /* 2 mixing-time problem */
+  pt(7.7,TK,{gaze:IMP});idle(9.6);pt(11.84,TK,{gaze:IMP});idle(13.2);pt(14.79,CLK);ask(16.3);shake(18.02);pt(18.84,TTL);idle(20.2);
+  note(s1,19.0,22.0,'PLC timer can do this');
+  /* 2b batch, 30 s example */
+  pt(22.02,TK,{gaze:IMP});pt(24.19,TK,{gaze:IMP});idle(26.35,SB,{facing:-1});pt(27.81,TK,{gaze:IMP});idle(30.1);nod(33.34);think(36.75);nod(38.75);
+  head(s1,24.3,33.3,'Ingredients already loaded');note(s1,28.0,33.3,'30 s',{size:48});note(s1,33.5,41.7,'30 s = example\nreal time = recipe');
+  /* question: Stop in the middle? */
+  idle(41.75,SP,{facing:-1,face:'confused'});ask(43.3);idle(45.89,SB,{facing:-1});ask(47.32);pt(49.13,TK,{gaze:IMP});think(50.73);idle(52.9);pr(53.91,[px+20,py+200]);nod(56.35);
+  note(s1,47.4,49.1,'Full 30 s again?');note(s1,49.2,53.8,'...or only the rest?');head(s1,54.0,58.6,'Non-retentive  vs  Retentive');
+  /* 3 equipment / logic build */
+  pr(58.7,[px+20,py+200]);idle(60.5);idle(62.12,SB,{facing:-1});M(62.2,63.4,mBtn(SB),'#2fbf4a');idle(63.47,SP,{facing:-1});M(63.5,64.8,mBtn(SP));pt(64.87,OUT);M(64.9,67.1,mOut);pt(67.15,RUN);M(67.2,70.6,mRun);
+  pt(70.73,TMR);M(71.0,72.7,mTmr,'#1f5fd1');pt(72.81,RUN);note(s1,72.9,76.0,'Mixing Run = internal bit');
+  idle(76.14,SB,{facing:-1});pt(77.6,RUN);note(s1,76.3,79.4,'Start → Mixing Run ON');idle(79.45,SB,{facing:-1});idle(80.3);pt(81.8,RUN);note(s1,81.9,84.3,'Button released →\nbit stays ON (holding)');
+  pt(84.37,RUN);pt(85.6,OUT);note(s1,84.5,88.0,'Mixing Run → Mixer output');pt(88.09,RUN);pt(89.3,TMR);note(s1,88.2,91.1,'Mixing Run → Timer input');
+  pt(91.15,TK,{gaze:IMP});idle(93.0);pt(94.17,ACC);note(s1,91.3,96.3,'Mixer runs +\ntimer counts (together)');
+  /* 4 preset vs elapsed */
+  pt(96.39,PRE);M(96.5,102.4,mPre);pr(99.84,PRE);note(s1,97.9,102.5,'Preset = set time');
+  pt(102.54,ACC);M(102.6,109.3,mAcc);note(s1,103.8,109.3,'Elapsed = counted time');pr(106.22,ACC);idle(107.44);
+  pt(109.42,ACC);pt(110.22,DN);M(110.3,116.7,mDn,'#2fbf4a');note(s1,111.6,116.7,'Elapsed reaches preset\n→ DONE ON');nod(114.51);
+  /* 5 ON-delay misunderstanding */
+  pt(116.9,TTL);idle(118.6);pt(121.22,TTL);note(s1,122.5,130.5,'ON-delay: DONE comes\nafter the set time');pt(122.44,INP);pt(124.6,DN);pt(126.99,BARE);idle(128.6);
+  pt(130.57,TK,{gaze:IMP,face:'confused'});ask(132.82);pt(134.67,[640,150],{gaze:'viewer'});shake(136.95);pt(137.9,DN);note(s1,137.2,141.0,'Mixer is NOT\nstarted by DONE');
+  pt(141.01,RUN);M(141.1,143.9,mRun,'#2fbf4a');note(s1,142.2,147.0,'Mixer starts from\nMixing Run');pt(143.95,DN);pr(146.07,DN);note(s1,147.1,149.4,'DONE = mixing\ntime finished');
+  pt(149.44,RUN);note(s1,149.6,153.5,'DONE → logic clears\nMixing Run → mixer stops');idle(151.5);
+  /* 6 NR complete cycle */
+  idle(153.57);idle(154.6,SB,{facing:-1});press(156.6,SB);pt(158.03,RUN);pt(160.0,OUT);pt(160.65,TK,{gaze:IMP});idle(162.8,IMP);
+  pt(165.5,ACC);idle(167.5,ACC);pt(170.14,ACC);pt(171.25,TK,{gaze:IMP});pt(172.67,DN);idle(174.0,ACC);pt(175.6,ACC);pt(176.94,TK,{gaze:IMP});pt(178.6,PRE);idle(180.0,ACC);
+  pt(181.09,BARE);pt(182.8,DN);idle(184.5,DN);pt(186.04,DN);pt(187.3,RUN);idle(189.0,RUN);pt(190.23,RUN);pt(191.6,OUT);pt(193.56,TK,{gaze:[260,180]});pt(195.32,TK,{gaze:IMP});idle(196.6);
+  shake(197.6);pt(198.7,TK);note(s1,197.8,201.2,'Timer does not cut\nmotor power');pt(201.24,DN);note(s1,201.4,203.7,'Timer only signals:\ntime finished');pt(203.76,RUN);pt(204.8,OUT);note(s1,203.9,207.0,'PLC logic turns\noutput OFF');
+  pt(207.3,RUN);ask(209.31);nod(211.69);pt(212.36,ACC);M(213.0,218.8,mAcc);idle(214.6,ACC);pt(217.05,DN);note(s1,214.2,218.8,'Non-retentive:\nACC → 0, DONE OFF');
+  ask(219.21);pt(221.0,TK,{gaze:IMP});shake(222.8);pt(223.68,RUN);idle(225.92,SB,{facing:-1});idle(227.4);idle(229.2);note(s1,229.4,234.2,'1 Start = 1 mixing cycle');nod(231.0);
+  /* 7 NR interrupted */
+  idle(234.31);idle(235.2,SB,{facing:-1});press(236.7,SB);pt(237.4,ACC);idle(239.0,SP,{facing:-1});press(240.3,SP);ask(242.13);pt(243.5,TK,{gaze:IMP});shake(245.3);
+  pt(246.22,RUN);pt(249.26,OUT);pt(250.87,RUN);pt(252.79,ACC);M(252.9,257.8,mAcc);note(s1,254.0,257.8,'15 s counted\n→ lost (0)');
+  idle(257.95,SB,{facing:-1});press(258.9,SB);shake(260.42);pt(261.4,ACC);pt(263.38,ACC);note(s1,263.5,266.3,'Fresh 30 s from zero');pt(266.44,TTL);pt(267.55,ACC);idle(269.0);
+  /* 7b new requirement */
+  think(270.45);idle(273.22);note(s1,273.4,279.4,'Need 30 s in total –\nkeep time already mixed');ask(275.78);idle(277.5);
+  /* 8–9 retentive (same as the approved excerpt) */
+  pr(279.4,[px+20,py+200]);idle(281.8);pt(282.6,TK,{gaze:[300,330]});pt(283.8,PRE);pt(285.5,TTL);idle(287.6,SB,{facing:-1,face:'neutral'});press(288.6,SB);
+  pt(289.45,RUN);pt(290.95,TK,{gaze:IMP});pt(292.3,ACC);idle(294.6,SP,{facing:-1,face:'neutral'});press(295.9,SP);pt(297.4,RUN);pt(299.2,OUT);pt(300.95,BAR);
+  pr(303.0,ACC);pt(305.7,ACC,{face:'o'});idle(306.6);ask(307.35);pt(308.6,TK,{gaze:IMP});shake(310.1);pt(311.0,ACC);pt(312.8,BAR);pr(314.9,ACC);nod(316.6);
+  idle(318.4,SB,{facing:-1,face:'neutral'});press(319.6,SB);pt(320.6,TK,{gaze:IMP});pt(321.8,ACC);pr(323.65,ACC);pt(325.8,TK,{gaze:IMP});pt(327.5,BAR);pt(329.84,DN);pt(331.95,RUN);pt(333.2,TK,{gaze:IMP});nod(334.0);
+  M(305.75,318.2,mAcc);Tx(s1,{text:'continues from 15 s',size:30,x:560,y:92,draw:1,fill:'#1f5fd1',win:[323.7,329.7]});
+  /* 9b 15 + 15 */
+  pt(335.36,[px+120,py+316]);pt(336.93,[px+300,py+316]);note(s1,336.9,340.8,'15 s + 15 s = 30 s');pr(338.68,ACC);shake(340.85);note(s1,341.0,344.5,'Stopped time\nis not added');
+  pt(344.65,TTL);pt(347.52,RUN);pt(349.36,ACC);note(s1,347.6,351.9,'Retentive: time kept\nwhen input goes OFF');idle(351.0);
+  /* 10 Reset */
+  ask(352.59);idle(354.78);idle(355.1,RB);pt(356.92,[800,300]);idle(358.6);pt(360.73,TK,{gaze:IMP});idle(361.8,RB);press(362.8,RB);pt(363.98,ACC);M(364.0,367.9,mAcc,'#3d7bfd');pt(365.47,DN);idle(366.8);
+  idle(367.97,SB,{facing:-1});press(368.8,SB);pt(369.57,ACC);note(s1,369.8,371.7,'Fresh 30 s');idle(371.73);note(s1,372.0,377.8,'Next batch →\nreset old value');nod(376.44);
+  idle(377.84,RB);idle(380.5,SB,{facing:-1});note(s1,379.0,384.3,'Sequence: Reset → Start\n= fresh cycle');idle(382.0);
+  idle(384.34);note(s1,384.5,397.1,'STOP ≠ RESET',{size:44,fill:'#e5383b'});idle(387.75,SP,{facing:-1});pt(389.2,TK,{gaze:IMP});pt(390.76,ACC);idle(393.89,RB);pt(395.2,ACC);idle(396.3);
+  b.done(man);
+  cam(s1,[[7.66,TANKF],[21.6,FULL],[22.0,TANKF],[33.2,FULL],[41.6,MANF],[53.8,FULL],[58.6,PANF],[96.3,ACCF],[116.6,PANF],[153.4,FULL],[207.0,ACCF],[218.8,FULL],
+    [250.8,ACCF],[257.2,FULL],[270.3,MANF],[278.9,FULL],[285.4,{x:990,y:300,z:1.18}],[287.3,FULL],[303.0,{x:960,y:340,z:1.3}],[308.5,FULL],[312.75,{x:960,y:340,z:1.3}],[318.3,FULL,.55],
+    [321.75,{x:980,y:330,z:1.22}],[325.7,FULL],[335.2,ACCF],[351.8,FULL]]);
+
+  /* ===== Scene 2: NR vs RTO side by side (6:37–7:18) ===== */
+  const s2=mkScene(1,'Side by side','wipe',.5);
+  const mkc=mode=>({id:uid++,type:'ctrl',kind:'tmr',name:mode==='nr'?'Non-retentive logic':'Retentive logic',preset:30,mode0:mode,x:40,y:612,w:240,h:28,draw:.1,delay:0,withPrev:true,entrance:'draw',motion:'none',events:[]});
+  const cn=mkc('nr'),cr=mkc('rto');
+  const pn={id:uid++,type:'tpanel',name:'Non-retentive panel',x:110,y:60,w:390,h:500,preset:30,draw:.6,delay:0,entrance:'draw',motion:'none',bind:{ctrl:cn.id,role:'panel'}};
+  const prr={id:uid++,type:'tpanel',name:'Retentive panel',x:780,y:60,w:390,h:500,preset:30,draw:.6,delay:.05,entrance:'draw',motion:'none',bind:{ctrl:cr.id,role:'panel'}};s2.els.push(pn,prr);
+  const z1=399.9-s2.off,z15=402.9-s2.off,z2=410.6-s2.off;
+  [cn,cr].forEach(cc=>cc.events.push({t:z1,k:'start'},{t:z1,k:'rate',v:15/(z15-z1)},{t:z15,k:'stop',snap:15},{t:z2,k:'start'},{t:z2,k:'rate',v:2}));s2.els.push(cn,cr);
+  const m2=presenter(s2,640-90,280,1),b2=Beats(s2,640);
+  const nACC=[pn.x+110,pn.y+286],rACC=[prr.x+110,prr.y+286],nPRE=[pn.x+90,pn.y+228],rPRE=[prr.x+90,prr.y+228],nBAR=[pn.x+250,pn.y+316],rBAR=[prr.x+250,prr.y+316];
+  b2.idle(397.1);b2.pt(399.41,nPRE);b2.pt(400.3,rPRE);b2.idle(401.56);b2.pt(404.41,nACC);mark(s2,404.5,409.6,pn.x+60,pn.y+250,140,56);b2.pt(406.99,rACC);mark(s2,407.1,409.6,prr.x+60,prr.y+250,140,56,'#2fbf4a');
+  b2.idle(409.71);b2.pt(412.6,nBAR);b2.pt(414.81,rBAR);b2.ask(418.37);b2.idle(420.12);b2.nod(421.74);b2.pt(423.21,nACC);b2.pt(428.29,rACC);b2.idle(434.1);b2.done(m2);
+  const hc=(a,bb,text)=>Tx(s2,{text,size:30,x:'c',y:14,win:W_(s2,a,bb)});
+  hc(399.5,404.3,'Same preset (30 s) · same Stop at 15 s');hc(410.0,418.3,'Start again: full 30 s  vs  remaining 15 s');hc(434.2,437.9,'Choose by process requirement (recipe)');
+
+  /* ===== Scene 3: output ≠ proof, feedback, power-loss note (7:18–7:54) ===== */
+  const s3=mkScene(2,'Practical notes','fade',.4);
+  const c3={id:uid++,type:'ctrl',kind:'tmr',name:'Mixer (demo running)',preset:30,mode0:'off',x:40,y:612,w:240,h:28,draw:.1,delay:0,withPrev:true,entrance:'draw',motion:'none',events:[{t:0,k:'start'}]};
+  const tank3=await put(s3,'agitank',{...pre(s3),x:110,y:150,size:420,color:.1,bind:{ctrl:c3.id,role:'mixmotor'}});
+  const w1=anchorPt(tank3,'winTL'),w2=anchorPt(tank3,'winBR'),MOT=anchorPt(tank3,'motor');
+  s3.els.push({id:uid++,type:'mixview',name:'Tank contents',x:w1[0]+3,y:w1[1]+3,w:w2[0]-w1[0]-6,h:w2[1]-w1[1]-6,draw:.1,delay:0,withPrev:true,entrance:'none',motion:'none',bind:{ctrl:c3.id,role:'mix'}},c3);
+  const m3=presenter(s3,470,280,1),b3=Beats(s3,560);
+  const plc=await put(s3,'plc2',{x:1060,y:120,size:150,draw:.9,color:.2,win:W_(s3,438.1,1e6)});const PLC=[plc.x+plc.w/2,plc.y+plc.h/2];
+  Tx(s3,{text:'PLC output ON  ≠  proof the motor runs',size:34,x:440,y:24,win:W_(s3,440.1,1e6)});
+  addArrow({scene:s3,quiet:true,name:'Run command',line:'dashed',path:'curve',bend:.12,color:'#2fbf4a',width:2.6,head:true,draw:.8,delay:0,withPrev:true,x1:plc.x-4,y1:plc.y+40,x2:MOT[0]+40,y2:MOT[1]+20,win:W_(s3,442.4,1e6)});
+  await put(s3,'warning',{x:690,y:190,size:70,draw:.6,color:.2,win:W_(s3,444.97,1e6)});Tx(s3,{text:'Drive fault?',size:28,x:770,y:206,fill:'#e5383b',win:W_(s3,445.8,1e6)});
+  mark(s3,446.47,1e6,MOT[0]-46,MOT[1]-34,92,70);
+  addArrow({scene:s3,quiet:true,name:'Running feedback',line:'dashed',path:'curve',bend:-.18,color:'#ff9f1c',width:2.6,head:true,draw:.9,delay:0,withPrev:true,x1:MOT[0]+40,y1:MOT[1]+40,x2:plc.x-4,y2:plc.y+100,win:W_(s3,448.6,1e6)});
+  Tx(s3,{text:'running feedback',size:28,x:790,y:290,fill:'#c26b00',win:W_(s3,450.0,1e6)});
+  Tx(s3,{text:'Basic example: motor assumed OK',size:26,x:690,y:340,win:W_(s3,455.5,459.3)});
+  await put(s3,'bolt',{x:680,y:380,size:60,draw:.5,color:.2,win:W_(s3,459.5,1e6)});
+  Tx(s3,{text:'Power OFF: retention is not guaranteed',size:28,x:750,y:388,fill:'#1f5fd1',win:W_(s3,460.2,1e6)});
+  [[465.21,'· PLC model'],[466.54,'· timer instruction'],[467.55,'· memory settings']].forEach(([t,txt],k)=>Tx(s3,{text:txt,size:26,x:770,y:428+k*34,draw:.5,win:W_(s3,t,1e6)}));
+  b3.idle(437.98);b3.pt(440.03,[1000,170]);b3.pt(442.5,[MOT[0],MOT[1]]);b3.pt(444.97,[720,220]);b3.pt(446.47,[MOT[0],MOT[1]]);b3.pt(448.57,[860,300]);b3.pr(450.99,[1060,200]);b3.idle(453.0);
+  b3.nod(455.38);b3.idle(457.0);b3.think(459.44);b3.pt(461.5,[880,400]);b3.pt(465.21,[800,440]);b3.idle(468.5);b3.pr(469.45,[900,300]);b3.idle(471.5);b3.done(m3);
+  cam(s3,[[0+s3.off,FULL]]);
+
+  /* ===== Scene 4: quiz (7:54–8:20) ===== */
+  const s4=mkScene(3,'Quiz','wipe',.5);const o4=s4.off;
+  Tx(s4,{text:'Quiz',font:'Permanent Marker',size:64,x:60,y:30,draw:.5,win:W_(s4,474.0,1e6)});
+  const sc=[[475.9,'Retentive timer · PRESET 30 s'],[478.3,'Stopped at 15 s'],[481.1,'RESET not pressed'],[482.85,'START pressed again']];
+  sc.forEach(([t,txt],k)=>Tx(s4,{text:txt,size:34,x:60,y:130+k*44,draw:.7,win:W_(s4,t,1e6)}));
+  Tx(s4,{text:'Mixer innum evlo neram odum?',size:44,x:60,y:330,draw:.9,win:W_(s4,485.2,1e6),fill:'#1f5fd1'});
+  [[487.7,'A — Meedhi 15 seconds'],[490.7,'B — Pudhusaa 30 seconds'],[493.55,'C — Udane ninnudum']].forEach(([t,txt],k)=>Tx(s4,{text:txt,size:36,x:90,y:410+k*62,draw:.8,win:W_(s4,t,1e6)}));
+  Tx(s4,{text:'Comment: A, B or C?',size:40,x:640,y:500,draw:.8,win:W_(s4,496.7,1e6),fill:'#e5383b'});
+  const m4=presenter(s4,1010,250,-1),b4=Beats(s4,1100);
+  b4.idle(473.92);b4.pt(475.78,[620,150]);b4.pt(478.24,[420,190]);b4.pt(481.06,[420,240]);b4.pt(482.8,[440,280]);b4.ask(485.15);b4.pt(487.69,[480,430]);b4.pt(490.68,[500,490]);b4.pt(493.52,[480,550]);b4.pr(496.66,[900,520]);b4.idle(498.5);b4.done(m4);
+
+  /* ===== Scene 5: counter teaser + subscribe (8:20–8:36) ===== */
+  const s5=mkScene(4,'Next episode','fade',.4);
+  await put(s5,'crate',{x:120,y:250,size:260,draw:.7,color:.3,win:W_(s5,499.9,1e6)});
+  Tx(s5,{text:'1 box = exactly 6 bottles. How does a PLC count?',size:36,x:60,y:60,draw:.9,win:W_(s5,500.5,1e6)});
+  for(let k=0;k<6;k++)await put(s5,'bottle',{x:440+k*70,y:250,size:150,draw:.4,color:.1,win:W_(s5,502.8+k*.55,1e6)});
+  Tx(s5,{text:'Next episode: PLC counter',size:48,x:60,y:150,draw:.9,win:W_(s5,508.2,1e6),fill:'#1f5fd1'});
+  Tx(s5,{text:'Subscribe · Factory Decode Tamil',size:44,x:'c',y:470,draw:1,win:W_(s5,512.0,1e6),fill:'#e5383b'});
+  const m5=presenter(s5,1000,240,-1),b5=Beats(s5,1090);
+  b5.idle(499.76);b5.pt(500.45,[600,80]);b5.pt(502.72,[640,330]);b5.ask(506.27);b5.pt(508.18,[400,170]);b5.idle(510.0);b5.pr(511.15,[700,490]);
+  b5.add(514.1,{act:'wave',facing:1,face:'grin'});b5.idle(515.5);b5.done(m5);
+  S.captions=true;S.showHand=true;S.cur=0;S.pin=false;S.t=0;refresh();
+}
 async function loadTemplate(key){
+  if(key==='mixfull')return buildMixFull();
   if(key==='mixep')return buildMixEp();
   if(key==='mixrto')return buildMixRto();
   if(key==='ep5')return buildEp5();
@@ -1944,7 +2133,7 @@ Object.entries(TPL).forEach(([k,T])=>{const b=document.createElement('button');b
 S.scenes=[newScene({name:'Scene 1',style:'white',transition:'cut'})];renderStickIcons();refresh();
 (async()=>{
   try{await Promise.all(['Gochi Hand','Patrick Hand','Kalam','Caveat','Permanent Marker','IBM Plex Sans'].map(f=>document.fonts.load(`40px "${f}"`)))}catch(_){}
-  await guard(()=>loadTemplate('mixrto'));S.cur=0;S.pin=false;S.t=0;refresh();
+  await guard(()=>loadTemplate('mixfull'));S.cur=0;S.pin=false;S.t=0;refresh();
 })();
 })();
 </script>
