@@ -358,6 +358,58 @@ function tmrState(c,lt){
   const r={slowL,kind:'tmr',mode,run,out:run,acc,done,rate,slow,speed,ang,state:stateL,doneAt,flashAt,lastReset,presses:ev.filter(E=>E.t<=lt&&(E.k==='start'||E.k==='stop'||E.k==='reset'))};
   _cs.set(key,r);return r;
 }
+/* ---------- Reference-style teaching tools (RealPars mix): ladder rungs with live power flow, focus box, pointer click ---------- */
+const LCOL={wire:'#5d6b7a',on:'#2fbf4a',card:'#ffffff',edge:'#1d1d1f',txt:'#1d1d1f',accent:'#1f5fd1'};
+function drawLadder(e,l,st,tl){
+  const s=bst(e);if(!s)return null;const p=clamp(l/e.draw),{x,y,w,h}=e;
+  ctx.save();ctx.globalAlpha*=Math.min(1,p*1.6);
+  ctx.fillStyle=LCOL.card;ctx.strokeStyle=LCOL.edge;ctx.lineWidth=4;ctx.beginPath();ctx.roundRect(x,y,w,h,14);ctx.fill();ctx.stroke();
+  const F=(sz,wt=600)=>`${wt} ${sz}px "IBM Plex Sans", system-ui, sans-serif`;
+  ctx.font=F(22);ctx.fillStyle=LCOL.txt;ctx.textBaseline='alphabetic';ctx.fillText(e.title||'Ladder logic',x+18,y+34);
+  const L=x+34,R=x+w-34,top=y+60,bot=y+h-20;
+  const pr=k=>s.presses&&s.presses.some(E=>E.k===k&&CSnow-E.t>=0&&CSnow-E.t<.45);
+  const sig={start:pr('start'),stop:pr('stop'),reset:pr('reset'),run:s.run,dn:s.done,out:s.out};
+  ctx.lineCap='round';ctx.lineJoin='round';
+  const wire=(x1,y1,x2,y2,on)=>{ctx.save();if(on){ctx.shadowColor=LCOL.on;ctx.shadowBlur=10*curScale}ctx.strokeStyle=on?LCOL.on:LCOL.wire;ctx.lineWidth=on?6:3;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.restore()};
+  /* rails */
+  wire(L,top,L,bot,true);ctx.strokeStyle=LCOL.edge;ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(R,top);ctx.lineTo(R,bot);ctx.stroke();
+  const label=(t,cx,yy,col=LCOL.txt,sz=19)=>{ctx.font=F(sz,500);ctx.fillStyle=col;ctx.textAlign='center';ctx.fillText(t,cx,yy);ctx.textAlign='left'};
+  const contact=(cx,cy,nc,closed,tag,inOn)=>{const outOn=inOn&&closed;wire(cx-34,cy,cx-8,cy,inOn);wire(cx+8,cy,cx+34,cy,outOn);
+    ctx.save();ctx.strokeStyle=outOn?LCOL.on:LCOL.edge;ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(cx-8,cy-16);ctx.lineTo(cx-8,cy+16);ctx.moveTo(cx+8,cy-16);ctx.lineTo(cx+8,cy+16);ctx.stroke();
+    if(nc){ctx.beginPath();ctx.moveTo(cx-12,cy+14);ctx.lineTo(cx+12,cy-14);ctx.stroke()}
+    if(closed){ctx.fillStyle=outOn?'rgba(47,191,74,.35)':'rgba(93,107,122,.18)';ctx.fillRect(cx-6,cy-14,12,28)}ctx.restore();label(tag,cx,cy-24,outOn?'#1a8a34':LCOL.txt);return outOn};
+  const coil=(cx,cy,on,tag)=>{ctx.save();ctx.strokeStyle=on?LCOL.on:LCOL.edge;ctx.lineWidth=4;if(on){ctx.fillStyle='rgba(47,191,74,.25)';ctx.beginPath();ctx.arc(cx,cy,15,0,7);ctx.fill()}
+    ctx.beginPath();ctx.arc(cx+6,cy,16,Math.PI*.72,Math.PI*1.28);ctx.stroke();ctx.beginPath();ctx.arc(cx-6,cy,16,-Math.PI*.28,Math.PI*.28);ctx.stroke();ctx.restore();label(tag,cx,cy-24,on?'#1a8a34':LCOL.txt)};
+  const rows=e.rungs||['seal','timer','out'],gap=(bot-top)/rows.length;
+  rows.forEach((kind,i)=>{const cy=top+gap*(i+.42);
+    ctx.font=F(14,500);ctx.fillStyle='#8e98a3';ctx.fillText(String(i).padStart(3,'0'),x+6,cy+5);
+    if(kind==='seal'){const c1=L+70,c2=L+170,c3=L+260,cx4=R-60,by=cy+gap*.42;
+      const a=contact(c1,cy,false,sig.start,'Start',true),b=contact(c1,by,false,sig.run,'Mixing Run',true);
+      wire(L,cy,c1-34,cy,true);wire(L,by,c1-34,by,true);wire(L,cy,L,by,true);
+      const n=a||b;wire(c1+34,by,c1+34,cy,b);
+      const m=contact(c2,cy,true,!sig.stop,'Stop',n);wire(c1+34,cy,c2-34,cy,n);
+      const q=contact(c3,cy,true,!sig.dn,'DONE',m);wire(c2+34,cy,c3-34,cy,m);
+      wire(c3+34,cy,cx4-20,cy,q);coil(cx4,cy,sig.run,'Mixing Run');wire(cx4+20,cy,R,cy,false)}
+    else if(kind==='timer'){const c1=L+70;const a=contact(c1,cy,false,sig.run,'Mixing Run',true);wire(L,cy,c1-34,cy,true);
+      const bx=L+150,bw=220,bh=84;wire(c1+34,cy,bx,cy,a);
+      ctx.save();ctx.fillStyle=a?'rgba(47,191,74,.12)':'#f6f8fa';ctx.strokeStyle=a?LCOL.on:LCOL.edge;ctx.lineWidth=3;ctx.beginPath();ctx.roundRect(bx,cy-bh/2,bw,bh,8);ctx.fill();ctx.stroke();ctx.restore();
+      ctx.font=F(20);ctx.fillStyle=LCOL.txt;ctx.fillText(s.mode==='rto'?'RTO  Mix timer':'TON  Mix timer',bx+12,cy-14);
+      ctx.font=F(19,500);ctx.fillText('PRE '+(e.preset||30)+' s',bx+12,cy+10);ctx.fillStyle=a?'#1f5fd1':LCOL.txt;ctx.font=F(22,700);ctx.fillText('ACC '+s.acc.toFixed(1)+' s',bx+12,cy+34);
+      const dx=bx+bw+40;wire(bx+bw,cy,dx-20,cy,sig.dn);coil(dx,cy,sig.dn,'DONE');wire(dx+20,cy,R,cy,false)}
+    else if(kind==='out'){const c1=L+70,cx4=R-60;const a=contact(c1,cy,false,sig.run,'Mixing Run',true);wire(L,cy,c1-34,cy,true);wire(c1+34,cy,cx4-20,cy,a);coil(cx4,cy,sig.out,'Mixer');wire(cx4+20,cy,R,cy,false)}});
+  ctx.restore();return null;
+}
+function drawFocus(e,l,st,tl){
+  const p=clamp(l/(e.draw||.4)),{x,y,w,h}=e,k=.5+.5*Math.sin(tl*5);ctx.save();ctx.globalAlpha*=p;
+  ctx.strokeStyle=e.color||'#ff8a2a';ctx.lineWidth=4;ctx.setLineDash([12,8]);ctx.lineDashOffset=-tl*30;ctx.beginPath();ctx.roundRect(x-6*k,y-6*k,w+12*k,h+12*k,12);ctx.stroke();ctx.setLineDash([]);
+  if(e.label){ctx.font='600 20px "IBM Plex Sans", sans-serif';const tw=ctx.measureText(e.label).width+24;const ly=e.labelBelow?y+h+12:y-40;ctx.fillStyle=e.color||'#ff8a2a';ctx.beginPath();ctx.roundRect(x,ly,tw,30,6);ctx.fill();ctx.fillStyle='#fff';ctx.textBaseline='middle';ctx.fillText(e.label,x+12,ly+15)}
+  ctx.restore();return null}
+function drawCursor(e,l,st,tl){
+  const C=e.clicks||[];if(!C.length)return null;let i=0;for(let k=0;k<C.length;k++)if(C[k][0]-.6<=tl)i=k;const c=C[i],pv=C[Math.max(0,i-1)];
+  const k=ease(clamp((tl-(c[0]-.6))/.5)),x=pv[1]+(c[1]-pv[1])*k,y=pv[2]+(c[2]-pv[2])*k,dt=tl-c[0];
+  ctx.save();if(dt>=0&&dt<.5){ctx.globalAlpha=1-dt/.5;ctx.strokeStyle='#1f5fd1';ctx.lineWidth=3;ctx.beginPath();ctx.arc(c[1],c[2],10+dt*60,0,7);ctx.stroke();ctx.globalAlpha=1}
+  const s=dt>=0&&dt<.15?.88:1;ctx.translate(x,y);ctx.scale(s,s);ctx.rotate(-.35);ctx.fillStyle='#ffffff';ctx.strokeStyle='#1d1d1f';ctx.lineWidth=3;ctx.lineJoin='round';
+  ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(0,34);ctx.lineTo(9,26);ctx.lineTo(16,40);ctx.lineTo(22,37);ctx.lineTo(15,23);ctx.lineTo(27,23);ctx.closePath();ctx.fill();ctx.stroke();ctx.restore();return null}
 function drawMark(e,l,st,tl){
   if(!e._P){const P=[],cx=e.x+e.w/2,cy=e.y+e.h/2;for(let i=0;i<=60;i++){const u=i/60,a=-2.5+u*Math.PI*2*1.12,g=1+.06*u;P.push([cx+Math.cos(a)*e.w/2*g,cy+Math.sin(a)*e.h/2*g])}e._P=P;e._g=segFrom(P.flat())}
   const p=clamp(l/e.draw),col=e.color||'#e5383b';ctx.save();ctx.strokeStyle=col;ctx.lineCap='round';ctx.lineJoin='round';
@@ -1058,6 +1110,9 @@ function drawEl(e,l,st,tl){
   if(e.type==='tonview')return drawTonView(e,l,st,tl);
   if(e.type==='mixview')return drawMixView(e,l,st,tl);
   if(e.type==='mark')return drawMark(e,l,st,tl);
+  if(e.type==='ladder')return drawLadder(e,l,st,tl);
+  if(e.type==='focus')return drawFocus(e,l,st,tl);
+  if(e.type==='cursor')return drawCursor(e,l,st,tl);
   if(e.type==='tpanel')return drawTPanel(e,l,st,tl);
   const p1=clamp(l/e.draw),p2=hasColor(e)?clamp((l-e.draw)/e.color):0,bf=boilF(tl),jx=S.ink.boil?Math.sin(bf*12.9+e.id)*.6:0,jy=S.ink.boil?Math.cos(bf*7.3+e.id)*.6:0;
   if(e.type==='svg'){let hand=null;const cl=e.flat?e.data.flat:e.data.layer;if(p2>0){const t=revealTo(cl,colorRev(e,cl),p2,e,jx,jy);if(t)hand={...t,color:e.data.accent}}const t=traceTo(e,p1,st,tl);if(t)hand=t;return hand}
@@ -1475,7 +1530,7 @@ $('closeResult').onclick=()=>{$('exportBox').hidden=true};
 
 /* ---------- Save / open project ---------- */
 function saveProject(){
-  const ser=e=>{if(e.type==='mark'||e.type==='tonview'||e.type==='tpanel'||e.type==='mixview'||e.type==='ctrl'&&(e.kind==='ton'||e.kind==='tmr')){const{_g,_gk,...rest}=e;return JSON.parse(JSON.stringify(rest))}const b={id:e.id,bind:e.bind,showWhen:e.showWhen,flat:e.flat,beats:e.beats,win:e.win,dot:e.dot,type:e.type,name:e.name,x:e.x,y:e.y,w:e.w,h:e.h,draw:e.draw,color:e.color,delay:e.delay,colorOn:e.colorOn,withPrev:e.withPrev,entrance:e.entrance,motion:e.motion,fillMode:e.fillMode};
+  const ser=e=>{if(e.type==='ladder'||e.type==='focus'||e.type==='cursor'||e.type==='mark'||e.type==='tonview'||e.type==='tpanel'||e.type==='mixview'||e.type==='ctrl'&&(e.kind==='ton'||e.kind==='tmr')){const{_g,_gk,...rest}=e;return JSON.parse(JSON.stringify(rest))}const b={id:e.id,bind:e.bind,showWhen:e.showWhen,flat:e.flat,beats:e.beats,win:e.win,dot:e.dot,type:e.type,name:e.name,x:e.x,y:e.y,w:e.w,h:e.h,draw:e.draw,color:e.color,delay:e.delay,colorOn:e.colorOn,withPrev:e.withPrev,entrance:e.entrance,motion:e.motion,fillMode:e.fillMode};
     if(e.type==='arrow')Object.assign(b,{x1:e.x1,y1:e.y1,x2:e.x2,y2:e.y2,path:e.path,line:e.line,bend:e.bend,width:e.width,head:e.head,via:e.via,radius:e.radius,acolor:e.color});if(e.type==='liquid')Object.assign(b,{level:e.level,bubbles:e.bubbles,lcolor:e.color,rimDy:e.rimDy,wallOut:e.wallOut,floorY:e.floorY});if(e.type==='ctrl')Object.assign(b,{mode:e.mode,L0:e.L0,rate:e.rate,drainRate:e.drainRate,high:e.high,low:e.low,drain:e.drain,minEnd:e.minEnd,onAfter:e.onAfter,onDelay:e.onDelay});if(e.type==='stick')Object.assign(b,{action:e.action,action2:e.action2,switchAt:e.switchAt,expr:e.expr,acc:e.acc,facing:e.facing,travel:e.travel,travel2:e.travel2,pen:e.pen,look:e.look,outfit:e.outfit,shirt:e.shirt,pants:e.pants,skin:e.skin,hair:e.hair,hairStyle:e.hairStyle,speak:e.speak,tuft:e.tuft,size:e.h});
     if(e.type==='svg')Object.assign(b,{svgText:e.svgText,key:e.key,pen:e.pen});if(e.type==='image')Object.assign(b,{src:e.src,imgStyle:e.imgStyle,detail:e.detail});if(e.type==='text')Object.assign(b,{text:e.text,font:e.font,size:e.size,fill:e.fill,outline:e.outline});return b};
   const data={narrOff:S.narrOff||0,app:'inkstroke',v:5,aspect:S.aspect||'16:9',ink:S.ink,captions:S.captions,showHand:S.showHand,grid:S.grid,narr:S.narr?{name:S.narr.name,src:S.narr.src}:null,music:S.music?{name:S.music.name,src:S.music.src,vol:S.music.vol}:null,
@@ -1487,7 +1542,7 @@ async function loadProject(d){
   if(!d||d.app!=='inkstroke'||!Array.isArray(d.scenes))throw new Error('That file is not an Inkstroke project.');
   stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.cur=0;const idMap={};setAspect(d.aspect||'16:9');
   for(const sd of d.scenes){const s=newScene(sd);s.cam=sd.cam;s.capBeats=sd.capBeats;s.minDur=sd.minDur;s.fitVoice=sd.fitVoice!==false;if(sd.voice)s.voice=await audioFromSrc(sd.voice);S.scenes.push(s);S.cur=S.scenes.length-1;
-    for(const ed of sd.els){let e;if(ed.type==='mark'||ed.type==='tonview'||ed.type==='tpanel'||ed.type==='mixview'){e={...ed,id:uid++};s.els.push(e);idMap[ed.id]=e.id;continue}if(ed.type==='ctrl'){e={...ed,id:uid++,draw:.1,delay:0,withPrev:true,entrance:'draw',motion:'none'};s.els.push(e);idMap[ed.id]=e.id;continue}
+    for(const ed of sd.els){let e;if(ed.type==='ladder'||ed.type==='focus'||ed.type==='cursor'||ed.type==='mark'||ed.type==='tonview'||ed.type==='tpanel'||ed.type==='mixview'){e={...ed,id:uid++};s.els.push(e);idMap[ed.id]=e.id;continue}if(ed.type==='ctrl'){e={...ed,id:uid++,draw:.1,delay:0,withPrev:true,entrance:'draw',motion:'none'};s.els.push(e);idMap[ed.id]=e.id;continue}
       const o={bind:ed.bind,showWhen:ed.showWhen,flat:ed.flat,scene:s,quiet:true,x:ed.x,y:ed.y,draw:ed.draw,color:ed.color,delay:ed.delay,colorOn:ed.colorOn,withPrev:ed.withPrev,entrance:ed.entrance,motion:ed.motion,fillMode:ed.fillMode};
       if(ed.type==='svg')e=await addSvg(ed.svgText,ed.name,{...o,key:ed.key,pen:ed.pen});else if(ed.type==='image')e=await addImageSrc(ed.src,ed.name,{...o,imgStyle:ed.imgStyle,detail:ed.detail});else if(ed.type==='arrow')e=addArrow({...ed,...o,name:ed.name,color:ed.acolor});else if(ed.type==='liquid'){e=addLiquid({...ed,...o,w:ed.w,h:ed.h,color:ed.lcolor});Object.assign(e,{rimDy:ed.rimDy,wallOut:ed.wallOut,floorY:ed.floorY})}else if(ed.type==='stick')e=addStick({...ed,...o,h:ed.h,look:ed.look||'stick'});else e=addText({...o,text:ed.text,font:ed.font,size:ed.size,fill:ed.fill,outline:ed.outline});
       if(e.type==='svg'||e.type==='image'){e.w=ed.w;e.h=ed.h}e.name=ed.name||e.name;if(ed.beats)e.beats=ed.beats;if(ed.speak)e.speak=ed.speak;if(ed.tuft)e.tuft=true;if(ed.win)e.win=ed.win;if(ed.dot)e.dot=true;if(ed.id!=null)idMap[ed.id]=e.id}}
@@ -1499,6 +1554,7 @@ $('openIn').onchange=ev=>{const f=ev.target.files[0];ev.target.value='';if(!f)re
 
 /* ---------- Templates ---------- */
 const TPL={
+ styledemo:{name:'Style test: ladder logic + whiteboard',desc:'24 s · live ladder rungs (green power flow), focus boxes · next-episode look',style:'white',scenes:[]},
  mixfull:{name:'EP05 Mixing tank timers – full (presenter)',desc:'8:36 · one presenter · gestures · speech-timed mouth · load narration',style:'white',scenes:[]},
  mixrto:{name:'EP05 excerpt: retentive timer (presenter)',desc:'55 s quality sample · one presenter · gestures · speech-timed mouth · load narration',style:'white',scenes:[]},
  mixep:{name:'EP05 Mixing tank timers (16:9 long-form)',desc:'5 scenes · non-retentive vs retentive · timed to narration',style:'white',scenes:[]},
@@ -2112,7 +2168,44 @@ async function buildMixFull(){
   b5.add(514.1,{act:'wave',facing:1,face:'grin'});b5.idle(515.5);b5.done(m5);
   S.captions=true;S.showHand=true;S.cur=0;S.pin=false;S.t=0;refresh();
 }
+/* ---------- Style test: whiteboard + presenter + reference-style ladder logic (next-episode look) ---------- */
+async function buildStyleDemo(){
+  stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('16:9');S.narrOff=0;
+  const s=newScene({name:'Style test: ladder + whiteboard',style:'white',transition:'cut',trans:0,hold:0});s.minDur=24;S.scenes.push(s);S.cur=0;
+  const pre={entrance:'none',scene:s,quiet:true,delay:0,withPrev:true,draw:.1};
+  const c={id:uid++,type:'ctrl',kind:'tmr',name:'Mixing logic',preset:30,mode0:'nr',x:40,y:612,w:260,h:28,draw:.1,delay:0,withPrev:true,entrance:'draw',motion:'none',events:[]};
+  const put=(k,o)=>addSvg(doodleSvg(k),DOODLES[k][0],{key:k,flat:true,...pre,...o});
+  const tank=await put('agitank',{x:50,y:170,size:380,color:.1,bind:{ctrl:c.id,role:'mixmotor'}});
+  const wtl=anchorPt(tank,'winTL'),wbr=anchorPt(tank,'winBR');
+  s.els.push({id:uid++,type:'mixview',name:'Tank contents',x:wtl[0]+3,y:wtl[1]+3,w:wbr[0]-wtl[0]-6,h:wbr[1]-wtl[1]-6,draw:.1,delay:0,withPrev:true,entrance:'none',motion:'none',bind:{ctrl:c.id,role:'mix'}});
+  const stn=await put('station3',{x:350,y:300,size:140,color:.1,bind:{ctrl:c.id,role:'station'}});
+  const SB=anchorPt(stn,'start'),SP=anchorPt(stn,'stop');
+  addText({font:'IBM Plex Sans',fill:'#1d1d1f',size:18,x:stn.x-58,y:SB[1]-12,...pre,text:'START'});addText({font:'IBM Plex Sans',fill:'#1d1d1f',size:18,x:stn.x-52,y:SP[1]-12,...pre,text:'STOP'});
+  const lad={id:uid++,type:'ladder',name:'Ladder logic',title:'PLC program · mixing timer',x:690,y:50,w:570,h:500,preset:30,rungs:['seal','timer','out'],draw:.1,delay:0,withPrev:true,entrance:'none',motion:'none',bind:{ctrl:c.id,role:'ladder'}};s.els.push(lad);
+  const E=c.events;E.push({t:3.0,k:'start'},{t:3.0,k:'rate',v:4},{t:10.4,k:'slow',v:true,label:'SLOW-MOTION: one PLC scan'},{t:12.2,k:'clearRun'},{t:12.25,k:'nrReset'},{t:12.25,k:'slow',v:false},
+    {t:15.6,k:'start'},{t:15.6,k:'rate',v:4},{t:19.4,k:'stop'});
+  s.els.push(c);
+  const man=addStick({scene:s,quiet:true,look:'stick',action:'idle',size:270,x:SB[0]+18,y:300,facing:-1,entrance:'none',delay:0,withPrev:true,draw:.1});man.name='Presenter';
+  const R0=[lad.x+40,lad.y+120],R1=[lad.x+260,lad.y+260],DNc=[lad.x+470,lad.y+250],R2=[lad.x+300,lad.y+420];
+  const B=[{t:0,act:'present',facing:1,target:[lad.x,lad.y+200],gaze:'viewer',face:'smile'},{t:2.3,act:'idle',facing:-1,gaze:SB,face:'neutral'},
+    {t:2.65,act:'reach',facing:-1,target:SB,gaze:SB},{t:3.55,act:'idle',facing:-1,gaze:SB},{t:4.2,act:'point',facing:1,target:R0,gaze:R0,face:'smile'},
+    {t:6.0,act:'point',facing:1,target:R1,gaze:R1},{t:8.5,act:'idle',facing:1,gaze:[260,420]},{t:10.5,act:'point',facing:1,target:DNc,gaze:DNc,face:'o'},
+    {t:12.3,act:'idle',facing:1,gaze:'viewer',face:'smile'},{t:13.5,act:'nod',facing:1,gaze:'viewer'},{t:15.0,act:'idle',facing:-1,gaze:SB,face:'neutral'},
+    {t:15.25,act:'reach',facing:-1,target:SB,gaze:SB},{t:16.15,act:'idle',facing:-1,gaze:R1},{t:19.05,act:'reach',facing:-1,target:SP,gaze:SP},{t:19.95,act:'idle',facing:-1,gaze:SP},
+    {t:20.6,act:'point',facing:1,target:R1,gaze:R1,face:'o'},{t:22.2,act:'ask',facing:1,gaze:'viewer',face:'confused'}];
+  man.beats=B;man.speak=[];
+  const F=(a,b,x,y,w,h,label,o={})=>s.els.push({id:uid++,type:'focus',name:'Focus box',x,y,w,h,label,draw:.35,delay:0,withPrev:true,entrance:'draw',motion:'none',win:[a,b],...o});
+  F(4.0,6.0,lad.x+20,lad.y+60,lad.w-40,170,'Rung 0: Start → Mixing Run (holding)');
+  F(6.0,10.3,lad.x+20,lad.y+235,lad.w-40,110,'Rung 1: timer counts while Mixing Run is ON');
+  F(10.4,12.6,lad.x+300,lad.y+90,110,80,'DONE opens this contact',{labelBelow:true,color:'#e5383b'});
+  F(12.6,15.0,lad.x+20,lad.y+380,lad.w-40,100,'Rung 2: Mixer follows Mixing Run');
+  F(19.5,23.9,lad.x+150,lad.y+250,200,90,'Non-retentive: ACC → 0',{color:'#e5383b'});
+  s.capBeats=[[0,2.6,'Style test: whiteboard plant + live ladder logic (no narration)'],[2.6,4,'Start pressed → Rung 0 conducts'],[4,6,'Mixing Run seals itself in (holding)'],[6,10.3,'Timer counts (FAST-FORWARD ×4)'],
+    [10.3,12.6,'DONE ON → NC contact opens → Mixing Run drops'],[12.6,15,'Mixer OFF. Timer resets (non-retentive)'],[15,19.4,'Start again…'],[19.4,24,'Stop at 15 s → elapsed back to 0']].map(([t,end,text])=>({t,end,text}));
+  S.captions=true;S.showHand=true;S.cur=0;S.pin=false;S.t=0;refresh();
+}
 async function loadTemplate(key){
+  if(key==='styledemo')return buildStyleDemo();
   if(key==='mixfull')return buildMixFull();
   if(key==='mixep')return buildMixEp();
   if(key==='mixrto')return buildMixRto();

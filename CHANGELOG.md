@@ -1,5 +1,10 @@
 # Changelog – Inkstroke
 
+## v12 – Reference-channel teaching tools (RealPars mix)
+- Ladder card element: live rungs (seal-in, timer box, output) driven by the plant state; conducting parts glow green
+- Focus box (dashed pulsing box + label tag) and pointer-click cursor
+- Template "Style test: ladder logic + whiteboard" (24 s); docs/STYLE-GUIDE.md
+
 ## v11 – EP05 full episode, one presenter
 - Template "EP05 Mixing tank timers – full (presenter)" (8:36, default): 5 scenes, 15 compositions from beat-sheet-v2
 - Panel title segments (titles rewritten by the drawing hand), custom slow-motion labels, SLOW-MOTION ×n badge when counting slower than real time
