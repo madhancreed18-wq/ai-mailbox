@@ -1,5 +1,9 @@
 # Changelog – Inkstroke
 
+## v14.1 – EP06 long videos explain with the live ladder card
+- Ladder6 card (R0 edge, R1 reset at rest, R2 CTU, R3 stop-dominant run latch with Box OK, R4 conveyor) driven by the packing-line state; focus boxes on rungs at the spoken words
+- Shorts unchanged
+
 ## v14 – EP06 counters (from ChatGPT 020 + production pack)
 - Packing-line simulation: belt, bottle sensor (beam/LED), 6-slot box with physical count, rising-edge counting, DONE stop, blocked Start, box swap, Reset at rest
 - Flat CTU panel, counter cards (CTU/CTD/CTUD), buffer area, encoder + HSC, signal traces, 3-button station (Start/Stop/Reset)
