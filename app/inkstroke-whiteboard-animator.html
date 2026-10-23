@@ -2265,9 +2265,9 @@ async function buildStyleDemo(){
 /* ---------- EP05 portrait promo (015/016): 9:16, no captions, 2.5D, one presenter. Silent draft timing – retime to the owner's narration ---------- */
 async function buildPromo(o={}){
   stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('9:16');S.narrOff=0;
-  /* timed to the owner's Shorts narration (36.0 s) by speech/pause segments – no transcript available, so beat-to-phrase mapping is estimated */
-  const SEG=[[.29,3.45],[3.85,4.68],[5.24,8.42],[9.17,10.87],[11.2,13.15],[14.11,15.23],[15.71,17.47],[18.47,21.33],[21.74,22.46],[23.52,25.9],[26.17,26.99],[27.77,31.9],[32.19,34.11],[34.55,35.96]];
-  const T=o.T||{start:1.0,stop:7.6,ask:8.5,restart:12.4,q:13.3,c1:14.15,c2:15.75,choose:17.5,mem:18.5,card:23.5,sub:32.2,end:36.0};
+  /* timed to the owner's Shorts narration v2 (30.5 s) by speech/pause segments – no transcript available, so beat-to-phrase mapping is estimated */
+  const SEG=[[.32,3.19],[3.61,7.31],[7.6,11.18],[11.71,14.73],[15.36,19.07],[19.58,22.49],[23.05,23.99],[24.25,26.81],[27.29,30.48]];
+  const T=o.T||{start:1.0,stop:6.6,ask:7.65,restart:10.2,q:10.9,c1:11.75,c2:13.2,choose:14.3,mem:15.4,card:19.6,sub:24.3,end:30.5};
   const s=newScene({name:'EP05 promo (portrait)',style:'white',transition:'cut',trans:0,hold:0});s.minDur=T.end;S.scenes.push(s);S.cur=0;
   const pre={entrance:'none',scene:s,quiet:true,delay:0,withPrev:true,draw:.1};
   const c={id:uid++,type:'ctrl',kind:'tmr',name:'Mixing logic',preset:30,mode0:'rto',x:20,y:1240,w:200,h:24,draw:.1,delay:0,withPrev:true,entrance:'draw',motion:'none',events:[]};
@@ -2296,7 +2296,7 @@ async function buildPromo(o={}){
   man.beats=[a(0,{gaze:TK,face:'smile'}),...reach(T.start,SB),a(T.start+1.2,{gaze:TK,face:'smile'}),a(T.start+2.6,{act:'present',facing:1,target:[430,520],gaze:TF,face:'smile'}),
     a(T.stop-1.2,{gaze:SP}),...reach(T.stop,SP),a(T.stop+.9,{gaze:TK,face:'o'}),a(T.stop+1.8,{facing:1,gaze:TF,face:'o'}),
     a(T.ask,{act:'ask',facing:1,gaze:V,face:'confused'}),a(T.restart-.9,{gaze:SB}),...reach(T.restart,SB),a(T.q,{act:'ask',facing:1,gaze:TF,face:'confused'}),
-    a(T.c1+.1,{facing:1,gaze:[470,430],face:'o'}),a(T.c2+.1,{facing:1,gaze:[470,650],face:'o'}),a(T.choose,{act:'ask',facing:1,gaze:V,face:'confused'}),a(T.choose+1.4,{facing:1,gaze:[470,430],face:'think'}),a(T.choose+2.4,{facing:1,gaze:[470,650],face:'think'}),
+    a(T.c1+.1,{facing:1,gaze:[470,430],face:'o'}),a(T.c2+.1,{facing:1,gaze:[470,650],face:'o'}),a(T.choose,{act:'ask',facing:1,gaze:V,face:'confused'}),...(T.mem-T.choose>2.6?[a(T.choose+1.4,{facing:1,gaze:[470,430],face:'think'}),a(T.choose+2.4,{facing:1,gaze:[470,650],face:'think'})]:[]),
     a(T.mem,{act:'think',facing:1,gaze:[470,430],face:'think'}),a(T.mem+1.5,{act:'think',facing:1,gaze:[470,620],face:'think'}),a(T.mem+3,{act:'ask',facing:1,gaze:V,face:'confused'}),
     a(T.card+.5,{act:'present',facing:1,target:[520,560],gaze:[400,330],face:'smile'}),a(T.card+1.6,{act:'present',facing:1,target:[520,560],gaze:V,face:'smile'}),a(T.card+2.6,{facing:1,gaze:V,face:'smile'}),
     a(T.sub,{act:'point',facing:1,target:[470,808],gaze:[470,808],face:'smile'}),a(T.sub+1.4,{act:'nod',facing:1,gaze:V,face:'grin'})].sort((p,q)=>p.t-q.t);
