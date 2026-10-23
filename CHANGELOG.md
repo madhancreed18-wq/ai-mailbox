@@ -1,5 +1,11 @@
 # Changelog – Inkstroke
 
+## v13 – Portrait promo tools (from ChatGPT 015/016)
+- Cartoon hands for all stickmen: palm silhouette, separate thumb, rounded fingers (rest, point, open, palm-up, press)
+- 2.5D assets: shaded mixing tank (cutaway) and push-button station with contact shadows; shaded presenter head + ground shadow
+- Timer face (TARGET, elapsed, RUN lamp, speed tag, hide-behind-? card) and editorial cards (slide / pop)
+- Template "EP05 promo Short (9:16, no captions)" – silent draft timing until the owner's narration arrives
+
 ## v12 – Reference-channel teaching tools (RealPars mix)
 - Ladder card element: live rungs (seal-in, timer box, output) driven by the plant state; conducting parts glow green
 - Focus box (dashed pulsing box + label tag) and pointer-click cursor
