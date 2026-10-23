@@ -2,7 +2,7 @@
 
 Topic: PLC counters — CTU, CTD, CTUD and high-speed counting overview, with a detailed CTU six-bottle packing example.
 
-Four separate deliverables: Tamil long (16:9), English long (16:9), Tamil promo Short (9:16), English promo Short (9:16). Recording drafts below are complete; audio, timing, animation and renders are not yet produced. Long-form delivery is approximately 6–9 minutes per language, depending on delivery and demonstration pauses; Shorts approximately 30 seconds. These are estimates, not measured durations.
+Four separate deliverables: Tamil long (16:9), English long (16:9), Tamil promo Short (9:16), English promo Short (9:16). Recording scripts and production directions below were prepared before recording. Original duration estimates were 6–9 minutes per long video and approximately 30 seconds per Short; those estimates do not override final audio. Current status: Claude reports delivery of all four exports in mailbox/021-from-claude.md (English long 8:13, Tamil long 8:01, English promo 0:28, Tamil promo 0:30). These are collaborator-reported durations and completion claims, not independent ChatGPT review of the exported videos. The packaging section below does not request changes to recorded narration or final animation timing.
 
 Record only the narration sections. Production notes, rung identifiers, source notes and visual directions are not spoken. Final animation must follow each language's actual audio separately. The proposed Episode 7 hint is interlocks; it is a proposal, not an established next-episode decision.
 
@@ -467,3 +467,71 @@ The manufacturer's instruction reference supports false-to-true counting, preset
 - Siemens STEP 7 V20, Configuring high-speed counters: https://docs.tia.siemens.cloud/r/en-us/v20/functional-description-of-s7-1200-cpus-s7-1200/setting-the-operating-behavior-s7-1200/high-speed-counters-s7-1200/configuring-high-speed-counters-s7-1200
 
 Classification note: direction-based counter instructions and high-speed hardware capability overlap. Do not title this lesson “the only four PLC counter types.” No vendor-specific CTD zero/done behavior or maximum HSC frequency is claimed in this overview.
+
+
+## 7. Packaging — Suggested visibility and clear search intent
+
+Owner direction: use bold imagery/high contrast for Suggested placements, and specific topic/query wording for Search. Treat the reported source behavior as owner-supplied context, not independently verified analytics. No traffic-source metrics or keyword-volume data were supplied. These are candidate packages to test, not proven high-performing titles or guaranteed CTR/retention improvements.
+
+### Recommended long-video title/thumbnail pairs
+
+Keep the explicit topic near the front. Episode number and branding are secondary; the thumbnail poses a concrete visual question instead of repeating the title.
+
+| Language / priority | Title | Thumbnail main text | Visual promise |
+| --- | --- | --- | --- |
+| Tamil — primary | PLC Counter in Tamil: Bottle Counting, CTU & Reset — EP06 | 6 VANDHAA STOP? | Six visible bottles in a box, incoming conveyor, large counter 6 and a stop cue; presenter reacts toward the sensor |
+| English — primary | PLC Counter Explained: Bottle Counting, CTU & Reset — EP06 | 6 BOTTLES… STOP? | Same core composition, English question, visually readable six-bottle target |
+| Tamil — alternate 1 | PLC Counter Rising Edge in Tamil: One Bottle, One Count | ON = COUNT? | One bottle blocks the illuminated sensor; counter face shows a question rather than a fictional demonstrated count |
+| English — alternate 1 | PLC Counter Rising Edge Explained: One Bottle, One Count | ON = COUNT? | Same sensor-versus-count mystery |
+| Tamil — alternate 2 | PLC Counter Stop vs Reset in Tamil: Count Enna Aagum? | STOP ≠ RESET | A stopped three-bottle batch, readable counter 3, contrasting Stop and Reset buttons; presenter compares the two |
+| English — alternate 2 | PLC Counter Stop vs Reset: What Happens to the Count? | STOP ≠ RESET | Same process-state comparison |
+
+Do not advertise “the only four counter types” or a full vendor-specific programming tutorial. The lesson gives a detailed CTU example plus an overview; no target PLC implementation has been verified. Choose one coherent title/thumbnail pair per upload rather than mixing every topic onto one thumbnail.
+
+### Thumbnail art requirements for Suggested placements
+
+- Main thumbnail is landscape 16:9, even though a separate 9:16 Short cover is also needed. Recompose the Short cover; do not crop away the question or hands.
+- Pure white or very light stage, substantial black contours, dark high-contrast main text and restrained functional red/green with blue equipment accents. Avoid weak grey-on-grey text and low-contrast pastel labels.
+- Two or three dominant elements: bottle/box process, readable counter or sensor focus, and expressive presenter. Use a selective cutaway of the box if needed so all six bottles can be counted; avoid promising six while only five are visible.
+- Large specific quantity/question, little peripheral text. The counter readout, main question and facial reaction must remain legible around a 160-pixel-wide preview. Inspect the 360-pixel-wide version for hand detail as well.
+- Recognizable slim stickman with readable palm/thumb/finger shapes and an intentional gaze toward the key event. No stocky mascot, oversized head, twig fingers or random shocked face.
+- Stylized 3D or polished 2.5D must preserve silhouettes and contrast. Keep realistic reflective surfaces from overpowering the counter and expression.
+- Small Factory Decode Tamil branding and EP06 badge. If keeping the owner's SUBSCRIBE badge, keep it small and secondary; it must not displace the process question or cover the duration area.
+- Do not paste a complete ladder program, tiny waveform, all four counter terms, multiple giant arrows or narration paragraphs onto the cover. No captions in the actual video.
+
+### Description openings — copy-ready, long videos
+
+Tamil:
+
+PLC Counter epdi work aagum? Oru box-ku 6 bottles count panni conveyor-ai stop pannura example-oda Tamil-la purinjukkalaam.
+CTU, rising edge, preset/accumulated count, Stop vs Reset — plus CTD, CTUD and high-speed counter basics.
+
+English:
+
+How does a PLC count bottles and stop a conveyor after six? Learn PLC counters with a practical bottle-packing example.
+Understand CTU, rising edges, preset and accumulated counts, and Stop vs Reset, with an overview of CTD, CTUD and high-speed counters.
+
+Add chapters only after final audio and export timings are checked. Do not copy estimated storyboard times into upload metadata.
+
+### Candidate search phrases — not measured keyword demand
+
+Tamil: PLC counter in Tamil; CTU counter Tamil; bottle counting PLC Tamil; PLC counter rising edge Tamil; PLC counter reset Tamil; CTU CTD CTUD Tamil.
+
+English: PLC counter explained; CTU counter example; PLC bottle counting; PLC counter rising edge; PLC counter stop vs reset; CTU CTD CTUD difference.
+
+Use relevant phrases naturally in the title and description. Avoid keyword stuffing and do not treat tags as the growth strategy.
+
+### Separate promo Short packaging
+
+| Language | Short title | Cover main text |
+| --- | --- | --- |
+| Tamil | Oru Bottle… PLC Ethana Count Pannum? — PLC Counter Tamil | ONE BOTTLE…? |
+| English | One Bottle, Two Seconds: What Will the PLC Count? | ONE BOTTLE…? |
+
+Cover: one clearly visible bottle holding the sensor HIGH, large questioning counter face and a thoughtful presenter. No answer tick, repeated-count animation presented as true, or spoiler. The promo retains its question-led narration. Point each Short to the respective language long lesson when the actual destination is available; do not invent URLs.
+
+### One first packaging experiment
+
+For each language long video, start with the primary title and six-bottle thumbnail. Compare it with the alternate sensor-question thumbnail while keeping that video's title fixed, preferably using a platform comparison feature when available. Do not change language, title and thumbnail simultaneously and attribute the result to the thumbnail alone.
+
+Primary metric: Suggested-source CTR with its impression count. Guardrails: watch duration/watch time and early retention, so a click increase that attracts mismatched viewers is not automatically called a win. Examine Search separately, including the actual queries, impressions and watch duration. Use comparable windows and report sample size; do not invent a universal CTR target or causal conclusion from a small result. Test Tamil and English within their own audiences rather than treating one language as the other's control.
