@@ -38,16 +38,16 @@ def run(SRC,B,NAMES,K):
         # face features: components inside head circle
         lab2,n2=nd.label(dark);hl=lab2[top+1,int(tx)] if dark[top+1,int(tx)] else lab2[top+2,int(tx)]
         # head radius from width at row top+62 restricted to head component
-        hr=np.where(lab2[RC]==hl)[0];r=(hr[-1]-hr[0])/2;cx=(hr[-1]+hr[0])/2;cy=top+r
+        hr=np.where(lab2[RC]==hl)[0];hr=hr[np.abs(hr-tx)<0.22*(bot-top)];r=(hr[-1]-hr[0])/2;cx=(hr[-1]+hr[0])/2;cy=top+r
         feats=[]
         for i,sl in enumerate(nd.find_objects(lab2)):
             if i+1==hl or sl is None:continue
             fy=(sl[0].start+sl[0].stop)/2;fx=(sl[1].start+sl[1].stop)/2
             if (fx-cx)**2+(fy-cy)**2<(r-8*fz)**2:feats.append([sl[1].start,sl[0].start,sl[1].stop,sl[0].stop])
         cyc=lambda b:(b[1]+b[3])/2
-        ec=[b for b in feats if cy-28*fz<cyc(b)<cy+10*fz and b[3]-b[1]>=18*fz and b[3]-b[1]<40*fz and b[2]-b[0]<30*fz]
+        ec=[b for b in feats if cy-28*fz<cyc(b)<cy+22*fz and b[3]-b[1]>=18*fz and b[3]-b[1]<52*fz and b[2]-b[0]<32*fz]
         ec.sort(key=lambda b:-(b[2]-b[0])*(b[3]-b[1]));eyes=sorted(ec[:2],key=lambda b:b[0])
-        mouth=[b for b in feats if cyc(b)>cy+14*fz and b not in eyes]
+        mouth=[b for b in feats if cyc(b)>cy+24*fz and b not in eyes and b[2]-b[0]<60*fz and b[3]-b[1]<34*fz]
         mouth=[min(b[0] for b in mouth),min(b[1] for b in mouth),max(b[2] for b in mouth),max(b[3] for b in mouth)] if mouth else None
         rel=lambda b:[round(float(b[0]-ax)*S,1),round(float(b[1]-ay)*S,1),round(float(b[2]-ax)*S,1),round(float(b[3]-ay)*S,1)]
         res.append(dict(n=nm,h=476,head=[round(float(cx-ax)*S,1),round(float(cy-ay)*S,1),round(float(r)*S,1)],eyes=[rel(b) for b in eyes],mouth=rel(mouth) if mouth else None,sil=silp,ink=ink))
@@ -56,4 +56,7 @@ run(Image.open('ref.png').convert('L'),B,NAMES,3)
 B2=[(21,50,310,335),(17,530,310,741),(18,921,310,1100),(18,1354,310,1602),(322,116,616,279),(322,451,616,774),(323,946,616,1141),(324,1352,616,1520),(630,56,926,335),(629,522,926,776),(629,939,926,1180),(629,1360,926,1514)]
 N2=['shrug','presentup','onefinger','pointfar','clap','welcome','count','stop','palmsup','heart','presenttwo','clasp']
 run(Image.open('ref2.png').convert('L'),B2,N2,5)
+B3=[(18, 76, 309, 296), (16, 528, 309, 751), (18, 887, 309, 1118), (18, 1369, 309, 1607), (321, 84, 615, 299), (322, 524, 615, 740), (322, 949, 615, 1105), (321, 1380, 615, 1532), (630, 130, 927, 291), (628, 518, 926, 690), (630, 947, 927, 1113), (628, 1372, 927, 1535)]
+N3=['pointupleft','pointupright','pointleft','pointright','pointdownleft','pointdownright','stand','standlook','chinthink','temple','chinworry','thumbchin']
+run(Image.open('ref3.png').convert('L'),B3,N3,5)
 open('office_sprites.js','w').write('const OFFICE_SPR='+json.dumps(res,separators=(',',':'))+';\n')
