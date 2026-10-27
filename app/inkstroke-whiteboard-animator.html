@@ -1524,7 +1524,125 @@ function layout(){
 function sceneAt(t){for(let i=S.scenes.length-1;i>=0;i--)if(t>=S.scenes[i].t0)return i;return 0}
 
 function colorRev(e,layer){if(e.fillMode==='scribble')return e._hatch&&e._hatchL===layer?e._hatch:(e._hatchL=layer,e._hatch=makeHatch(layer.width,layer.height));return e.type==='svg'?e.data.zig:e.zig}
+/* ================= NextGenDecode explainer elements (type 'ngd') ================= */
+const NG={teal:'#0e9f8e',navy:'#1d2b4f',org:'#f07a1c',grn:'#22b35e',red:'#e5484d',gry:'#c9ced6',blue:'#2f6fd6',ink:'#1d1d1f',soft:'#eef6f5'};
+function ngRR(c,x,y,w,h,r){c.beginPath();c.roundRect(x,y,w,h,r)}
+function ngTxt(c,t,x,y,sz,col,wt=800,al='center'){c.font=`${wt} ${sz}px "IBM Plex Sans", system-ui, sans-serif`;c.fillStyle=col;c.textAlign=al;c.textBaseline='middle';c.fillText(t,x,y)}
+function ngArrowHead(c,x,y,ang,s){c.beginPath();c.moveTo(x,y);c.lineTo(x-Math.cos(ang-0.45)*s,y-Math.sin(ang-0.45)*s);c.lineTo(x-Math.cos(ang+0.45)*s,y-Math.sin(ang+0.45)*s);c.closePath();c.fill()}
+function ngValAt(vals,t){let v=null;(vals||[]).forEach(([a,x])=>{if(t>=a)v=x});return v}
+function drawNgd(e,l,st,tl){
+  const c=ctx,a0=e.win?e.win[0]:0,k=clamp((tl-a0)/(e.pop??.35)),pk=e.noPop?1:(.7+.3*backOut(k));
+  c.save();c.globalAlpha*=Math.min(1,k*1.6);
+  if(!e.noPop&&e.kind!=='arrow'&&e.kind!=='flash'){const cx=e.x+e.w/2,cy=e.y+e.h/2;c.translate(cx,cy);c.scale(pk,pk);c.translate(-cx,-cy)}
+  c.lineCap='round';c.lineJoin='round';
+  const K=e.kind;
+  if(K==='box'){const col=e.color||NG.teal;
+    c.save();c.shadowColor='rgba(0,0,0,.12)';c.shadowBlur=14*curScale;c.shadowOffsetY=6*curScale;ngRR(c,e.x,e.y,e.w,e.h,e.r??18);c.fillStyle=e.bg||'#fff';c.fill();c.restore();
+    ngRR(c,e.x,e.y,e.w,e.h,e.r??18);c.lineWidth=e.lw??4;c.strokeStyle=col;c.stroke();
+    if(e.head){ngRR(c,e.x,e.y,e.w,e.headH||46,[e.r??18,e.r??18,0,0]);c.fillStyle=col;c.fill();ngTxt(c,e.head,e.x+e.w/2,e.y+(e.headH||46)/2,e.headSize||24,'#fff')}
+    const lines=e.lines||[];const y0=e.y+(e.head?(e.headH||46):0),hh=e.h-(e.head?(e.headH||46):0),lh=e.lh||Math.min(44,hh/(lines.length+.5));
+    lines.forEach((ln,i)=>{const t=typeof ln==='string'?{t:ln}:ln;if(t.at!=null&&tl<t.at)return;const ka=t.at!=null?clamp((tl-t.at)/.3):1;c.save();c.globalAlpha*=ka;ngTxt(c,t.t,e.x+(e.align==='left'?22:e.w/2),y0+hh/2+(i-(lines.length-1)/2)*lh,t.size||e.size||24,t.color||e.tcolor||NG.navy,t.wt||700,e.align||'center');c.restore()});
+  }
+  else if(K==='title'){const w=e.w,h=e.h;ngRR(c,e.x,e.y,w,h,h/2);c.fillStyle=e.bg||NG.teal;c.fill();ngTxt(c,e.text,e.x+w/2,e.y+h/2,e.size||34,e.color||'#fff',800)}
+  else if(K==='label'){ngTxt(c,e.text,e.x+e.w/2,e.y+e.h/2,e.size||26,e.color||NG.navy,e.wt||800);if(e.under){c.strokeStyle=e.color||NG.navy;c.lineWidth=3;c.beginPath();c.moveTo(e.x+10,e.y+e.h);c.lineTo(e.x+e.w-10,e.y+e.h);c.stroke()}}
+  else if(K==='arrow'){const p=clamp((tl-a0)/(e.dur||.45)),x2=e.x1+(e.x2-e.x1)*p,y2=e.y1+(e.y2-e.y1)*p,col=e.color||NG.navy;
+    c.strokeStyle=col;c.fillStyle=col;c.lineWidth=e.lw||5;if(e.dash)c.setLineDash(e.dash);c.beginPath();c.moveTo(e.x1,e.y1);c.lineTo(x2,y2);c.stroke();c.setLineDash([]);
+    if(p>.05&&!e.noHead)ngArrowHead(c,x2,y2,Math.atan2(e.y2-e.y1,e.x2-e.x1),16);
+    if(e.flow&&p>=1&&(e.flowFrom==null||tl>=e.flowFrom)){const L=Math.hypot(e.x2-e.x1,e.y2-e.y1),n=Math.floor(L/40);for(let i=0;i<n;i++){const f=((i/n)+(tl*(e.speed||.6)))%1;c.beginPath();c.arc(e.x1+(e.x2-e.x1)*f,e.y1+(e.y2-e.y1)*f,6,0,7);c.fillStyle=e.flowColor||NG.grn;c.fill()}}
+    if(e.label&&p>=1)ngTxt(c,e.label,(e.x1+e.x2)/2+(e.lx||0),(e.y1+e.y2)/2+(e.ly??-22),e.lsize||20,col,800)}
+  else if(K==='loop'){drawNgLoop(e,c,tl)}
+  else if(K==='table'){drawNgTable(e,c,tl)}
+  else if(K==='rung'){drawNgRung(e,c,tl)}
+  else if(K==='pulse'){drawNgPulse(e,c,tl)}
+  else if(K==='wdog'){drawNgWdog(e,c,tl)}
+  else if(K==='flash'){const f=clamp((tl-a0)/.5);c.globalAlpha=1-f;c.fillStyle='#fff';c.fillRect(0,0,W,H)}
+  else if(K==='motion'){c.strokeStyle=e.color||NG.teal;c.lineWidth=4;c.setLineDash([18,16]);c.lineDashOffset=-(tl*(e.speed||90));for(let i=0;i<(e.n||3);i++){c.beginPath();c.moveTo(e.x,e.y+i*14);c.lineTo(e.x+e.w,e.y+i*14);c.stroke()}c.setLineDash([])}
+  else if(K==='spin'){const r=e.w/2,cx=e.x+r,cy=e.y+r,ang=tl*(e.speed||6);c.strokeStyle=e.color||NG.grn;c.fillStyle=e.color||NG.grn;c.lineWidth=5;c.beginPath();c.arc(cx,cy,r,ang,ang+4.4);c.stroke();ngArrowHead(c,cx+Math.cos(ang+4.4)*r,cy+Math.sin(ang+4.4)*r,ang+4.4+Math.PI/2,14)}
+  else if(K==='tick'||K==='cross'){const p=clamp((tl-a0)/.35),s=e.w;c.lineWidth=e.lw||12;c.strokeStyle=K==='tick'?NG.grn:NG.red;c.beginPath();
+    if(K==='tick'){const P=[[e.x,e.y+s*.55],[e.x+s*.38,e.y+s*.9],[e.x+s,e.y+s*.1]];c.moveTo(...P[0]);if(p<.4)c.lineTo(P[0][0]+(P[1][0]-P[0][0])*p/.4,P[0][1]+(P[1][1]-P[0][1])*p/.4);else{c.lineTo(...P[1]);const q=(p-.4)/.6;c.lineTo(P[1][0]+(P[2][0]-P[1][0])*q,P[1][1]+(P[2][1]-P[1][1])*q)}}
+    else{c.moveTo(e.x,e.y);c.lineTo(e.x+s*Math.min(1,p*2),e.y+s*Math.min(1,p*2));if(p>.5){const q=(p-.5)*2;c.moveTo(e.x+s,e.y);c.lineTo(e.x+s-s*q,e.y+s*q)}}c.stroke()}
+  else if(K==='lamp'){const on=tl>=(e.on??a0)&&(!e.blink||Math.sin(tl*9)>-.2),r=e.w/2;c.beginPath();c.arc(e.x+r,e.y+r,r,0,7);c.fillStyle=on?(e.color||NG.red):'#d9dde3';c.fill();c.lineWidth=4;c.strokeStyle=NG.ink;c.stroke();if(on){c.save();c.globalAlpha*=.25;c.beginPath();c.arc(e.x+r,e.y+r,r*1.7,0,7);c.fillStyle=e.color||NG.red;c.fill();c.restore()}if(e.text)ngTxt(c,e.text,e.x+r,e.y+e.w+22,20,NG.navy,800)}
+  c.restore();return null;
+}
+/* 4-step scan loop: reveal[i] times, hi:[[t,i]], spin:[t0,t1,stepsPerSec], counter shows scans while spinning */
+function drawNgLoop(e,c,tl){
+  const cx=e.x+e.w/2,cy=e.y+e.h/2,R=Math.min(e.w,e.h)/2-48,labels=e.labels||['READ INPUTS','RUN PROGRAM','WRITE OUTPUTS','HOUSEKEEPING'],cols=[NG.blue,NG.teal,NG.org,'#8a63d2'];
+  let cur=ngValAt(e.hi,tl),spinOn=e.spin&&tl>=e.spin[0]&&tl<e.spin[1];
+  if(spinOn)cur=Math.floor((tl-e.spin[0])*e.spin[2])%4;
+  for(let i=0;i<4;i++){const rv=e.reveal?e.reveal[i]:0;if(tl<rv)continue;const p=clamp((tl-rv)/.5),a0=-Math.PI/2+i*Math.PI/2+.32,a1=a0+(Math.PI/2-.64)*p;
+    c.strokeStyle=cols[i];c.lineWidth=10;c.globalAlpha=cur==null||cur===i?1:.55;c.beginPath();c.arc(cx,cy,R,a0,a1);c.stroke();c.fillStyle=cols[i];if(p>.9)ngArrowHead(c,cx+Math.cos(a1)*R,cy+Math.sin(a1)*R,a1+Math.PI/2,22);c.globalAlpha=1}
+  for(let i=0;i<4;i++){const rv=e.reveal?e.reveal[i]:0;if(tl<rv)continue;const kk=clamp((tl-rv)/.35),ang=-Math.PI/2+i*Math.PI/2-Math.PI/2+Math.PI/2,px=cx+Math.cos(-Math.PI/2+i*Math.PI/2)*R,py=cy+Math.sin(-Math.PI/2+i*Math.PI/2)*R;
+    const act=cur===i,s=(act?1.12:1)*(.6+.4*backOut(kk)),bw=(e.pillW||190)*s,bh=58*s;
+    c.save();c.globalAlpha*=Math.min(1,kk*1.5);if(act){c.shadowColor=cols[i];c.shadowBlur=24*curScale}ngRR(c,px-bw/2,py-bh/2,bw,bh,bh/2);c.fillStyle=act?cols[i]:'#fff';c.fill();c.restore();
+    c.save();c.globalAlpha*=Math.min(1,kk*1.5);ngRR(c,px-bw/2,py-bh/2,bw,bh,bh/2);c.lineWidth=4;c.strokeStyle=cols[i];c.stroke();
+    c.beginPath();c.arc(px-bw/2+26*s,py,17*s,0,7);c.fillStyle=act?'#fff':cols[i];c.fill();ngTxt(c,String(i+1),px-bw/2+26*s,py+1,22*s,act?cols[i]:'#fff',800);
+    ngTxt(c,labels[i],px+14*s,py+1,(e.lsize||19)*s,act?'#fff':NG.navy,800);c.restore()}
+  if(cur!=null){const ang=-Math.PI/2+cur*Math.PI/2+(spinOn?((tl-e.spin[0])*e.spin[2]%1):clamp((tl-(e.hiT||0))))*0;}
+  if(e.center){const show=tl>=(e.centerAt||0);if(show)ngTxt(c,e.center,cx,cy-(spinOn||e.counterAlways?18:0),e.csize||30,NG.navy,800)}
+  if(e.spin&&tl>=e.spin[0]){const n=Math.floor((Math.min(tl,e.spin[1])-e.spin[0])*e.spin[2]/4*(e.spinMul||1));ngTxt(c,'SCANS: '+n.toLocaleString('en-US'),cx,cy+22,26,NG.teal,800)}
+}
+/* image table: rows [{label,sub,vals:[[t,v]]}], photo at t (polaroid frame), stale:[a,b] */
+function drawNgTable(e,c,tl){
+  const {x,y,w}=e,rh=e.rh||58,hd=52,h=hd+rh*e.rows.length+16,col=e.color||NG.blue,photo=e.photo!=null&&tl>=e.photo;
+  if(photo){const p=clamp((tl-e.photo)/.4);c.save();c.translate(x+w/2,y+h/2);c.rotate(-.035*p);c.translate(-(x+w/2),-(y+h/2));
+    c.fillStyle='#fff';c.shadowColor='rgba(0,0,0,.25)';c.shadowBlur=20*curScale;c.shadowOffsetY=8*curScale;c.fillRect(x-18,y-18,w+36,h+70);c.shadowColor='transparent';c.strokeStyle=NG.ink;c.lineWidth=3;c.strokeRect(x-18,y-18,w+36,h+70);
+    ngTxt(c,e.photoText||'INPUT PHOTO',x+w/2,y+h+26,24,NG.ink,800);c.restore()}
+  c.save();if(photo){c.translate(x+w/2,y+h/2);c.rotate(-.035*clamp((tl-e.photo)/.4));c.translate(-(x+w/2),-(y+h/2))}
+  ngRR(c,x,y,w,h,16);c.fillStyle='#fff';c.fill();c.lineWidth=4;c.strokeStyle=col;c.stroke();
+  ngRR(c,x,y,w,hd,[16,16,0,0]);c.fillStyle=col;c.fill();ngTxt(c,e.title,x+w/2,y+hd/2,24,'#fff',800);
+  e.rows.forEach((r,i)=>{const yy=y+hd+8+i*rh+rh/2;if(r.at!=null&&tl<r.at)return;const v=ngValAt(r.vals,tl);
+    ngTxt(c,r.label,x+24,yy-(r.sub?8:0),24,NG.navy,800,'left');if(r.sub)ngTxt(c,r.sub,x+24,yy+15,16,'#5b6576',600,'left');
+    const bx=x+w-96;ngRR(c,bx,yy-22,72,44,12);c.fillStyle=v==null?'#f1f3f6':(v?'#e6f7ee':'#f6f7f9');c.fill();c.lineWidth=3;c.strokeStyle=v==null?'#c9ced6':(v?NG.grn:'#9aa3af');c.stroke();
+    ngTxt(c,v==null?'?':String(v),bx+36,yy+1,28,v?NG.grn:'#6b7280',800);
+    if(r.led){c.beginPath();c.arc(x+w-128,yy,9,0,7);c.fillStyle=v?NG.grn:'#d9dde3';c.fill()}});
+  if(e.stale&&tl>=e.stale[0]&&tl<e.stale[1]){ngTxt(c,e.staleText||'FROZEN UNTIL NEXT SCAN',x+w/2,y+h+(photo?98:28),20,NG.org,800)}
+  c.restore();
+}
+/* ladder rung: items [{k:'NO'|'NC'|'COIL',label,on:[[t,v]], par:{k,label,on}}], power:[[t,v]] colours live path, sweep:[t0,t1] scan cursor */
+function drawNgRung(e,c,tl){
+  const {x,y,w}=e,n=e.items.length,seg=w/(n+1),rail=5,pw=ngValAt(e.power,tl),hasPar=e.items.some(i=>i.par),H_=hasPar?86:0;
+  c.lineWidth=rail;c.strokeStyle=NG.ink;c.beginPath();c.moveTo(x,y-40);c.lineTo(x,y+40+H_);c.moveTo(x+w,y-40);c.lineTo(x+w,y+40+H_);c.stroke();
+  if(e.num)ngTxt(c,e.num,x-28,y,22,'#6b7280',800);
+  const live=pw?NG.grn:NG.ink;
+  // wire
+  c.lineWidth=4;c.strokeStyle=live;c.beginPath();c.moveTo(x,y);c.lineTo(x+w,y);c.stroke();
+  e.items.forEach((it,i)=>{const cx=x+seg*(i+1),v=ngValAt(it.on,tl),col=it.k==='COIL'?(v?NG.grn:NG.ink):(v?NG.grn:NG.ink);
+    c.fillStyle='#fff';c.fillRect(cx-26,y-30,52,60);
+    c.lineWidth=5;c.strokeStyle=col;
+    if(it.k==='COIL'){c.beginPath();c.arc(cx-6,y,24,Math.PI*.62,Math.PI*1.38);c.stroke();c.beginPath();c.arc(cx+6,y,24,-Math.PI*.38,Math.PI*.38);c.stroke();if(v){c.save();c.globalAlpha*=.2;c.beginPath();c.arc(cx,y,30,0,7);c.fillStyle=NG.grn;c.fill();c.restore()}}
+    else{c.beginPath();c.moveTo(cx-14,y-26);c.lineTo(cx-14,y+26);c.moveTo(cx+14,y-26);c.lineTo(cx+14,y+26);c.stroke();if(it.k==='NC'){c.beginPath();c.moveTo(cx-24,y+24);c.lineTo(cx+24,y-24);c.stroke()}}
+    ngTxt(c,it.label,cx,y-50,20,NG.navy,800);
+    if(it.val!==false&&v!=null)ngTxt(c,'='+v,cx,y+46,20,v?NG.grn:'#6b7280',800);
+    if(it.par){const pv=ngValAt(it.par.on,tl),py=y+H_,pc=pv?NG.grn:NG.ink;c.lineWidth=4;c.strokeStyle=pc;c.beginPath();c.moveTo(cx-seg*.45,y);c.lineTo(cx-seg*.45,py);c.lineTo(cx+seg*.45,py);c.lineTo(cx+seg*.45,y);c.stroke();
+      c.fillStyle='#fff';c.fillRect(cx-26,py-30,52,60);c.lineWidth=5;c.beginPath();c.moveTo(cx-14,py-26);c.lineTo(cx-14,py+26);c.moveTo(cx+14,py-26);c.lineTo(cx+14,py+26);c.stroke();ngTxt(c,it.par.label,cx,py+46,20,NG.navy,800)}});
+  if(e.sweep&&tl>=e.sweep[0]&&tl<=e.sweep[1]+.2){const f=clamp((tl-e.sweep[0])/(e.sweep[1]-e.sweep[0])),sx=x+w*f;c.save();c.globalAlpha*=.22;c.fillStyle=NG.org;c.fillRect(x,y-44,sx-x,88+H_);c.restore();c.strokeStyle=NG.org;c.lineWidth=4;c.beginPath();c.moveTo(sx,y-46);c.lineTo(sx,y+46+H_);c.stroke()}
+  if(e.result){const r=ngValAt(e.result,tl);if(r)ngTxt(c,r,x+w+16,y,22,r.includes('OFF')?NG.red:NG.grn,800,'left')}
+}
+/* scan ticks vs short pulse: ticks every dx px, pulse [px0,px1], cursor from t0 to t1 sweeps */
+function drawNgPulse(e,c,tl){
+  const {x,y,w,h}=e,f=clamp((tl-e.t0)/(e.t1-e.t0)),cx=x+w*f,mid=y+h*.62;
+  ngTxt(c,'SENSOR',x-14,mid-h*.25,18,NG.navy,800,'right');ngTxt(c,'INPUT READ',x-14,y+h-6,18,NG.blue,800,'right');
+  c.strokeStyle='#c9ced6';c.lineWidth=2;c.beginPath();c.moveTo(x,mid);c.lineTo(x+w,mid);c.stroke();
+  // pulse path up to cursor
+  c.strokeStyle=NG.org;c.lineWidth=5;c.beginPath();c.moveTo(x,mid);const [p0,p1]=e.pulse,ph=h*.5;
+  const pts=[[x,mid],[x+p0,mid],[x+p0,mid-ph],[x+p1,mid-ph],[x+p1,mid],[x+w,mid]];let started=false;
+  for(let i=0;i<pts.length-1;i++){const[a,b]=[pts[i],pts[i+1]];if(a[0]>cx)break;c.lineTo(...(b[0]<=cx?b:[cx,b[1]]))}c.stroke();
+  for(let tx=x+e.dx/2;tx<x+w;tx+=e.dx){if(tx>cx)break;c.strokeStyle=NG.blue;c.lineWidth=4;c.beginPath();c.moveTo(tx,y+h-28);c.lineTo(tx,y+h+4);c.stroke();c.beginPath();c.arc(tx,y+h-30,7,0,7);c.fillStyle=NG.blue;c.fill();
+    const hit=tx>=x+p0&&tx<=x+p1;ngTxt(c,hit?'1':'0',tx,y+h+22,18,hit?NG.grn:'#6b7280',800)}
+  if(f>0&&f<1){c.strokeStyle=NG.navy;c.lineWidth=2;c.setLineDash([6,6]);c.beginPath();c.moveTo(cx,y-6);c.lineTo(cx,y+h+6);c.stroke();c.setLineDash([])}
+  if(e.counter!=null&&tl>=e.counter)ngTxt(c,'COUNT: 0',x+w-70,y-26,24,NG.red,800);
+}
+/* watchdog bar */
+function drawNgWdog(e,c,tl){
+  const {x,y,w,h}=e,lim=x+w*.72,f=clamp((tl-e.t0)/(e.t1-e.t0)),bx=x+w*f*(e.over||1);
+  ngRR(c,x,y,w,h,h/2);c.fillStyle='#f1f3f6';c.fill();
+  c.save();ngRR(c,x,y,w,h,h/2);c.clip();c.fillStyle=bx>lim?NG.red:NG.teal;c.fillRect(x,y,Math.min(bx,x+w)-x,h);c.restore();
+  c.strokeStyle=NG.ink;c.lineWidth=3;ngRR(c,x,y,w,h,h/2);c.stroke();
+  c.strokeStyle=NG.red;c.lineWidth=4;c.setLineDash([10,8]);c.beginPath();c.moveTo(lim,y-24);c.lineTo(lim,y+h+24);c.stroke();c.setLineDash([]);
+  ngTxt(c,'WATCHDOG LIMIT',lim,y-40,18,NG.red,800);ngTxt(c,e.label||'SCAN TIME',x,y-40,20,NG.navy,800,'left');
+}
 function drawEl(e,l,st,tl){
+  if(e.type==='ngd')return drawNgd(e,l,st,tl);
   if(e.type==='arrow')return drawArrow(e,l,st,tl);
   if(e.type==='liquid')return drawLiquid(e,l,st,tl);
   if(e.type==='stick')return drawStick(e,l,st,tl);
@@ -1964,7 +2082,7 @@ $('closeResult').onclick=()=>{$('exportBox').hidden=true};
 
 /* ---------- Save / open project ---------- */
 function saveProject(){
-  const ser=e=>{if(['packview','ctupanel','ladder6','cntcard','trace','buffer','encoder'].includes(e.type)||e.type==='ctrl'&&e.kind==='pack'||e.type==='tface'||e.type==='card'||e.type==='ladder'||e.type==='focus'||e.type==='cursor'||e.type==='mark'||e.type==='tonview'||e.type==='tpanel'||e.type==='mixview'||e.type==='ctrl'&&(e.kind==='ton'||e.kind==='tmr')){const{_g,_gk,...rest}=e;return JSON.parse(JSON.stringify(rest))}const b={id:e.id,bind:e.bind,showWhen:e.showWhen,flat:e.flat,beats:e.beats,win:e.win,dot:e.dot,type:e.type,name:e.name,x:e.x,y:e.y,w:e.w,h:e.h,draw:e.draw,color:e.color,delay:e.delay,colorOn:e.colorOn,withPrev:e.withPrev,entrance:e.entrance,motion:e.motion,fillMode:e.fillMode};
+  const ser=e=>{if(['ngd','packview','ctupanel','ladder6','cntcard','trace','buffer','encoder'].includes(e.type)||e.type==='ctrl'&&e.kind==='pack'||e.type==='tface'||e.type==='card'||e.type==='ladder'||e.type==='focus'||e.type==='cursor'||e.type==='mark'||e.type==='tonview'||e.type==='tpanel'||e.type==='mixview'||e.type==='ctrl'&&(e.kind==='ton'||e.kind==='tmr')){const{_g,_gk,...rest}=e;return JSON.parse(JSON.stringify(rest))}const b={id:e.id,bind:e.bind,showWhen:e.showWhen,flat:e.flat,beats:e.beats,win:e.win,dot:e.dot,type:e.type,name:e.name,x:e.x,y:e.y,w:e.w,h:e.h,draw:e.draw,color:e.color,delay:e.delay,colorOn:e.colorOn,withPrev:e.withPrev,entrance:e.entrance,motion:e.motion,fillMode:e.fillMode};
     if(e.type==='arrow')Object.assign(b,{x1:e.x1,y1:e.y1,x2:e.x2,y2:e.y2,path:e.path,line:e.line,bend:e.bend,width:e.width,head:e.head,via:e.via,radius:e.radius,acolor:e.color});if(e.type==='liquid')Object.assign(b,{level:e.level,bubbles:e.bubbles,lcolor:e.color,rimDy:e.rimDy,wallOut:e.wallOut,floorY:e.floorY});if(e.type==='ctrl')Object.assign(b,{mode:e.mode,L0:e.L0,rate:e.rate,drainRate:e.drainRate,high:e.high,low:e.low,drain:e.drain,minEnd:e.minEnd,onAfter:e.onAfter,onDelay:e.onDelay});if(e.type==='stick')Object.assign(b,{action:e.action,action2:e.action2,switchAt:e.switchAt,expr:e.expr,acc:e.acc,facing:e.facing,travel:e.travel,travel2:e.travel2,pen:e.pen,look:e.look,outfit:e.outfit,shirt:e.shirt,pants:e.pants,skin:e.skin,hair:e.hair,hairStyle:e.hairStyle,speak:e.speak,tuft:e.tuft,size:e.h});
     if(e.type==='svg')Object.assign(b,{svgText:e.svgText,key:e.key,pen:e.pen});if(e.type==='image')Object.assign(b,{src:e.src,imgStyle:e.imgStyle,detail:e.detail});if(e.type==='text')Object.assign(b,{text:e.text,font:e.font,size:e.size,fill:e.fill,outline:e.outline});return b};
   const data={narrOff:S.narrOff||0,app:'inkstroke',v:5,aspect:S.aspect||'16:9',ink:S.ink,captions:S.captions,showHand:S.showHand,grid:S.grid,narr:S.narr?{name:S.narr.name,src:S.narr.src}:null,music:S.music?{name:S.music.name,src:S.music.src,vol:S.music.vol}:null,
@@ -1988,6 +2106,7 @@ $('openIn').onchange=ev=>{const f=ev.target.files[0];ev.target.value='';if(!f)re
 
 /* ---------- Templates ---------- */
 const TPL={
+ ngd01:{name:'NGD 01 – How a PLC Actually Thinks (16:9)',desc:'scan cycle explainer · host + equipment · load narrratopm.wav',style:'white',scenes:[]},
  ngddemo:{name:'NextGenDecode – host + equipment (traced)',desc:'16 host poses · 50+ machines, panel parts, sensors, IoT · backgrounds',style:'white',scenes:[]},
  techfix:{name:'Technician – conveyor jam fix (LOTO)',desc:'14 traced poses · alarm → isolate → inspect → clear → reset → ready',style:'white',scenes:[]},
  dialogue:{name:'Dialogue – operator + engineer (traced)',desc:'talking · listening · replying · speech-timed mouths · load a 2-voice narration',style:'white',scenes:[]},
@@ -2955,7 +3074,125 @@ async function buildNgdDemo(){
   let X=20,Y=20;const H0=95;eq.forEach(x=>{const ww=x.w*H0/x.h;if(X+ww>1260){X=20;Y+=H0+38}const m=addStick({scene:s3,quiet:true,look:'equip',action:x.n,size:H0,x:0,y:Y,facing:1,entrance:'none',delay:0,withPrev:true,draw:.1});m.x=X+ww/2-m.w/2;X+=ww+22});
   S.captions=false;S.showHand=true;S.cur=0;S.pin=false;S.t=1;refresh();
 }
+const NGD01_DATA={"A":{"hook_photo":5.02,"hook_photo2":7.1,"hook_faults":8.84,"p1_scan":14.61,"p1_conv":16.12,"p1_start":16.83,"p1_stop":17.82,"p1_motor":18.77,"p1_three":21.39,"p2_input":26.26,"p2_buttons":27.56,"p2_sensors":28.17,"p2_cpu":29.73,"p2_output":32.58,"p2_contactors":34.17,"p2_valves":34.97,"p2_lamps":35.61,"p3_four":38.12,"p3_read":41.21,"p3_run":42.36,"p3_write":43.61,"p3_house":45.15,"p3_loop":48.67,"p3_cycle":49.56,"p4_step":51.18,"p4_checks":54.12,"p4_copies":56.57,"p4_image":59.78,"p4_start":61.21,"p4_one1":62.94,"p4_stop":63.89,"p4_nc":66.16,"p4_one2":68.4,"p4_photo":70.23,"p5_only":73.6,"p5_real":75.64,"p5_know":78.2,"p6_step":79.56,"p6_book":83.56,"p6_top":84.47,"p6_next":86.97,"p6_end":88.49,"p7_first":89.25,"p7_start":91.97,"p7_own":93.1,"p7_stop":94.9,"p7_gives":95.74,"p7_s1":97.28,"p7_s2":98.37,"p7_true":99.84,"p7_writes":101.58,"p7_memory":103.23,"p7_outimg":104.77,"p8_motor":106.64,"p8_yet":107.84,"p8_real":110.87,"p8_three":112.91,"p9_step":113.9,"p9_copies":116.8,"p9_terminals":119.06,"p9_contactor":121.26,"p9_conv":122.74,"p10_step":124.23,"p10_hmi":127.66,"p10_network":128.49,"p10_checks":129.29,"p10_back":131.16,"p11_trip":133.01,"p11_ms":137.15,"p11_hundreds":139.54,"p11_instant":142.58,"p12_so":144.05,"p12_three":146.93,"p13_fault":149.8,"p13_bottle":151.33,"p13_eye":152.84,"p13_short":154.73,"p13_pulse":156.11,"p13_between":157.58,"p13_never":159.48,"p13_counter":161.33,"p14_fix":163.81,"p14_slow":164.84,"p14_longer":166.31,"p14_hsc":169.14,"p14_int":170.68,"p14_wait":172.37,"p15_fault":174.34,"p15_coil":178.38,"p15_r5":182.58,"p15_on":181.95,"p15_r20":188.0,"p15_off":183.62,"p15_end":186.24,"p15_last":187.56,"p15_wins":188.37,"p16_fix":190.58,"p16_combine":194.23,"p17_fault":197.19,"p17_wd":198.55,"p17_long":201.69,"p17_loop":203.43,"p17_never":205.74,"p17_timer":207.2,"p17_stops":209.06,"p17_frozen":211.27,"p18_when":214.68,"p18_loops":217.67,"p18_check":219.84,"p18_diag":221.46,"p19_photo":224.09,"p19_read":225.07,"p19_run":226.24,"p19_write":228.24,"p19_repeat":229.5,"p19_missed":231.76,"p19_fighting":232.69,"p19_watchdog":233.87,"p19_myst":235.66,"p20_next":236.99,"p20_npn":238.17,"p20_photo":242.58,"p20_sub":243.8},"P":[[0.25,10.41],[11.16,22.68],[23.34,36.1],[36.72,50.53],[51.18,70.71],[71.24,78.91],[79.56,88.7],[89.25,105.64],[106.21,113.3],[113.9,123.66],[124.23,132.05],[132.8,143.07],[144.05,149.19],[149.8,162.64],[163.72,173.15],[174.34,189.7],[190.48,195.81],[197.19,213.69],[214.68,222.18],[223.32,236.18],[236.99,244.95]],"speak":[[0.25,4.0],[4.48,5.53],[6.08,7.54],[7.9,10.41],[11.16,19.15],[19.64,22.68],[23.34,24.69],[25.29,29.18],[29.66,31.87],[32.32,36.1],[36.72,40.65],[41.21,43.27],[43.61,45.76],[46.12,47.78],[48.4,50.53],[51.18,51.72],[52.04,52.96],[53.51,58.12],[58.61,60.7],[61.21,63.33],[63.89,68.74],[69.26,70.71],[71.24,74.93],[75.43,78.91],[79.56,80.08],[80.48,81.36],[81.85,83.97],[84.47,88.7],[89.25,91.35],[91.97,92.44],[92.79,96.58],[97.14,100.21],[100.71,103.71],[104.16,105.64],[106.21,108.02],[108.56,111.6],[112.14,113.3],[113.9,114.46],[114.8,115.68],[116.2,120.34],[120.95,123.66],[124.23,124.93],[125.24,125.83],[126.45,132.05],[132.8,134.88],[135.41,141.12],[141.56,143.07],[144.05,146.09],[146.6,149.19],[149.8,150.48],[150.91,151.77],[152.8,155.32],[155.84,159.03],[159.33,162.64],[163.72,164.29],[164.84,167.1],[167.63,173.15],[174.34,174.92],[175.43,176.87],[178.0,180.44],[180.9,182.27],[182.58,183.91],[184.57,189.7],[190.48,190.96],[191.54,195.81],[197.19,197.99],[198.42,199.54],[200.76,206.62],[207.14,213.69],[214.68,217.05],[217.36,219.45],[219.75,222.18],[223.32,224.48],[225.07,227.78],[228.24,229.91],[230.63,236.18],[236.99,242.96],[243.8,244.95]]};
+async function buildNgd01(){
+  stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('16:9');S.narrOff=0;
+  const D=NGD01_DATA,A=D.A,P=D.P,END=246.2;
+  const s=newScene({name:'NGD 01 – How a PLC actually thinks',style:'white',transition:'cut',trans:0,hold:0});s.minDur=END;S.scenes.push(s);
+  /* section boundaries = start of each paragraph (last one runs to END) */
+  const B=i=>i<P.length?P[i][0]-.25:END, SEC=(i,j=i)=>[B(i),B(j+1)];
+  const ng=(kind,o,win)=>{const e={id:uid++,type:'ngd',kind,name:o.name||kind,draw:.1,delay:0,withPrev:true,entrance:'draw',motion:'none',x:0,y:0,w:10,h:10,...o,win};s.els.push(e);return e};
+  const eq=(n,x,y,h,win,o={})=>{const m=addStick({scene:s,quiet:true,look:'equip',action:n,size:h,x:0,y,facing:1,entrance:'pop',delay:0,withPrev:true,draw:.35,name:n,...o});const sp=EQUIP_SPR.find(q=>q.n===n),ww=sp.w*h/sp.h;m.x=x+ww/2-m.w/2;m.win=win;return m};
+  const pill=(text,win,o={})=>ng('title',{x:o.x??560,y:o.y??26,w:o.w??560,h:58,text,size:o.size||28,bg:o.bg||NG.navy},win);
+  const box=(o,win)=>ng('box',o,win);
+  const arrow=(x1,y1,x2,y2,win,o={})=>ng('arrow',{x1,y1,x2,y2,x:Math.min(x1,x2),y:Math.min(y1,y2),w:Math.abs(x2-x1)+1,h:Math.abs(y2-y1)+1,noPop:true,...o},win);
+  /* ---------- 0 hook ---------- */
+  eq('plc_rack',640,150,190,SEC(0));eq('pushbuttons',470,180,150,SEC(0));eq('prox_sensor',900,380,90,SEC(0));
+  ng('flash',{x:0,y:0,w:W,h:H,noPop:true},[A.hook_photo,A.hook_photo+.6]);
+  ng('table',{x:620,y:360,w:330,title:'INPUT PHOTO',color:NG.blue,rows:[{label:'START',vals:[[0,1]]},{label:'STOP',vals:[[0,1]]},{label:'SENSOR',vals:[[0,0]]}],rh:46,photo:A.hook_photo+.1,photoText:'SNAPSHOT'},[A.hook_photo,B(1)]);
+  ng('label',{x:430,y:600,w:820,h:60,text:'STRANGE FAULTS → ONE REASON',size:30,color:NG.red},[A.hook_faults,B(1)]);
+  /* ---------- 1 setup ---------- */
+  pill('SCAN CYCLE',SEC(1),{x:640,w:400});
+  eq('plc_rack',940,130,170,[A.p1_scan-1.6,B(2)]);
+  eq('conveyor',520,380,190,[A.p1_conv,B(2)]);
+  eq('pushbuttons',440,150,170,[A.p1_start,B(2)]);
+  ng('label',{x:420,y:330,w:200,h:36,text:'START · STOP',size:22},[A.p1_stop,B(2)]);
+  eq('motor_3ph',990,460,130,[A.p1_motor,B(2)]);
+  ng('title',{x:860,y:620,w:380,h:54,text:'+ 3 REAL FAULTS',size:26,bg:NG.red},[A.p1_three,B(2)]);
+  /* ---------- 2 inside a PLC ---------- */
+  const bx=[[430,'INPUTS',NG.blue,A.p2_input],[735,'CPU',NG.teal,A.p2_cpu],[1040,'OUTPUTS',NG.org,A.p2_output]];
+  bx.forEach(([x,t,col,at])=>box({x,y:170,w:220,h:330,head:t,color:col,lines:[]},[at,B(3)]));
+  eq('pushbuttons',470,240,110,[A.p2_buttons,B(3)]);eq('prox_sensor',455,380,70,[A.p2_sensors,B(3)]);
+  eq('plc_rack',750,280,110,[A.p2_cpu,B(3)]);ng('label',{x:735,y:420,w:220,h:40,text:'RUNS PROGRAM',size:20,color:NG.teal},[A.p2_cpu+.6,B(3)]);
+  arrow(655,335,730,335,[A.p2_cpu,B(3)],{color:NG.blue,flow:true});arrow(960,335,1035,335,[A.p2_output,B(3)],{color:NG.org,flow:true});
+  eq('contactor',1055,225,90,[A.p2_contactors,B(3)]);eq('solenoid_valve',1150,240,80,[A.p2_valves,B(3)]);
+  ng('lamp',{x:1125,y:360,w:56,h:56,text:'LAMP',color:NG.grn,on:A.p2_lamps},[A.p2_lamps,B(3)]);
+  /* ---------- 3 the loop ---------- */
+  ng('loop',{x:470,y:80,w:740,h:600,reveal:[A.p3_read,A.p3_run,A.p3_write,A.p3_house],hi:[[A.p3_read,0],[A.p3_run,1],[A.p3_write,2],[A.p3_house,3],[A.p3_loop,null]],center:'SCAN CYCLE',centerAt:A.p3_cycle,pillW:220,lsize:20},SEC(3));
+  ng('label',{x:470,y:330,w:740,h:50,text:'SAME 4 JOBS · FOREVER',size:26,color:'#6b7280'},[A.p3_four,A.p3_read]);
+  /* ---------- 4–5 step 1: read inputs ---------- */
+  pill('STEP 1 · READ INPUTS',SEC(4,5),{bg:NG.blue});
+  eq('pushbuttons',450,190,170,SEC(4,5));
+  ng('label',{x:430,y:380,w:200,h:36,text:'REAL BUTTONS',size:20,color:'#6b7280'},SEC(4,5));
+  arrow(640,280,730,280,[A.p4_copies,B(6)],{color:NG.blue,flow:true,label:'COPY',lsize:18});
+  ng('table',{x:760,y:170,w:420,title:'INPUT IMAGE (MEMORY)',color:NG.blue,rows:[{label:'START',sub:'pressed',vals:[[A.p4_one1,1]]},{label:'STOP',sub:'normally closed',vals:[[A.p4_one2,1]]}],rh:70,photo:A.p4_photo,photoText:'THE PHOTO',stale:[A.p5_real,B(6)],staleText:'PROGRAM STILL SEES START = 1'},[A.p4_image,B(6)]);
+  ng('label',{x:430,y:430,w:260,h:40,text:'REAL START: 0',size:24,color:NG.org},[A.p5_real,B(6)]);
+  /* ---------- 6 step 2: run program ---------- */
+  pill('STEP 2 · RUN PROGRAM',SEC(6),{bg:NG.teal});
+  ng('label',{x:470,y:100,w:740,h:44,text:'TOP → BOTTOM · LEFT → RIGHT',size:26,color:'#6b7280'},[A.p6_book,B(7)]);
+  const r3=[[A.p6_top,A.p6_next-.15,[{k:'NO',label:'START'},{k:'NC',label:'STOP'},{k:'COIL',label:'MOTOR'}],'1'],[A.p6_next,A.p6_next+.8,[{k:'NO',label:'SENSOR'},{k:'COIL',label:'COUNT'}],'2'],[A.p6_next+.8,A.p6_end+.3,[{k:'NO',label:'FULL'},{k:'COIL',label:'LAMP'}],'3']];
+  r3.forEach(([a,b,items,num],i)=>ng('rung',{x:520,y:230+i*150,w:640,h:80,items,num,sweep:[a,b]},[A.p6_step+.3,B(7)]));
+  /* ---------- 7–8 seal-in rung + output image ---------- */
+  pill('RUNG 1 · START / STOP',SEC(7,8),{bg:NG.teal});
+  ng('rung',{x:500,y:200,w:660,h:120,num:'1',items:[{k:'NO',label:'START',on:[[A.p7_s1,1]],par:{label:'MOTOR'}},{k:'NC',label:'STOP',on:[[A.p7_s2,1]]},{k:'COIL',label:'MOTOR',on:[[A.p7_writes,1]]}],power:[[A.p7_true,1]],sweep:[A.p7_start,A.p7_gives+.6]},[A.p7_first,B(9)]);
+  ng('table',{x:470,y:440,w:360,title:'OUTPUT IMAGE (MEMORY)',color:NG.org,rows:[{label:'MOTOR',vals:[[A.p7_writes,1]]}],rh:64},[A.p7_writes,B(9)]);
+  eq('motor_3ph',960,450,140,[A.p8_motor-.3,B(9)]);
+  ng('label',{x:900,y:610,w:300,h:44,text:'REAL MOTOR: OFF',size:26,color:NG.red},[A.p8_yet,B(9)]);
+  ng('label',{x:880,y:400,w:340,h:40,text:'NOT UNTIL STEP 3',size:22,color:NG.org},[A.p8_three,B(9)]);
+  /* ---------- 9 step 3: write outputs ---------- */
+  pill('STEP 3 · WRITE OUTPUTS',SEC(9),{bg:NG.org});
+  ng('table',{x:430,y:170,w:330,title:'OUTPUT IMAGE',color:NG.org,rows:[{label:'MOTOR',vals:[[0,1]]}],rh:64},SEC(9));
+  arrow(770,240,880,240,[A.p9_copies,B(10)],{color:NG.org,flow:true,label:'COPY ALL'});
+  eq('contactor',900,170,140,[A.p9_terminals,B(10)]);
+  ng('lamp',{x:1080,y:200,w:50,h:50,text:'OUTPUT ON',color:NG.grn,on:A.p9_terminals},[A.p9_terminals,B(10)]);
+  eq('conveyor',470,400,200,[A.p9_step,B(10)]);eq('motor_3ph',990,460,130,[A.p9_step,B(10)]);
+  ng('spin',{x:1020,y:420,w:60,h:60,speed:7},[A.p9_contactor,B(10)]);
+  ng('label',{x:600,y:620,w:300,h:44,text:'CONVEYOR RUNS',size:26,color:NG.grn},[A.p9_conv,B(10)]);
+  /* ---------- 10 step 4: housekeeping ---------- */
+  pill('STEP 4 · HOUSEKEEPING',SEC(10),{bg:'#8a63d2'});
+  eq('hmi',470,180,150,[A.p10_hmi,B(11)]);eq('net_switch',800,210,90,[A.p10_network,B(11)]);
+  box({x:470,y:400,w:300,h:90,lines:['SELF-CHECK  ✓'],color:NG.grn,size:26},[A.p10_checks,B(11)]);
+  ng('title',{x:900,y:410,w:300,h:70,text:'↺  BACK TO STEP 1',size:28,bg:NG.blue},[A.p10_back,B(11)]);
+  /* ---------- 11 one scan ---------- */
+  ng('loop',{x:470,y:80,w:740,h:600,reveal:[0,0,0,0],spin:[A.p11_trip,B(12)-.1,12],spinMul:100,center:'1 SCAN ≈ A FEW ms',centerAt:A.p11_ms,pillW:200,lsize:18,csize:24},SEC(11));
+  ng('title',{x:1010,y:640,w:240,h:44,text:'SLOW-MOTION VIEW',size:18,bg:'#6b7280'},[A.p11_trip+.3,B(12)]);
+  /* ---------- 12 three faults ---------- */
+  box({x:520,y:150,w:640,h:420,head:'WHAT THE SCAN EXPLAINS',color:NG.red,align:'left',size:32,lines:[{t:'1 · MISSED PULSE',at:A.p12_three+.2},{t:'2 · FIGHTING COILS',at:A.p12_three+.7},{t:'3 · WATCHDOG TRIP',at:A.p12_three+1.2}],lh:90},SEC(12));
+  /* ---------- 13–14 fault 1 ---------- */
+  pill('FAULT 1 · MISSED PULSE',SEC(13,14),{bg:NG.red});
+  eq('photo_eye',470,130,120,[A.p13_eye-.2,B(15)]);
+  ng('pulse',{x:600,y:330,w:620,h:170,t0:A.p13_pulse,t1:A.p13_never+.6,dx:120,pulse:[205,285],counter:A.p13_counter},[A.p13_short,B(14)]);
+  ng('label',{x:760,y:190,w:420,h:44,text:'PULSE BETWEEN TWO READS',size:24,color:NG.org},[A.p13_between,B(14)]);
+  box({x:520,y:150,w:640,h:470,head:'FIXES',color:NG.grn,align:'left',size:28,lines:[{t:'• SLOWER PRODUCT / LONGER TARGET',at:A.p14_slow},{t:'• HIGH-SPEED COUNTER',at:A.p14_hsc},{t:'• INTERRUPT INPUT',at:A.p14_int},{t:"  → they don't wait for the scan",at:A.p14_wait,size:22,color:'#6b7280'}],lh:78},SEC(14));
+  eq('encoder',1000,330,90,[A.p14_hsc,B(15)]);
+  /* ---------- 15–16 fault 2 ---------- */
+  pill('FAULT 2 · FIGHTING COILS',SEC(15,16),{bg:NG.red});
+  ng('rung',{x:520,y:210,w:560,h:80,num:'5',items:[{k:'NO',label:'COND A',on:[[A.p15_r5,1]]},{k:'COIL',label:'MOTOR',on:[[A.p15_on,1]]}],power:[[A.p15_on,1]],result:[[A.p15_on,'= 1 (ON)']]},[A.p15_coil,B(16)]);
+  ng('rung',{x:520,y:380,w:560,h:80,num:'20',items:[{k:'NO',label:'COND B',on:[[A.p15_r20,0]]},{k:'COIL',label:'MOTOR',on:[[A.p15_off,0]]}],result:[[A.p15_off,'= 0 (OFF)']]},[A.p15_r20-.2,B(16)]);
+  ng('title',{x:560,y:540,w:460,h:60,text:'LAST RUNG WINS → OUTPUT OFF',size:24,bg:NG.red},[A.p15_last,B(16)]);
+  ng('cross',{x:1120,y:440,w:70,h:70},[A.p15_wins,B(16)]);
+  ng('rung',{x:520,y:210,w:560,h:80,num:'5',items:[{k:'NO',label:'COND A',on:[[0,1]]},{k:'NC',label:'COND B',on:[[0,1]]},{k:'COIL',label:'MOTOR',on:[[A.p16_combine+.6,1]]}],power:[[A.p16_combine+.6,1]]},[A.p16_fix,B(17)]);
+  ng('box',{x:520,y:380,w:560,h:100,lines:['ONE COIL · ONE PLACE'],color:NG.grn,size:28,bg:'#f3fbf6'},[A.p16_fix+.3,B(17)]);
+  ng('tick',{x:1120,y:380,w:90,h:90},[A.p16_combine+.6,B(17)]);
+  /* ---------- 17–18 fault 3 ---------- */
+  pill('FAULT 3 · WATCHDOG TRIP',SEC(17,18),{bg:NG.red});
+  eq('plc_rack',470,150,150,SEC(17,18));
+  ng('wdog',{x:460,y:390,w:470,h:44,t0:A.p17_long,t1:A.p17_never+1.2,over:1.2},[A.p17_long-.2,B(19)]);
+  ng('lamp',{x:720,y:190,w:64,h:64,text:'CPU FAULT',color:NG.red,on:A.p17_stops,blink:true},[A.p17_stops,B(19)]);
+  ng('label',{x:460,y:460,w:470,h:44,text:'SCAN NEVER FINISHES',size:24,color:NG.red},[A.p17_never,B(19)]);
+  eq('laptop_dash',470,520,150,[A.p18_when,B(19)]);
+  box({x:680,y:540,w:360,h:120,lines:[{t:'LOOK FOR: LOOPS',at:A.p18_loops},{t:'HEAVY INSTRUCTIONS',at:A.p18_loops+.9},{t:'CHECK SCAN TIME',at:A.p18_check}],color:NG.navy,size:20,lh:32},[A.p18_loops-.1,B(19)]);
+  const tech=addStick({scene:s,quiet:true,look:'tech',action:'panelcheck',size:430,x:1010,y:250,facing:-1,entrance:'pop',delay:0,withPrev:true,draw:.35,name:'Technician'});
+  tech.win=[A.p17_fault,B(19)];tech.beats=[{t:0,pose:'panelcheck',facing:-1},{t:A.p17_stops,pose:'think',facing:-1},{t:A.p18_check,pose:'laptop',facing:-1}];
+  /* ---------- 19 recap ---------- */
+  ng('loop',{x:400,y:90,w:560,h:580,reveal:[A.p19_read,A.p19_run,A.p19_write,A.p19_repeat],hi:[[A.p19_read,0],[A.p19_run,1],[A.p19_write,2],[A.p19_repeat,3],[A.p19_missed,null]],center:'THE PHOTO',centerAt:A.p19_photo,pillW:200,lsize:17},SEC(19));
+  box({x:1035,y:200,w:230,h:330,head:'NO MORE MYSTERY',headSize:18,color:NG.grn,align:'left',size:19,lines:[{t:'✓ MISSED COUNTS',at:A.p19_missed},{t:'✓ FIGHTING COILS',at:A.p19_fighting},{t:'✓ WATCHDOG STOPS',at:A.p19_watchdog}],lh:62},[A.p19_missed-.2,B(20)]);
+  /* ---------- 20 next + subscribe ---------- */
+  box({x:520,y:150,w:620,h:300,head:'NEXT VIDEO',color:NG.blue,lines:[{t:'NPN vs PNP SENSORS',size:40},{t:'how they show up in the input photo',size:22,color:'#6b7280'}],lh:64},SEC(20));
+  eq('prox_sensor',600,470,90,[A.p20_npn,END]);eq('photo_eye',900,460,110,[A.p20_npn+.6,END]);
+  ng('title',{x:640,y:610,w:380,h:70,text:'▶  SUBSCRIBE',size:34,bg:NG.red},[A.p20_sub,END]);
+  /* ---------- host (whole video) ---------- */
+  const host=addStick({scene:s,quiet:true,look:'host',action:'talking',size:470,x:40,y:240,facing:1,entrance:'none',delay:0,withPrev:true,draw:.1,name:'Host'});
+  host.speak=D.speak;
+  const hb=[[0,'talking'],[A.hook_photo2,'pointright'],[P[1][0],'explaining'],[A.p1_conv,'pointright'],[A.p1_three,'counting'],[P[2][0],'explaining'],[A.p2_cpu,'pointright'],[P[3][0],'talking'],[A.p3_four,'counting'],[A.p3_cycle,'palmsup'],
+    [P[4][0],'pointright'],[A.p4_photo,'thumbsup'],[P[5][0],'thinking'],[P[6][0],'explaining'],[A.p6_top,'pointright'],[P[7][0],'pointright'],[A.p7_true,'thumbsup'],[A.p7_memory,'pointup'],[P[8][0],'pointright'],[A.p8_three,'counting'],
+    [P[9][0],'pointright'],[A.p9_conv,'thumbsup'],[P[10][0],'talking'],[A.p10_back,'pointright'],[P[11][0],'explaining'],[A.p11_hundreds,'surprised'],[P[12][0],'talking'],[A.p12_three,'counting'],[P[13][0],'thinking'],[A.p13_between,'pointright'],
+    [P[14][0],'pointup'],[A.p14_hsc,'explaining'],[P[15][0],'thinking'],[A.p15_last,'surprised'],[P[16][0],'pointup'],[A.p16_combine,'thumbsup'],[P[17][0],'listening'],[A.p17_stops,'surprised'],[P[18][0],'explaining'],[P[19][0],'palmsup'],[A.p19_missed,'counting'],[A.p19_myst,'thumbsup'],[P[20][0],'pointright'],[A.p20_sub,'waving']];
+  host.beats=hb.map(([t,pose])=>({t,pose,blend:.22}));
+  S.captions=false;S.showHand=false;S.cur=0;S.pin=false;S.t=1;refresh();
+}
 async function loadTemplate(key){
+  if(key==='ngd01')return buildNgd01();
   if(key==='ngddemo')return buildNgdDemo();
   if(key==='techfix')return buildTechFix();
   if(key==='dialogue')return buildDialogue();
@@ -2986,7 +3223,7 @@ Object.entries(TPL).forEach(([k,T])=>{const b=document.createElement('button');b
 S.scenes=[newScene({name:'Scene 1',style:'white',transition:'cut'})];renderStickIcons();refresh();
 (async()=>{
   try{await Promise.all(['Gochi Hand','Patrick Hand','Kalam','Caveat','Permanent Marker','IBM Plex Sans'].map(f=>document.fonts.load(`40px "${f}"`)))}catch(_){}
-  await guard(()=>loadTemplate('ngddemo'));
+  await guard(()=>loadTemplate('ngd01'));
 })();
 })();
 </script>

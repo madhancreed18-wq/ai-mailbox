@@ -1,0 +1,25 @@
+{
+"v1": [
+"Your PLC never looks at your sensors while it's thinking. It looks at a photo. And once you see that photo, a lot of strange faults suddenly make sense.",
+"In this video, we'll follow one PLC through one full scan, using a simple conveyor with a Start button, a Stop button and a motor. Then we'll use that scan to explain three real faults.",
+"First, what's inside. A PLC has input terminals, where buttons and sensors are wired. A CPU, which runs your program. And output terminals, which switch contactors, valves and lamps.",
+"The CPU does the same four jobs, in the same order, forever. Read the inputs. Run the program. Write the outputs. Then housekeeping: communication and self-checks. That loop is called the scan cycle.",
+"Step one: read the inputs. The CPU checks every input terminal at once and copies its state into memory. This copy is called the input image. Start is pressed, so it's a one. Stop is not pressed, but its contact is normally closed, so that's also a one. That copy is the photo.",
+"From now until the next scan, the program only reads this photo. If the real button changes a moment later, the program doesn't know yet.",
+"Step two: run the program. The CPU reads your ladder like a book. Top rung first, left to right, then the next rung, all the way to the end.",
+"Our first rung is the start-stop circuit. Start, or the motor's own contact, and Stop, gives Motor. With Start at one and Stop at one, the rung is true. So the CPU writes a one, but only into memory. This is the output image.",
+"Notice the motor hasn't started yet. Writing a coil in the program doesn't switch the real output. Not until step three.",
+"Step three: write the outputs. The CPU copies the whole output image to the output terminals in one go. Now the contactor pulls in, and the conveyor runs.",
+"Step four: housekeeping. The CPU talks to the HMI and the network, checks itself, and then jumps straight back to step one.",
+"One trip around this loop is one scan. On a small program it takes a few milliseconds, so the PLC repeats it hundreds of times every second. That's why it feels instant.",
+"So why does this matter on the shop floor? Here are three faults the scan cycle explains.",
+"Fault one: the missed bottle. A photo-eye sees a bottle for a very short time. If that pulse starts and ends between two input reads, it never appears in any photo, and the counter simply never counts it.",
+"The fix: slow the product or use a longer target, or move the signal to a high-speed counter or an interrupt input, which don't wait for the scan.",
+"Fault two: the output that won't turn on. The same coil is written on two rungs. Rung five turns it on, rung twenty turns it off. Because outputs are only written at the end of the scan, the last rung wins, every time.",
+"The fix: write each coil in one place only, and combine the conditions on that rung.",
+"Fault three: the watchdog trip. If the program takes too long, because of a huge loop or something it's waiting on, the scan never finishes. A watchdog timer sees this and stops the PLC with a fault, so a frozen program can't keep running the machine.",
+"When you see a watchdog or scan-time fault, look for loops and heavy instructions, and check the scan time in your PLC diagnostics.",
+"So that's the photo. Read the inputs, run the program from top to bottom, write the outputs, and repeat. Remember that loop, and missed counts, fighting coils and watchdog stops stop being mysteries.",
+"Next time, we'll wire NPN and PNP sensors and see exactly how they show up in that input photo. Subscribe so you don't miss it."
+]
+}
