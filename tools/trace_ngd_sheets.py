@@ -2,7 +2,7 @@ import sys,json,numpy as np,potrace
 from PIL import Image
 from scipy import ndimage as nd
 from sklearn.cluster import KMeans
-K=3;D='/mnt/user-data/uploads/electricity/_ngd_in/'
+K=3;D='/mnt/user-data/uploads/electricity/_ngd_in/';D2='/mnt/user-data/uploads/electricity/_ngd_v2/'
 def trace(mask,ox,oy,S,turd=30):
     try:pl=potrace.Bitmap(~mask).trace(turdsize=turd,alphamax=1.0,opticurve=True,opttolerance=0.5)
     except ValueError:pl=potrace.Bitmap(~mask).trace(turdsize=turd,alphamax=1.0,opticurve=False)
@@ -81,7 +81,7 @@ def faces(dark,top,tx,hmaxpx,fz):
     mouth=min(mo,key=lambda b:((b[0]+b[2])/2-exc)**2+(cyc(b)-eb-20*fz)**2) if mo else None
     return (cx,cy,r),eyes,mouth
 def run(fname,cols,rows,names,kind,kcol=8):
-    img=Image.open(D+fname).convert('RGB');a,lb,grid=cells(img,cols,rows);H,W=a.shape[:2];cellH=H/rows
+    img=Image.open((D2 if fname.startswith('v2/') else D)+fname.replace('v2/','')).convert('RGB');a,lb,grid=cells(img,cols,rows);H,W=a.shape[:2];cellH=H/rows
     items=[]
     for r in range(rows):
         for c in range(cols):
@@ -157,6 +157,19 @@ SHEETS={
  'iot':('ngd-iot.png',4,3,['iot_gateway','wifi_router','cloud','server_rack','laptop_dash','tablet_dash','phone_alarm','net_switch','eth_cable','antenna','data_packet','padlock'],'prop'),
  'bg':('ngd-backgrounds.png',2,2,['bg_factory','bg_control','bg_workshop','bg_electrical'],'prop'),
  'brand':('ngd-brand.png',3,1,['face_smile','face_surprised','face_point'],'brand'),
+ 'hf1':('v2/host-front-1.png',4,2,['f_stand','f_talk','f_palmsup','f_pointleft','f_pointright','f_pointup','f_pointdown','f_crossarms'],'char'),
+ 'hf2':('v2/host-front-2.png',4,2,['f_count1','f_count2','f_count3','f_count4','f_count5','f_thumbsup','f_thinking','f_shrug'],'char'),
+ 'h34':('v2/host-34-gestures.png',4,2,['count1','count2','count3','count4','no','idea','magnifier','presentlow'],'char'),
+ 'mouths':('v2/host-mouths.png',4,2,['m_closed','m_neutral','m_small','m_medium','m_wide','m_o','m_ee','m_sad'],'prop'),
+ 'app1':('v2/apprentice-1.png',4,2,['standing','asking','confused','surprised','idea','pressing','listening','thumbsup'],'char'),
+ 'appf':('v2/apprentice-front.png',4,2,['f_stand','f_asking','f_confused','f_surprised','f_pointleft','f_pointright','f_thumbsup','f_shrug'],'char'),
+ 'techf':('v2/tech-front.png',4,2,['f_stand','f_talk','f_pointleft','f_pointright','f_inspect','f_meter','f_thumbsup','f_stophand'],'char'),
+ 'conv':('v2/conveyor-parts.png',3,2,['conv_frame','belt_strip','roller','motor_body','motor_fan','gearbox2'],'prop'),
+ 'st1':('v2/states-1.png',4,2,['pb_up','pb_down','estop_up','estop_down','cont_open','cont_closed','lamp_off','lamp_on'],'prop'),
+ 'st2':('v2/states-2.png',4,2,['pe_clear','pe_blocked','prox_off','prox_on','cyl_body','cyl_rod','valve_closed','valve_open'],'prop'),
+ 'cab':('v2/plc-cabinet.png',2,1,['cabinet_off','cabinet_on'],'prop'),
+ 'prod':('v2/products.png',4,2,['bottle','bottle_tipped','box_closed','box_open','petfood_bag','pallet','bottle_jammed','can'],'prop'),
+ 'inplc':('v2/inside-plc.png',3,1,['in_cpu','in_input','in_output'],'prop'),
 }
 key=sys.argv[1];f,c,r,n,kd=SHEETS[key]
 res=run(f,c,r,n,'prop' if kd=='brand' else kd,kcol=6 if kd=='char' else 9)
