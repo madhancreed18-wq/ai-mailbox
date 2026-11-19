@@ -14,7 +14,7 @@ async function main() {
     opts[argv[i].slice(2)] = argv[i + 1];
   }
   const template = opts.template || 'ep6sen';
-  if (!['ep6en', 'ep6ta', 'ep6sen', 'ep6sta', 'mixfull', 'promo05'].includes(template)) throw Error('Unsupported template.');
+  if (!/^[a-z0-9]+$/.test(template)) throw Error('Template key must be lowercase letters/digits (see TPL in the app).');
   const source = path.resolve(opts.app || path.join(__dirname, '../app/inkstroke-whiteboard-animator.html'));
   const output = path.resolve(opts.out || 'render.mp4');
   const fps = Number(opts.fps || 30), start = Number(opts.start || 0), scale = Number(opts.scale || 1);
@@ -31,9 +31,15 @@ window.__inkstrokeRender = {
 };
 `;
   html = html.replace(marker, bridge + marker);
-  const boot = "await guard(()=>loadTemplate('ep6en'));S.cur=0;S.pin=false;S.t=0;refresh();";
-  if (!html.includes(boot)) throw Error('Unrecognized app startup; inspect source before adapting.');
-  html = html.replace(boot, boot + 'window.__inkstrokeRender.ready=true;');
+  // v15: the app's start-up template changes between versions, so mark "ready" after whichever one it loads.
+  const boot = /await guard\(\(\)=>loadTemplate\('[a-z0-9]+'\)\);[^\n]*/;
+  if (!boot.test(html)) throw Error('Unrecognized app startup; inspect source before adapting.');
+  html = html.replace(boot, m => m + 'window.__inkstrokeRender.ready=true;');
+  html = html.replace('async build(key) {', 'async build(key) { if(!TPL[key]) throw Error("Unknown template: "+key);');
+  // Sprites live in app/sprites_*.js next to the HTML: render from a temp file in the same folder so they load.
+  const tmpHtml = path.join(path.dirname(source), `.render-${process.pid}.html`);
+  fs.writeFileSync(tmpHtml, html);
+  process.on('exit', () => { try { fs.unlinkSync(tmpHtml); } catch (_) {} });
   const browser = await chromium.launch({ ...(opts.browser ? { executablePath: path.resolve(opts.browser) } : {}), headless: true,
     args: ['--no-sandbox', '--disable-dev-shm-usage', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
   let encoder, encoderError = '', errors = [];
@@ -42,7 +48,7 @@ window.__inkstrokeRender = {
     page.on('pageerror', e => errors.push(String(e)));
     // Render locally supplied app data only. System font fallbacks are explicit in the report.
     await page.route(/^https?:/, route => route.abort());
-    await page.setContent(html, { waitUntil: 'load', timeout: 30000 });
+    await page.goto('file://' + tmpHtml, { waitUntil: 'load', timeout: 60000 });
     await page.waitForFunction(() => window.__inkstrokeRender?.ready, { timeout: 60000 });
     const info = await page.evaluate(key => window.__inkstrokeRender.build(key), template);
     const duration = opts.duration == null ? info.duration - start : Number(opts.duration);

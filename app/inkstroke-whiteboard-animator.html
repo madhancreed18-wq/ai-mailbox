@@ -90,7 +90,13 @@ textarea{resize:vertical;min-height:64px}
 
 <div class="app">
   <aside class="panel" aria-label="Library">
+    <details class="s2v" open><summary class="label" style="cursor:pointer">Script → video</summary>
+      <textarea id="s2vText" rows="7" aria-label="Voiceover script" placeholder="Paste a voiceover script. One paragraph per section, or start sections with ## Heading. Optional first line: # Video title"></textarea>
+      <div class="row" style="margin-top:6px;align-items:center"><label class="c" style="white-space:nowrap">Words/s <input id="s2vWps" type="number" value="2.5" step="0.1" min="1.2" max="4" style="width:64px"></label><button id="s2vEx" type="button">Example</button><button id="s2vGo" type="button" class="primary">Build</button></div>
+      <p class="hint" id="s2vMsg">Names of machines, sensors and panel parts in the script pop in when they are spoken. Captions follow the sentences.</p>
+    </details>
     <div class="label">Templates</div>
+    <input id="tplQ" type="text" placeholder="Search templates…" aria-label="Search templates" style="margin-bottom:6px">
     <div class="tpls" id="tpls"></div>
     <div class="row" style="justify-content:space-between"><div class="label">Characters</div><select id="stickLook" aria-label="Character look" style="width:auto;padding:3px 6px;font-size:12px"><option value="doodle">Doodle</option><option value="stick">Stickman</option><option value="office">Office stickman</option><option value="worker">Operator (blue shirt)</option><option value="engineer">Engineer (white shirt)</option><option value="tech">Technician (grey/orange)</option><option value="host">NGD host (teal)</option><option value="apprentice">Apprentice (yellow)</option><option value="equip">Equipment &amp; machines</option></select></div>
     <div class="doodles" id="sticks"></div>
@@ -2173,6 +2179,7 @@ $('openIn').onchange=ev=>{const f=ev.target.files[0];ev.target.value='';if(!f)re
 
 /* ---------- Templates ---------- */
 const TPL={
+ ngd02:{name:'NGD 02 – NPN vs PNP sensors (explainer)',desc:'1:48 · hook → wires → PNP → NPN → rule → fault → check → CTA · captions on, add narration later',style:'white',scenes:[]},
  ngd01v2:{name:'NGD 01 v2 – story version (running plant)',desc:'host + apprentice + technician · moving plant · load narrratopm.wav',style:'white',scenes:[]},
  ngd01:{name:'NGD 01 – How a PLC Actually Thinks (16:9)',desc:'scan cycle explainer · host + equipment · load narrratopm.wav',style:'white',scenes:[]},
  ngddemo:{name:'NextGenDecode – host + equipment (traced)',desc:'16 host poses · 50+ machines, panel parts, sensors, IoT · backgrounds',style:'white',scenes:[]},
@@ -3389,7 +3396,249 @@ async function buildNgd01v2(){
   [4,6,9,10,13,15,17].forEach(i=>sfx(P[i][0]-.2,'whoosh'));
   S.sfx=SFX;S.sfxRun=run;S.captions=false;S.showHand=false;S.cur=0;S.pin=false;S.t=1;refresh();
 }
+/* ---------- Script → video (v15) ----------
+   Renderforest-style "build the video from a voiceover script", done offline with rules (no AI call):
+   each paragraph (or "## Heading" block) becomes a section with a title pill, the host in a matching pose,
+   the equipment the narration names (popping in when the word is spoken), key-point cards and timed captions.
+   Timing comes from words per second; load the real narration later and re-time with "Fit to narration". */
+const S2V_WORDS=[
+ ['plc_rack',/\bplcs?\b|controller/],['hmi',/\bhmi\b|touch ?screen|operator panel/],['vfd',/\bvfd\b|variable frequency|inverter|\bdrive\b/],
+ ['contactor',/contactor/],['mcb',/breaker|\bmcb\b/],['overload_relay',/overload/],['relay',/(?<!overload )\brelay/],['terminal_block',/terminal/],
+ ['psu_24v',/power supply|\bpsu\b|24 ?v(olt)? supply/],['estop',/emergency stop|e-?stop/],['pushbuttons',/push ?button|start button|stop button|\bbuttons?\b/],
+ ['cabinet_open',/cabinet|control panel/],['photo_eye',/photo ?(eye|electric|sensor)|light beam/],['limit_switch',/limit switch/],
+ ['prox_sensor',/proximity|inductive|capacitive|\bsensors?\b/],['pressure_tx',/pressure/],['temp_sensor',/temperature|thermocouple|\brtd\b/],
+ ['flow_meter',/flow ?meter|\bflow\b/],['encoder',/encoder/],['solenoid_valve',/solenoid|\bvalves?\b/],['pneumatic_cyl',/cylinder|pneumatic/],
+ ['motor_3ph',/\bmotors?\b/],['gearbox',/gearbox/],['pump',/\bpumps?\b/],['conveyor',/conveyor|\bbelt\b/],['packing_machine',/packing|packaging/],
+ ['filling_machine',/filling|filler/],['mixing_tank',/\btanks?\b|mixing/],['compressor',/compressor/],['boiler',/boiler|steam/],['robot_arm',/robot/],
+ ['pallet_wrapper',/pallet|wrapp/],['iot_gateway',/\biot\b|gateway/],['wifi_router',/wi-?fi|router|wireless/],['cloud',/\bcloud\b/],['server_rack',/server|scada/],
+ ['laptop_dash',/laptop|dashboard/],['tablet_dash',/tablet/],['phone_alarm',/phone|\balarms?\b|notification/],['net_switch',/network switch|ethernet switch/],
+ ['eth_cable',/ethernet|cable/],['antenna',/antenna|radio/],['data_packet',/\bdata\b|packet/],['padlock',/lockout|padlock|\bloto\b|isolat/],
+ ['bottle',/bottles?\b/],['box_closed',/\bbox(es)?\b|carton/],['can',/\bcans?\b/]];
+function s2vParse(src){
+  const lines=src.replace(/\r/g,'').split('\n');let title='';const secs=[];let cur=null;
+  const flush=()=>{if(cur&&cur.text.trim())secs.push(cur);cur=null};
+  for(const raw of lines){const l=raw.trim();
+    if(/^#\s/.test(l)&&!title&&!secs.length&&!cur){title=l.replace(/^#\s*/,'');continue}
+    if(/^##\s/.test(l)){flush();cur={head:l.replace(/^##\s*/,''),text:''};continue}
+    if(!l){if(cur&&cur.text.trim()&&!cur.head)flush();else if(cur&&cur.head&&cur.text.trim())cur.text+=' ';continue}
+    if(!cur)cur={head:'',text:''};cur.text+=(cur.text?' ':'')+l}
+  flush();
+  return{title,secs:secs.map(x=>({head:x.head,text:x.text.replace(/\s+/g,' ').trim()}))};
+}
+const s2vSentences=t=>(t.match(/[^.!?…]+[.!?…]+["')\]]*|[^.!?…]+$/g)||[t]).map(x=>x.trim()).filter(Boolean);
+const s2vWords=t=>t.split(/\s+/).filter(Boolean).length;
+function s2vHeadFrom(text){const w=text.replace(/[^\w\s+\-]/g,'').split(/\s+/).filter(x=>x.length>2&&!/^(the|and|you|your|this|that|with|for|are|has|have|its|it's|was|but|now|then|when|what|how|why|our|from|into|will|can)$/i.test(x));return(w.slice(0,3).join(' ')||'NEXT').toUpperCase()}
+function s2vPose(sent,i,n,secIdx,nSec){
+  const s=sent.toLowerCase();
+  if(secIdx===0&&i===0)return'waving';
+  if(secIdx===nSec-1&&/subscribe|thanks|thank you|see you/.test(s))return'thumbsup';
+  if(/\?$/.test(sent.trim()))return i%2?'thinking':'f_shrug';
+  if(/\b(first|one)\b/.test(s))return'count1';if(/\b(second|two)\b/.test(s))return'count2';if(/\b(third|three)\b/.test(s))return'count3';
+  if(/\b(no|not|never|wrong|don't|doesn't)\b/.test(s))return'no';
+  if(/\b(idea|trick|tip|simple|remember)\b/.test(s))return'idea';
+  if(/\b(check|look|inspect|find)\b/.test(s))return'magnifier';
+  return['pointright','explaining','f_talk','palmsup'][(i+secIdx)%4];
+}
+async function buildFromScript(src,o={}){
+  const wps=Math.max(1.2,Math.min(4,+o.wps||2.5)),P=s2vParse(src);
+  if(!P.secs.length)throw new Error('Paste a script first: one paragraph per section (or start sections with "## Heading").');
+  stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('16:9');S.narrOff=0;
+  const s=newScene({name:P.title||'Script video',style:'white',transition:'cut',trans:0,hold:0});S.scenes.push(s);
+  const ng=(kind,e,win)=>{const x={id:uid++,type:'ngd',kind,name:e.name||kind,draw:.1,delay:0,withPrev:true,entrance:'draw',motion:'none',x:0,y:0,w:10,h:10,...e,win};s.els.push(x);return x};
+  const eq=(n,cx,y,h,win)=>{const m=addStick({scene:s,quiet:true,look:'equip',action:n,size:h,x:0,y,facing:1,entrance:'pop',delay:0,withPrev:true,draw:.35,name:n});m.x=cx-m.w/2;m.win=win;return m};
+  const host=addStick({scene:s,quiet:true,look:'host',action:'waving',size:470,x:20,y:235,facing:1,entrance:'none',delay:0,withPrev:true,draw:.1,name:'Host'});
+  const beats=[],caps=[],cols=[NG.teal,NG.navy,NG.org,NG.blue];let t=.6;
+  if(P.title){const win=[.2,3.6];ng('title',{x:560,y:60,w:480,h:52,text:'NEXT GEN DECODE',size:22,bg:NG.teal},win);
+    ng('label',{x:470,y:220,w:780,h:90,text:P.title.toUpperCase(),size:Math.min(64,Math.floor(1100/P.title.length)),color:NG.navy},win);beats.push({t:0,pose:'waving',blend:.22});t=3.8}
+  P.secs.forEach((sec,si)=>{
+    const sents=s2vSentences(sec.text),t0=t,lower=sec.text.toLowerCase();
+    let tt=t0;const st=sents.map(x=>{const a=tt;tt+=s2vWords(x)/wps+.25;return[a,tt]});const t1=tt+.4,win=[t0,t1];
+    if(si>0)ng('flash',{x:0,y:0,w:W,h:H,noPop:true},[t0,t0+.5]);
+    ng('title',{x:870-260,y:24,w:520,h:56,text:(sec.head||s2vHeadFrom(sents[0])).toUpperCase().slice(0,34),size:28,bg:cols[si%cols.length]},win);
+    sents.forEach((x,i)=>{caps.push({t:st[i][0],end:st[i][1]-.05,text:x});beats.push({t:st[i][0],pose:s2vPose(x,i,sents.length,si,P.secs.length),blend:.22})});
+    /* equipment named in the narration, popping in when spoken (max 3) */
+    const found=[];for(const[n,re]of S2V_WORDS){if(found.length>=3)break;if(n==='relay'&&found.some(f=>f.n==='overload_relay'))continue;const m=lower.match(re);if(m&&!found.some(f=>f.n===n))found.push({n,at:m.index})}
+    found.sort((a,b)=>a.at-b.at);
+    const wordAt=ci=>{const w=s2vWords(sec.text.slice(0,ci));let acc=0;for(let i=0;i<sents.length;i++){const k=s2vWords(sents[i]);if(w<acc+k)return st[i][0]+(w-acc)/wps;acc+=k}return t0};
+    if(found.length){const slot=found.length===1?[860]:found.length===2?[700,1040]:[600,860,1120],hh=found.length===1?260:found.length===2?210:170;
+      found.forEach((f,i)=>{const sp=EQUIP_SPR.find(q=>q.n===f.n),h=Math.min(hh,hh*1.25*sp.h/Math.max(sp.w,sp.h)),at=Math.max(t0+.3,wordAt(f.at));
+        eq(f.n,slot[i],330-h/2,h,[at,t1]);ng('label',{x:slot[i]-130,y:330+h/2+14,w:260,h:34,text:f.n.replace(/_/g,' ').replace(/ (3ph|24v|dash|closed)$/,'').toUpperCase(),size:20,color:NG.navy},[at+.2,t1])})}
+    /* key-point card: short version of each sentence, revealed as it is spoken */
+    const pts=sents.map((x,i)=>({t:x.replace(/[.!?…]+$/,'').split(' ').slice(0,7).join(' ')+(s2vWords(x)>7?'…':''),at:st[i][0]})).slice(0,4);
+    if(!found.length)ng('box',{x:480,y:130,w:760,h:90+pts.length*56,head:'KEY POINTS',color:cols[si%cols.length],align:'left',lines:pts.map(p=>({...p,size:26})),lh:56},win);
+    else if(pts.length>1)ng('box',{x:520,y:470,w:680,h:46+Math.min(2,pts.length)*40,color:cols[si%cols.length],align:'left',lines:pts.slice(-2).map(p=>({...p,size:21})),lh:40},[t0+.5,t1]);
+    if(si===P.secs.length-1&&/subscribe/.test(lower))ng('title',{x:1000,y:560,w:220,h:60,text:'▶ SUBSCRIBE',size:28,bg:'#e5484d'},[st[st.length-1][0],t1+1.5]);
+    t=t1;
+  });
+  s.minDur=t+1.5;s.capBeats=caps;host.beats=beats;
+  S.captions=true;S.showHand=false;S.cur=0;S.pin=false;S.t=1;refresh();
+  return{sections:P.secs.length,duration:s.minDur};
+}
+/* ---------- NGD 02 – NPN vs PNP sensors (explainer, Renderforest-style structure) ----------
+   Structure: hook (fault) → promise → the three wires → PNP → NPN → matching rule → the fault explained → how to check → recap + CTA.
+   One scene, elements shown in time windows; captions from NGD02_SCRIPT (silent draft timing ≈ 2.5 words/s).
+   When the owner's narration arrives: load it as whole-video narration and re-time NGD02_SCRIPT[i][0] to the paragraph starts. */
+const NGD02_SCRIPT=[
+ [0.6,'You wire a brand-new sensor. Its LED lights up… but the PLC sees nothing.'],
+ [5.4,'Broken sensor? No. Wrong type.'],
+ [8.6,'Today: NPN versus PNP – the two ways a three-wire sensor can switch, and how to pick the right one in ten seconds.'],
+ [17.2,'Every three-wire sensor has the same wires.'],
+ [19.6,'Brown goes to plus 24 volts. Blue goes to zero volts.'],
+ [23.6,'Black is the output – the signal to the PLC.'],
+ [28.4,'A PNP sensor switches the positive side.'],
+ [31.4,'When it sees a part, it connects black to plus 24 volts and pushes current into the PLC input.'],
+ [37.6,'P for Positive. This is called sourcing.'],
+ [43.6,'An NPN sensor does the opposite. It switches the negative side.'],
+ [48.2,'Black is pulled down to zero volts, and current flows out of the PLC input into the sensor.'],
+ [54.6,'N for Negative. This is called sinking.'],
+ [60.4,'So the rule is simple.'],
+ [62.4,'A PNP sensor needs a sinking input – the input common goes to zero volts.'],
+ [67.6,'An NPN sensor needs a sourcing input – the common goes to plus 24.'],
+ [73.6,'Mix them up, and both ends of the input sit at the same voltage.'],
+ [78.0,'No current can flow. The sensor LED still lights, but the PLC input stays off.'],
+ [83.4,'That was our fault from the start.'],
+ [86.4,'To check, read the sensor label or datasheet: it says PNP or NPN.'],
+ [91.6,'Then look where the input card common is wired.'],
+ [95.8,'PNP switches plus. NPN switches minus. Match the input card, and it just works.'],
+ [101.6,'Next time we wire one live on the conveyor. Subscribe so you don\'t miss it.']];
+async function buildNgd02(){
+  stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('16:9');S.narrOff=0;
+  const END=108,SC=NGD02_SCRIPT;
+  const s=newScene({name:'NGD 02 – NPN vs PNP sensors',style:'white',transition:'cut',trans:0,hold:0});s.minDur=END;S.scenes.push(s);
+  s.capBeats=SC.map(([t,text],i)=>({t,end:i+1<SC.length?SC[i+1][0]-.05:END-.3,text}));
+  const ng=(kind,o,win)=>{const e={id:uid++,type:'ngd',kind,name:o.name||kind,draw:.1,delay:0,withPrev:true,entrance:'draw',motion:'none',x:0,y:0,w:10,h:10,...o,win};s.els.push(e);return e};
+  const eq=(n,x,y,h,win,o={})=>{const m=addStick({scene:s,quiet:true,look:'equip',action:n,size:h,x:0,y,facing:1,entrance:'pop',delay:0,withPrev:true,draw:.35,name:n,...o});const sp=EQUIP_SPR.find(q=>q.n===n),ww=sp.w*h/sp.h;m.x=x-m.w/2;m.win=win;return m};
+  const pill=(text,win,o={})=>ng('title',{x:(o.cx??800)-(o.w??520)/2,y:o.y??24,w:o.w??520,h:56,text,size:o.size||28,bg:o.bg||NG.navy},win);
+  const label=(text,cx,cy,win,o={})=>ng('label',{x:cx-(o.w??300)/2,y:cy-20,w:o.w??300,h:40,text,size:o.size||24,color:o.color||NG.navy,under:o.under},win);
+  const line=(x1,y1,x2,y2,win,o={})=>ng('arrow',{x1,y1,x2,y2,x:Math.min(x1,x2),y:Math.min(y1,y2),w:Math.abs(x2-x1)+1,h:Math.abs(y2-y1)+1,noPop:true,noHead:o.head?false:true,lw:o.lw||6,dur:o.dur??.35,...o},win);
+  const box=(o,win)=>ng('box',o,win);
+  const lamp=(cx,cy,d,on,win,o={})=>ng('lamp',{x:cx-d/2,y:cy-d/2,w:d,h:d,on,...o},win);
+  const BN='#8b5a2b',BU='#2f6fd6',BK='#1d1d1f',RED='#e5484d';
+  const W_=(a,b)=>[a,b];
+
+  /* ---------- host (left) ---------- */
+  const host=addStick({scene:s,quiet:true,look:'host',action:'surprised',size:470,x:20,y:235,facing:1,entrance:'none',delay:0,withPrev:true,draw:.1,name:'Host'});
+  host.beats=[['surprised',0],['f_shrug',5.2],['no',6.6],['waving',8.6],['f_talk',12],['f_count3',17.2],['count1',19.6],['count2',21.6],['count3',23.6],
+    ['pointright',28.4],['explaining',31.4],['idea',37.6],['pointright',43.6],['explaining',48.2],['idea',54.6],
+    ['f_talk',60.4],['f_pointright',62.4],['presentlow',67.6],['f_crossarms',73.6],['surprised',78],['f_pointright',83.4],
+    ['magnifier',86.4],['pointright',91.6],['f_count2',95.8],['thumbsup',99],['waving',101.6],['f_thumbsup',104.6]].map(([pose,t])=>({t,pose,blend:.22}));
+
+  /* ---------- 0 HOOK: sensor lit, PLC input dark (0 – 8.6) ---------- */
+  const H0=[0.2,8.6];
+  eq('conveyor',800,400,180,H0);
+  eq('prox_sensor',800,330,60,[0.5,8.6]);
+  lamp(870,318,26,1.2,[0.5,8.6],{color:'#ffb020'});label('SENSOR LED ON',870,280,[1.4,8.6],{w:240,size:20,color:'#d88a00'});
+  eq('plc_rack',1130,150,140,[1.2,8.6]);
+  lamp(1130,330,34,99,[1.6,8.6],{text:'PLC INPUT I0'});
+  line(890,345,1110,345,[1.6,8.6],{color:BK,lw:4,dash:[10,8]});
+  ng('cross',{x:972,y:317,w:56,h:56},[3.0,8.6]);
+  ng('title',{x:600,y:40,w:440,h:56,text:'LED ON · PLC SEES 0',size:26,bg:RED},[3.4,5.4]);
+  pill('WRONG SENSOR TYPE?',[5.4,8.6],{cx:820,y:40,w:460,bg:RED});
+
+  /* ---------- 1 PROMISE: title card (8.6 – 17.2) ---------- */
+  const P1=[8.6,17.2];
+  ng('flash',{x:0,y:0,w:W,h:H,noPop:true},[8.6,9.1]);
+  pill('NEXT GEN DECODE · EPISODE 2',P1,{cx:820,y:60,w:460,size:22,bg:NG.teal});
+  label('NPN  vs  PNP',820,200,P1,{w:700,size:84,color:NG.navy});
+  label('3-WIRE SENSORS – SINKING & SOURCING',820,290,[9.6,17.2],{w:760,size:30,color:NG.org});
+  eq('prox_sensor',640,380,80,[10.2,17.2]);eq('photo_eye',840,350,130,[10.6,17.2]);eq('limit_switch',1040,350,130,[11.0,17.2]);
+  box({x:580,y:510,w:480,h:70,lines:[{t:'PICK THE RIGHT ONE IN 10 SECONDS',size:24,color:NG.teal}],color:NG.teal},[13.2,17.2]);
+
+  /* ---------- 2 THE THREE WIRES (17.2 – 28.4) ---------- */
+  const P2=[17.2,28.4];
+  pill('THE 3 WIRES',P2,{cx:820,y:24,w:360,bg:NG.navy});
+  eq('prox_sensor',640,250,110,P2);
+  const sx=785,sy=330;
+  line(sx,sy-24,1040,sy-24-0,[19.6,28.4],{color:BN,lw:9,dur:.5});ng('title',{x:1050,y:sy-52,w:210,h:52,text:'BROWN · +24 V',size:22,bg:BN},[19.9,28.4]);
+  line(sx,sy+6,1040,sy+86,[21.4,28.4],{color:BU,lw:9,dur:.5});ng('title',{x:1050,y:sy+60,w:210,h:52,text:'BLUE · 0 V',size:22,bg:BU},[21.7,28.4]);
+  line(sx,sy+30,1040,sy+190,[23.6,28.4],{color:BK,lw:9,dur:.5});ng('title',{x:1050,y:sy+164,w:210,h:52,text:'BLACK · OUTPUT',size:22,bg:BK},[23.9,28.4]);
+  box({x:470,y:470,w:400,h:100,head:'POWER + SIGNAL',color:NG.teal,lines:[{t:'2 wires = power · 1 wire = signal',size:21}]},[25.2,28.4]);
+
+  /* ---------- circuit diagram helper (PNP / NPN / fault) ---------- */
+  function circuit(win,kind,t0){
+    const X0=500,X1=1240,YP=140,YN=540,senX=610,inX=1010,midY=330;
+    const flowOn=kind==='fault'?null:t0+3.0;
+    line(X0,YP,X1,YP,win,{color:RED,lw:7,dur:.5});ng('title',{x:X0-8,y:YP-48,w:120,h:40,text:'+24 V',size:20,bg:RED},win);
+    line(X0,YN,X1,YN,win,{color:BU,lw:7,dur:.5});ng('title',{x:X0-8,y:YN+10,w:100,h:40,text:'0 V',size:20,bg:BU},win);
+    // sensor block
+    box({x:senX-80,y:midY-70,w:160,h:140,head:kind==='npn'?'NPN':'PNP',color:kind==='npn'?NG.org:NG.teal,lines:[{t:kind==='npn'?'switches −':'switches +',size:20}],lh:30},[win[0]+.3,win[1]]);
+    line(senX-40,YP,senX-40,midY-70,[win[0]+.6,win[1]],{color:BN,lw:6});
+    line(senX,midY+70,senX,YN,[win[0]+.8,win[1]],{color:BU,lw:6});
+    // PLC input block
+    const inHead=kind==='npn'||kind==='fault'?'SOURCING INPUT':'SINKING INPUT';
+    box({x:inX-110,y:midY-70,w:220,h:140,head:'PLC INPUT I0',color:NG.navy,lines:[{t:inHead,size:18,color:kind==='fault'?RED:NG.navy},{t:'I0',size:18}],lh:34,align:'left'},[win[0]+1.0,win[1]]);
+    lamp(inX+84,midY+28,26,flowOn??1e9,[win[0]+1.0,win[1]],{color:NG.grn});
+    // common wire: sinking → 0 V, sourcing → +24 V
+    const comToPlus=kind!=='pnp';
+    ng('label',{x:inX+70,y:comToPlus?midY-130:midY+100,w:120,h:30,text:'COM',size:18,color:NG.navy},[win[0]+1.4,win[1]]);
+    // signal (black) wire and current flow direction
+    const fwd=kind==='pnp';
+    line(fwd?senX+80:inX-110,midY,fwd?inX-110:senX+80,midY,[win[0]+1.2,win[1]],{color:BK,lw:6,flow:!!flowOn,flowFrom:flowOn,flowColor:NG.grn,speed:.5});
+    line(inX+60,comToPlus?YP:midY+70,inX+60,comToPlus?midY-70:YN,[win[0]+1.4,win[1]],{color:comToPlus?RED:BU,lw:6,flow:!!flowOn,flowFrom:flowOn,flowColor:NG.grn,speed:.5});
+    return{senX,inX,midY,YP,YN};
+  }
+
+  /* ---------- 3 PNP (28.4 – 43.6) ---------- */
+  const P3=[28.4,43.6];
+  pill('PNP = SWITCHES +24 V',P3,{cx:870,y:24,w:440,bg:NG.teal});
+  const g3=circuit(P3,'pnp',28.4);
+  label('CURRENT →',(g3.senX+g3.inX)/2,g3.midY-34,[31.4+2.6,43.6],{w:200,size:22,color:NG.grn});
+  ng('title',{x:640,y:575,w:460,h:50,text:'P = POSITIVE · "SOURCING"',size:24,bg:NG.teal},[37.6,43.6]);
+
+  /* ---------- 4 NPN (43.6 – 60.4) ---------- */
+  const P4=[43.6,60.4];
+  ng('flash',{x:0,y:0,w:W,h:H,noPop:true},[43.6,44.1]);
+  pill('NPN = SWITCHES 0 V',P4,{cx:870,y:24,w:440,bg:NG.org});
+  const g4=circuit(P4,'npn',45.2);
+  label('← CURRENT',(g4.senX+g4.inX)/2,g4.midY-34,[48.2,60.4],{w:200,size:22,color:NG.grn});
+  ng('title',{x:640,y:575,w:460,h:50,text:'N = NEGATIVE · "SINKING"',size:24,bg:NG.org},[54.6,60.4]);
+
+  /* ---------- 5 THE RULE (60.4 – 73.6) ---------- */
+  const P5=[60.4,73.6];
+  ng('flash',{x:0,y:0,w:W,h:H,noPop:true},[60.4,60.9]);
+  pill('THE MATCHING RULE',P5,{cx:870,y:24,w:420,bg:NG.navy});
+  const row=(y,a,acol,b,c,at)=>{box({x:470,y,w:240,h:120,head:a,color:acol,lines:[{t:a==='PNP SENSOR'?'switches +':'switches −',size:22}],lh:30},[at,73.6]);
+    line(725,y+60,825,y+60,[at+.4,73.6],{color:NG.ink,lw:6,head:true});
+    box({x:840,y,w:320,h:120,head:b,color:NG.navy,lines:[{t:c,size:22,color:NG.navy}],lh:30},[at+.6,73.6]);ng('tick',{x:1180,y:y+30,w:56,h:56},[at+1.2,73.6])};
+  row(140,'PNP SENSOR',NG.teal,'SINKING INPUT','COM → 0 V',62.4);
+  row(330,'NPN SENSOR',NG.org,'SOURCING INPUT','COM → +24 V',67.6);
+  ng('title',{x:520,y:500,w:620,h:54,text:'OPPOSITES ATTRACT: SOURCE ↔ SINK',size:24,bg:NG.teal},[70.4,73.6]);
+
+  /* ---------- 6 THE FAULT (73.6 – 86.4) ---------- */
+  const P6=[73.6,86.4];
+  ng('flash',{x:0,y:0,w:W,h:H,noPop:true},[73.6,74.1]);
+  pill('PNP + SOURCING INPUT = ✗',P6,{cx:870,y:24,w:480,bg:RED});
+  const g6=circuit(P6,'fault',73.6);
+  lamp(g6.senX+60,g6.midY-52,24,74.2,[74.2,86.4],{color:'#ffb020'});
+  ng('title',{x:560,y:570,w:560,h:50,text:'+24 V  ↔  +24 V  =  NO CURRENT',size:24,bg:RED},[76.2,86.4]);
+  ng('cross',{x:(g6.senX+g6.inX)/2-28,y:g6.midY+10,w:56,h:56},[78,86.4]);
+  ng('label',{x:560,y:80,w:640,h:40,text:'SENSOR LED ON · PLC INPUT OFF',size:24,color:RED},[80.2,86.4]);
+  addStick({scene:s,quiet:true,look:'apprentice',action:'confused',size:280,x:1110,y:300,facing:-1,entrance:'pop',delay:0,withPrev:true,draw:.35,name:'Apprentice'}).win=[83.4,86.4];
+
+  /* ---------- 7 HOW TO CHECK (86.4 – 95.8) ---------- */
+  const P7=[86.4,95.8];
+  pill('HOW TO CHECK',P7,{cx:870,y:24,w:360,bg:NG.navy});
+  eq('prox_sensor',650,250,110,P7);
+  box({x:520,y:330,w:330,h:200,head:'SENSOR LABEL',color:NG.teal,align:'left',lines:[{t:'M18 · 10–30 V DC',size:22},{t:'PNP · NO',size:30,color:NG.teal},{t:'BN+  BU−  BK out',size:20}],lh:48},[87.4,95.8]);
+  ng('label',{x:530,y:550,w:310,h:36,text:'① READ PNP / NPN',size:24,color:NG.teal},[88.6,95.8]);
+  eq('terminal_block',1060,330,110,[91.6,95.8]);
+  box({x:900,y:360,w:320,h:150,head:'INPUT CARD',color:NG.navy,lines:[{t:'COM → 0 V = sinking',size:21},{t:'COM → +24 V = sourcing',size:21}],lh:40},[92.2,95.8]);
+  ng('label',{x:900,y:550,w:320,h:36,text:'② FIND THE COMMON',size:24,color:NG.navy},[92.8,95.8]);
+
+  /* ---------- 8 RECAP + CTA (95.8 – 108) ---------- */
+  const P8=[95.8,END];
+  ng('flash',{x:0,y:0,w:W,h:H,noPop:true},[95.8,96.3]);
+  pill('RECAP',P8,{cx:870,y:24,w:260,bg:NG.navy});
+  box({x:520,y:110,w:700,h:250,head:'NPN vs PNP IN 3 LINES',color:NG.teal,align:'left',lines:[{t:'PNP switches +24 V  →  sinking input',at:96.2},{t:'NPN switches 0 V  →  sourcing input',at:97.6},{t:'Mismatch: LED on, PLC sees nothing',at:99,color:RED}],lh:52},[95.8,END]);
+  eq('conveyor',730,420,150,[101.6,END]);eq('prox_sensor',730,360,55,[101.9,END]);
+  ng('title',{x:960,y:400,w:280,h:54,text:'NEXT: LIVE WIRING',size:22,bg:NG.org},[101.8,END]);
+  ng('title',{x:990,y:490,w:220,h:62,text:'▶ SUBSCRIBE',size:28,bg:RED},[104.2,END]);
+  ng('tick',{x:1220,y:494,w:50,h:50},[104.8,END]);
+
+  S.captions=true;S.showHand=false;S.cur=0;S.pin=false;S.t=1;refresh();
+}
 async function loadTemplate(key){
+  if(key==='ngd02')return buildNgd02();
   if(key==='ngd01v2')return buildNgd01v2();
   if(key==='ngd01')return buildNgd01();
   if(key==='ngddemo')return buildNgdDemo();
@@ -3414,15 +3663,21 @@ async function loadTemplate(key){
       if(it.t==='text')addText({...o,draw:it.draw||1.4});else if(it.t==='arrow')addArrow(o);else if(it.t==='liquid')addLiquid(o);else if(it.t==='stick')addStick(o);else await addSvg(doodleSvg(it.k),DOODLES[it.k][0],{...o,key:it.k,flat:!!DOODLES[it.k][2]})}}
   S.cur=0;S.pin=true;S.t=0;refresh();
 }
+const TPL_STARTERS=['ngd02','stick','plc','explainer','safety','lesson','promo','pumptank'];
+const S2V_SAMPLE="# Why motors need overload relays\n\n## The problem\nA motor is jammed on the conveyor. It keeps pulling current and gets hotter every second.\n\n## The fix\nAn overload relay measures the motor current. If it stays too high, the relay opens the contactor and the motor stops.\n\n## Remember\nThe breaker protects the cable. The overload relay protects the motor. Subscribe for more.";
+function tplGroup(g){let el=$('tpls').querySelector('.tplgrp[data-g="'+g+'"]');if(!el){el=document.createElement('div');el.className='tplgrp';el.dataset.g=g;el.style.cssText='display:flex;flex-direction:column;gap:6px';el.innerHTML='<div class="hint" style="margin:4px 0 0">'+(g==='start'?'Starters':'Episodes &amp; prototypes')+'</div>';if(g==='start')$('tpls').prepend(el);else $('tpls').appendChild(el)}return el}
 Object.entries(TPL).forEach(([k,T])=>{const b=document.createElement('button');b.type='button';b.innerHTML=`<span><i class="sw" style="background:${STYLES[T.style].bg}"></i>${esc(T.name)}</span><small>${esc(T.desc)}</small>`;
   b.onclick=()=>{if(!b.dataset.sure&&S.scenes.some(s=>s.els.length)){b.dataset.sure=1;b.querySelector('small').textContent='Replaces your current video. Click again.';setTimeout(()=>{delete b.dataset.sure;b.querySelector('small').textContent=T.desc},4000);return}delete b.dataset.sure;b.querySelector('small').textContent=T.desc;guard(()=>loadTemplate(k))};
-  $('tpls').appendChild(b)});
+  b.dataset.q=(T.name+' '+T.desc+' '+k).toLowerCase();b.dataset.grp=TPL_STARTERS.includes(k)?'start':'ep';tplGroup(b.dataset.grp).appendChild(b)});
+$('tplQ').addEventListener('input',ev=>{const q=ev.target.value.trim().toLowerCase();$('tpls').querySelectorAll('button').forEach(b=>b.style.display=!q||q.split(/\s+/).every(w=>b.dataset.q.includes(w))?'':'none');$('tpls').querySelectorAll('.tplgrp').forEach(g=>g.style.display=[...g.querySelectorAll('button')].some(b=>b.style.display!=='none')?'':'none')});
+$('s2vEx').onclick=()=>{$('s2vText').value=S2V_SAMPLE};
+$('s2vGo').onclick=()=>guard(async()=>{if(S.scenes.some(x=>x.els.length)&&!$('s2vGo').dataset.sure){$('s2vGo').dataset.sure=1;$('s2vMsg').textContent='Replaces your current video. Click Build again.';setTimeout(()=>delete $('s2vGo').dataset.sure,4000);return}delete $('s2vGo').dataset.sure;const r=await buildFromScript($('s2vText').value,{wps:$('s2vWps').value});$('s2vMsg').textContent=`Built ${r.sections} sections · ${r.duration.toFixed(1)} s. Add the narration, then fine-tune timings.`});
 
 /* ---------- Start ---------- */
 S.scenes=[newScene({name:'Scene 1',style:'white',transition:'cut'})];renderStickIcons();refresh();
 (async()=>{
   try{await Promise.all(['Gochi Hand','Patrick Hand','Kalam','Caveat','Permanent Marker','IBM Plex Sans'].map(f=>document.fonts.load(`40px "${f}"`)))}catch(_){}
-  await guard(()=>loadTemplate('ngd01v2'));
+  await guard(()=>loadTemplate('ngd02'));
 })();
 })();
 </script>

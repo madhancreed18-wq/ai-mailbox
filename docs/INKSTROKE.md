@@ -50,6 +50,10 @@ Animaker, InstaDoodle and AnkonAI-style explainers look and move, using the
 - Process control element: manual or PLC high/low with drain; linked pump, liquid, pipes, sensors, PLC, contactor and signal cables follow its state
 - Process pipes vs dashed signal cables; overflow spill; live LEDs and ON/OFF status
 
+### Script → video (v15)
+- Paste a voiceover script (one paragraph per section, or `## Heading`; optional `# Title`)
+- Host poses follow each sentence; machines and parts named in the script pop in when spoken; captions and key-point cards are timed by words per second
+
 ### Video
 - Scenes with thumbnails; transitions: camera pan, eraser wipe, fade, zoom, cut
 - Boards: whiteboard, paper, chalkboard, glassboard
@@ -90,6 +94,8 @@ Tip: images with thick black outlines, a white background and flat colors trace 
 ## Roadmap
 
 - Type a prompt → Claude draws a doodle (vector) for the scene
+- Undo/redo and autosave
+- Browser draft voice (speechSynthesis) to time a script before recording
 - Images from ChatGPT through this mailbox repo → traced into scenes
 - Joint-by-joint custom posing
 - Sitting poses and props (desk, chair, laptop)

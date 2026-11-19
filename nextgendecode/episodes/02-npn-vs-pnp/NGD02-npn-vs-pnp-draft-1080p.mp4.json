@@ -1,0 +1,36 @@
+{
+  "source": "/home/claude/madhancreed18-wq/ai-mailbox/app/inkstroke-whiteboard-animator.html",
+  "template": "ngd02",
+  "start": 0,
+  "duration": 108,
+  "frames": 3240,
+  "fps": 30,
+  "scale": 1.5,
+  "templateInfo": {
+    "width": 1280,
+    "height": 720,
+    "duration": 108,
+    "aspect": "16:9",
+    "scenes": 1,
+    "captions": true
+  },
+  "audio": "silent",
+  "caveats": [
+    "System font fallbacks used; remote font requests disabled.",
+    "Reproduction test is not style approval or word-level audio alignment verification."
+  ],
+  "output": {
+    "programs": [],
+    "streams": [
+      {
+        "codec_type": "video",
+        "width": 1920,
+        "height": 1080,
+        "avg_frame_rate": "30/1"
+      }
+    ],
+    "format": {
+      "duration": "108.000000"
+    }
+  }
+}

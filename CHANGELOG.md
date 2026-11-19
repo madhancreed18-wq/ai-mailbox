@@ -1,5 +1,11 @@
 # Changelog – Inkstroke
 
+## v15 – Script → video, template search, NGD 02 explainer
+- Script → video panel: paste a voiceover script; sections get title pills, host poses per sentence, named equipment pops in on its word, key-point cards and timed captions (words/s)
+- Template search box; Starters and Episodes groups
+- Offline renderer (`scripts/render-inkstroke.cjs`) fixed for the current app: any template key, sprites load, `--scale 3` = 4K
+- Template "NGD 02 – NPN vs PNP sensors (explainer)" (1:48, captions, default on open); draft render with SFX + music bed
+
 ## v14.1 – EP06 long videos explain with the live ladder card
 - Ladder6 card (R0 edge, R1 reset at rest, R2 CTU, R3 stop-dominant run latch with Box OK, R4 conveyor) driven by the packing-line state; focus boxes on rungs at the spoken words
 - Shorts unchanged
