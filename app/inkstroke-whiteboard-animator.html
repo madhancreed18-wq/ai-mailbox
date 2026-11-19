@@ -3857,13 +3857,18 @@ function g3Lift(){const B=g3Base('#e9edf2'),{T,S,cam,M,box,cyl,tex,label}=B;
   const btnM=M('#d9dde3',{r:.35,e:'#ff8a1f',ei:0}),btn=cyl(.17,.17,.08,btnM,2.3,.75,-.74,S,40);btn.rotation.x=Math.PI/2;
   label('▲',.3,.3,2.3,.75,-.69,S,{size:90,color:'#5d6b7a'});
   const glow=new T.PointLight('#ff9a30',0,2.2);glow.position.set(2.3,.75,-.3);S.add(glow);
+  const skin=M('#e9b48a',{r:.7}),fin=new T.Group();const f1=new T.Mesh(new T.CylinderGeometry(.07,.08,.9,20),skin);f1.rotation.x=Math.PI/2;f1.position.z=.45;fin.add(f1);const f2=new T.Mesh(new T.SphereGeometry(.075,16,16),skin);fin.add(f2);
+  const hand=new T.Mesh(new T.SphereGeometry(.26,20,16),skin);hand.scale.set(1,.8,1.3);hand.position.set(0,-.05,1.05);fin.add(hand);const piv=new T.Group();piv.add(fin);fin.rotation.y=.75;fin.rotation.x=-.25;piv.position.set(2.3,.75,-.62);S.add(piv);
+  const sens=box(.22,.14,.12,M('#3b4652',{r:.4}),-1.55,-1.75,-.6),sLed=box(.06,.04,.03,M('#2f343b',{e:'#22ff77',ei:0}),-1.55,-1.75,-.53);
   let lastFloor=null;
-  return{B,update(tl,e){const on=tl>=e.press&&tl<e.arrive,pr=tl>=e.press&&tl<e.press+.35;
+  return{B,update(tl,e){
+    const fp=tl-e.press,fk=fp<-.6||fp>.9?-1:fp<0?1+fp/.6*.0+(-fp/.6):fp<.25?0:Math.min(1,(fp-.25)/.65);fin.visible=fk>=0&&fk<.98;fin.position.set(Math.sin(.75)*(fk<0?2:fk)*1.6,Math.sin(.25)*(fk<0?2:fk)*1.6,Math.cos(.75)*(fk<0?2:fk)*1.6);
+    sLed.material.emissiveIntensity=tl>=e.arrive&&tl<e.arrive+1.5?3:0;const on=tl>=e.press&&tl<e.arrive,pr=tl>=e.press&&tl<e.press+.35;
     btnM.emissiveIntensity=on?2.6:0;btnM.color.set(on?'#fff1db':'#d9dde3');glow.intensity=on?3:0;btn.position.z=-.74-(pr?.04:0);
-    const k=g3ease(g3c((tl-e.arrive)/1.3));dl.position.x=-.72-k*.74;dr.position.x=.72+k*.74;
+    const k=g3ease(g3c((tl-e.arrive)/.8));dl.position.x=-.72-k*.5;dr.position.x=.72+k*.5;
     const f=tl<e.press?5:tl>=e.arrive?1:Math.max(1,5-Math.floor((tl-e.press)/((e.arrive-e.press)/4)));
     if(f!==lastFloor){lastFloor=f;const c=disp._c.getContext('2d');c.fillStyle='#0b0e12';c.fillRect(0,0,256,128);c.font='800 96px Arial';c.fillStyle='#ff5a3c';c.textAlign='center';c.textBaseline='middle';c.fillText((tl<e.arrive&&tl>=e.press?'▼ ':'')+f,128,68);disp.needsUpdate=true}
-    const z=e.zoom?g3ease(g3c((tl-e.zoom[0])/(e.zoom[1]-e.zoom[0]))):0;
+    let z=e.zoom?g3ease(g3c((tl-e.zoom[0])/(e.zoom[1]-e.zoom[0]))):0;if(e.zk){let i=0;while(i<e.zk.length-1&&tl>=e.zk[i+1][0])i++;const a=e.zk[i],b=e.zk[i+1];z=!b||tl<a[0]?a[1]:a[1]+(b[1]-a[1])*g3ease(g3c((tl-a[0])/Math.min(1.2,b[0]-a[0])))}
     cam.position.set(.9+z*1.6,1.2-z*.3,11.5-z*6.5-Math.min(tl,8)*.05);cam.lookAt(.7+z*1.2,.8-z*.1,-.8)}}
 }
 /* ---- shot: doorbell (momentary) vs fan switch (maintained) ---- */
@@ -3972,8 +3977,11 @@ async function buildEp09(){
   const flash=t=>ng('flash',{x:0,y:0,w:W,h:H,noPop:true},[t,t+.45]);
 
   /* 1 HOOK – 3D lift (0 – P2) */
-  g3('lift',{press:.55,arrive:1e9,zoom:[T(0,2),T(0,2)+1.6]},P(0));
-  pill('BUTTON-AI VITTAACHU… LIGHT ON?',640,24,[T(0,4),PS(1)],{w:620,bg:RED,size:26});
+  g3('lift',{press:.9,arrive:T(0,3)+.3,zk:[[0,0],[1.6,1],[T(0,3)-.2,1],[T(0,3)+.2,0]]},[0,T(0,4)-.1]);
+  g3('lift',{press:T(0,4)-.2,arrive:1e9,zk:[[0,1]]},[T(0,4)-.1,PS(1)]);
+  pill('① PRESS',640,24,[.9,T(0,1)],{w:240,bg:NG.navy});pill('② KAI EDUTHAACHU · LIGHT INNUM ON!',640,24,[T(0,1),T(0,3)],{w:620,bg:NG.org,size:26});
+  pill('③ LIFT VANDHACHU → LIGHT OFF',640,24,[T(0,3),T(0,4)-.1],{w:560,bg:NG.grn,size:26});
+  pill('YAAR ANDHA LIGHT-AI ON-LA VECHIRUNDHAANGA?',640,24,[T(0,4)-.1,PS(1)],{w:760,bg:RED,size:26});
   /* 2 TITLE – latching + "3 sec guess" promise */
   flash(PS(1));big('LATCHING',640,250,P(1),{size:110});label('PLC-la "NYAABAGAM VECHUKKURA" VELAI',640,340,[T(1,1),PS(2)],{w:900,size:30,color:NG.org});
   ng('count3',{x:580,y:420,w:120,h:120,t0:T(1,2),t1:T(1,2)+3,noPop:true,label:'3 SEC-LA GUESS!'},[T(1,2)-.1,PS(2)]);
@@ -3996,17 +4004,22 @@ async function buildEp09(){
   /* 7 SET / RST rungs */
   flash(PS(6));pill('VAZHI 2 · SET / RST',640,24,P(6),{w:420,bg:PUR});
   const Y0s=[[T(6,1)+.2,1],[T(6,4)+.4,0]];
-  ng('rung',{x:300,y:200,w:700,h:80,num:'1',items:[{k:'NO',label:'X0',on:[[T(6,1),1],[T(6,2),0]]},{k:'SET',label:'Y0',on:Y0s}],power:[[T(6,1),1],[T(6,2),0]]},[T(6,0),PS(7)]);
-  ng('rung',{x:300,y:380,w:700,h:80,num:'2',items:[{k:'NO',label:'X1',on:[[T(6,4),1],[T(6,4)+1.2,0]]},{k:'RST',label:'Y0',on:[[T(6,4),1],[T(6,4)+1.2,0]]}],power:[[T(6,4),1],[T(6,4)+1.2,0]]},[T(6,3),PS(7)]);
-  lamp(1130,300,90,Y0s[0][0],[T(6,0),PS(7)],{color:NG.grn});
+  ng('rung',{x:120,y:200,w:640,h:80,num:'1',items:[{k:'NO',label:'X0 CALL BUTTON',on:[[T(6,1),1],[T(6,2),0]]},{k:'SET',label:'Y0 CALL LAMP',on:Y0s}],power:[[T(6,1),1],[T(6,2),0]]},[T(6,0),PS(7)]);
+  ng('rung',{x:120,y:380,w:640,h:80,num:'2',items:[{k:'NO',label:'X1 FLOOR SENSOR',on:[[T(6,4),1],[T(6,4)+1.2,0]]},{k:'RST',label:'Y0 CALL LAMP',on:[[T(6,4),1],[T(6,4)+1.2,0]]}],power:[[T(6,4),1],[T(6,4)+1.2,0]]},[T(6,3),PS(7)]);
+  g3('lift',{x:820,y:150,w:430,h:330,rr:18,frame:'#cbd5e1',press:T(6,1),arrive:T(6,4)+.2,zk:[[0,.25]]},[T(6,0),PS(7)]);
   ng('title',{x:380,y:540,w:520,h:52,text:'X0 VITTAALUM Y0 ON · RST VARUM VARAIKKUM',size:21,bg:PUR},[T(6,2),PS(7)]);
   /* 8 GUESS – lift: SET or RST? */
   flash(PS(7));g3('lift',{x:40,y:110,w:620,h:349,rr:18,frame:'#cbd5e1',press:T(7,1),arrive:T(7,2)+.6},P(7));
   ng('title',{x:700,y:170,w:520,h:70,text:'BUTTON PRESS = SET? RST?',size:26,bg:NG.navy},[T(7,1),PS(8)]);ng('title',{x:700,y:270,w:520,h:70,text:'LIFT VANDHADHU = SET? RST?',size:26,bg:NG.navy},[T(7,2),PS(8)]);
   ring(T(7,3),E(7),{cx:960,cy:450});
   /* 9 REVEAL */
-  g3('lift',{x:40,y:110,w:620,h:349,rr:18,frame:'#86efac',press:T(8,0),arrive:T(8,1)+.4},P(8));
-  ng('title',{x:700,y:170,w:520,h:70,text:'PRESS = SET ✓',size:30,bg:NG.grn},[T(8,0),PS(9)]);ng('title',{x:700,y:270,w:520,h:70,text:'LIFT VANDHADHU = RST ✓',size:30,bg:PUR},[T(8,1),PS(9)]);
+  const LA=T(8,2)+2.2,pz=[[T(8,0),1],[T(8,0)+.6,0]],xs=[[LA,1],[LA+1,0]];
+  g3('lift',{x:30,y:100,w:600,h:440,rr:18,frame:'#86efac',press:T(8,0)+.2,arrive:LA,zk:[[0,.15]]},P(8));
+  ng('rung',{x:700,y:170,w:520,h:80,num:'1',items:[{k:'NO',label:'X0 BUTTON',on:pz},{k:'SET',label:'Y0 LAMP',on:[[T(8,0)+.2,1],[LA,0]]}],power:pz},P(8));
+  ng('rung',{x:700,y:330,w:520,h:80,num:'2',items:[{k:'NO',label:'X1 FLOOR SENSOR',on:xs},{k:'RST',label:'Y0 LAMP',on:xs}],power:xs},[T(8,1),PS(9)]);
+  pill('PRESS = SET ✓',330,30,[T(8,0),PS(9)],{w:300,bg:NG.grn,size:26});pill('LIFT VANDHADHU = RST ✓',960,30,[T(8,1),PS(9)],{w:440,bg:PUR,size:26});
+  ng('title',{x:700,y:470,w:520,h:60,text:'LIFT VARUM VARAI · LAMP NYAABAGAM',size:22,bg:NG.navy},[T(8,2),LA]);
+  ng('title',{x:700,y:470,w:520,h:60,text:'FLOOR SENSOR → RST → LAMP OFF ✓',size:22,bg:NG.grn},[LA,PS(9)]);
   /* 10 SAME…BUT 2 DIFFERENCES */
   flash(PS(9));card(140,170,440,260,'HOLDING',[{t:'button vittaalum ON'}],NG.teal,P(9));card(700,170,440,260,'SET / RST',[{t:'button vittaalum ON'}],PUR,P(9));
   big('≠',640,300,[T(9,1),PS(10)],{w:120,size:96,color:RED});ng('title',{x:420,y:520,w:440,h:60,text:'2 MUKKIYA DIFFERENCE',size:28,bg:RED},[T(9,2),PS(10)]);
