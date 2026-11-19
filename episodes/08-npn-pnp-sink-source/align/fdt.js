@@ -29,15 +29,12 @@ async function buildFdtNpn(){
   const RED='#e5484d',BN='#8b5a2b',BU='#2f6fd6',BK='#1d1d1f',YEL='#ffd23f',AMB='#ffb020';
   const W=(p,q=p)=>[PS(p),q>=24?END:PS(q+1)];
   s.capBeats=[];
-  /* ---------- host ---------- */
-  const host=addStick({scene:s,quiet:true,look:'office',action:'question',size:440,x:0,y:270,facing:1,entrance:'none',delay:0,withPrev:true,draw:.1,name:'Host'});
-  const HB=[[0,'question'],[6,'worriedlook'],[9.4,'swap'],[13.6,'screwdriver'],[19.4,'holdsensor'],[26,'scratchhead'],[28,'talkneutral'],[31.9,'pointboard'],[36,'count1'],[39.2,'count2'],[42.2,'pointboard'],
-    [44.7,'talkneutral'],[50,'trace'],[57.3,'pointboard'],[59.6,'thumbsup'],[61.8,'trace'],[67.2,'onefinger'],[69.6,'pointboard'],[83.3,'talkneutral'],[90.5,'trace'],[97.1,'thumbsup'],
-    [99.4,'question'],[112.2,'count1'],[114.2,'count2'],[116.9,'talkneutral'],[121.8,'pointboard'],[130.2,'pointboard'],[143,'trace'],[153.4,'thumbsup'],[154.3,'present'],[159.4,'pointboard'],
-    [163.5,'worriedlook'],[169.3,'swap'],[175.9,'pointboard'],[183.6,'probes'],[192.1,'question'],[196.1,'scratchhead'],[200.6,'chinthink'],[205.2,'onefinger'],[208,'trace'],[220.5,'thumbsup'],
-    [222.5,'talkneutral'],[237,'question'],[239.5,'holdsensor'],[241.9,'pointboard'],[245.1,'count1'],[248.4,'count2'],[251.2,'holdsensor'],[256.7,'pointboard'],[261.8,'trace'],[266.5,'thumbsup'],
-    [269.6,'talkneutral'],[277.9,'swap'],[286.4,'chinthink'],[287.5,'count1'],[290.1,'count2'],[297,'count3'],[303.2,'askviewer'],[308,'probes'],[312.9,'trace'],[316.2,'wavebye']];
-  host.beats=HB.map(([t,pose])=>({t,pose,blend:.22}));host.speak=[[0,END]];
+  /* ---------- floor (depth) ---------- */
+  s.els.push({id:uid++,type:'ngd',kind:'mg',mg:'floor',name:'floor',x:-500,y:0,w:2300,h:720,hz:430,vx:.5,draw:.1,delay:0,withPrev:true,entrance:'none',motion:'none',noPop:true,win:[0,END]});
+  /* ---------- office stickman: key moments only (hook, the fault question, quiz + goodbye), small, left corner ---------- */
+  const HOSTW=[[0,PS(2)],[T(15,5)-.3,PS(16)],[PS(20),END]];
+  const HB=[[0,'question'],[9.4,'swap'],[13.6,'screwdriver'],[22,'holdsensor'],[26,'scratchhead'],[195.8,'scratchhead'],[269.6,'talkneutral'],[287.5,'count1'],[290.1,'count2'],[297,'count3'],[303.2,'askviewer'],[316.2,'wavebye']];
+  HOSTW.forEach(win=>{const h=addStick({scene:s,quiet:true,look:'office',action:'question',size:380,x:10,y:330,facing:1,entrance:'pop',delay:0,withPrev:true,draw:.3,name:'Host'});h.win=win;h.beats=HB.map(([t,pose])=>({t,pose,blend:.35}));h.speak=[[0,END]]});
   /* ---------- geometry ---------- */
   const YP=140,YN=610,X0R=400,X1R=1240,cx=560,cy=375,bx0=480,bx1=640,by0=290,by1=460,yBk=400;
   const rails=(win)=>{seg(X0R,YP,X1R,YP,win,{color:RED,lw:8,dur:.4});ng('title',{x:X0R-6,y:YP-46,w:110,h:38,text:'+24 V',size:19,bg:RED},win);
@@ -103,7 +100,9 @@ async function buildFdtNpn(){
   label('CURRENT PATH COMPLETE ✓',1060,560,[T(4,5),N[1]],{w:340,size:22,color:NG.grn});
   ng('arrow',{x1:800,y1:yBk+38,x2:690,y2:yBk+38,x:690,y:yBk+20,w:110,h:36,noPop:true,color:NG.grn,lw:6,label:'INTO SENSOR'},[T(5,1),N[1]]);
   pill('NPN = SINKING OUTPUT',1050,470,[T(5,2),N[1]],{w:330,bg:NG.org});
-  s.cam=[{t:0,x:640,y:360,z:1},{t:T(5,0),x:700,y:400,z:1.3,d:.9},{t:T(5,2)+.2,x:640,y:360,z:1,d:.8}];
+  s.cam=[];for(let p=0;p<=20;p++){const a=PS(p),b=p<20?PS(p+1):END,hostOn=HOSTW.some(w=>a>=w[0]-.5&&a<w[1]),cx=hostOn?640:800;
+    s.cam.push({t:a,x:cx,y:360,z:1,d:.7},{t:a+.7,x:cx,y:366,z:1.035,d:Math.max(1,b-a-.9)})}
+  s.cam.push({t:T(5,0),x:720,y:400,z:1.3,d:.9},{t:T(5,2)+.2,x:800,y:360,z:1,d:.8});
 
   /* ===== 6–7 PNP + LAMP (69.6 – 99.4) ===== */
   const Pq=W(6,7),tP=T(7,0)+.6,fP=T(7,2);
@@ -221,8 +220,13 @@ async function buildFdtNpn(){
   [['A','X0 ON aagum',NG.grn,PS(21)],['B','X0 OFF-la irukkum',RED,PS(22)],['C','X0 ON / OFF maaritte irukkum',NG.blue,PS(23)]].forEach(([l,t,c,at],i)=>{
     ng('title',{x:440,y:110+i*120,w:90,h:90,text:l,size:48,bg:c},[at,END]);box({x:550,y:110+i*120,w:640,h:90,color:c,lines:[{t,size:28}]},[at,END])});
   box({x:440,y:480,w:750,h:150,head:'COMMENT-LA REASONING SOLLUNGA',color:NG.navy,lines:[{t:'X0, S/S enna voltage?',at:T(24,2)},{t:'Input circuit vazhiya current odumaa?',at:T(24,3)}],lh:42},[T(24,1),END]);
+  s.cam.sort((a,b)=>a.t-b.t);
+  fdt25(s);
   S.captions=false;S.showHand=false;S.cur=0;S.pin=false;S.t=1;refresh();
 }
+/* 2.5D finish: raised cards/pills, wires as tubes with glowing current */
+function fdt25(s){s.els.forEach(e=>{if(e.type!=='ngd')return;if(e.kind==='box'||e.kind==='title')e.d3=true;
+  if(e.kind==='arrow'&&e.color!=='#ffe27a'&&(e.lw||5)>=4)e.tube=true;if(e.kind==='arrow'&&e.color==='#ffe27a'){e.color='#ffe9a8';e.lw=18}})}
 /* ---------- FDT Short (9:16, 0:46) ---------- */
 async function buildFdtNpnShort(){
   stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('9:16');S.narrOff=0;
@@ -230,8 +234,9 @@ async function buildFdtNpnShort(){
   const s=newScene({name:'FDT Short – LED ON, X0 OFF?',style:'white',transition:'cut',trans:0,hold:0});s.minDur=END;S.scenes.push(s);
   const{ng,T,PS,seg,wire,pill,label,lamp,box,mg}=fdtKit(s,A);
   const RED='#e5484d',BN='#8b5a2b',BU='#2f6fd6',BK='#1d1d1f',AMB='#ffb020';
-  const host=addStick({scene:s,quiet:true,look:'office',action:'question',size:440,x:-10,y:820,facing:1,entrance:'none',delay:0,withPrev:true,draw:.1,name:'Host'});
-  host.beats=[[0,'question'],[3.4,'worriedlook'],[7.6,'scratchhead'],[9.3,'swap'],[15.5,'screwdriver'],[17.7,'holdsensor'],[20.6,'scratchhead'],[21.3,'onefinger'],[24.6,'trace'],[30.3,'pointdownright'],[36,'askviewer'],[41,'thumbsup'],[43.4,'wavebye']].map(([t,pose])=>({t,pose,blend:.22}));host.speak=[[0,END]];
+  s.els.push({id:uid++,type:'ngd',kind:'mg',mg:'floor',name:'floor',x:0,y:0,w:720,h:1280,hz:640,vx:.5,draw:.1,delay:0,withPrev:true,entrance:'none',motion:'none',noPop:true,win:[0,END]});
+  const SB=[[0,'question'],[9.3,'swap'],[15.5,'screwdriver'],[20.6,'scratchhead'],[36,'askviewer'],[41,'thumbsup'],[43.4,'wavebye']];
+  [[0,T(2,0)],[T(3,0),END]].forEach(win=>{const h=addStick({scene:s,quiet:true,look:'office',action:'question',size:400,x:0,y:860,facing:1,entrance:'pop',delay:0,withPrev:true,draw:.3,name:'Host'});h.win=win;h.beats=SB.map(([t,pose])=>({t,pose,blend:.35}));h.speak=[[0,END]]});
   /* 0 hook */
   const H=[0,PS(1)];
   pill('LED ON · X0 OFF?',360,70,[0.2,PS(2)],{w:560,h:70,size:36,bg:RED});
@@ -262,5 +267,6 @@ async function buildFdtNpnShort(){
   pill('👍 LIKE',480,500,[T(3,1),END],{w:320,h:84,size:36,bg:NG.blue});
   pill('↗ SHARE',480,640,[T(3,2),END],{w:320,h:84,size:36,bg:NG.teal});
   label('Sensor wiring doubt friend-kku',480,760,[T(3,2)+.6,END],{w:440,size:24,color:NG.navy});
+  fdt25(s);
   S.captions=false;S.showHand=false;S.cur=0;S.pin=false;S.t=1;refresh();
 }
