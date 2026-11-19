@@ -4,6 +4,7 @@
       CLIPDIR/PREFIX-01.wav … one clip per paragraph of SCRIPT.txt (paragraphs = blank-line separated).
       Joins the clips with `gap` seconds of silence into OUT_WAV; paragraph starts are exact,
       sentences inside a paragraph are placed by the pauses in that clip.
+  python3 tools/fdt_retime.py txt    SCRIPT.txt timing-long.txt OUT_JSON   (ChatGPT timings, mailbox 038)
   python3 tools/fdt_retime.py srt    SCRIPT.txt FILE.srt OUT_JSON
       Uses subtitle cue times (one cue per sentence or per paragraph) instead of pauses.
 
@@ -89,7 +90,20 @@ def cmd_srt(script, srt, out_json):
     json.dump(res, open(out_json, 'w')); print(len(cues), 'cues →', len(res), 'sentences →', out_json)
 
 
+def cmd_txt(script, timing, out_json):
+    """timing file from mailbox 038: lines 'N | start | end [| note]' in sentence order."""
+    _, S = sentences(open(script, encoding='utf-8').read()); T = {}
+    for ln in open(timing, encoding='utf-8'):
+        f = [x.strip() for x in ln.split('|')]
+        if len(f) >= 3 and f[0].isdigit(): T[int(f[0])] = (float(f[1]), float(f[2]))
+    missing = [i + 1 for i in range(len(S)) if i + 1 not in T]
+    assert not missing, f'missing sentence numbers: {missing[:10]}'
+    res = [[round(T[i + 1][0], 2), round(T[i + 1][1], 2), p] for i, (p, _) in enumerate(S)]
+    json.dump(res, open(out_json, 'w')); print(len(res), 'sentences →', out_json)
+
+
 if __name__ == '__main__':
     a = sys.argv[1:]
     if a[0] == 'clips': cmd_clips(a[1], a[2], a[3], a[4], a[5], float(a[6]) if len(a) > 6 else .45)
     elif a[0] == 'srt': cmd_srt(a[1], a[2], a[3])
+    elif a[0] == 'txt': cmd_txt(a[1], a[2], a[3])
