@@ -27,6 +27,7 @@ async function main() {
 window.__inkstrokeRender = {
   ready: false,
   async build(key) { await loadTemplate(key); S.playing=false; S.pin=false; S.sel=null; return {width:W,height:H,duration:S.total,aspect:S.aspect,scenes:S.scenes.length,captions:S.captions}; },
+  hasNarr() { return !!(S.narr&&S.narr.buffer); },
   frame(t,scale) { const c=document.createElement('canvas'); c.width=Math.round(W*scale); c.height=Math.round(H*scale); renderFrame(c.getContext('2d'),t,scale,false); return c.toDataURL('image/png').split(',')[1]; }
 };
 `;
@@ -50,6 +51,8 @@ window.__inkstrokeRender = {
     await page.route(/^https?:/, route => route.abort());
     await page.goto('file://' + tmpHtml, { waitUntil: 'load', timeout: 60000 });
     await page.waitForFunction(() => window.__inkstrokeRender?.ready, { timeout: 60000 });
+    // v15: --narration file.wav loads the voice into the app first, so speech-timed mouths follow it (and it is muxed as audio).
+    if (opts.narration) { await page.setInputFiles('#narrIn', path.resolve(opts.narration)); await page.waitForFunction(() => window.__inkstrokeRender.hasNarr(), { timeout: 60000 }); if (!opts.audio) opts.audio = opts.narration; }
     const info = await page.evaluate(key => window.__inkstrokeRender.build(key), template);
     const duration = opts.duration == null ? info.duration - start : Number(opts.duration);
     if (!Number.isFinite(duration) || duration <= 0 || start + duration > info.duration + .001) throw Error('Requested interval exceeds the template.');

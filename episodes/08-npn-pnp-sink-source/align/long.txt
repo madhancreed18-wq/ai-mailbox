@@ -1,0 +1,49 @@
+Conveyor-la box vandhuduchu. Sensor LED ON. Aana PLC-la X zero OFF.
+
+Pazhaya sensor-ai maathittu spare sensor pottadhukku appuram dhaan indha problem. Brown wire plus twenty-four volt-la irukku. Blue wire zero volt-la irukku. Black wire X zero-la irukku. Moonu wire-um connect panniyachu. Sensor box-aiyum detect pannudhu. Appo PLC input mattum yen ON aagala?
+
+Idhai purinjikka, mudhalla oru sensor-um oru twenty-four volt lamp-um eduthukkalaam. Indha lamp dhaan namma load.
+
+First, NPN sensor. Brown wire plus twenty-four volt-la. Blue wire zero volt-la. Lamp-oda oru side plus twenty-four volt-la. Innoru side sensor-oda black output wire-la.
+
+Target vandhadhum sensor-kulla irukkura output switch ON aagum. Black wire-ai zero volt pakkam connect pannum. Ippo current enga pogum? Plus twenty-four volt-lendhu lamp vazhiya black wire-kku pogum. Black wire-lendhu sensor-kulla poi, blue wire vazhiya zero volt-ku thirumbum. Current path complete. Lamp eriyum.
+
+Ippo black wire pakkathula mattum paarunga. Current sensor-kulla pogudhu. Adhanaala NPN output-ai sinking output nu solrom.
+
+Ippo PNP sensor-ku maaruvom. Brown, blue supply connections adhe dhaan. Lamp connection mattum maarum. Indha murai lamp-oda oru side black output wire-la. Innoru side zero volt-la.
+
+Target vandhadhum PNP sensor-oda output switch ON aagum. Black wire-ai plus twenty-four volt pakkam connect pannum. Current plus twenty-four volt-lendhu sensor switch vazhiya black wire-la veliya varum. Anga irundhu lamp vazhiya zero volt-ku pogum. Lamp eriyum.
+
+Rendu setup-layum lamp eriyudhu. Aana black wire-la current direction maarudhu. NPN-la current sensor-kulla pogudhu. PNP-la current sensor-lendhu veliya varudhu. Adhanaala NPN sinks. PNP sources.
+
+Ippo lamp example-lendhu PLC-kku varuvom. Namma Mitsubishi PLC-la, input circuit-oda oru pakkam X zero. Innoru pakkam S S common. Lamp vazhiya current odinaa lamp eriyum. Adhe maadhiri, X zero-kkum S S-kkum naduvula irukkura input circuit vazhiya thevaiyaana current odinaa PLC input ON aagum.
+
+Mudhalla PNP sensor-ai connect pannuvom. Black wire X zero-la. S S common zero volt-la. Box vandhaa, PNP output X zero-ai plus twenty-four volt pakkam kondu varum.
+
+Current path-ai paarunga. Plus twenty-four volt-lendhu PNP sensor vazhiya black wire-kku varudhu. X zero vazhiya PLC-kulla pogudhu. Input circuit-ai kadandhu S S vazhiya zero volt-ku thirumbudhu. X zero ON.
+
+Inga rendu device-aiyum thanithaniyaa paarunga. Sensor black output-lendhu current veliya kodukkudhu. Adhu sourcing output. PLC X zero vazhiya current-ai ulla edukkudhu. Adhu sinking input.
+
+Ippo opening-la nadandha fault-kku varuvom. Pazhaya sensor PNP. Spare sensor NPN. Black wire-ai adhe X zero-la connect pannitaanga. S S common-um pazhaya setup maadhiri zero volt-laye irundhuchu.
+
+Box vandhadhum NPN sensor detect pannuchu. LED erinjuchu. Black wire vazhiya X zero-ai zero volt pakkam izhuthuchu.
+
+Ippo rendu terminal voltages-ai paarunga. X zero kittathatta zero volt. S S common zero volt. Rendu pakkamum kittathatta ore voltage. Input circuit vazhiya X zero-ai ON panna thevaiyaana current odala. Adhaan sensor LED ON, aana PLC X zero OFF.
+
+Appo indha PLC input group-la NPN sensor-ku current path eppadi complete aagum? S S common plus twenty-four volt-la irukkanum. Ippo plus twenty-four volt-lendhu current S S vazhiya PLC input circuit-kulla pogum. X zero vazhiya PLC-lendhu veliya varum. Black wire vazhiya NPN sensor-kulla poi, blue wire vazhiya zero volt-ku thirumbum. Ippo X zero ON.
+
+Indha murai PLC X zero vazhiya current-ai veliya kodukkudhu. Adhu sourcing input. NPN sensor black wire vazhiya current-ai ulla edukkudhu. Adhu sinking output.
+
+Sink-aa, source-aa nu doubt vandhaa, endha device pathi pesureenganu mudhalla paarunga. Sensor-na black OUT terminal-ai paarunga. PLC-na X zero terminal-ai paarunga. Andha terminal vazhiya current device-kulla ponaa sink. Device-lendhu veliya vandhaa source.
+
+Adutha murai sensor LED eriyudhu, PLC input varala-na, sensor label-la PNP-aa NPN-aa nu check pannunga. PLC wiring diagram-la andha input group-oda common enga connect aayirukku nu paarunga. Apram plus twenty-four volt-lendhu zero volt varaikkum current path-ai trace pannunga. Endha connection match aagalanu appo theriyum.
+
+Ippo oru quick quiz. Opening fault-ai reverse pannuvom. Indha murai PNP sensor connect pannirukkom. Black wire X zero-la. Aana PLC-oda S S common plus twenty-four volt-la irukku. Box vandhuduchu. Sensor detect pannudhu. Ippo X zero enna aagum?
+
+Option A. X zero ON aagum.
+
+Option B. X zero OFF-la irukkum.
+
+Option C. Box angeye irundhaalum X zero ON, OFF-nu maaritte irukkum.
+
+Unga answer A, B, illa C? Letter mattum podaadheenga. X zero-um S S-um enna voltage-la irukkum? PLC input circuit vazhiya current odumaa? Unga reasoning-ai comment-la sollunga.

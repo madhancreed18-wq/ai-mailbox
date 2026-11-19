@@ -1,0 +1,7 @@
+Conveyor-la box vandhuduchu. Sensor LED ON. Aana PLC-la X zero OFF. Yen?
+
+Pazhaya sensor PNP. Pudhusaa potta spare sensor NPN. Brown, blue, black moonu wire-um adhe idathula dhaan connect pannirukkom. Sensor box-aiyum detect pannudhu. Appo PLC input mattum yen ON aagala?
+
+Clue, black wire-la current endha pakkam pogudhu nu paarunga. Adhai trace panninaa, sink, source difference-um X zero yen OFF-aa irukku-ngradhu puriyum. Full video-la rendu current path-aiyum diagram-oda kaattirukken. Keezha irukkura linked video-va paarunga.
+
+Indha maadhiri practical automation related videos-ku Factory Decode Tamil-ai subscribe pannunga. Indha troubleshooting question pudichirundhaa like pannunga. Sensor wiring-la doubt irukkura friend-kku share pannunga.

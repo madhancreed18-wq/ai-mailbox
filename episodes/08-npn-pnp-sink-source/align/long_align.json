@@ -1,0 +1,686 @@
+[
+{
+"t": 0.25,
+"end": 2.82,
+"p": 0,
+"s": "Conveyor-la box vandhuduchu."
+},
+{
+"t": 3.41,
+"end": 5.05,
+"p": 0,
+"s": "Sensor LED ON."
+},
+{
+"t": 6.04,
+"end": 8.87,
+"p": 0,
+"s": "Aana PLC-la X zero OFF."
+},
+{
+"t": 9.59,
+"end": 13.18,
+"p": 1,
+"s": "Pazhaya sensor-ai maathittu spare sensor pottadhukku appuram dhaan indha problem."
+},
+{
+"t": 13.62,
+"end": 15.0,
+"p": 1,
+"s": "Brown wire plus twenty-four volt-la irukku."
+},
+{
+"t": 15.46,
+"end": 16.69,
+"p": 1,
+"s": "Blue wire zero volt-la irukku."
+},
+{
+"t": 17.29,
+"end": 18.73,
+"p": 1,
+"s": "Black wire X zero-la irukku."
+},
+{
+"t": 19.42,
+"end": 21.21,
+"p": 1,
+"s": "Moonu wire-um connect panniyachu."
+},
+{
+"t": 22.08,
+"end": 25.47,
+"p": 1,
+"s": "Sensor box-aiyum detect pannudhu."
+},
+{
+"t": 26.1,
+"end": 27.15,
+"p": 1,
+"s": "Appo PLC input mattum yen ON aagala?"
+},
+{
+"t": 28.05,
+"end": 29.08,
+"p": 2,
+"s": "Idhai purinjikka, mudhalla oru sensor-um oru twenty-four volt lamp-um eduthukkalaam."
+},
+{
+"t": 29.86,
+"end": 31.52,
+"p": 2,
+"s": "Indha lamp dhaan namma load."
+},
+{
+"t": 31.9,
+"end": 33.02,
+"p": 3,
+"s": "First, NPN sensor."
+},
+{
+"t": 33.58,
+"end": 35.68,
+"p": 3,
+"s": "Brown wire plus twenty-four volt-la."
+},
+{
+"t": 36.06,
+"end": 38.24,
+"p": 3,
+"s": "Blue wire zero volt-la."
+},
+{
+"t": 39.24,
+"end": 41.68,
+"p": 3,
+"s": "Lamp-oda oru side plus twenty-four volt-la."
+},
+{
+"t": 42.19,
+"end": 44.05,
+"p": 3,
+"s": "Innoru side sensor-oda black output wire-la."
+},
+{
+"t": 44.73,
+"end": 45.72,
+"p": 4,
+"s": "Target vandhadhum sensor-kulla irukkura output switch ON aagum."
+},
+{
+"t": 46.24,
+"end": 49.32,
+"p": 4,
+"s": "Black wire-ai zero volt pakkam connect pannum."
+},
+{
+"t": 50.06,
+"end": 53.77,
+"p": 4,
+"s": "Ippo current enga pogum?"
+},
+{
+"t": 54.44,
+"end": 55.43,
+"p": 4,
+"s": "Plus twenty-four volt-lendhu lamp vazhiya black wire-kku pogum."
+},
+{
+"t": 55.84,
+"end": 56.44,
+"p": 4,
+"s": "Black wire-lendhu sensor-kulla poi, blue wire vazhiya zero volt-ku thirumbum."
+},
+{
+"t": 57.29,
+"end": 59.01,
+"p": 4,
+"s": "Current path complete."
+},
+{
+"t": 59.61,
+"end": 61.17,
+"p": 4,
+"s": "Lamp eriyum."
+},
+{
+"t": 61.81,
+"end": 64.42,
+"p": 5,
+"s": "Ippo black wire pakkathula mattum paarunga."
+},
+{
+"t": 65.44,
+"end": 66.59,
+"p": 5,
+"s": "Current sensor-kulla pogudhu."
+},
+{
+"t": 67.22,
+"end": 69.15,
+"p": 5,
+"s": "Adhanaala NPN output-ai sinking output nu solrom."
+},
+{
+"t": 69.65,
+"end": 70.91,
+"p": 6,
+"s": "Ippo PNP sensor-ku maaruvom."
+},
+{
+"t": 71.66,
+"end": 74.32,
+"p": 6,
+"s": "Brown, blue supply connections adhe dhaan."
+},
+{
+"t": 74.71,
+"end": 75.94,
+"p": 6,
+"s": "Lamp connection mattum maarum."
+},
+{
+"t": 76.85,
+"end": 79.53,
+"p": 6,
+"s": "Indha murai lamp-oda oru side black output wire-la."
+},
+{
+"t": 80.12,
+"end": 82.42,
+"p": 6,
+"s": "Innoru side zero volt-la."
+},
+{
+"t": 83.28,
+"end": 87.11,
+"p": 7,
+"s": "Target vandhadhum PNP sensor-oda output switch ON aagum."
+},
+{
+"t": 87.72,
+"end": 89.84,
+"p": 7,
+"s": "Black wire-ai plus twenty-four volt pakkam connect pannum."
+},
+{
+"t": 90.47,
+"end": 93.52,
+"p": 7,
+"s": "Current plus twenty-four volt-lendhu sensor switch vazhiya black wire-la veliya varum."
+},
+{
+"t": 93.96,
+"end": 96.37,
+"p": 7,
+"s": "Anga irundhu lamp vazhiya zero volt-ku pogum."
+},
+{
+"t": 97.15,
+"end": 98.95,
+"p": 7,
+"s": "Lamp eriyum."
+},
+{
+"t": 99.41,
+"end": 101.51,
+"p": 8,
+"s": "Rendu setup-layum lamp eriyudhu."
+},
+{
+"t": 102.17,
+"end": 104.73,
+"p": 8,
+"s": "Aana black wire-la current direction maarudhu."
+},
+{
+"t": 105.87,
+"end": 107.79,
+"p": 8,
+"s": "NPN-la current sensor-kulla pogudhu."
+},
+{
+"t": 108.51,
+"end": 111.84,
+"p": 8,
+"s": "PNP-la current sensor-lendhu veliya varudhu."
+},
+{
+"t": 112.22,
+"end": 113.46,
+"p": 8,
+"s": "Adhanaala NPN sinks."
+},
+{
+"t": 114.19,
+"end": 116.08,
+"p": 8,
+"s": "PNP sources."
+},
+{
+"t": 116.91,
+"end": 117.5,
+"p": 9,
+"s": "Ippo lamp example-lendhu PLC-kku varuvom."
+},
+{
+"t": 117.84,
+"end": 121.49,
+"p": 9,
+"s": "Namma Mitsubishi PLC-la, input circuit-oda oru pakkam X zero."
+},
+{
+"t": 121.83,
+"end": 124.5,
+"p": 9,
+"s": "Innoru pakkam S S common."
+},
+{
+"t": 125.56,
+"end": 127.49,
+"p": 9,
+"s": "Lamp vazhiya current odinaa lamp eriyum."
+},
+{
+"t": 128.24,
+"end": 129.8,
+"p": 9,
+"s": "Adhe maadhiri, X zero-kkum S S-kkum naduvula irukkura input circuit vazhiya thevaiyaana current odinaa PLC input ON aagum."
+},
+{
+"t": 130.23,
+"end": 131.82,
+"p": 10,
+"s": "Mudhalla PNP sensor-ai connect pannuvom."
+},
+{
+"t": 132.61,
+"end": 136.7,
+"p": 10,
+"s": "Black wire X zero-la."
+},
+{
+"t": 137.44,
+"end": 138.25,
+"p": 10,
+"s": "S S common zero volt-la."
+},
+{
+"t": 138.76,
+"end": 142.57,
+"p": 10,
+"s": "Box vandhaa, PNP output X zero-ai plus twenty-four volt pakkam kondu varum."
+},
+{
+"t": 143.03,
+"end": 144.93,
+"p": 11,
+"s": "Current path-ai paarunga."
+},
+{
+"t": 145.39,
+"end": 148.49,
+"p": 11,
+"s": "Plus twenty-four volt-lendhu PNP sensor vazhiya black wire-kku varudhu."
+},
+{
+"t": 148.89,
+"end": 149.87,
+"p": 11,
+"s": "X zero vazhiya PLC-kulla pogudhu."
+},
+{
+"t": 150.84,
+"end": 152.88,
+"p": 11,
+"s": "Input circuit-ai kadandhu S S vazhiya zero volt-ku thirumbudhu."
+},
+{
+"t": 153.39,
+"end": 153.95,
+"p": 11,
+"s": "X zero ON."
+},
+{
+"t": 154.31,
+"end": 156.39,
+"p": 12,
+"s": "Inga rendu device-aiyum thanithaniyaa paarunga."
+},
+{
+"t": 156.73,
+"end": 157.92,
+"p": 12,
+"s": "Sensor black output-lendhu current veliya kodukkudhu."
+},
+{
+"t": 158.52,
+"end": 159.05,
+"p": 12,
+"s": "Adhu sourcing output."
+},
+{
+"t": 159.35,
+"end": 161.32,
+"p": 12,
+"s": "PLC X zero vazhiya current-ai ulla edukkudhu."
+},
+{
+"t": 161.65,
+"end": 162.76,
+"p": 12,
+"s": "Adhu sinking input."
+},
+{
+"t": 163.52,
+"end": 165.14,
+"p": 13,
+"s": "Ippo opening-la nadandha fault-kku varuvom."
+},
+{
+"t": 165.7,
+"end": 166.85,
+"p": 13,
+"s": "Pazhaya sensor PNP."
+},
+{
+"t": 167.34,
+"end": 168.66,
+"p": 13,
+"s": "Spare sensor NPN."
+},
+{
+"t": 169.32,
+"end": 171.82,
+"p": 13,
+"s": "Black wire-ai adhe X zero-la connect pannitaanga."
+},
+{
+"t": 172.3,
+"end": 175.19,
+"p": 13,
+"s": "S S common-um pazhaya setup maadhiri zero volt-laye irundhuchu."
+},
+{
+"t": 175.99,
+"end": 178.28,
+"p": 14,
+"s": "Box vandhadhum NPN sensor detect pannuchu."
+},
+{
+"t": 178.64,
+"end": 179.39,
+"p": 14,
+"s": "LED erinjuchu."
+},
+{
+"t": 179.96,
+"end": 182.88,
+"p": 14,
+"s": "Black wire vazhiya X zero-ai zero volt pakkam izhuthuchu."
+},
+{
+"t": 183.66,
+"end": 185.44,
+"p": 15,
+"s": "Ippo rendu terminal voltages-ai paarunga."
+},
+{
+"t": 185.96,
+"end": 187.52,
+"p": 15,
+"s": "X zero kittathatta zero volt."
+},
+{
+"t": 188.03,
+"end": 189.34,
+"p": 15,
+"s": "S S common zero volt."
+},
+{
+"t": 189.83,
+"end": 191.6,
+"p": 15,
+"s": "Rendu pakkamum kittathatta ore voltage."
+},
+{
+"t": 192.06,
+"end": 195.62,
+"p": 15,
+"s": "Input circuit vazhiya X zero-ai ON panna thevaiyaana current odala."
+},
+{
+"t": 196.13,
+"end": 199.43,
+"p": 15,
+"s": "Adhaan sensor LED ON, aana PLC X zero OFF."
+},
+{
+"t": 200.59,
+"end": 204.58,
+"p": 16,
+"s": "Appo indha PLC input group-la NPN sensor-ku current path eppadi complete aagum?"
+},
+{
+"t": 205.18,
+"end": 207.31,
+"p": 16,
+"s": "S S common plus twenty-four volt-la irukkanum."
+},
+{
+"t": 207.99,
+"end": 212.53,
+"p": 16,
+"s": "Ippo plus twenty-four volt-lendhu current S S vazhiya PLC input circuit-kulla pogum."
+},
+{
+"t": 212.97,
+"end": 215.15,
+"p": 16,
+"s": "X zero vazhiya PLC-lendhu veliya varum."
+},
+{
+"t": 215.52,
+"end": 219.92,
+"p": 16,
+"s": "Black wire vazhiya NPN sensor-kulla poi, blue wire vazhiya zero volt-ku thirumbum."
+},
+{
+"t": 220.47,
+"end": 221.55,
+"p": 16,
+"s": "Ippo X zero ON."
+},
+{
+"t": 222.52,
+"end": 225.58,
+"p": 17,
+"s": "Indha murai PLC X zero vazhiya current-ai veliya kodukkudhu."
+},
+{
+"t": 225.88,
+"end": 226.9,
+"p": 17,
+"s": "Adhu sourcing input."
+},
+{
+"t": 227.41,
+"end": 231.55,
+"p": 17,
+"s": "NPN sensor black wire vazhiya current-ai ulla edukkudhu."
+},
+{
+"t": 232.36,
+"end": 236.44,
+"p": 17,
+"s": "Adhu sinking output."
+},
+{
+"t": 236.96,
+"end": 238.91,
+"p": 18,
+"s": "Sink-aa, source-aa nu doubt vandhaa, endha device pathi pesureenganu mudhalla paarunga."
+},
+{
+"t": 239.46,
+"end": 241.3,
+"p": 18,
+"s": "Sensor-na black OUT terminal-ai paarunga."
+},
+{
+"t": 241.89,
+"end": 244.72,
+"p": 18,
+"s": "PLC-na X zero terminal-ai paarunga."
+},
+{
+"t": 245.11,
+"end": 247.31,
+"p": 18,
+"s": "Andha terminal vazhiya current device-kulla ponaa sink."
+},
+{
+"t": 248.41,
+"end": 250.81,
+"p": 18,
+"s": "Device-lendhu veliya vandhaa source."
+},
+{
+"t": 251.21,
+"end": 255.92,
+"p": 19,
+"s": "Adutha murai sensor LED eriyudhu, PLC input varala-na, sensor label-la PNP-aa NPN-aa nu check pannunga."
+},
+{
+"t": 256.73,
+"end": 260.97,
+"p": 19,
+"s": "PLC wiring diagram-la andha input group-oda common enga connect aayirukku nu paarunga."
+},
+{
+"t": 261.75,
+"end": 265.84,
+"p": 19,
+"s": "Apram plus twenty-four volt-lendhu zero volt varaikkum current path-ai trace pannunga."
+},
+{
+"t": 266.52,
+"end": 268.55,
+"p": 19,
+"s": "Endha connection match aagalanu appo theriyum."
+},
+{
+"t": 269.6,
+"end": 270.67,
+"p": 20,
+"s": "Ippo oru quick quiz."
+},
+{
+"t": 271.33,
+"end": 272.65,
+"p": 20,
+"s": "Opening fault-ai reverse pannuvom."
+},
+{
+"t": 273.1,
+"end": 275.24,
+"p": 20,
+"s": "Indha murai PNP sensor connect pannirukkom."
+},
+{
+"t": 275.75,
+"end": 277.39,
+"p": 20,
+"s": "Black wire X zero-la."
+},
+{
+"t": 277.94,
+"end": 281.17,
+"p": 20,
+"s": "Aana PLC-oda S S common plus twenty-four volt-la irukku."
+},
+{
+"t": 281.93,
+"end": 283.9,
+"p": 20,
+"s": "Box vandhuduchu."
+},
+{
+"t": 284.52,
+"end": 285.8,
+"p": 20,
+"s": "Sensor detect pannudhu."
+},
+{
+"t": 286.46,
+"end": 287.06,
+"p": 20,
+"s": "Ippo X zero enna aagum?"
+},
+{
+"t": 287.53,
+"end": 288.54,
+"p": 21,
+"s": "Option A."
+},
+{
+"t": 289.15,
+"end": 289.73,
+"p": 21,
+"s": "X zero ON aagum."
+},
+{
+"t": 290.13,
+"end": 291.26,
+"p": 22,
+"s": "Option B."
+},
+{
+"t": 291.89,
+"end": 296.07,
+"p": 22,
+"s": "X zero OFF-la irukkum."
+},
+{
+"t": 296.96,
+"end": 298.63,
+"p": 23,
+"s": "Option C."
+},
+{
+"t": 299.08,
+"end": 302.78,
+"p": 23,
+"s": "Box angeye irundhaalum X zero ON, OFF-nu maaritte irukkum."
+},
+{
+"t": 303.21,
+"end": 305.28,
+"p": 24,
+"s": "Unga answer A, B, illa C?"
+},
+{
+"t": 305.73,
+"end": 307.11,
+"p": 24,
+"s": "Letter mattum podaadheenga."
+},
+{
+"t": 308.02,
+"end": 312.26,
+"p": 24,
+"s": "X zero-um S S-um enna voltage-la irukkum?"
+},
+{
+"t": 312.96,
+"end": 315.55,
+"p": 24,
+"s": "PLC input circuit vazhiya current odumaa?"
+},
+{
+"t": 316.17,
+"end": 319.25,
+"p": 24,
+"s": "Unga reasoning-ai comment-la sollunga."
+}
+]

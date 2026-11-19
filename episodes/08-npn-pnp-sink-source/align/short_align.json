@@ -1,0 +1,98 @@
+[
+{
+"t": 0.31,
+"end": 3.02,
+"p": 0,
+"s": "Conveyor-la box vandhuduchu."
+},
+{
+"t": 3.35,
+"end": 5.87,
+"p": 0,
+"s": "Sensor LED ON."
+},
+{
+"t": 6.54,
+"end": 6.83,
+"p": 0,
+"s": "Aana PLC-la X zero OFF."
+},
+{
+"t": 7.71,
+"end": 8.91,
+"p": 0,
+"s": "Yen?"
+},
+{
+"t": 9.34,
+"end": 11.35,
+"p": 1,
+"s": "Pazhaya sensor PNP."
+},
+{
+"t": 11.84,
+"end": 15.19,
+"p": 1,
+"s": "Pudhusaa potta spare sensor NPN."
+},
+{
+"t": 15.57,
+"end": 17.37,
+"p": 1,
+"s": "Brown, blue, black moonu wire-um adhe idathula dhaan connect pannirukkom."
+},
+{
+"t": 17.77,
+"end": 19.76,
+"p": 1,
+"s": "Sensor box-aiyum detect pannudhu."
+},
+{
+"t": 20.64,
+"end": 20.83,
+"p": 1,
+"s": "Appo PLC input mattum yen ON aagala?"
+},
+{
+"t": 21.33,
+"end": 24.17,
+"p": 2,
+"s": "Clue, black wire-la current endha pakkam pogudhu nu paarunga."
+},
+{
+"t": 24.67,
+"end": 29.69,
+"p": 2,
+"s": "Adhai trace panninaa, sink, source difference-um X zero yen OFF-aa irukku-ngradhu puriyum."
+},
+{
+"t": 30.4,
+"end": 33.48,
+"p": 2,
+"s": "Full video-la rendu current path-aiyum diagram-oda kaattirukken."
+},
+{
+"t": 33.83,
+"end": 35.44,
+"p": 2,
+"s": "Keezha irukkura linked video-va paarunga."
+},
+{
+"t": 36.13,
+"end": 40.61,
+"p": 3,
+"s": "Indha maadhiri practical automation related videos-ku Factory Decode Tamil-ai subscribe pannunga."
+},
+{
+"t": 41.02,
+"end": 43.15,
+"p": 3,
+"s": "Indha troubleshooting question pudichirundhaa like pannunga."
+},
+{
+"t": 43.47,
+"end": 46.13,
+"p": 3,
+"s": "Sensor wiring-la doubt irukkura friend-kku share pannunga."
+}
+]
