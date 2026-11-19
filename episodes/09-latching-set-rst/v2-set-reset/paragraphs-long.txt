@@ -1,0 +1,85 @@
+Unga phone-ku oru message varudhu. Screen-la notification vandhudhu. Phone-ai keezha vechutteenga. Ten minutes kazhichu eduthaa, andha notification innum anga dhaan irukku. Message vandha event mudinjiduchu. Appo andha notification-ai yaaru ivlo neram nyaabagam vechirukkaa?
+
+Indha maadhiri oru event-ai nyaabagam vechukkura logic-ai PLC-layum create pannalaam. Adhukku use panra rendu instructions, SET, RESET. Innikku Mitsubishi FX3U PLC-la, GX Works2 ladder vechu idhai explain pannaporom. Naduvula oru challenge irukku. Answer-ai kadaisila paakkalaam.
+
+Notification vandhadhum, adhu screen-la irukkuradhaa yosichukkonga. Idhu SET maadhiri. Message vandha event mudinjiduchu. Aana notification disappear aagala. Neenga clear pannumbodhu dhaan adhu pogudhu. Andha clear panra action, RESET maadhiri.
+
+Mitsubishi PLC-la oru input ON aagumbodhu, SET M zero execute pannuvom. M zero ON aagum. Input OFF aanaalum, M zero ON-laye irukkum. Nammoda program-la RST M zero execute pannumbodhu, adhu OFF aagum. GX Works2-la RESET instruction-ai RST-nu ezhudhuvom.
+
+Inga M zero-nguradhu PLC-kulla irukkura internal memory bit. Physical output terminal illa. Andha M zero contact-ai vechu Y zero alarm lamp-ai control pannalaam.
+
+Normal OUT coil eppadi different?
+
+Oru simple rung-la X zero contact-ai vechu OUT Y zero podrom. X zero ON-na rung true; Y zero ON. X zero OFF-na rung false; Y zero OFF. Andha simple rung-la, munnaadi input vandhadha output remember pannaadhu.
+
+“Appo self-holding circuit-layum button-ai vittaalum output ON-la irukkume? Adhuvum SET-um orey vishayamaa?”
+
+Rendum state-ai hold panna use aagum. Aana hold panra method different.
+
+Self-holding circuit-la, Start contact-ku parallel-aa andha bit-oda contact podrom. Start button-ai vittaalum, holding contact vazhi rung true-aa irukku. Stop condition andha path-ai break pannumbodhu, normal OUT coil OFF aagudhu.
+
+SET method-la andha holding branch thevai illa. SET instruction execute aanaa bit ON. Adhukku appuram SET rung false aanaalum bit ON-laye irukkum. Adhai clear panna namma program-la RST execute aaganum.
+
+Idhu dhaan main difference. Self-holding-la holding path state-ai maintain pannudhu. SET method-la instruction ON pannina state, adhai maathura instruction execute aagura varaikkum irukkum.
+
+Ippo factory-ku vaanga.
+
+Oru machine-la fault signal konja neram vandhuttu disappear aagudhu. Operator andha nerathula panel pakkathula illa. Normal OUT vechu alarm lamp-ai direct-aa control panninaa, signal irukkura neram mattum lamp ON aagum. Operator andha fault-ai miss pannalaam.
+
+Adhanaala fault memory create pannuvom. X zero, fault input. X one, Reset button. M zero, alarm memory. Y zero, alarm lamp.
+
+Fault input X zero ON aagumbodhu, SET M zero execute aagudhu. M zero ON. Adhanoda contact vazhi Y zero alarm lamp-um ON aagudhu.
+
+Fault signal ippo OFF aayiduchu. Aana M zero ON-laye irukku. Alarm lamp-um ON. Operator vandhu, inga fault vandhirundhuchunu paakkuraaru. Problem-ai check pannittu Reset button-ai press pannuraaru.
+
+Reset rung-la rendu conditions veppom. X one Reset button ON-aa irukkanum. X zero fault input OFF-aa irukkanum. Rendum satisfy aanaa RST M zero execute aagum. Alarm memory clear aagum. Lamp OFF aagum.
+
+Ippo oru question. Fault innum irukkumbodhu operator Reset button-ai press panninaa?
+
+Reset button condition true. Aana fault clear condition false. Adhanaala RST execute aagaadhu. Alarm lamp ON-laye irukkum. Reset button press pannradhu mattum fault sari aayiduchunguradhukku proof illa.
+
+Mitsubishi PLC-la instruction order-um mukkiyam.
+
+Orey bit-ku SET-um RST-um ore scan-la execute aanaa, kadaisiyaa execute aana instruction andha bit-oda final state-ai decide pannum. SET-ku appuram RST execute aanaa OFF. RST-ku appuram SET execute aanaa ON.
+
+Adhanaala “RESET eppovum jeyikkum” nu nyaabagam vechukkaadheenga. Execution order-ai paarunga. Namma alarm example-la, fault irukkumbodhu reset aagaama irukka explicit condition-um vechirukkom.
+
+Ippo ungalukku challenge.
+
+Orey scan-la, M zero-ku SET instruction moonu thadava execute aagudhu. Adhukku appuram RST M zero oru thadava execute aagudhu. Andha scan-la adhukku appuram M zero-vai vera endha instruction-um maathala.
+
+Kadaisila M zero ON-aa, OFF-aa?
+
+SET moonu thadava, RESET oru thadava. Count panni answer sollaama, instruction enna seiyudhunu yosichu paarunga. Answer kadaisila.
+
+SET RESET-oda advantage enna?
+
+Short-aa vandhu pona event-ai remember pannalaam. Alarm memory, batch active status, machine sequence step maadhiri applications-la useful. State-ai start panra condition-um, clear panra condition-um thaniththaniyaa define pannalaam.
+
+Self-holding-la simple Start Stop logic-ai orey rung-la trace pannalaam. SET RESET-la start event-um completion event-um separate-aa organise panna convenient-aa irukkum. Application-ku yetha method-ai choose pannanum.
+
+Aana SET RESET-la oru common mistake irukku. SET pottaachu. RESET condition-ai poda marandhuttaachu. Appo input OFF aagiyum bit ON-la nikkalaam. Adhanaala SET podumbodhe, “Indha state eppo clear aaganum?” nu decide pannunga.
+
+Ore bit-ku program full-aa pala SET RESET instructions pottaa, troubleshooting-um kashtam. Andha bit-ai yaar ON pannuraanga, yaar OFF pannuraanga-nu thedanum. Clear comments-um organised logic-um mukkiyam.
+
+Innum oru confusion. SET panna bit power cut-ku appuramum nyaabagam vechukkumaa?
+
+SET instruction mattum adhai guarantee pannaadhu. Endha device use panrom, adhu retained memory-aa, PLC settings enna, required backup working-la irukkaa-nguradhai poruthadhu.
+
+Input OFF aana piragum bit ON-la irukkuradhum, power cut-ku appuram bit retain aaguradhum rendu different vishayangal.
+
+Retained bit-ai motor run request-aa use panninaa, power return-la unwanted restart vara chance irukku. Adhanaala startup behaviour-ai check pannanum. SET RESET use pannom-nguradhukkaaga machine safe-aa restart aagum-nu assume panna koodaadhu.
+
+Seri, challenge answer.
+
+SET M zero moonu thadava execute aanaalum, ovvoru thadavayum adhu M zero-vai ON dhaan pannum. SET count pannaadhu. Moonu SET-ku moonu RESET thevai illa.
+
+Adhukku appuram RST M zero execute aagudhu. M zero OFF. Adhukku appuram vera instruction adhai maathala. So answer, OFF.
+
+Nyaabagam vechukkonga. Latching-nguradhu state-ai hold panra behaviour. Self-holding-um SET RESET-um adhai achieve panra rendu methods.
+
+Self-holding circuit-la, holding path-ai trace pannunga. SET RESET program-la, “Edhu SET pannudhu? Edhu RESET pannudhu? Endha order-la execute aagudhu?” nu paarunga.
+
+Indha moonu questions-ku answer therinjaa, Mitsubishi PLC-la ON-aa nikkura bit-ai troubleshoot pannradhu clear aagidum.
+
+Challenge-ku correct answer sonneengalaa? Comment-la sollunga. Video useful-aa irundhaa like pannunga. PLC kathukkura friend-kku share pannunga. Next video-la, timer-um SET RESET-um sendhu, oru real machine sequence build pannuvom. Miss pannaama irukka, Factory Decode Tamil-ai subscribe pannunga.

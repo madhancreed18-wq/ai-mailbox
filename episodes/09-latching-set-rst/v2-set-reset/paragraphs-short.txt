@@ -1,0 +1,9 @@
+Unga phone-ku message vandhudhu. Notification ON. Message vandha event mudinjiduchu. Aana notification innum screen-la irukku. Neenga clear pannaa dhaan pogudhu.
+
+Mitsubishi PLC-la SET, RESET-um indha maadhiri dhaan.
+
+Aana oru twist. Start button-ai vittaalum output ON-la irukka, self-holding circuit-e podhume? Appo SET, RESET edhukku?
+
+Innum oru question. SET moonu thadava execute aagi, kadaisila RESET oru thadava execute aanaa, bit ON-aa, OFF-aa? Moonu SET-ku moonu RESET venumaa?
+
+Unga guess-ai comment pannunga. Rendu method-oda difference-um, indha question-oda answer-um, keezha linked long video-la paakkalaam. Video pidichaa like pannunga. Friend-kku share pannunga. Factory Decode Tamil-ai subscribe pannunga.
