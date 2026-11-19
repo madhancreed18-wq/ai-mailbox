@@ -158,6 +158,7 @@ textarea{resize:vertical;min-height:64px}
 <script src="sprites_b.js"></script>
 <script src="sprites_c.js"></script>
 <script src="sprites_d.js"></script>
+<script src="vendor/three.iife.js"></script>
 <script>
 (()=>{
 let W=1280,H=720;
@@ -1573,7 +1574,7 @@ function drawNgd(e,l,st,tl){
   else if(K==='pulse'){drawNgPulse(e,c,tl)}
   else if(K==='wdog'){drawNgWdog(e,c,tl)}
   else if(K==='plant'){drawPlant(e,c,tl)}
-  else if(K==='flash'){const f=clamp((tl-a0)/.5);c.globalAlpha=1-f;c.fillStyle='#fff';c.fillRect(0,0,W,H)}
+  else if(K==='flash'){const f=clamp((tl-a0)/.5);c.globalAlpha=(1-f)*(e.color?.55:1);c.fillStyle=e.color||'#fff';c.fillRect(0,0,W,H)}
   else if(K==='motion'){c.strokeStyle=e.color||NG.teal;c.lineWidth=4;c.setLineDash([18,16]);c.lineDashOffset=-(tl*(e.speed||90));for(let i=0;i<(e.n||3);i++){c.beginPath();c.moveTo(e.x,e.y+i*14);c.lineTo(e.x+e.w,e.y+i*14);c.stroke()}c.setLineDash([])}
   else if(K==='spin'){const r=e.w/2,cx=e.x+r,cy=e.y+r,ang=tl*(e.speed||6);c.strokeStyle=e.color||NG.grn;c.fillStyle=e.color||NG.grn;c.lineWidth=5;c.beginPath();c.arc(cx,cy,r,ang,ang+4.4);c.stroke();ngArrowHead(c,cx+Math.cos(ang+4.4)*r,cy+Math.sin(ang+4.4)*r,ang+4.4+Math.PI/2,14)}
   else if(K==='tick'||K==='cross'){const p=clamp((tl-a0)/.35),s=e.w;c.lineWidth=e.lw||12;c.strokeStyle=K==='tick'?NG.grn:NG.red;c.beginPath();
@@ -1581,6 +1582,8 @@ function drawNgd(e,l,st,tl){
     else{c.moveTo(e.x,e.y);c.lineTo(e.x+s*Math.min(1,p*2),e.y+s*Math.min(1,p*2));if(p>.5){const q=(p-.5)*2;c.moveTo(e.x+s,e.y);c.lineTo(e.x+s-s*q,e.y+s*q)}}c.stroke()}
   else if(K==='lamp'){const on=tl>=(e.on??a0)&&(!e.blink||Math.sin(tl*9)>-.2),r=e.w/2;c.beginPath();c.arc(e.x+r,e.y+r,r,0,7);c.fillStyle=on?(e.color||NG.red):'#d9dde3';c.fill();c.lineWidth=4;c.strokeStyle=NG.ink;c.stroke();if(on){c.save();c.globalAlpha*=.25;c.beginPath();c.arc(e.x+r,e.y+r,r*1.7,0,7);c.fillStyle=e.color||NG.red;c.fill();c.restore()}if(e.text)ngTxt(c,e.text,e.x+r,e.y+e.w+22,20,NG.navy,800)}
   else if(K==='mg')drawMG(e,c,tl);
+  else if(K==='g3')drawG3(e,c,tl);
+  else if(K==='count3')drawCount3(e,c,tl);
   c.restore();return null;
 }
 /* ================= Motion-graphics parts, 2.5D (v16, code-drawn vectors with shading; no traced images) =================
@@ -1751,10 +1754,10 @@ function drawNgRung(e,c,tl){
   const live=pw?NG.grn:NG.ink;
   // wire
   c.lineWidth=4;c.strokeStyle=live;c.beginPath();c.moveTo(x,y);c.lineTo(x+w,y);c.stroke();
-  e.items.forEach((it,i)=>{const cx=x+seg*(i+1),v=ngValAt(it.on,tl),col=it.k==='COIL'?(v?NG.grn:NG.ink):(v?NG.grn:NG.ink);
+  e.items.forEach((it,i)=>{const cx=x+seg*(i+1),v=ngValAt(it.on,tl),col=/COIL|SET|RST/.test(it.k)?(v?NG.grn:NG.ink):(v?NG.grn:NG.ink);
     c.fillStyle='#fff';c.fillRect(cx-26,y-30,52,60);
     c.lineWidth=5;c.strokeStyle=col;
-    if(it.k==='COIL'){c.beginPath();c.arc(cx-6,y,24,Math.PI*.62,Math.PI*1.38);c.stroke();c.beginPath();c.arc(cx+6,y,24,-Math.PI*.38,Math.PI*.38);c.stroke();if(v){c.save();c.globalAlpha*=.2;c.beginPath();c.arc(cx,y,30,0,7);c.fillStyle=NG.grn;c.fill();c.restore()}}
+    if(/COIL|SET|RST/.test(it.k)){c.beginPath();c.arc(cx-6,y,24,Math.PI*.62,Math.PI*1.38);c.stroke();c.beginPath();c.arc(cx+6,y,24,-Math.PI*.38,Math.PI*.38);c.stroke();if(it.k!=='COIL')ngTxt(c,it.k==='SET'?'S':'R',cx,y+1,24,it.k==='SET'?NG.grn:'#e5484d',900);if(v){c.save();c.globalAlpha*=.2;c.beginPath();c.arc(cx,y,30,0,7);c.fillStyle=NG.grn;c.fill();c.restore()}}
     else{c.beginPath();c.moveTo(cx-14,y-26);c.lineTo(cx-14,y+26);c.moveTo(cx+14,y-26);c.lineTo(cx+14,y+26);c.stroke();if(it.k==='NC'){c.beginPath();c.moveTo(cx-24,y+24);c.lineTo(cx+24,y-24);c.stroke()}}
     ngTxt(c,it.label,cx,y-50,20,NG.navy,800);
     if(it.val!==false&&v!=null)ngTxt(c,'='+v,cx,y+46,20,v?NG.grn:'#6b7280',800);
@@ -2252,6 +2255,8 @@ $('openIn').onchange=ev=>{const f=ev.target.files[0];ev.target.value='';if(!f)re
 /* ---------- Templates ---------- */
 const TPL={
  fdtnpn:{name:'FDT – LED ON, X0 OFF: NPN vs PNP (Tamil, 16:9)',desc:'5:20 motion-graphics explainer · current paths, sink/source, S/S common, quiz · load the long narration',style:'white',scenes:[]},
+ ep09:{name:'EP09 – Latching: SET/RST vs Holding (5:53)',desc:'3D lift, FX3U, mixie · 5 guess beats · decode moment · mid-video challenge · load narration-long.wav',style:'white',scenes:[]},
+ ep09s:{name:'EP09 Short – Lift button latching (9:16)',desc:'0:37 · 3D lift hook, decode, power-cut danger, CTA',style:'white',scenes:[]},
  fdtnpns:{name:'FDT Short – LED ON, X0 OFF? (9:16)',desc:'0:46 · hook, swap, clue, CTA · load the Shorts narration',style:'white',scenes:[]},
  ngd02:{name:'NGD 02 – NPN vs PNP sensors (explainer)',desc:'1:48 · hook → wires → PNP → NPN → rule → fault → check → CTA · captions on, add narration later',style:'white',scenes:[]},
  ngd01v2:{name:'NGD 01 v2 – story version (running plant)',desc:'host + apprentice + technician · moving plant · load narrratopm.wav',style:'white',scenes:[]},
@@ -3820,6 +3825,299 @@ async function buildFdtNpnShort(){
   fdt25(s);
   S.captions=false;S.showHand=false;S.cur=0;S.pin=false;S.t=1;refresh();
 }
+/* ================= G3: real 3D shots inside Inkstroke (v17) =================
+   ngd kind 'g3', e.shot = lift | switches | fx3u | mixie. Uses vendor/three.iife.js (window.THREE).
+   One shared WebGL renderer draws the shot for the element's scene time, then it is drawn onto the 2D canvas,
+   so 3D, 2.5D graphics and the stickman share one timeline and camera. Times are scene-local seconds. */
+const G3D={r:null,shots:{},w:0,h:0};
+function g3R(w,h){const T=window.THREE;if(!T)return null;
+  if(!G3D.r){const r=new T.WebGLRenderer({antialias:true,alpha:false,preserveDrawingBuffer:true});r.shadowMap.enabled=true;r.shadowMap.type=T.PCFSoftShadowMap;r.toneMapping=T.ACESFilmicToneMapping;r.outputColorSpace=T.SRGBColorSpace;G3D.r=r}
+  if(G3D.w!==w||G3D.h!==h){G3D.r.setSize(w,h,false);G3D.w=w;G3D.h=h}return G3D.r}
+const g3ease=k=>k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2,g3c=v=>Math.max(0,Math.min(1,v)),g3in=(w,t)=>(w||[]).some(([a,b])=>t>=a&&t<b),g3val=(tl,t,d)=>{let v=d;(tl||[]).forEach(([a,x])=>{if(t>=a)v=x});return v};
+function g3Base(bg='#eef2f6'){const T=THREE,S=new T.Scene();S.background=new T.Color(bg);
+  const hemi=new T.HemisphereLight('#ffffff','#b8c4d2',1.1);S.add(hemi);
+  const key=new T.DirectionalLight('#ffffff',2.0);key.position.set(4,7,8);key.castShadow=true;key.shadow.mapSize.set(1024,1024);key.shadow.radius=5;['left','bottom'].forEach(k=>key.shadow.camera[k]=-10);['right','top'].forEach(k=>key.shadow.camera[k]=10);S.add(key);
+  const rim=new T.DirectionalLight('#dbe8ff',.6);rim.position.set(-5,3,-4);S.add(rim);
+  const cam=new T.PerspectiveCamera(32,16/9,.1,100);
+  const M=(c,o={})=>new T.MeshStandardMaterial({color:c,roughness:o.r??.6,metalness:o.m??0,emissive:o.e||'#000',emissiveIntensity:o.ei??0,transparent:o.op!=null,opacity:o.op??1});
+  const box=(w,h,d,m,x,y,z,p=S)=>{const k=new T.Mesh(new T.BoxGeometry(w,h,d),m);k.position.set(x,y,z);k.castShadow=k.receiveShadow=true;p.add(k);return k};
+  const cyl=(r1,r2,h,m,x,y,z,p=S,seg=32)=>{const k=new T.Mesh(new T.CylinderGeometry(r1,r2,h,seg),m);k.position.set(x,y,z);k.castShadow=k.receiveShadow=true;p.add(k);return k};
+  const tex=(draw,w=512,h=128)=>{const c=document.createElement('canvas');c.width=w;c.height=h;const t=new T.CanvasTexture(c);t.colorSpace=T.SRGBColorSpace;t._c=c;t._draw=draw;draw(c.getContext('2d'),w,h);return t};
+  const label=(txt,w,h,x,y,z,p=S,o={})=>{const t=tex((c,W_,H_)=>{c.clearRect(0,0,W_,H_);c.font=`800 ${o.size||64}px "IBM Plex Sans",Arial`;c.fillStyle=o.color||'#2b2f36';c.textAlign='center';c.textBaseline='middle';c.fillText(txt,W_/2,H_/2)});const m=new T.Mesh(new T.PlaneGeometry(w,h),new T.MeshBasicMaterial({map:t,transparent:true}));m.position.set(x,y,z);p.add(m);return m};
+  return{T,S,cam,key,hemi,rim,M,box,cyl,tex,label};
+}
+/* ---- shot: lift call panel + doors ---- */
+function g3Lift(){const B=g3Base('#e9edf2'),{T,S,cam,M,box,cyl,tex,label}=B;
+  box(14,8,.2,M('#e7e1d6',{r:.85}),0,2,-1);box(14,.1,6,M('#d5d9df',{r:.8}),0,-1.95,1.6);
+  box(3.2,4.6,.25,M('#9aa3af',{m:.7,r:.3}),0,.4,-.8);                           // frame
+  const dl=box(1.42,4.2,.12,M('#c7ccd2',{m:.85,r:.22}),-.72,.3,-.62),dr=box(1.42,4.2,.12,M('#c7ccd2',{m:.85,r:.22}),.72,.3,-.62);
+  const disp=tex((c,W_,H_)=>{c.fillStyle='#0b0e12';c.fillRect(0,0,W_,H_)},256,128),dm=new T.Mesh(new T.PlaneGeometry(.9,.45),new T.MeshBasicMaterial({map:disp}));dm.position.set(0,3.05,-.66);S.add(dm);
+  const plate=box(.7,1.3,.08,M('#b9c2cc',{m:.8,r:.25}),2.3,.6,-.82);
+  const ring=new T.Mesh(new T.TorusGeometry(.2,.04,16,48),M('#9aa3af',{m:.8,r:.3}));ring.position.set(2.3,.75,-.74);S.add(ring);
+  const btnM=M('#d9dde3',{r:.35,e:'#ff8a1f',ei:0}),btn=cyl(.17,.17,.08,btnM,2.3,.75,-.74,S,40);btn.rotation.x=Math.PI/2;
+  label('▲',.3,.3,2.3,.75,-.69,S,{size:90,color:'#5d6b7a'});
+  const glow=new T.PointLight('#ff9a30',0,2.2);glow.position.set(2.3,.75,-.3);S.add(glow);
+  let lastFloor=null;
+  return{B,update(tl,e){const on=tl>=e.press&&tl<e.arrive,pr=tl>=e.press&&tl<e.press+.35;
+    btnM.emissiveIntensity=on?2.6:0;btnM.color.set(on?'#fff1db':'#d9dde3');glow.intensity=on?3:0;btn.position.z=-.74-(pr?.04:0);
+    const k=g3ease(g3c((tl-e.arrive)/1.3));dl.position.x=-.72-k*.74;dr.position.x=.72+k*.74;
+    const f=tl<e.press?5:tl>=e.arrive?1:Math.max(1,5-Math.floor((tl-e.press)/((e.arrive-e.press)/4)));
+    if(f!==lastFloor){lastFloor=f;const c=disp._c.getContext('2d');c.fillStyle='#0b0e12';c.fillRect(0,0,256,128);c.font='800 96px Arial';c.fillStyle='#ff5a3c';c.textAlign='center';c.textBaseline='middle';c.fillText((tl<e.arrive&&tl>=e.press?'▼ ':'')+f,128,68);disp.needsUpdate=true}
+    const z=e.zoom?g3ease(g3c((tl-e.zoom[0])/(e.zoom[1]-e.zoom[0]))):0;
+    cam.position.set(.9+z*1.6,1.2-z*.3,11.5-z*6.5-Math.min(tl,8)*.05);cam.lookAt(.7+z*1.2,.8-z*.1,-.8)}}
+}
+/* ---- shot: doorbell (momentary) vs fan switch (maintained) ---- */
+function g3Switches(){const B=g3Base('#eef2f6'),{T,S,cam,M,box,cyl,label}=B;
+  box(14,8,.2,M('#efe9df',{r:.9}),0,2,-1.2);
+  [-2.2,2.2].forEach(x=>box(1.1,1.5,.1,M('#f7f7f5',{r:.4}),x,.4,-1.05));
+  const bellBtnM=M('#f2f2f0',{r:.3}),bellBtn=cyl(.22,.22,.12,bellBtnM,-2.2,.4,-.97,S,40);bellBtn.rotation.x=Math.PI/2;
+  const rock=box(.38,.62,.1,M('#f2f2f0',{r:.3}),2.2,.4,-.95);
+  // bell
+  const bell=new T.Group();const bm=M('#e3b341',{m:.8,r:.25});const bc=new T.Mesh(new T.ConeGeometry(.55,.7,32,1,true),bm);bc.rotation.x=Math.PI;bc.material.side=T.DoubleSide;bell.add(bc);const bk=new T.Mesh(new T.SphereGeometry(.1,16,16),bm);bk.position.y=-.35;bell.add(bk);bell.position.set(-2.2,2.6,-.6);S.add(bell);
+  const waves=[0,1,2].map(i=>{const m=new T.Mesh(new T.TorusGeometry(.7+i*.25,.02,8,48,Math.PI*.6),new T.MeshBasicMaterial({color:'#e3b341',transparent:true,opacity:0}));m.position.set(-2.2,2.55,-.6);m.rotation.z=Math.PI*.2;S.add(m);return m});
+  // ceiling fan
+  const fan=new T.Group();const hub=new T.Mesh(new T.CylinderGeometry(.2,.25,.25,24),M('#8e98a3',{m:.6,r:.35}));fan.add(hub);
+  for(let i=0;i<3;i++){const bl=new T.Mesh(new T.BoxGeometry(1.4,.04,.32),M('#a9805a',{r:.6}));bl.position.x=.8;const g=new T.Group();g.add(bl);g.rotation.y=i*Math.PI*2/3;fan.add(g)}
+  fan.position.set(2.2,3.0,-.2);fan.rotation.x=.35;S.add(fan);const rod=cyl(.04,.04,.9,M('#8e98a3',{m:.6}),2.2,3.5,-.35);
+  label('DOORBELL',1.6,.4,-2.2,-.65,-1.04,S,{size:62,color:'#2b2f36'});label('FAN SWITCH',1.8,.4,2.2,-.65,-1.04,S,{size:62,color:'#2b2f36'});
+  let fanA=0,lastT=0;
+  return{B,update(tl,e){const ring=g3in(e.bell,tl);bellBtn.position.z=ring?-1.0:-.97;bellBtnM.color.set(ring?'#ffe08a':'#f2f2f0');
+    bell.rotation.z=ring?Math.sin(tl*40)*.18:0;waves.forEach((w,i)=>{w.material.opacity=ring?(.6-.18*i)*(.5+.5*Math.sin(tl*12-i)):0});
+    const fon=g3in(e.fan,tl);rock.rotation.x=fon?-.28:.28;const dt=Math.max(0,Math.min(.1,tl-lastT));lastT=tl;fanA+=dt*(fon?14:0);fan.rotation.y=fanA;
+    const fz=e.focus?g3val(e.focus,tl,0):0;cam.position.set(fz*1.6,1.6,8.4-Math.abs(fz)*1.6);cam.lookAt(fz*1.9,1.4,-.8)}}
+}
+/* ---- shot: FX3U-32MR/ES (model text only, no brand) with LED timelines, BATT zoom and X-ray "DECODE MOMENT" ---- */
+function g3Fx3u(){const B=g3Base('#e9eef4'),{T,S,cam,M,box,cyl,label}=B;
+  box(14,7,.1,M('#dfe5ec',{r:.85}),0,0,-.9);box(12,.35,.08,M('#b9c2cc',{m:.7,r:.3}),0,0,-.8);
+  const P=new T.Group();S.add(P);const BW=3.64,BH=1.8,BD=1.5,mats=[];const mm=(c,o)=>{const m=M(c,o);mats.push(m);return m};
+  const body=box(BW,BH,BD,mm('#d9dbd5',{r:.55}),0,0,0,P);box(BW-.1,.62,.08,mm('#e6e8e2',{r:.5}),0,0,BD/2+.02,P);
+  box(BW-.08,.5,.12,mm('#c9cbc4',{r:.5}),0,.6,BD/2+.02,P);box(BW-.08,.5,.12,mm('#c9cbc4',{r:.5}),0,-.6,BD/2+.02,P);
+  const sm=mm('#c7ccd2',{m:.85,r:.25});const scr=(y0,row)=>{for(let i=0;i<12;i++){const s=cyl(.036,.036,.03,sm,-1.62+i*.27+(row?.135:0),y0,BD/2+.1,P,20);s.rotation.x=Math.PI/2}};scr(.68,0);scr(.55,1);scr(-.55,0);scr(-.68,1);
+  const L=(t,w,h,x,y,s=40)=>label(t,w*1.5,h*1.5,x,y,BD/2+.11,P,{size:s});
+  [['S/S',-1.08,.8],['0V',-.81,.8],['X0',-.54,.8],['24V',-.675,.43],['X1',-.405,.43]].forEach(([t,x,y])=>L(t,.32,.08,x,y));L('Y0',.36,.08,-1.35,-.43);L('COM1',.36,.08,-1.485,-.8);
+  const leds={};const lm=c=>new T.MeshStandardMaterial({color:'#2f343b',emissive:c,emissiveIntensity:0,roughness:.3});
+  [['POWER','#22ff77'],['RUN','#22ff77'],['BATT','#ff3b3b'],['ERROR','#ff3b3b']].forEach(([n,c],i)=>{const l=box(.07,.05,.03,lm(c),-1.55,.2-i*.13,BD/2+.07,P);leds[n]=l;L(n,.24,.06,-1.36,.2-i*.13,38)});
+  const ids=['0','1','2','3','4','5','6','7','10','11','12','13','14','15','16','17'];
+  const grid=(p,y)=>ids.forEach((id,i)=>{leds[p+id]=box(.05,.04,.03,lm('#22ff77'),-.5+(i%8)*.13,y-Math.floor(i/8)*.1,BD/2+.07,P)});
+  L('IN',.12,.05,-.68,.17,38);grid('X',.17);L('OUT',.14,.05,-.68,-.09,38);grid('Y',-.09);
+  label('FX3U-32MR/ES',1.12,.18,1.05,-.12,BD/2+.11,P,{size:60});
+  box(.3,.5,.04,mm('#cfd1ca',{r:.5}),-.95,0,BD/2+.06,P);box(.07,.12,.05,M('#2b2f36',{r:.4}),-.95,.05,BD/2+.1,P);L('RUN',.16,.05,-.95,.2,30);L('STOP',.18,.05,-.95,-.13,30);
+  box(.05,1.2,1.0,mm('#cfd1ca',{r:.5}),BW/2+.02,0,0,P);
+  // inside (visible in X-ray): CPU board, memory chip, battery
+  const inner=new T.Group();P.add(inner);inner.visible=false;
+  box(3.2,1.4,.06,M('#1e7a4a',{r:.6}),0,0,-.2,inner);const cpu=box(.7,.5,.12,M('#20242a',{r:.4,e:'#38bdf8',ei:0}),.5,.15,-.1,inner);
+  const mem=box(.9,.3,.12,M('#20242a',{r:.4,e:'#a78bfa',ei:0}),.5,-.4,-.1,inner);const bat=cyl(.18,.18,.5,M('#3b82f6',{m:.4,r:.4,e:'#3b82f6',ei:0}),-1.2,-.2,.1,inner);bat.rotation.z=Math.PI/2;
+  label('CPU',.5,.14,.5,.15,-.03,inner,{size:56,color:'#e0f2fe'});label('LATCHED MEMORY',.9,.14,.5,-.4,-.03,inner,{size:44,color:'#ede9fe'});label('BATTERY',.7,.16,-1.2,.12,.32,inner,{size:52,color:'#1e3a8a'});
+  const scan=new T.Mesh(new T.PlaneGeometry(BW+.4,.04),new T.MeshBasicMaterial({color:'#38e8ff',transparent:true,opacity:.9}));scan.position.z=BD/2+.2;P.add(scan);scan.visible=false;
+  const scanGlow=new T.Mesh(new T.PlaneGeometry(BW+.4,.35),new T.MeshBasicMaterial({color:'#38e8ff',transparent:true,opacity:.18}));P.add(scanGlow);scanGlow.position.z=BD/2+.19;scanGlow.visible=false;
+  const CAM={front:[0,.25,6.6,0,0,0],wide:[2.4,1.3,7.4,0,0,0],batt:[-1.6,.2,2.6,-1.3,.0,0],leds:[-.8,.2,4.6,-.6,0,0],model:[1.6,.2,3.4,1.0,-.1,0]};
+  let cprev=null;
+  return{B,update(tl,e){const st=e.leds||{};Object.entries(leds).forEach(([k,l])=>{const on=!!g3val(st[k],tl,k==='POWER'||k==='RUN'?1:0);l.material.emissiveIntensity=on?3.2:0;l.material.color.set(on?'#0d3b1f':'#2f343b')});
+    const dim=g3val(e.dim,tl,0);B.hemi.intensity=1.1*(1-dim*.85);B.key.intensity=2*(1-dim*.9);B.S.background.set(dim?'#1a1f27':'#e9eef4');
+    const xr=e.xray&&tl>=e.xray[0]&&tl<e.xray[1],xk=xr?g3c((tl-e.xray[0])/.6)*g3c((e.xray[1]-tl)/.5):0;
+    mats.forEach(m=>{m.transparent=true;m.opacity=1-xk*.82;m.depthWrite=xk<.5});inner.visible=xk>.05;
+    [cpu,mem,bat].forEach(o=>o.material.emissiveIntensity=xk*1.2);scan.visible=scanGlow.visible=xk>.05;const sy=.9-(((tl-(e.xray?e.xray[0]:0))*.9)%1)*1.8;scan.position.y=sy;scanGlow.position.y=sy+.17;
+    const K=g3val(e.cam,tl,'front'),cur=CAM[K];if(!cprev||cprev.k!==K)cprev={k:K,t:tl,from:cprev?cprev.now:cur};
+    const f=g3ease(g3c((tl-cprev.t)/.9)),now=cprev.from.map((v,i)=>v+(cur[i]-v)*f);cprev.now=now;
+    cam.position.set(now[0]+Math.sin(tl*.25)*.08,now[1],now[2]);cam.lookAt(now[3],now[4],now[5])}}
+}
+/* ---- shot: mixie (mixer grinder) + room lamp, power cut and restart ---- */
+function g3Mixie(){const B=g3Base('#f1ece4'),{T,S,cam,M,box,cyl,label}=B;
+  box(14,.3,6,M('#cfc6b8',{r:.8}),0,-1.05,0);box(14,8,.2,M('#ece4d6',{r:.9}),0,2.5,-2.6);
+  const base=box(1.6,1.0,1.3,M('#f3f4f6',{r:.35}),0,-.4,0);const knob=cyl(.16,.16,.1,M('#e5484d',{r:.4}),0,-.35,.68,S,32);knob.rotation.x=Math.PI/2;
+  const jar=cyl(.55,.45,1.4,M('#dbeafe',{r:.05,op:.35}),0,.8,0,S,40);const lid=cyl(.58,.58,.15,M('#1f2937',{r:.5}),0,1.55,0,S,40);
+  const blades=new T.Group();for(let i=0;i<2;i++){const b=new T.Mesh(new T.BoxGeometry(.7,.03,.1),M('#cbd5e1',{m:.9,r:.2}));b.rotation.y=i*Math.PI/2;blades.add(b)}blades.position.set(0,.25,0);S.add(blades);
+  const fill=cyl(.48,.42,.55,M('#f59e0b',{r:.7,op:.85}),0,.45,0,S,32);
+  const lamp=new T.PointLight('#fff4d6',0,10);lamp.position.set(-2.5,3.5,2);S.add(lamp);const bulb=new T.Mesh(new T.SphereGeometry(.2,16,16),new T.MeshBasicMaterial({color:'#fff4d6'}));bulb.position.copy(lamp.position);S.add(bulb);
+  let ang=0,lastT=0;
+  return{B,update(tl,e){const dark=g3in(e.cut,tl);const run=g3in(e.run,tl)&&!dark;
+    B.hemi.intensity=dark?.12:1.1;B.key.intensity=dark?.08:2;lamp.intensity=dark?0:8;bulb.material.color.set(dark?'#3a3a3a':'#fff4d6');B.S.background.set(dark?'#15181d':'#f1ece4');
+    const dt=Math.max(0,Math.min(.1,tl-lastT));lastT=tl;ang+=dt*(run?40:0);blades.rotation.y=ang;fill.rotation.y=ang*.3;
+    const sh=run?Math.sin(tl*60)*.012:0;jar.position.x=sh;lid.position.x=sh;fill.position.x=sh;knob.rotation.z=g3in(e.knobOn,tl)?-.9:0;
+    cam.position.set(2.6-tl*.01,1.5,5.2);cam.lookAt(0,.3,0)}}
+}
+const G3_BUILD={lift:g3Lift,switches:g3Switches,fx3u:g3Fx3u,mixie:g3Mixie};
+function drawG3(e,c,tl){if(!window.THREE){ngTxt(c,'3D: '+e.shot,e.x+e.w/2,e.y+e.h/2,28,NG.navy,800);return}
+  const sc=typeof curScale==='number'?curScale:1,w=Math.max(64,Math.round(e.w*sc)),h=Math.max(36,Math.round(e.h*sc)),r=g3R(w,h);
+  const key=e.shot+'#'+e.id,s=G3D.shots[key]||(G3D.shots[key]=G3_BUILD[e.shot]());s.B.cam.aspect=w/h;s.B.cam.updateProjectionMatrix();s.update(tl,e);r.render(s.B.S,s.B.cam);
+  c.save();if(e.rr){ngRR(c,e.x,e.y,e.w,e.h,e.rr);c.clip()}c.drawImage(r.domElement,e.x,e.y,e.w,e.h);c.restore();
+  if(e.frame){c.lineWidth=4;c.strokeStyle=e.frame;ngRR(c,e.x,e.y,e.w,e.h,e.rr||0);c.stroke()}}
+/* 3-second guess ring: shows 3,2,1 across [t0,t1], then a check flash */
+function drawCount3(e,c,tl){const t0=e.t0,t1=e.t1,cx=e.x+e.w/2,cy=e.y+e.h/2,r=e.w/2,f=g3c((tl-t0)/(t1-t0)),n=Math.max(1,3-Math.floor(f*3));
+  c.save();c.beginPath();c.arc(cx,cy,r,0,7);c.fillStyle='rgba(255,255,255,.94)';c.fill();c.lineWidth=10;c.strokeStyle='#e5e7eb';c.stroke();
+  c.beginPath();c.arc(cx,cy,r,-Math.PI/2,-Math.PI/2+Math.PI*2*(1-f));c.strokeStyle=f<1?NG.org:NG.grn;c.lineWidth=10;c.lineCap='round';c.stroke();
+  ngTxt(c,f<1?String(n):'✓',cx,cy+2,r*1.05,f<1?NG.navy:NG.grn,800);ngTxt(c,e.label||'GUESS!',cx,cy+r+26,22,NG.org,800);c.restore()}
+
+/* ---------- EP09 – What is Latching in PLC? SET/RST vs Holding (Factory Decode Tamil) ----------
+   Hybrid: real 3D shots (g3: lift, switches, FX3U-32MR/ES, mixie) + 2.5D ladder graphics + office stickman at key moments.
+   5 guess beats with a 3-second ring, DECODE MOMENT (FX3U X-ray + scan), comment challenge mid-video, answer at the end.
+   Timing: sentences placed inside ChatGPT's measured paragraph times (mailbox 039) – EP09_A / EP09_SA. */
+const EP09_A=[[0.25, 2.13, 0], [2.57, 3.32, 0], [3.66, 5.43, 0], [6.07, 7.37, 0], [7.98, 11.03, 0], [11.83, 15.45, 1], [15.8, 16.29, 1], [17.16, 19.27, 1], [19.7, 20.61, 1], [21.12, 21.59, 1], [22.81, 23.41, 2], [24.36, 26.29, 2], [26.7, 28.77, 2], [29.7, 32.21, 2], [33.41, 34.01, 3], [34.61, 36.56, 3], [36.9, 37.97, 3], [38.35, 39.3, 3], [39.99, 43.65, 3], [44.05, 45.2, 3], [46.35, 49.97, 4], [50.43, 53.65, 4], [54.12, 56.59, 4], [57.27, 58.14, 4], [58.84, 60.39, 5], [61.17, 64.12, 5], [64.79, 68.43, 5], [69.08, 71.57, 5], [72.12, 74.41, 5], [75.12, 77.86, 5], [78.94, 80.77, 6], [81.59, 83.63, 6], [84.23, 86.32, 6], [86.87, 88.82, 6], [89.34, 91.47, 6], [92.31, 92.85, 7], [93.29, 96.3, 7], [96.78, 99.0, 7], [99.71, 101.94, 7], [103.1, 104.55, 8], [105.03, 106.68, 8], [107.21, 109.91, 8], [110.93, 112.76, 9], [113.07, 114.41, 9], [114.87, 116.74, 9], [117.46, 118.11, 10], [118.79, 121.85, 10], [122.38, 125.04, 10], [125.62, 131.25, 10], [131.79, 134.06, 10], [135.08, 137.38, 11], [138.08, 143.17, 11], [143.94, 146.05, 11], [146.94, 148.0, 12], [148.75, 151.44, 12], [152.09, 154.28, 12], [154.75, 156.87, 12], [157.36, 161.16, 12], [161.48, 165.67, 12], [166.38, 167.83, 12], [168.16, 169.65, 12], [170.49, 173.27, 13], [173.78, 175.17, 13], [175.98, 178.94, 13], [179.61, 182.55, 13], [183.27, 184.47, 13], [184.8, 187.61, 13], [188.28, 191.64, 13], [192.33, 193.27, 13], [193.95, 194.45, 14], [194.93, 195.92, 14], [196.59, 197.12, 15], [197.51, 198.74, 15], [199.33, 200.04, 16], [200.35, 202.53, 16], [203.16, 206.25, 17], [206.77, 207.43, 17], [208.27, 209.51, 18], [210.02, 211.76, 18], [212.31, 213.79, 18], [214.44, 216.96, 18], [217.49, 218.72, 18], [219.52, 220.83, 19], [221.34, 222.01, 19], [222.74, 224.21, 19], [224.91, 230.08, 20], [230.45, 232.38, 20], [232.68, 234.59, 20], [235.11, 238.37, 20], [238.92, 241.43, 20], [242.21, 242.69, 21], [243.22, 247.87, 21], [248.49, 249.75, 21], [250.34, 251.43, 21], [251.94, 252.66, 21], [253.36, 255.52, 21], [256.37, 256.86, 22], [257.46, 260.16, 22], [260.6, 261.79, 22], [262.3, 263.45, 22], [264.03, 264.69, 22], [265.4, 266.73, 23], [267.34, 269.05, 23], [269.54, 270.92, 23], [271.51, 276.7, 23], [276.99, 280.63, 23], [281.55, 283.22, 24], [283.84, 284.07, 24], [284.44, 286.81, 24], [287.45, 293.21, 24], [293.72, 296.41, 24], [297.25, 302.14, 24], [302.93, 303.37, 25], [304.25, 307.78, 25], [308.7, 313.34, 25], [314.11, 318.31, 25], [319.21, 321.28, 26], [322.16, 323.47, 26], [323.89, 324.89, 26], [325.61, 329.67, 26], [329.92, 331.1, 26], [331.74, 332.43, 26], [332.95, 333.67, 26], [334.44, 337.52, 26], [338.11, 338.91, 26], [339.73, 341.66, 27], [342.48, 347.95, 27], [348.67, 350.79, 27], [351.6, 353.24, 27]];
+const EP09_SA=[[0.25, 1.58, 0], [1.87, 3.68, 0], [4.05, 4.63, 0], [5.4, 11.15, 0], [12.19, 13.69, 1], [14.41, 16.13, 1], [16.69, 17.84, 1], [18.24, 19.38, 1], [19.83, 22.0, 1], [22.71, 23.76, 2], [24.19, 28.84, 2], [29.56, 31.79, 2], [32.4, 34.86, 3], [35.11, 36.95, 3]];
+function ep09Kit(s,A,END){const K=fdtKit(s,A),{ng}=K;
+  const g3=(shot,o,win)=>ng('g3',{shot,x:0,y:0,w:W,h:H,noPop:true,...o},win);
+  const ring=(t0,t1,o={})=>ng('count3',{x:(o.cx??1150)-60,y:(o.cy??120)-60,w:120,h:120,t0,t1,noPop:true,label:o.label||'3 SEC GUESS'},[t0-.15,t1+.9]);
+  const host=(win,beats,o={})=>{const h=addStick({scene:s,quiet:true,look:'office',action:beats[0][1],size:o.size||300,x:o.x??10,y:o.y??(H-(o.size||300)-6),facing:1,entrance:'pop',delay:0,withPrev:true,draw:.3,name:'Host'});h.win=win;h.beats=beats.map(([t,pose])=>({t,pose,blend:.35}));h.speak=[[0,END]];return h};
+  const card=(x,y,w,h,head,lines,col,win,o={})=>ng('box',{x,y,w,h,head,color:col,lines,lh:o.lh||40,align:o.align||'center',d3:true},win);
+  const big=(text,cx,cy,win,o={})=>ng('label',{x:cx-(o.w??900)/2,y:cy-30,w:o.w??900,h:60,text,size:o.size||64,color:o.color||NG.navy},win);
+  return{...K,g3,ring,host,card,big};
+}
+async function buildEp09(){
+  stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('16:9');S.narrOff=0;
+  const A=EP09_A,END=354.2;
+  const s=newScene({name:'EP09 – What is Latching in PLC? SET/RST vs Holding',style:'white',transition:'cut',trans:0,hold:0});s.minDur=END;S.scenes.push(s);
+  const K=ep09Kit(s,A,END),{ng,T,PS,pill,label,box,g3,ring,host,card,big,seg,lamp}=K;
+  const RED='#e5484d',PUR='#7c3aed',W_=(p,q=p)=>[PS(p),q>=27?END:PS(q+1)],P=W_,E=p=>A.filter(a=>a[2]===p).slice(-1)[0][1];
+  s.els.push({id:uid++,type:'ngd',kind:'mg',mg:'floor',name:'floor',x:-200,y:0,w:1680,h:720,hz:430,vx:.5,draw:.1,delay:0,withPrev:true,entrance:'none',motion:'none',noPop:true,win:[0,END]});
+  const flash=t=>ng('flash',{x:0,y:0,w:W,h:H,noPop:true},[t,t+.45]);
+
+  /* 1 HOOK – 3D lift (0 – P2) */
+  g3('lift',{press:.55,arrive:1e9,zoom:[T(0,2),T(0,2)+1.6]},P(0));
+  pill('BUTTON-AI VITTAACHU… LIGHT ON?',640,24,[T(0,4),PS(1)],{w:620,bg:RED,size:26});
+  /* 2 TITLE – latching + "3 sec guess" promise */
+  flash(PS(1));big('LATCHING',640,250,P(1),{size:110});label('PLC-la "NYAABAGAM VECHUKKURA" VELAI',640,340,[T(1,1),PS(2)],{w:900,size:30,color:NG.org});
+  ng('count3',{x:580,y:420,w:120,h:120,t0:T(1,2),t1:T(1,2)+3,noPop:true,label:'3 SEC-LA GUESS!'},[T(1,2)-.1,PS(2)]);
+  /* 3–4 DOORBELL vs FAN – 3D switches */
+  g3('switches',{bell:[[T(3,1)+.2,T(3,1)+2.2]],fan:[[T(3,4)+.3,1e9]],focus:[[PS(2),0],[T(3,1),-1],[T(3,4),1],[T(3,5)+.8,0]]},[PS(2),PS(4)]);
+  pill('ENDHA SWITCH ON-LA IRUKKUM?',640,24,P(2),{w:560,bg:NG.navy,size:26});ring(T(2,3),E(2));
+  pill('MOMENTARY',380,24,[T(3,3),PS(4)],{w:300,bg:NG.org});pill('MAINTAINED',900,24,[T(3,5),PS(4)],{w:300,bg:NG.teal});
+  /* 5 FACTORY BUTTONS → PLC = FAN SWITCH */
+  flash(PS(4));pill('FACTORY BUTTONS = DOORBELL MAADHIRI',640,24,P(4),{w:640,bg:NG.navy,size:26});
+  ng('title',{x:90,y:200,w:220,h:90,text:'▶ START',size:34,bg:NG.grn},[T(4,0),PS(5)]);ng('title',{x:90,y:330,w:220,h:90,text:'■ STOP',size:34,bg:RED},[T(4,0)+.3,PS(5)]);
+  seg(330,290,560,290,[T(4,1),PS(5)],{color:NG.ink,lw:6,head:true});
+  g3('fx3u',{x:580,y:120,w:660,h:372,rr:18,frame:'#cbd5e1',leds:{X0:[[T(4,1),1],[T(4,1)+.6,0]],Y0:[[T(4,1)+.1,1]]},cam:[[0,'front']]},[T(4,1),PS(5)]);
+  ng('title',{x:640,y:520,w:540,h:60,text:'PLC = "FAN SWITCH" VELAI',size:28,bg:NG.teal},[T(4,2),PS(5)]);ng('title',{x:740,y:600,w:340,h:52,text:'2 VAZHI',size:28,bg:NG.org},[T(4,3),PS(5)]);
+  /* 6 HOLDING LOGIC rung */
+  flash(PS(5));pill('VAZHI 1 · HOLDING LOGIC (SEAL-IN)',640,24,P(5),{w:620,bg:NG.teal,size:26});
+  const X0p=[[T(5,1),1],[T(5,3)+.3,0]],Y0h=[[T(5,1)+.25,1]];
+  ng('rung',{x:300,y:230,w:760,h:120,num:'1',items:[{k:'NO',label:'START X0',on:X0p,par:{label:'Y0',on:Y0h}},{k:'NC',label:'STOP',on:[[0,1]]},{k:'COIL',label:'Y0',on:Y0h}],power:[[T(5,1),1]],sweep:[T(5,1),T(5,1)+1]},[T(5,0),PS(6)]);
+  ng('title',{x:380,y:470,w:580,h:56,text:'X0 VITTAALUM · Y0 THANNAIYE PIDICHUKKUDHU',size:22,bg:NG.grn},[T(5,3),PS(6)]);
+  ng('title',{x:440,y:560,w:460,h:50,text:'DOL STARTER SEAL-IN = IDHE DHAAN',size:22,bg:NG.navy},[T(5,5),PS(6)]);
+  /* 7 SET / RST rungs */
+  flash(PS(6));pill('VAZHI 2 · SET / RST',640,24,P(6),{w:420,bg:PUR});
+  const Y0s=[[T(6,1)+.2,1],[T(6,4)+.4,0]];
+  ng('rung',{x:300,y:200,w:700,h:80,num:'1',items:[{k:'NO',label:'X0',on:[[T(6,1),1],[T(6,2),0]]},{k:'SET',label:'Y0',on:Y0s}],power:[[T(6,1),1],[T(6,2),0]]},[T(6,0),PS(7)]);
+  ng('rung',{x:300,y:380,w:700,h:80,num:'2',items:[{k:'NO',label:'X1',on:[[T(6,4),1],[T(6,4)+1.2,0]]},{k:'RST',label:'Y0',on:[[T(6,4),1],[T(6,4)+1.2,0]]}],power:[[T(6,4),1],[T(6,4)+1.2,0]]},[T(6,3),PS(7)]);
+  lamp(1130,300,90,Y0s[0][0],[T(6,0),PS(7)],{color:NG.grn});
+  ng('title',{x:380,y:540,w:520,h:52,text:'X0 VITTAALUM Y0 ON · RST VARUM VARAIKKUM',size:21,bg:PUR},[T(6,2),PS(7)]);
+  /* 8 GUESS – lift: SET or RST? */
+  flash(PS(7));g3('lift',{x:40,y:110,w:620,h:349,rr:18,frame:'#cbd5e1',press:T(7,1),arrive:T(7,2)+.6},P(7));
+  ng('title',{x:700,y:170,w:520,h:70,text:'BUTTON PRESS = SET? RST?',size:26,bg:NG.navy},[T(7,1),PS(8)]);ng('title',{x:700,y:270,w:520,h:70,text:'LIFT VANDHADHU = SET? RST?',size:26,bg:NG.navy},[T(7,2),PS(8)]);
+  ring(T(7,3),E(7),{cx:960,cy:450});
+  /* 9 REVEAL */
+  g3('lift',{x:40,y:110,w:620,h:349,rr:18,frame:'#86efac',press:T(8,0),arrive:T(8,1)+.4},P(8));
+  ng('title',{x:700,y:170,w:520,h:70,text:'PRESS = SET ✓',size:30,bg:NG.grn},[T(8,0),PS(9)]);ng('title',{x:700,y:270,w:520,h:70,text:'LIFT VANDHADHU = RST ✓',size:30,bg:PUR},[T(8,1),PS(9)]);
+  /* 10 SAME…BUT 2 DIFFERENCES */
+  flash(PS(9));card(140,170,440,260,'HOLDING',[{t:'button vittaalum ON'}],NG.teal,P(9));card(700,170,440,260,'SET / RST',[{t:'button vittaalum ON'}],PUR,P(9));
+  big('≠',640,300,[T(9,1),PS(10)],{w:120,size:96,color:RED});ng('title',{x:420,y:520,w:440,h:60,text:'2 MUKKIYA DIFFERENCE',size:28,bg:RED},[T(9,2),PS(10)]);
+  /* 11 DIFFERENCE 1 – where is the RST? */
+  flash(PS(10));pill('DIFFERENCE 1 · RST ENGA?',640,24,P(10),{w:480,bg:NG.navy});
+  card(90,120,500,300,'HOLDING · 1 RUNG',[{t:'Start · Stop · Coil',size:24},{t:'orey idathula ✓',size:24,color:NG.grn}],NG.teal,[T(10,1),PS(11)]);
+  card(690,120,240,170,'PAGE 1',[{t:'SET Y0',size:26}],PUR,[T(10,3),PS(11)]);card(980,250,240,170,'PAGE 7',[{t:'RST Y0',size:26}],PUR,[T(10,3)+.5,PS(11)]);
+  ng('title',{x:700,y:480,w:520,h:56,text:'🔍 FAULT FIND: RST-AI THEDANUM',size:22,bg:RED},[T(10,4),PS(11)]);
+  /* 12 GUESS – SET + RST together */
+  flash(PS(11));pill('SET + RST ORE NERATHULA TRUE?',640,24,P(11),{w:560,bg:NG.navy,size:26});
+  const both=[[T(11,0),1]];
+  ng('rung',{x:240,y:200,w:640,h:80,num:'1',items:[{k:'NO',label:'X0',on:both},{k:'SET',label:'Y0',on:both}],power:both},P(11));
+  ng('rung',{x:240,y:380,w:640,h:80,num:'2',items:[{k:'NO',label:'X1',on:both},{k:'RST',label:'Y0',on:both}],power:both},P(11));
+  ng('title',{x:960,y:250,w:240,h:70,text:'Y0 = ?',size:36,bg:RED},[T(11,1),PS(12)]);ring(T(11,2),E(11),{cx:1080,cy:470});
+  /* 13 DECODE MOMENT – FX3U X-ray + scan, then the program scan */
+  flash(PS(12));g3('fx3u',{x:0,y:80,w:700,h:394,rr:0,leds:{X0:both,X1:both,Y0:[[0,0]]},xray:[T(12,0),T(12,4)+1],cam:[[0,'front']]},P(12));
+  ng('title',{x:380,y:16,w:520,h:64,text:'⚡ DECODE MOMENT',size:34,bg:'#0ea5e9'},[T(12,0),T(12,0)+4]);
+  pill('PROGRAM: MELA → KEEZHA SCAN',640,24,[T(12,0)+4,PS(13)],{w:560,bg:'#0ea5e9',size:26});
+  ng('rung',{x:760,y:200,w:440,h:80,num:'1',items:[{k:'NO',label:'X0',on:both},{k:'SET',label:'Y0',on:both}],power:both,sweep:[T(12,2),T(12,2)+1.6]},[T(12,1),PS(13)]);
+  ng('rung',{x:760,y:360,w:440,h:80,num:'2',items:[{k:'NO',label:'X1',on:both},{k:'RST',label:'Y0',on:both}],power:both,sweep:[T(12,3),T(12,3)+1.6]},[T(12,1),PS(13)]);
+  ng('title',{x:780,y:480,w:400,h:56,text:'Y0 IMAGE = 1',size:26,bg:NG.grn},[T(12,2)+1.2,T(12,3)+1.2]);ng('title',{x:780,y:480,w:400,h:56,text:'Y0 IMAGE = 0',size:26,bg:RED},[T(12,3)+1.2,PS(13)]);
+  ng('title',{x:760,y:570,w:440,h:56,text:'SCAN END → OUTPUT UPDATE',size:22,bg:NG.navy},[T(12,4),PS(13)]);
+  ng('title',{x:120,y:560,w:480,h:60,text:'KEEZHA IRUKKURADHU JEYIKKUM',size:24,bg:RED},[T(12,5),PS(13)]);ng('title',{x:150,y:640,w:420,h:52,text:'STOP PRIORITY → RST KEEZHA',size:22,bg:NG.teal},[T(12,7),PS(13)]);
+  /* 14–18 COMMENT CHALLENGE (answer at the end) */
+  flash(PS(13));pill('💬 CHALLENGE · ANSWER VIDEO KADAISILA',640,24,[PS(13),PS(18)],{w:700,bg:NG.org,size:26});
+  const sw=[[T(13,3),1]];
+  ng('rung',{x:330,y:170,w:600,h:70,num:'1',items:[{k:'NO',label:'X1',on:sw},{k:'RST',label:'Y0',on:sw}],power:sw},[T(13,3),PS(18)]);
+  ng('rung',{x:330,y:310,w:600,h:70,num:'2',items:[{k:'NO',label:'X0',on:sw},{k:'SET',label:'Y0',on:sw}],power:sw},[T(13,3)+.3,PS(18)]);
+  ng('title',{x:960,y:220,w:250,h:64,text:'RST MELA ↑',size:24,bg:RED},[T(13,4),PS(18)]);ng('title',{x:960,y:330,w:250,h:64,text:'SET KEEZHA ↓',size:24,bg:NG.grn},[T(13,4)+.3,PS(18)]);
+  [['A','Y0 ON aagum',NG.grn],['B','Y0 OFF-la irukkum',RED],['C','ON / OFF maarum',NG.blue]].forEach(([l,t,c],i)=>{ng('title',{x:330+i*300,y:470,w:70,h:70,text:l,size:40,bg:c},[PS(14+i),PS(18)]);ng('box',{x:405+i*300,y:470,w:205,h:70,color:c,lines:[{t,size:20}],d3:true},[PS(14+i),PS(18)])});
+  ng('title',{x:380,y:580,w:520,h:64,text:'💬 IPPOVE COMMENT: A/B/C + REASON',size:24,bg:NG.navy},[PS(17),PS(18)]);
+  /* 19–20 MIXIE – power cut, restarts by itself */
+  flash(PS(18));g3('mixie',{run:[[T(18,1)-1,1e9]],cut:[[T(18,2),T(19,0)]],knobOn:[[0,1e9]]},[PS(18),PS(20)]);
+  pill('POWER CUT!',640,24,[T(18,2),T(19,0)],{w:300,bg:'#111827'});ring(T(18,4),E(18),{cx:1120,cy:130});
+  flash(T(19,0));pill('⚠ MIXIE THAANAA ODUDHU!',640,24,[T(19,0),PS(20)],{w:520,bg:RED,size:28});
+  /* 21 FX3U memory – general vs latched, BATT */
+  flash(PS(20));pill('FX3U MEMORY',640,24,P(20),{w:340,bg:NG.navy});
+  g3('fx3u',{x:620,y:110,w:640,h:360,rr:18,frame:'#cbd5e1',cam:[[0,'front'],[T(20,4),'batt']],xray:[T(20,4)+.6,PS(21)],leds:{}},P(20));
+  card(60,130,500,150,'M0 – M499 · GENERAL',[{t:'Power pona → CLEAR',size:24}],'#64748b',[T(20,0),PS(21)]);
+  card(60,320,500,150,'M500 – M1023 · LATCHED',[{t:'Battery → NYAABAGAM ✓',size:24,color:PUR}],PUR,[T(20,2),PS(21)]);
+  ng('title',{x:120,y:540,w:400,h:56,text:'🔋 BATT LIGHT + BATTERY',size:24,bg:PUR},[T(20,4),PS(21)]);
+  /* 22 GUESS – SET M500 → motor, after power cut? */
+  flash(PS(21));pill('SET M500 → MOTOR Y0',640,24,P(21),{w:420,bg:PUR});
+  const m5=[[T(21,1),1]];
+  ng('rung',{x:200,y:190,w:600,h:80,num:'1',items:[{k:'NO',label:'X0',on:[[T(21,1),1],[T(21,1)+1,0]]},{k:'SET',label:'M500',on:m5}],power:[[T(21,1),1],[T(21,1)+1,0]]},P(21));
+  ng('rung',{x:200,y:360,w:600,h:80,num:'2',items:[{k:'NO',label:'M500',on:m5},{k:'COIL',label:'Y0 MOTOR',on:[[T(21,1),1],[T(21,2),0]]}],power:[[T(21,1),1],[T(21,2),0]]},[T(21,1)+.5,PS(22)]);
+  ng('title',{x:860,y:200,w:360,h:64,text:'⚡ POWER CUT → BACK',size:24,bg:'#111827'},[T(21,2),PS(22)]);ng('title',{x:860,y:300,w:360,h:64,text:'MOTOR ODUMAA?',size:28,bg:RED},[T(21,4),PS(22)]);
+  ring(T(21,5),E(21),{cx:900,cy:480});
+  /* 23 DANGER – restarts by itself */
+  g3('fx3u',{leds:{POWER:[[0,1],[PS(22),0],[T(22,0)+.6,1]],RUN:[[0,1],[PS(22),0],[T(22,1),1]],Y0:[[T(22,1)+.4,1]]},dim:[[0,0],[PS(22),1],[T(22,0)+.6,0]],cam:[[0,'front'],[T(22,1),'leds']]},P(22));
+  ng('flash',{x:0,y:0,w:W,h:H,noPop:true,color:RED},[T(22,3),T(22,3)+.6]);pill('⚠ DANGER · YAARUM START PRESS PANNALA',640,24,[T(22,3),PS(23)],{w:720,bg:RED,size:26});
+  /* 24 HOLDING is safe */
+  flash(PS(23));pill('HOLDING LOGIC · POWER CUT-LA SAFE',640,24,P(23),{w:640,bg:NG.teal,size:26});
+  const hy=[[0,1],[T(23,1),0]];
+  ng('rung',{x:300,y:230,w:760,h:120,num:'1',items:[{k:'NO',label:'START X0',on:[[0,0]],par:{label:'Y0',on:hy}},{k:'NC',label:'STOP',on:[[0,1]]},{k:'COIL',label:'Y0',on:hy}],power:hy},P(23));
+  ng('title',{x:380,y:470,w:580,h:56,text:'POWER CUT → Y0 OFF · SEAL BREAK',size:24,bg:'#111827'},[T(23,1),PS(24)]);
+  ng('title',{x:380,y:550,w:580,h:56,text:'START PRESS PANNA DHAAN ODUM ✓',size:24,bg:NG.grn},[T(23,2),PS(24)]);
+  ng('title',{x:380,y:630,w:580,h:52,text:'MOTOR · CONVEYOR · PUMP = HOLDING',size:22,bg:NG.teal},[T(23,4),PS(24)]);
+  /* 25 when SET/RST is right */
+  flash(PS(24));pill('SET / RST THAPPA? ILLA!',640,24,P(24),{w:460,bg:PUR});
+  [['🔔 ALARM LATCH',T(24,3)],['📦 BATCH RUNNING',T(24,3)+.6],['⚠ FAULT MESSAGE (ACK)',T(24,3)+1.2]].forEach(([t,a],i)=>ng('title',{x:120+i*360,y:160,w:330,h:70,text:t,size:22,bg:PUR},[a,PS(25)]));
+  ng('title',{x:240,y:320,w:800,h:72,text:'✗ MOTOR-AI LATCHED BIT-LA SET PANNAADHEENGA',size:26,bg:RED},[T(24,4),PS(25)]);
+  ng('title',{x:340,y:440,w:600,h:60,text:'POWER RETURN-LA ENNA AAGUM? CHECK ✓',size:22,bg:NG.navy},[T(24,5),PS(25)]);
+  /* 26 SUMMARY */
+  flash(PS(25));pill('QUICK SUMMARY',640,24,P(25),{w:340,bg:NG.navy});
+  card(70,140,360,300,'HOLDING',[{t:'Power cut → OFF'},{t:'Motor-ku SAFE ✓',color:NG.grn}],NG.teal,[T(25,1),PS(26)]);
+  card(460,140,360,300,'SET / RST',[{t:'Thani RST venum'},{t:'Keezha jeyikkum'}],PUR,[T(25,2),PS(26)]);
+  card(850,140,360,300,'LATCHED M500',[{t:'Power cut-ku'},{t:'appuram-um ON',color:RED}],RED,[T(25,3),PS(26)]);
+  /* 27 ANSWER REVEAL */
+  flash(PS(26));pill('CHALLENGE ANSWER',640,24,P(26),{w:400,bg:NG.org});
+  const sw2=[[T(26,2),1]];
+  ng('rung',{x:280,y:180,w:640,h:80,num:'1',items:[{k:'NO',label:'X1',on:sw2},{k:'RST',label:'Y0',on:sw2}],power:sw2,sweep:[T(26,3),T(26,3)+1.6]},P(26));
+  ng('rung',{x:280,y:350,w:640,h:80,num:'2',items:[{k:'NO',label:'X0',on:sw2},{k:'SET',label:'Y0',on:sw2}],power:sw2,sweep:[T(26,3)+1.8,T(26,3)+3.4]},P(26));
+  ng('title',{x:980,y:180,w:240,h:70,text:'A ✓ Y0 ON',size:32,bg:NG.grn},[T(26,5),PS(27)]);
+  ng('title',{x:300,y:500,w:680,h:64,text:'"RST EPPOVUM JEYIKKUM" ✗  ORDER DHAAN RULE ✓',size:24,bg:NG.navy},[T(26,7),PS(27)]);
+  /* 28 END */
+  flash(PS(27));big('🎉 CORRECT-AA SONNAVANGALUKKU SHOUT-OUT',700,170,P(27),{size:34,w:1000});
+  ng('title',{x:420,y:260,w:560,h:70,text:'NEXT: TIMER + LATCH = MACHINE',size:28,bg:NG.teal},[T(27,1),END]);
+  ng('title',{x:420,y:380,w:270,h:70,text:'👍 LIKE',size:30,bg:NG.blue},[T(27,2),END]);ng('title',{x:710,y:380,w:270,h:70,text:'↗ SHARE',size:30,bg:NG.teal},[T(27,2)+.3,END]);
+  ng('title',{x:530,y:480,w:340,h:76,text:'▶ SUBSCRIBE',size:34,bg:RED},[T(27,3),END]);
+  /* office stickman – key moments only */
+  host([0,PS(2)],[[0,'question'],[T(0,4),'scratchhead']]);
+  host([T(7,3)-.3,PS(8)],[[0,'question']],{x:1040,y:440,size:260});
+  host([T(11,2)-.3,PS(12)],[[0,'question']],{x:30,y:470,size:240});
+  host([PS(13),PS(18)],[[0,'askviewer'],[PS(17),'count1']],{x:20,y:400,size:300});
+  host([T(19,0),PS(20)],[[0,'worriedlook']],{x:20,y:420,size:280});
+  host([T(21,5)-.3,PS(22)],[[0,'question']],{x:1050,y:440,size:260});
+  host([PS(27),END],[[0,'thumbsup'],[T(27,3),'wavebye']],{x:30,y:400,size:300});
+  fdt25(s);S.captions=false;S.showHand=false;S.cur=0;S.pin=false;S.t=1;refresh();
+}
+async function buildEp09Short(){
+  stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('9:16');S.narrOff=0;
+  const A=EP09_SA,END=37.6;
+  const s=newScene({name:'EP09 Short – Lift button latching',style:'white',transition:'cut',trans:0,hold:0});s.minDur=END;S.scenes.push(s);
+  const K=ep09Kit(s,A,END),{ng,T,PS,pill,g3,ring,host,big}=K,RED='#e5484d',PUR='#7c3aed';
+  s.els.push({id:uid++,type:'ngd',kind:'mg',mg:'floor',name:'floor',x:0,y:0,w:720,h:1280,hz:640,vx:.5,draw:.1,delay:0,withPrev:true,entrance:'none',motion:'none',noPop:true,win:[0,END]});
+  g3('lift',{x:0,y:150,w:720,h:720,press:.4,arrive:9e9,zoom:[T(0,1),T(0,1)+1.2]},[0,PS(2)]);
+  pill('BUTTON VITTAACHU… LIGHT ON?',360,40,[0,PS(1)],{w:620,h:70,bg:RED,size:30});ring(T(0,3),PS(1)-.2,{cx:360,cy:980,label:'3 SEC GUESS'});
+  ng('flash',{x:0,y:0,w:720,h:1280,noPop:true},[PS(1),PS(1)+.45]);ng('title',{x:110,y:40,w:500,h:76,text:'⚡ DECODE MOMENT',size:36,bg:'#0ea5e9'},[T(1,0),T(1,0)+2.4]);
+  g3('lift',{x:0,y:150,w:720,h:720,press:T(1,2),arrive:T(1,3)+.3},[PS(1),PS(2)]);
+  ng('title',{x:110,y:900,w:500,h:76,text:'PRESS = SET',size:36,bg:NG.grn},[T(1,2),PS(2)]);ng('title',{x:110,y:1000,w:500,h:76,text:'LIFT VANDHADHU = RESET',size:30,bg:PUR},[T(1,3),PS(2)]);
+  ng('title',{x:60,y:40,w:600,h:76,text:'PLC-LA IDHU LATCHING',size:34,bg:NG.navy},[T(1,1),PS(2)]);
+  g3('fx3u',{x:0,y:200,w:720,h:540,leds:{POWER:[[0,1],[T(2,1),0],[T(2,1)+1.2,1]],RUN:[[0,1],[T(2,1),0],[T(2,1)+1.4,1]],Y0:[[T(2,1)+1.8,1]]},dim:[[0,0],[T(2,1),1],[T(2,1)+1.2,0]],cam:[[0,'leds']]},[PS(2),PS(3)]);const P2=[PS(2),PS(3)];
+  pill('⚠ POWER CUT-KU APPURAM?',360,40,P2,{w:620,h:76,bg:RED,size:32});ng('title',{x:80,y:800,w:560,h:80,text:'MACHINE THAANAA START!',size:32,bg:RED},[T(2,1)+1.8,PS(3)]);
+  ng('title',{x:80,y:910,w:560,h:76,text:'FULL VIDEO ↓ LINKED',size:32,bg:NG.navy},[T(2,2),PS(3)]);
+  ng('flash',{x:0,y:0,w:720,h:1280,noPop:true},[PS(3),PS(3)+.45]);big('FACTORY DECODE TAMIL',360,200,[PS(3),END],{w:660,size:42});
+  ng('title',{x:200,y:330,w:320,h:84,text:'👍 LIKE',size:36,bg:NG.blue},[T(3,0),END]);ng('title',{x:200,y:450,w:320,h:84,text:'↗ SHARE',size:36,bg:NG.teal},[T(3,0)+.6,END]);ng('title',{x:200,y:570,w:320,h:90,text:'▶ SUBSCRIBE',size:38,bg:RED},[T(3,1),END]);
+  host([0,PS(1)],[[0,'question'],[T(0,3),'chinthink']],{x:-10,y:860,size:400});host([PS(3),END],[[0,'thumbsup'],[T(3,1),'wavebye']],{x:-10,y:860,size:400});
+  fdt25(s);S.captions=false;S.showHand=false;S.cur=0;S.pin=false;S.t=1;refresh();
+}
+
 /* ---------- NGD 02 – NPN vs PNP sensors (explainer, Renderforest-style structure) ----------
    Structure: hook (fault) → promise → the three wires → PNP → NPN → matching rule → the fault explained → how to check → recap + CTA.
    One scene, elements shown in time windows; captions from NGD02_SCRIPT (silent draft timing ≈ 2.5 words/s).
@@ -3987,6 +4285,8 @@ async function loadTemplate(key){
   if(key==='ngd02')return buildNgd02();
   if(key==='fdtnpn')return buildFdtNpn();
   if(key==='fdtnpns')return buildFdtNpnShort();
+  if(key==='ep09')return buildEp09();
+  if(key==='ep09s')return buildEp09Short();
   if(key==='ngd01v2')return buildNgd01v2();
   if(key==='ngd01')return buildNgd01();
   if(key==='ngddemo')return buildNgdDemo();
@@ -4011,7 +4311,7 @@ async function loadTemplate(key){
       if(it.t==='text')addText({...o,draw:it.draw||1.4});else if(it.t==='arrow')addArrow(o);else if(it.t==='liquid')addLiquid(o);else if(it.t==='stick')addStick(o);else await addSvg(doodleSvg(it.k),DOODLES[it.k][0],{...o,key:it.k,flat:!!DOODLES[it.k][2]})}}
   S.cur=0;S.pin=true;S.t=0;refresh();
 }
-const TPL_STARTERS=['fdtnpn','fdtnpns','ngd02','stick','plc','explainer','safety','lesson','promo','pumptank'];
+const TPL_STARTERS=['ep09','ep09s','fdtnpn','fdtnpns','ngd02','stick','plc','explainer','safety','lesson','promo','pumptank'];
 const S2V_SAMPLE="# Why motors need overload relays\n\n## The problem\nA motor is jammed on the conveyor. It keeps pulling current and gets hotter every second.\n\n## The fix\nAn overload relay measures the motor current. If it stays too high, the relay opens the contactor and the motor stops.\n\n## Remember\nThe breaker protects the cable. The overload relay protects the motor. Subscribe for more.";
 function tplGroup(g){let el=$('tpls').querySelector('.tplgrp[data-g="'+g+'"]');if(!el){el=document.createElement('div');el.className='tplgrp';el.dataset.g=g;el.style.cssText='display:flex;flex-direction:column;gap:6px';el.innerHTML='<div class="hint" style="margin:4px 0 0">'+(g==='start'?'Starters':'Episodes &amp; prototypes')+'</div>';if(g==='start')$('tpls').prepend(el);else $('tpls').appendChild(el)}return el}
 Object.entries(TPL).forEach(([k,T])=>{const b=document.createElement('button');b.type='button';b.innerHTML=`<span><i class="sw" style="background:${STYLES[T.style].bg}"></i>${esc(T.name)}</span><small>${esc(T.desc)}</small>`;

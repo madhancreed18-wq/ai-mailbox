@@ -42,7 +42,7 @@ window.__inkstrokeRender = {
   fs.writeFileSync(tmpHtml, html);
   process.on('exit', () => { try { fs.unlinkSync(tmpHtml); } catch (_) {} });
   const browser = await chromium.launch({ ...(opts.browser ? { executablePath: path.resolve(opts.browser) } : {}), headless: true,
-    args: ['--no-sandbox', '--disable-dev-shm-usage', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+    args: ['--no-sandbox', '--disable-dev-shm-usage', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--allow-file-access-from-files'] });
   let encoder, encoderError = '', errors = [];
   try {
     const page = await browser.newPage({ viewport: { width: 1600, height: 1000 } });
