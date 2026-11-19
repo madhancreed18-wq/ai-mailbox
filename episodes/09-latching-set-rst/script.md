@@ -4,7 +4,8 @@ Target: about 7 min at TTS speed. **One paragraph = one block** (blank line betw
 PLC shown in 3D: **FX3U-32MR/ES** (model text only, no brand name or logo). FX3U defaults: M0–M499 general, M500–M1023 latched (battery backed).
 
 ## Interaction design (new in v2)
-- **GUESS beats (every ~45 s):** the narration asks, a 3-second countdown ring appears on screen (3…2…1) with A/B choices, then the answer is revealed. 5 guesses in the video + the final quiz.
+- **GUESS beats (every ~45 s):** the narration asks, a 3-second countdown ring appears on screen (3…2…1), then the answer is revealed. 5 guesses in the video.
+- **Comment challenge in the MIDDLE (~3:15), answer at the END:** viewers comment while watching, and stay to the end to see if they were right. The end screen reveals the answer and gives a shout-out.
 - **Something changes on screen every 3–5 s:** camera move, LED change, label pop, current flow, card flip.
 - **Channel signature – "DECODE MOMENT":** once per video, the 3D machine turns into an X-ray/see-through view with a scan line and a short sound sting, and the hidden logic inside lights up. The narrator always says the same line: **"Ippo idha decode pannuvom!"** Every Factory Decode Tamil video gets this moment – it becomes what people remember the channel for.
 
@@ -38,6 +39,16 @@ Rendaavadhu difference-ku munnaadi, oru guess. SET-um RST-um orey nerathula true
 
 Ippo idha decode pannuvom! PLC program-ai mela irundhu keezha scan pannudhu. SET Y0 mudhalla ON ezhudhudhu. RST Y0 adhukku appuram OFF ezhudhudhu. Scan mudinjadhum dhaan output terminal update aagudhu. Adhanaala keezha irukkura instruction jeyikkum. RST keezha irundhaa, Y0 OFF. Stop-ku priority venum-na, RST-ai SET-ku keezha vainga.
 
+Ippo ungalukku oru challenge. Comment-la answer pannunga. Answer video kadaisila solren. Rung ondru-la X0 vandhaa SET Y0. Rung rendu-la X1 vandhaa RST Y0. Ippo program-ai maathi, RST rung-ai mela, SET rung-ai keezha vechom. Operator X0-um X1-um orey nerathula press pannuraar. Y0 enna aagum?
+
+Option A. Y0 ON aagum.
+
+Option B. Y0 OFF-la irukkum.
+
+Option C. Y0 ON, OFF-nu maaritte irukkum.
+
+Ippove comment-la A, B, illa C podunga, reason-oda. Answer kadaisila.
+
 Ippo dhaan mukkiyamaana part. Mixie ON-la irukkumbodhu current pochu. Switch-ai OFF pannaama marandhutteenga. Current vandhadhum… enna aagum? Moonu… rendu… onnu.
 
 Mixie thaanaa odudhu! Kai ulla irundhaa? PLC-la idhe maadhiri nadakkalaam.
@@ -54,15 +65,9 @@ Appo SET RST thappa? Illa. Edhai nyaabagam vechukkanum-o, angae use pannunga. Al
 
 Quick summary. Holding logic, power cut-la OFF, motor-ku safe. SET RST, thani RST thevai, keezha irukkura instruction jeyikkum. Latched M500 maadhiri bit, power cut-ku appuram-um ON-la irukkum.
 
-Kadaisi challenge. Rung ondru-la X0 vandhaa SET Y0. Rung rendu-la X1 vandhaa RST Y0. Ippo program-ai maathi, RST rung-ai mela, SET rung-ai keezha vechom. Operator X0-um X1-um orey nerathula press pannuraar. Y0 enna aagum?
+Ippo first-la naan keta challenge-oda answer. RST rung mela, SET rung keezha. Rendum orey nerathula true. Keezha irukkura instruction kadaisiyaa ezhudhum. Adhanaala SET jeyikkum. Answer A. Y0 ON. "RST eppovum jeyikkum"-nu nyaabagam vechavanga thappu pannirupeenga. Order dhaan rule.
 
-Option A. Y0 ON aagum.
-
-Option B. Y0 OFF-la irukkum.
-
-Option C. Y0 ON, OFF-nu maaritte irukkum.
-
-Unga answer A, B, illa C? Scan order vechu reason-um sollunga. Comment-la paakkalaam. Latching purinjirundhaa, unga friend-kku share pannunga. Factory Decode Tamil-ai subscribe pannunga.
+Correct-aa sonnavanga-ku comment-la oru shout-out. Adutha video-la, timer-um latch-um sendhu oru machine-ai eppadi control pannuradhu-nu paakkalaam. Latching purinjirundhaa, unga friend-kku share pannunga. Factory Decode Tamil-ai subscribe pannunga.
 
 ---
 
@@ -78,5 +83,5 @@ Aana jaakkiradhai. Latched bit power cut-ku appuram-um ON-la irundhaa, machine t
 
 ## Answers (for your pinned reply and checks)
 - In-video guesses: fan switch · button = SET, lift arrives = RST · SET and RST together → OFF (RST is lower) · mixie restarts · motor restarts with latched M500.
-- **Final challenge answer: A (Y0 ON)** – the order is reversed, so SET is now lower in the program and writes last. This tests whether the viewer understood the scan-order rule rather than just remembering "RST wins".
+- **Mid-video comment challenge (asked after the scan-order DECODE MOMENT, answered at the end): A (Y0 ON)** – the order is reversed, so SET is now lower in the program and writes last. This tests whether the viewer understood the scan-order rule rather than just remembering "RST wins".
 - FX3U ranges: M0–M499 general, M500–M1023 latched by default (battery). Ranges can be changed by parameters; the video uses defaults.
