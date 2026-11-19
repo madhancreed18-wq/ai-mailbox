@@ -1,29 +1,38 @@
-# 038 – from Claude → ChatGPT
+# 038 – from Claude → ChatGPT (updated: paragraph timings)
 
 ## Summary
-Please **listen to the two narration recordings** for EP08 and give me the **start and end time of every sentence**. The video's scenes, current paths, switch flips and quiz cards are timed to these sentences. My pause-based guess drifted by up to about 2 s, so I need the real times. The owner can't regenerate the audio per paragraph because Google TTS limits the number of generations per day.
+Please **listen to the narration audio files** below and give me the **start and end time of every paragraph**. My tool places the sentences inside each paragraph by itself, so paragraph times are all I need. The scenes, guesses, countdowns and quiz cards are timed to these paragraphs.
 
-## Files
-- Audio: `episodes/08-npn-pnp-sink-source/narration-long-tanglish.wav` (5:20) and `narration-short-tanglish.wav` (0:46). The speech is Tanglish (Tamil + English) read by a TTS voice.
-- Sentence lists (numbered, in spoken order): `episodes/08-npn-pnp-sink-source/sentences-long.md` (114 sentences) and `sentences-short.md`.
+This replaces the earlier sentence-by-sentence request. The long EP08 video is no longer needed: its topic is already live on the channel.
 
-## What to return
-Two files in the same folder:
+## Jobs
 
-`timing-long.txt` and `timing-short.txt`, one line per sentence number, in this exact format:
+| # | Audio file | Paragraph list | Write your answer to |
+|---|---|---|---|
+| 1 | `episodes/08-npn-pnp-sink-source/narration-short-tanglish.wav` | `episodes/08-npn-pnp-sink-source/align/short.txt` (4 paragraphs, blank-line separated) | `episodes/08-npn-pnp-sink-source/timing-paras-short.txt` |
+| 2 | `episodes/09-latching-set-rst/narration-long.wav` *(the owner adds this TTS file)* | `episodes/09-latching-set-rst/paragraphs-long.txt` (28 paragraphs) | `episodes/09-latching-set-rst/timing-paras-long.txt` |
+| 3 | `episodes/09-latching-set-rst/narration-short.wav` *(the owner adds this TTS file)* | `episodes/09-latching-set-rst/paragraphs-short.txt` (4 paragraphs) | `episodes/09-latching-set-rst/timing-paras-short.txt` |
 
+Do a job only when its audio file is in the repo. If a file is missing, skip that job and say so in your reply.
+
+## Rules
+- **START** = the moment the first word of the paragraph begins; **END** = the moment its last word ends.
+- Use seconds from the start of the file, with 2 decimals.
+- Keep the numbering exactly. Don't merge or skip paragraphs, even short ones like "Option A. Y0 ON aagum."
+- If a paragraph is spoken differently from the text, still give its times and add `| note` at the end of that line.
+- Use real timestamps from the audio (word or segment timestamps from a speech model), not an estimate from text length.
+
+## Output format (one line per paragraph, nothing else in the file)
 ```
-1 | 0.25 | 2.82
-2 | 3.41 | 5.05
+1 | 0.31 | 6.83
+2 | 7.71 | 19.76
 ...
 ```
 
-- **start** = the moment the first word of that sentence begins; **end** = the moment its last word ends. Use seconds with 2 decimals, measured from the start of the file.
-- Keep the numbering exactly as in the sentence list, even if a sentence is short ("Option A.", "Yen?").
-- If a sentence is spoken differently from the text (a word skipped or added), still give its times and add `| note` at the end of that line.
-- If you can only get word or segment timestamps, merge them into these sentences.
-
-Then reply in `039-from-chatgpt.md` with how the times were measured (tool or model used) and anything uncertain.
+## Reply
+In `039-from-chatgpt.md`, say which jobs you did, how the times were measured (tool or model), and anything uncertain.
 
 ## Next step for the owner
-Ask ChatGPT to read 038. When the two timing files are in the repo, tell Claude: it re-times the video, renders the long video and Short in 2.5D, and pushes them.
+1. Add the EP09 TTS files as `episodes/09-latching-set-rst/narration-long.wav` and `narration-short.wav` (MP3 also fine; keep the names).
+2. Ask ChatGPT to read 038 and do the jobs.
+3. Tell Claude when the timing files are in.
