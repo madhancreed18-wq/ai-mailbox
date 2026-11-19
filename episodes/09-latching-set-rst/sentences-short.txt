@@ -1,0 +1,12 @@
+1. Lift button-ai vittaachu.
+2. Aana light innum ON.
+3. Yen?
+4. Moonu second-la guess pannunga… moonu… rendu… onnu.
+5. Ippo idha decode pannuvom!
+6. PLC-la idhu latching.
+7. Press pannumbodhu SET.
+8. Lift vandhadhum RESET.
+9. Button-ai vittaalum output nyaabagam vechukkum.
+10. Aana jaakkiradhai.
+11. Latched bit power cut-ku appuram-um ON-la irundhaa, machine thaanaa start aagalaam.
+12. Full explanation, keezha linked video-la.

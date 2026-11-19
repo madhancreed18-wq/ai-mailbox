@@ -1,0 +1,129 @@
+1. Lift button-ai oru thadava press panneenga.
+2. Kaiya eduthaachu.
+3. Aana button light innum ON-la irukku.
+4. Lift vandhadhum dhaan OFF aagudhu.
+5. Button-ai vittaachu… appuram yaar andha light-ai ON-la vechirukka?
+6. Andha "nyaabagam vechukkura" velai-ku PLC-la oru peyar irukku.
+7. Latching.
+8. Indha video-la, ungalukku naan sila questions keppen.
+9. Moonu second dhaan time.
+10. Ready-aa irunga.
+11. Mudhal question.
+12. Veetla doorbell switch-um, fan switch-um.
+13. Endha switch button-ai vittaalum ON-la irukkum?
+14. Moonu… rendu… onnu.
+15. Fan switch dhaan.
+16. Doorbell press pannum varaikkum dhaan bell adikkudhu.
+17. Kaiya edutha udane nikkudhu.
+18. Idhu momentary switch.
+19. Fan switch oru thadava pottaa, thirumba OFF pannum varaikkum ON-laye irukkum.
+20. Idhu maintained switch.
+21. Factory-la start, stop button ellam doorbell maadhiri momentary dhaan.
+22. Aana motor-o, lift light-o, button-ai vittaalum ON-la irukkanum.
+23. Appo PLC dhaan andha fan switch velai-ai seiyyanum.
+24. Adhukku rendu vazhi irukku.
+25. Mudhal vazhi, holding logic.
+26. Start X0 press pannumbodhu Y0 ON aagudhu.
+27. Adhe rung-la Y0-oda contact-ai X0-ku parallel-aa podrom.
+28. X0-ai vittaalum, Y0 thannaiye pidichukkudhu.
+29. Stop condition break aana dhaan Y0 OFF.
+30. Namma DOL starter video-la paatha seal-in idhe dhaan.
+31. Rendaavadhu vazhi, SET RST.
+32. X0 press panna, SET Y0.
+33. X0-ai vittaalum Y0 ON-laye irukkum.
+34. Adhai OFF panna thani-aa oru rung venum.
+35. X1 press panna, RST Y0.
+36. Ippo question.
+37. Lift-la, button press panradhu SET-aa, RST-aa?
+38. Lift vandhu nikkuradhu SET-aa, RST-aa?
+39. Moonu… rendu… onnu.
+40. Button press = SET.
+41. Lift vandhadhu = RST.
+42. Light ON aagi, lift varum varaikkum nyaabagam vechukkudhu.
+43. Rendum paakka orey maadhiri dhaan theriyum.
+44. Button-ai vittaalum output ON.
+45. Aana rendu mukkiyamaana difference irukku.
+46. Mudhal difference.
+47. Holding logic-la start-um stop-um orey rung-la irukku.
+48. Program-ai paartha udane yen ON, yen OFF-nu theriyum.
+49. SET RST-la, SET oru idathula, RST innoru idathula, sila nerathula vera page-la kooda irukkum.
+50. Fault find pannumbodhu, RST enga irukku-nu thedanum.
+51. Rendaavadhu difference-ku munnaadi, oru guess.
+52. SET-um RST-um orey nerathula true aanaa, Y0 ON-aa, OFF-aa?
+53. Moonu… rendu… onnu.
+54. Ippo idha decode pannuvom!
+55. PLC program-ai mela irundhu keezha scan pannudhu.
+56. SET Y0 mudhalla ON ezhudhudhu.
+57. RST Y0 adhukku appuram OFF ezhudhudhu.
+58. Scan mudinjadhum dhaan output terminal update aagudhu.
+59. Adhanaala keezha irukkura instruction jeyikkum.
+60. RST keezha irundhaa, Y0 OFF.
+61. Stop-ku priority venum-na, RST-ai SET-ku keezha vainga.
+62. Ippo ungalukku oru challenge.
+63. Comment-la answer pannunga.
+64. Answer video kadaisila solren.
+65. Rung ondru-la X0 vandhaa SET Y0.
+66. Rung rendu-la X1 vandhaa RST Y0.
+67. Ippo program-ai maathi, RST rung-ai mela, SET rung-ai keezha vechom.
+68. Operator X0-um X1-um orey nerathula press pannuraar.
+69. Y0 enna aagum?
+70. Option A.
+71. Y0 ON aagum.
+72. Option B.
+73. Y0 OFF-la irukkum.
+74. Option C.
+75. Y0 ON, OFF-nu maaritte irukkum.
+76. Ippove comment-la A, B, illa C podunga, reason-oda.
+77. Answer kadaisila.
+78. Ippo dhaan mukkiyamaana part.
+79. Mixie ON-la irukkumbodhu current pochu.
+80. Switch-ai OFF pannaama marandhutteenga.
+81. Current vandhadhum… enna aagum?
+82. Moonu… rendu… onnu.
+83. Mixie thaanaa odudhu!
+84. Kai ulla irundhaa?
+85. PLC-la idhe maadhiri nadakkalaam.
+86. Indha FX3U PLC-la M0-lendhu M499 varaikkum general relays.
+87. Power pona clear aagidum.
+88. Aana M500-lendhu latched area.
+89. Battery backup-oda, power cut aanaalum andha bit nyaabagathula irukkum.
+90. Indha BATT light-um, ulla irukkura battery-um adhukku dhaan.
+91. Oru guess.
+92. SET M500 pannittu, M500-ai vechu motor Y0-ai ON panneenga.
+93. Power cut aagi thirumba vandhadhu.
+94. Yaarum start press pannala.
+95. Motor odumaa?
+96. Moonu… rendu… onnu.
+97. Odum.
+98. PLC RUN-ku vandhadhum M500 innum ON.
+99. Adhanaala Y0 ON.
+100. Motor thaanaa start aagidum.
+101. Idhu dhaan danger.
+102. Holding logic-la idhu nadakkaadhu.
+103. Power cut aanaa Y0 OFF aagidum.
+104. Seal-in contact-um break aagidum.
+105. Power thirumba vandhaalum, operator marubadi start press pannaadha varaikkum motor nikkum.
+106. Adhanaala motor, conveyor, pump maadhiri odura machine-ku holding logic safe.
+107. Appo SET RST thappa?
+108. Illa.
+109. Edhai nyaabagam vechukkanum-o, angae use pannunga.
+110. Alarm latch, batch running status, operator acknowledge pannum varaikkum irukkura fault message.
+111. Aana direct-aa motor-ai latched bit-la SET pannaadheenga.
+112. Latched area use pannumbodhu, power return-la enna aagum-nu kandippaa check pannunga.
+113. Quick summary.
+114. Holding logic, power cut-la OFF, motor-ku safe.
+115. SET RST, thani RST thevai, keezha irukkura instruction jeyikkum.
+116. Latched M500 maadhiri bit, power cut-ku appuram-um ON-la irukkum.
+117. Ippo first-la naan keta challenge-oda answer.
+118. RST rung mela, SET rung keezha.
+119. Rendum orey nerathula true.
+120. Keezha irukkura instruction kadaisiyaa ezhudhum.
+121. Adhanaala SET jeyikkum.
+122. Answer A.
+123. Y0 ON.
+124. "RST eppovum jeyikkum"-nu nyaabagam vechavanga thappu pannirupeenga.
+125. Order dhaan rule.
+126. Correct-aa sonnavanga-ku comment-la oru shout-out.
+127. Adutha video-la, timer-um latch-um sendhu oru machine-ai eppadi control pannuradhu-nu paakkalaam.
+128. Latching purinjirundhaa, unga friend-kku share pannunga.
+129. Factory Decode Tamil-ai subscribe pannunga.
