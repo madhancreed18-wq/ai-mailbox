@@ -18,23 +18,25 @@ function fdtKit(s,A){
   const lamp=(cx,cy,d,on,win,o={})=>ng('lamp',{x:cx-d/2,y:cy-d/2,w:d,h:d,on,...o},win);
   const box=(o,win)=>ng('box',o,win);
   const eq=(n,cx,y,h,win,o={})=>{const m=addStick({scene:s,quiet:true,look:'equip',action:n,size:h,x:0,y,facing:o.facing||1,entrance:'pop',delay:0,withPrev:true,draw:.35,name:n});m.x=cx-m.w/2;m.win=win;return m};
-  return{ng,P,T,PS,seg,wire,pill,label,lamp,box,eq};
+  const mg=(type,o,win)=>ng('mg',{mg:type,...o},win);
+  return{ng,P,T,PS,seg,wire,pill,label,lamp,box,eq,mg};
 }
 async function buildFdtNpn(){
   stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('16:9');S.narrOff=0;
   const A=FDT_NPN_A,END=320.4;
   const s=newScene({name:'FDT – Sensor LED ON, PLC X0 OFF (NPN vs PNP)',style:'white',transition:'cut',trans:0,hold:0});s.minDur=END;S.scenes.push(s);
-  const K=fdtKit(s,A),{ng,T,PS,seg,wire,pill,label,lamp,box,eq}=K;
+  const K=fdtKit(s,A),{ng,T,PS,seg,wire,pill,label,lamp,box,mg}=K;
   const RED='#e5484d',BN='#8b5a2b',BU='#2f6fd6',BK='#1d1d1f',YEL='#ffd23f',AMB='#ffb020';
   const W=(p,q=p)=>[PS(p),q>=24?END:PS(q+1)];
   s.capBeats=[];
   /* ---------- host ---------- */
-  const host=addStick({scene:s,quiet:true,look:'host',action:'surprised',size:430,x:-10,y:285,facing:1,entrance:'none',delay:0,withPrev:true,draw:.1,name:'Host'});
-  const HB=[[0,'surprised'],[9.4,'f_shrug'],[13.6,'count1'],[15.4,'count2'],[17.3,'count3'],[26,'thinking'],[28,'explaining'],[31.9,'pointright'],[44.7,'explaining'],[50,'thinking'],[54.4,'pointright'],[59.6,'thumbsup'],
-    [61.8,'magnifier'],[67.2,'idea'],[69.6,'pointright'],[83.3,'explaining'],[90.5,'pointright'],[97.1,'thumbsup'],[99.4,'f_palmsup'],[112.2,'f_count1'],[114.2,'f_count2'],
-    [116.9,'explaining'],[121.8,'pointright'],[130.2,'pointright'],[143,'explaining'],[153.4,'thumbsup'],[154.3,'f_pointright'],[163.5,'f_crossarms'],[175.9,'pointright'],[183.6,'magnifier'],[196.1,'surprised'],
-    [200.6,'thinking'],[205.2,'idea'],[208,'pointright'],[220.5,'thumbsup'],[222.5,'explaining'],[237,'f_talk'],[245.1,'f_count1'],[248.4,'f_count2'],[251.2,'magnifier'],[256.7,'pointright'],[261.8,'explaining'],
-    [269.6,'f_talk'],[286.4,'thinking'],[287.5,'f_count1'],[290.1,'f_count2'],[297,'f_count3'],[303.2,'f_palmsup'],[308,'thinking'],[316.2,'waving']];
+  const host=addStick({scene:s,quiet:true,look:'office',action:'question',size:440,x:0,y:270,facing:1,entrance:'none',delay:0,withPrev:true,draw:.1,name:'Host'});
+  const HB=[[0,'question'],[6,'worriedlook'],[9.4,'swap'],[13.6,'screwdriver'],[19.4,'holdsensor'],[26,'scratchhead'],[28,'talkneutral'],[31.9,'pointboard'],[36,'count1'],[39.2,'count2'],[42.2,'pointboard'],
+    [44.7,'talkneutral'],[50,'trace'],[57.3,'pointboard'],[59.6,'thumbsup'],[61.8,'trace'],[67.2,'onefinger'],[69.6,'pointboard'],[83.3,'talkneutral'],[90.5,'trace'],[97.1,'thumbsup'],
+    [99.4,'question'],[112.2,'count1'],[114.2,'count2'],[116.9,'talkneutral'],[121.8,'pointboard'],[130.2,'pointboard'],[143,'trace'],[153.4,'thumbsup'],[154.3,'present'],[159.4,'pointboard'],
+    [163.5,'worriedlook'],[169.3,'swap'],[175.9,'pointboard'],[183.6,'probes'],[192.1,'question'],[196.1,'scratchhead'],[200.6,'chinthink'],[205.2,'onefinger'],[208,'trace'],[220.5,'thumbsup'],
+    [222.5,'talkneutral'],[237,'question'],[239.5,'holdsensor'],[241.9,'pointboard'],[245.1,'count1'],[248.4,'count2'],[251.2,'holdsensor'],[256.7,'pointboard'],[261.8,'trace'],[266.5,'thumbsup'],
+    [269.6,'talkneutral'],[277.9,'swap'],[286.4,'chinthink'],[287.5,'count1'],[290.1,'count2'],[297,'count3'],[303.2,'askviewer'],[308,'probes'],[312.9,'trace'],[316.2,'wavebye']];
   host.beats=HB.map(([t,pose])=>({t,pose,blend:.22}));host.speak=[[0,END]];
   /* ---------- geometry ---------- */
   const YP=140,YN=610,X0R=400,X1R=1240,cx=560,cy=375,bx0=480,bx1=640,by0=290,by1=460,yBk=400;
@@ -69,10 +71,10 @@ async function buildFdtNpn(){
 
   /* ===== 0–1 HOOK (0 – 28) ===== */
   const H=W(0,1);
-  eq('conveyor',760,430,190,H);eq('box_closed',700,365,80,[0.3,H[1]]);eq('prox_sensor',760,300,58,[0.3,H[1]]);
-  lamp(812,292,22,2.0,[0.3,H[1]],{color:AMB});label('SENSOR LED ON',812,250,[3.4,H[1]],{w:220,size:20,color:'#d88a00'});
-  eq('plc_rack',1130,160,130,[1.0,H[1]]);lamp(1130,330,34,1e9,[1.0,H[1]],{color:NG.grn});label('X0 OFF',1130,382,[6.0,H[1]],{w:160,color:RED});
-  seg(840,300,1060,330,[1.4,H[1]],{color:BK,lw:4,dash:[10,8]});ng('cross',{x:925,y:285,w:50,h:50},[6.4,H[1]]);
+  mg('conv',{x:440,y:470,w:520,h:44,run:[[0,2.3]]},H);mg('box',{x:600,y:390,w:90,h:80,fromX:430,mv:[0.2,2.3]},[0.2,H[1]]);
+  mg('sensor',{x:720,y:405,w:170,h:46,led:2.3,det:2.3},[0.3,H[1]]);label('SENSOR LED ON',840,360,[3.4,H[1]],{w:240,size:20,color:'#d88a00'});
+  mg('plc',{x:1010,y:170,w:230,h:150,label:'PLC',on:null},[1.0,H[1]]);label('X0 OFF',1180,345,[6.0,H[1]],{w:140,color:RED});
+  seg(895,428,1040,325,[1.4,H[1]],{color:BK,lw:4,dash:[10,8]});ng('cross',{x:942,y:350,w:50,h:50},[6.4,H[1]]);
   pill('LED ON · PLC X0 OFF – YEN?',820,30,[6.0,9.4],{w:520,bg:RED});
   pill('SPARE SENSOR POTTADHUKKU APPURAM',820,30,[9.4,H[1]],{w:560,bg:NG.navy,size:22});
   [['BROWN → +24 V',BN,T(1,1)],['BLUE → 0 V',BU,T(1,2)],['BLACK → X0',BK,T(1,3)]].forEach(([t,c,at],i)=>{ng('title',{x:420+i*270,y:640,w:220,h:46,text:t,size:19,bg:c},[at,H[1]]);ng('tick',{x:645+i*270,y:644,w:34,h:34,lw:8},[T(1,4)+i*.2,H[1]])});
@@ -80,8 +82,8 @@ async function buildFdtNpn(){
 
   /* ===== 2 THE LAMP EXPERIMENT (28 – 31.9) ===== */
   const L2=W(2);
-  eq('prox_sensor',640,300,90,L2);ng('label',{x:540,y:420,w:200,h:30,text:'SENSOR',size:22},L2);
-  lamp(950,340,90,1e9,[T(2,0)+.6,L2[1]],{color:YEL});ng('label',{x:850,y:440,w:200,h:30,text:'24 V LAMP',size:22},[T(2,0)+.6,L2[1]]);
+  mg('sensor',{x:520,y:310,w:220,h:60,wires:true},L2);ng('label',{x:540,y:420,w:200,h:30,text:'SENSOR',size:22},L2);
+  mg('bulb',{x:905,y:295,w:90,on:null},[T(2,0)+.6,L2[1]]);ng('label',{x:850,y:440,w:200,h:30,text:'24 V LAMP',size:22},[T(2,0)+.6,L2[1]]);
   pill('LAMP = NAMMA LOAD',820,40,[T(2,1),L2[1]],{w:380,bg:NG.teal});
 
   /* ===== 3–5 NPN + LAMP (31.9 – 69.6) ===== */
@@ -90,7 +92,7 @@ async function buildFdtNpn(){
   const sn=sensor('npn',N,tN);
   wire([[sn.brown[0],YP],sn.brown],BN,[T(3,1),N[1]]);
   wire([sn.blue,[sn.blue[0],YN]],BU,[T(3,2),N[1]],{flow:fN});
-  lamp(900,270,56,T(4,6),[T(3,3),N[1]],{color:YEL});label('24V LAMP',1000,270,[T(3,3),N[1]],{w:140,size:18});
+  mg('bulb',{x:872,y:242,w:56,on:T(4,6)},[T(3,3),N[1]]);label('24V LAMP',1000,270,[T(3,3),N[1]],{w:140,size:18});
   wire([[900,YP],[900,242]],RED,[T(3,3),N[1]],{flow:fN});
   wire([[900,298],[900,yBk],sn.black],BK,[T(3,4),N[1]],{flow:fN});
   // internal current path (black → switch → blue) once the switch is closed
@@ -112,7 +114,7 @@ async function buildFdtNpn(){
   wire([sp.blue,[sp.blue[0],YN]],BU,[T(6,1),Pq[1]]);
   wire([sp.brown,[cx+35,yBk-50],[cx+35,yBk],sp.black],'rgba(0,0,0,0)',[fP,Pq[1]],{flow:fP,lw:1});
   wire([sp.black,[900,yBk],[900,472]],BK,[T(6,3),Pq[1]],{flow:fP});
-  lamp(900,500,56,T(7,4),[T(6,3),Pq[1]],{color:YEL});label('24V LAMP',1000,500,[T(6,3),Pq[1]],{w:140,size:18});
+  mg('bulb',{x:872,y:472,w:56,on:T(7,4)},[T(6,3),Pq[1]]);label('24V LAMP',1000,500,[T(6,3),Pq[1]],{w:140,size:18});
   wire([[900,528],[900,YN]],BU,[T(6,4),Pq[1]],{flow:fP});
   label('BLACK → +24 V',720,250,[T(7,1),Pq[1]],{w:220,size:20,color:RED});
   ng('arrow',{x1:690,y1:yBk-36,x2:800,y2:yBk-36,x:690,y:yBk-54,w:110,h:36,noPop:true,color:NG.grn,lw:6,label:'OUT OF SENSOR'},[T(7,2)+.5,Pq[1]]);
@@ -121,7 +123,7 @@ async function buildFdtNpn(){
   const C8=W(8);
   ng('flash',{x:0,y:0,w:1280,h:720,noPop:true},[C8[0],C8[0]+.5]);
   pill('RENDU-LAYUM LAMP ERIYUDHU',820,24,C8,{w:480,bg:NG.navy});
-  const card=(x,head,col,txt,dir,at)=>{box({x,y:120,w:360,h:380,head,color:col,lines:[]},[at,C8[1]]);eq('prox_sensor',x+130,230,80,[at+.2,C8[1]]);
+  const card=(x,head,col,txt,dir,at)=>{box({x,y:120,w:360,h:380,head,color:col,lines:[]},[at,C8[1]]);mg('sensor',{x:x+90,y:230,w:180,h:48,led:at+.6,det:at+.6},[at+.2,C8[1]]);
     ng('arrow',{x1:dir>0?x+330:x+230,y1:350,x2:dir>0?x+230:x+330,y2:350,x:x+230,y:330,w:100,h:40,noPop:true,color:NG.grn,lw:8,flow:true,flowFrom:at+.6,speed:.9},[at+.4,C8[1]]);
     ng('label',{x:x+10,y:400,w:340,h:40,text:txt,size:20,color:col},[at+.6,C8[1]])};
   card(430,'NPN',NG.org,'CURRENT ULLA → SINKS',1,T(8,2));card(840,'PNP',NG.teal,'CURRENT VELIYA → SOURCES',-1,T(8,3));
@@ -132,7 +134,7 @@ async function buildFdtNpn(){
   ng('flash',{x:0,y:0,w:1280,h:720,noPop:true},[P9[0],P9[0]+.5]);
   pill('LAMP → PLC INPUT',820,24,P9,{w:380,bg:NG.navy});
   plc([T(9,1),P9[1]],T(9,4)+2.5);
-  lamp(520,370,70,T(9,3)+.6,[T(9,3),P9[1]],{color:YEL,text:'LAMP'});ng('label',{x:600,y:350,w:80,h:40,text:'≈',size:44},[T(9,4),P9[1]]);
+  mg('bulb',{x:485,y:335,w:70,on:T(9,3)+.6},[T(9,3),P9[1]]);ng('label',{x:600,y:350,w:80,h:40,text:'≈',size:44},[T(9,4),P9[1]]);
   wire([[PX+34,X0Y],[LX,X0Y],[LX,344]],BK,[T(9,4),P9[1]],{flow:T(9,4)+1.2});wire([[LX,396],[LX,SSY],[PX+34,SSY]],BK,[T(9,4),P9[1]],{flow:T(9,4)+1.2});
 
   /* PLC circuit helper for 10–17 & quiz */
@@ -192,9 +194,9 @@ async function buildFdtNpn(){
   box({x:430,y:110,w:380,h:200,head:'ENDHA DEVICE?',color:NG.navy,align:'left',lines:[{t:'Sensor → black OUT terminal',at:T(18,1)},{t:'PLC → X0 terminal',at:T(18,2)}],lh:54},P18);
   box({x:840,y:110,w:380,h:200,head:'CURRENT DIRECTION',color:NG.teal,align:'left',lines:[{t:'Device-kulla → SINK',at:T(18,3),color:NG.org},{t:'Device-lendhu veliya → SOURCE',at:T(18,4),color:NG.teal}],lh:54},P18);
   ng('arrow',{x1:640,y1:450,x2:540,y2:450,x:540,y:430,w:100,h:40,noPop:true,color:NG.org,lw:8,flow:true,flowFrom:T(18,3),speed:.9,label:'SINK'},[T(18,3),P18[1]]);
-  eq('prox_sensor',470,410,70,[T(18,3),P18[1]]);
+  mg('sensor',{x:410,y:430,w:120,h:34},[T(18,3),P18[1]]);
   ng('arrow',{x1:960,y1:450,x2:1060,y2:450,x:960,y:430,w:100,h:40,noPop:true,color:NG.teal,lw:8,flow:true,flowFrom:T(18,4),speed:.9,label:'SOURCE'},[T(18,4),P18[1]]);
-  eq('prox_sensor',880,410,70,[T(18,4),P18[1]]);
+  mg('sensor',{x:830,y:430,w:120,h:34},[T(18,4),P18[1]]);
 
   /* ===== 19 TROUBLESHOOT CHECKLIST (251.2 – 269.6) ===== */
   const P19=W(19);
@@ -226,16 +228,16 @@ async function buildFdtNpnShort(){
   stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('9:16');S.narrOff=0;
   const A=FDT_NPN_SA,END=46.4;
   const s=newScene({name:'FDT Short – LED ON, X0 OFF?',style:'white',transition:'cut',trans:0,hold:0});s.minDur=END;S.scenes.push(s);
-  const{ng,T,PS,seg,wire,pill,label,lamp,box,eq}=fdtKit(s,A);
+  const{ng,T,PS,seg,wire,pill,label,lamp,box,mg}=fdtKit(s,A);
   const RED='#e5484d',BN='#8b5a2b',BU='#2f6fd6',BK='#1d1d1f',AMB='#ffb020';
-  const host=addStick({scene:s,quiet:true,look:'host',action:'surprised',size:440,x:-30,y:820,facing:1,entrance:'none',delay:0,withPrev:true,draw:.1,name:'Host'});
-  host.beats=[[0,'surprised'],[7.6,'f_shrug'],[9.3,'f_count1'],[11.8,'f_count2'],[15.5,'explaining'],[20.5,'thinking'],[21.3,'idea'],[24.6,'pointright'],[30.3,'f_pointdown'],[36,'f_talk'],[41,'thumbsup'],[43.4,'waving']].map(([t,pose])=>({t,pose,blend:.22}));host.speak=[[0,END]];
+  const host=addStick({scene:s,quiet:true,look:'office',action:'question',size:440,x:-10,y:820,facing:1,entrance:'none',delay:0,withPrev:true,draw:.1,name:'Host'});
+  host.beats=[[0,'question'],[3.4,'worriedlook'],[7.6,'scratchhead'],[9.3,'swap'],[15.5,'screwdriver'],[17.7,'holdsensor'],[20.6,'scratchhead'],[21.3,'onefinger'],[24.6,'trace'],[30.3,'pointdownright'],[36,'askviewer'],[41,'thumbsup'],[43.4,'wavebye']].map(([t,pose])=>({t,pose,blend:.22}));host.speak=[[0,END]];
   /* 0 hook */
   const H=[0,PS(1)];
   pill('LED ON · X0 OFF?',360,70,[0.2,PS(2)],{w:560,h:70,size:36,bg:RED});
-  eq('conveyor',360,420,320,[0,PS(2)]);eq('box_closed',290,320,120,[0.2,PS(2)]);eq('prox_sensor',380,200,95,[0.2,PS(2)]);
-  lamp(468,190,32,1.6,[0.2,PS(2)],{color:AMB});label('SENSOR LED ON',560,262,[T(0,1),PS(2)],{w:320,size:30,color:'#d88a00'});
-  eq('plc_rack',540,720,150,[T(0,2)-.2,PS(1)]);lamp(540,905,44,1e9,[T(0,2)-.2,PS(1)],{color:NG.grn});label('X0 OFF',540,962,[T(0,2),PS(1)],{w:220,size:34,color:RED});
+  mg('conv',{x:40,y:450,w:640,h:52,run:[[0,2.4]]},[0,PS(2)]);mg('box',{x:220,y:350,w:120,h:100,fromX:40,mv:[0.2,2.4]},[0.2,PS(2)]);mg('sensor',{x:370,y:372,w:230,h:58,led:2.5,det:2.5},[0.2,PS(2)]);
+  label('SENSOR LED ON',500,320,[T(0,1),PS(2)],{w:320,size:30,color:'#d88a00'});
+  mg('plc',{x:380,y:700,w:300,h:190,label:'PLC',on:null},[T(0,2)-.2,PS(1)]);label('X0 OFF',540,925,[T(0,2),PS(1)],{w:220,size:34,color:RED});
   ng('title',{x:440,y:1010,w:220,h:150,text:'YEN?',size:64,bg:RED},[T(0,3),PS(1)]);
   /* 1 swap */
   const P1=[PS(1),PS(2)];
@@ -246,8 +248,8 @@ async function buildFdtNpnShort(){
   /* 2 clue: black wire current direction */
   const P2=[PS(2),PS(3)];
   pill('CLUE',360,70,P2,{w:240,h:64,size:34,bg:NG.org});
-  eq('prox_sensor',210,220,130,P2);
-  seg(360,300,690,300,P2,{color:BK,lw:14});label('BLACK WIRE',520,360,P2,{w:320,size:32});
+  mg('sensor',{x:40,y:262,w:300,h:76},P2);
+  seg(340,300,690,300,P2,{color:BK,lw:14});label('BLACK WIRE',520,360,P2,{w:320,size:32});
   ng('arrow',{x1:380,y1:440,x2:660,y2:440,x:380,y:420,w:280,h:40,noPop:true,color:NG.teal,lw:9,flow:true,flowFrom:T(2,0)+.5,speed:.7,label:'VELIYA?',lsize:30},[T(2,0)+.3,P2[1]]);
   ng('arrow',{x1:660,y1:540,x2:380,y2:540,x:380,y:520,w:280,h:40,noPop:true,color:NG.org,lw:9,flow:true,flowFrom:T(2,0)+1,speed:.7,label:'ULLA?',lsize:30},[T(2,0)+.8,P2[1]]);
   box({x:330,y:620,w:370,h:170,head:'TRACE PANNUNGA',color:NG.navy,lines:[{t:'SINK  vs  SOURCE',at:T(2,1),size:26}]},[T(2,1),P2[1]]);

@@ -1,5 +1,11 @@
 # Changelog – Inkstroke
 
+## v16 – Office action poses, office mouth set, motion-graphics parts, EP08 NPN vs PNP
+- 16 new office stickman poses from mailbox 036 (hold sensor, screwdriver, probes, scratch head, swap, point board, trace, worried, talk, count 1–3, question, thumbs up, ask viewer, wave bye) in `app/sprites_d.js`, traced by `tools/trace_fdt_office.py`; drawn mouthless, lip-synced from narration with the new office mouth set (8 mouths incl. smile)
+- Code-drawn motion-graphics parts (ngd kind `mg`): proximity sensor with LED + detection waves, sliding cardboard box, running conveyor, compact PLC with X0 LED, 24 V bulb with rays
+- Templates "FDT – LED ON, X0 OFF: NPN vs PNP" (5:20, 16:9) and its Short (0:46, 9:16), timed to the owner's Tanglish narration
+- Renderer `--narration file.wav` loads the voice first so mouths follow it, and muxes it
+
 ## v15 – Script → video, template search, NGD 02 explainer
 - Script → video panel: paste a voiceover script; sections get title pills, host poses per sentence, named equipment pops in on its word, key-point cards and timed captions (words/s)
 - Template search box; Starters and Episodes groups
