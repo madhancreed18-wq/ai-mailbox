@@ -160,6 +160,7 @@ textarea{resize:vertical;min-height:64px}
 <script src="sprites_c.js"></script>
 <script src="sprites_d.js"></script>
 <script src="sprites_e.js"></script>
+<script src="sprites_f.js"></script>
 <script src="vendor/three.iife.js"></script>
 <script>
 (()=>{
@@ -2276,6 +2277,7 @@ const TPL={
  fdtnpn:{name:'FDT – LED ON, X0 OFF: NPN vs PNP (Tamil, 16:9)',desc:'5:20 motion-graphics explainer · current paths, sink/source, S/S common, quiz · load the long narration',style:'white',scenes:[]},
  ep09:{name:'EP09 – Latching: SET/RST vs Holding (5:53)',desc:'3D lift, FX3U, mixie · 5 guess beats · decode moment · mid-video challenge · load narration-long.wav',style:'white',scenes:[]},
  ep09s:{name:'EP09 Short – Lift button latching (9:16)',desc:'0:37 · 3D lift hook, decode, power-cut danger, CTA',style:'white',scenes:[]},
+ ep10cast:{name:'EP10 cast check',desc:'Operator + technician EP10 action poses',style:'white',scenes:[]},
  officetest:{name:'Office stickman – natural motion test',desc:'32 new poses (mailbox 047) with anchored lip-sync mouths',style:'white',scenes:[]},
  ep09v2:{name:'EP09 v2 – SET RESET (2D cards, 7:11)',desc:'Phone notification → machine alarm · emoji cards · wipe transitions · load v2 narration-long.wav',style:'white',scenes:[]},
  ep09v2s:{name:'EP09 v2 Short – SET RESET (9:16)',desc:'0:49 · notification hook · twist · challenge · CTA',style:'white',scenes:[]},
@@ -4460,6 +4462,16 @@ async function buildOfficeTest(){
   seq.forEach(([t,pose],i)=>s.els.push({id:uid++,type:'ngd',kind:'label',x:900,y:40,w:340,h:50,text:pose,size:30,color:NG.navy,win:[t,i<seq.length-1?seq[i+1][0]:END],noPop:true,draw:.1,delay:0,withPrev:true,entrance:'none',motion:'none'}));
   S.captions=false;S.showHand=false;S.cur=0;S.pin=false;S.t=1;refresh();
 }
+
+/* ---------- v20 EP10 cast check (operator + technician action sheets) ---------- */
+async function buildEp10Cast(){
+  stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('16:9');S.narrOff=0;S.art='';
+  const END=8,s=newScene({name:'EP10 cast check',style:'white',transition:'cut',trans:0,hold:0});s.minDur=END;S.scenes.push(s);
+  const OP=['op_press_start','op_lights_dim','op_cover_ears','op_point_motor','op_press_stop','op_wait_watch','op_thumbs_motor','op_ask'],TC=['tc_open_panel','tc_point_contactors','tc_set_timer','tc_clamp_meter','tc_motor_box','tc_check_interlock','tc_meter_panel','tc_all_ok'];
+  const put=(look,nm,i,t0,t1)=>{const st=addStick({scene:s,quiet:true,look,action:nm,size:300,x:20+(i%4)*315,y:i<4?20:370,facing:1,entrance:'pop',delay:0,withPrev:true,draw:.1,name:nm});st.win=[t0,t1];st.beats=[{t:0,pose:nm,blend:0}]};
+  OP.forEach((n,i)=>put('worker',n,i,0,4));TC.forEach((n,i)=>put('tech',n,i,4,8));
+  S.captions=false;S.showHand=false;S.cur=0;S.pin=false;S.t=1;refresh();
+}
 /* ---------- NGD 02 – NPN vs PNP sensors (explainer, Renderforest-style structure) ----------
    Structure: hook (fault) → promise → the three wires → PNP → NPN → matching rule → the fault explained → how to check → recap + CTA.
    One scene, elements shown in time windows; captions from NGD02_SCRIPT (silent draft timing ≈ 2.5 words/s).
@@ -4628,6 +4640,7 @@ async function loadTemplate(key){S.art='';
   if(key==='fdtnpn')return buildFdtNpn();
   if(key==='fdtnpns')return buildFdtNpnShort();
   if(key==='officetest')return buildOfficeTest();
+  if(key==='ep10cast')return buildEp10Cast();
   if(key==='ep09v2')return buildEp09v2();
   if(key==='ep09v2s')return buildEp09v2Short();
   if(key==='ep09')return buildEp09();
