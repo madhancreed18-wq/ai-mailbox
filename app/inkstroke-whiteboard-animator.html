@@ -1599,6 +1599,7 @@ function drawNgd(e,l,st,tl){
   else if(K==='count3')drawCount3(e,c,tl);
   else if(K==='card2')TIP=o2wrap(e,c,tl,drawCard2);
   else if(K==='sdiag')drawSD(e,c,tl);
+  else if(K==='kcap')drawKcap(e,c,tl);
   else if(K==='emo2')drawEmo2(e,c,tl);
   else if(K==='wipe2')drawWipe2(e,c,tl);
   else if(K==='phone2')TIP=o2wrap(e,c,tl,drawPhone2);
@@ -4196,7 +4197,7 @@ function o2wrap(e,c,tl,fn){if(e.instant||!e.win){fn(e,c,tl);return null}const a=
   if(q<1){const qe=o2ease(q);c.save();c.lineWidth=5;c.strokeStyle=O2;if(circ){c.beginPath();c.arc(e.x+r,e.y+r,r,0,7);c.stroke()}else if(S.art==='sketch'){c.lineWidth=3.2;skRectPath(c,e.x,e.y,e.w,e.h,e.r??Math.min(26,e.h/3),skSeed(e.x,e.y,e.w,e.h),2.2);c.stroke()}else{ngRR(c,e.x,e.y,e.w,e.h,e.r??Math.min(26,e.h/3));c.stroke()}
     c.beginPath();c.rect(e.x-30,e.y-220,(e.w+60)*qe,e.h+440);c.clip();fn(e,c,tl);c.restore();return{x:e.x-30+(e.w+60)*qe,y:e.y+e.h*.55,color:e.bg&&!o2light(e.bg)?e.bg:'#1f2430'}}
   fn(e,c,tl);return null}
-function drawCard2(e,c,tl){const{x,y,w,h}=e,bg=e.bg||'#fff',fg=e.fg||(o2light(bg)?O2:'#fff');
+function drawCard2(e,c,tl){if(e.float){c.translate(0,Math.sin(tl*2.1+e.x*.013)*3.2)}const{x,y,w,h}=e,bg=e.bg||'#fff',fg=e.fg||(o2light(bg)?O2:'#fff');
   o2box(c,x,y,w,h,e.r??Math.min(26,h/3),bg,e.lw??5);
   if(e.band){ngRR(c,x,y,w,e.band.h||40,[e.r??22,e.r??22,0,0]);c.fillStyle=e.band.bg;c.fill();c.lineWidth=e.lw??5;c.strokeStyle=O2;c.beginPath();c.moveTo(x,y+(e.band.h||40));c.lineTo(x+w,y+(e.band.h||40));c.stroke();ngTxt(c,e.band.t,x+w/2,y+(e.band.h||40)/2+1,e.band.size||20,'#fff',800)}
   const by=e.band?(e.band.h||40):0,cy=y+by+(h-by)/2;
@@ -4242,7 +4243,7 @@ function drawPanel2(e,c,tl){const{x,y,w,h}=e,lamp=o2t(tl,e.lamp),flt=o2in(e.faul
 function o2bubble(c,x,y,r){c.save();c.fillStyle='#fff';c.beginPath();c.ellipse(x,y-1,r,r*.8,0,0,7);c.fill();c.beginPath();c.moveTo(x-r*.5,y+r*.4);c.lineTo(x-r*.8,y+r*1.05);c.lineTo(x,y+r*.6);c.fill();c.restore()}
 function o2env(c,x,y){c.save();ngRR(c,x-34,y-23,68,46,6);c.fillStyle='#fff';c.fill();c.lineWidth=4;c.strokeStyle=O2;c.stroke();c.beginPath();c.moveTo(x-34,y-21);c.lineTo(x,y+4);c.lineTo(x+34,y-21);c.stroke();c.restore()}
 function o2bolt(c,x,y,s){c.save();c.translate(x,y);c.scale(s,s);c.beginPath();c.moveTo(6,-30);c.lineTo(-14,4);c.lineTo(0,4);c.lineTo(-6,30);c.lineTo(16,-6);c.lineTo(2,-6);c.closePath();c.fillStyle='#facc15';c.fill();c.lineWidth=4;c.strokeStyle=O2;c.stroke();c.restore()}
-function drawBit2(e,c,tl){const{x,y,w,h}=e,v=o2t(tl,e.val),ts=o2last(tl,e.val);o2box(c,x,y,w,h,22,'#fff',5);
+function drawBit2(e,c,tl){if(e.float){c.translate(0,Math.sin(tl*2.1+e.x*.013)*3.2)}const{x,y,w,h}=e,v=o2t(tl,e.val),ts=o2last(tl,e.val);o2box(c,x,y,w,h,22,'#fff',5);
   ngTxt(c,e.name||'M0',x+24,y+30,22,'#5b6475',800,'left');ngTxt(c,e.sub||'',x+24,y+58,16,'#8a93a3',700,'left');
   const pk=tl-ts<.4?1+.25*Math.sin((tl-ts)/.4*Math.PI):1;c.save();c.translate(x+w-70,y+h/2+6);c.scale(pk,pk);ngTxt(c,String(v),0,0,h*.62,v?NG.blue:'#9aa3b2',900);c.restore();
   c.beginPath();c.arc(x+w-18,y+18,9,0,7);c.fillStyle=v?'#22c55e':'#cbd5e1';c.fill();c.lineWidth=3;c.strokeStyle=O2;c.stroke();
@@ -4481,9 +4482,32 @@ async function buildEp10Cast(){
    Timing: ChatGPT paragraph times (mailbox 049) → sentence times EP10_A / EP10_SA. */
 const EP10_A=[[0.25, 3.66, 0], [4.15, 9.3, 0], [10.09, 10.52, 0], [11.04, 14.11, 0], [14.77, 17.85, 0], [18.56, 20.25, 0], [20.68, 21.74, 0], [22.36, 23.42, 0], [24.26, 26.46, 1], [27.22, 31.48, 1], [32.03, 36.72, 1], [37.29, 38.28, 1], [38.58, 39.29, 1], [40.55, 41.65, 2], [42.17, 43.17, 2], [43.65, 45.48, 2], [45.83, 47.69, 2], [48.1, 49.89, 2], [50.44, 51.37, 2], [52.46, 54.74, 3], [55.37, 56.39, 3], [57.0, 59.23, 3], [59.74, 61.78, 3], [62.82, 67.78, 4], [68.39, 71.45, 4], [72.01, 75.05, 4], [75.86, 78.25, 4], [78.8, 80.21, 4], [81.23, 85.81, 5], [86.38, 86.95, 5], [87.32, 87.86, 5], [88.93, 90.74, 6], [91.24, 92.48, 6], [92.99, 94.4, 6], [94.87, 95.77, 6], [96.52, 99.19, 6], [99.54, 100.15, 6], [100.66, 101.58, 6], [101.95, 102.84, 6], [103.32, 104.34, 6], [104.88, 105.46, 6], [106.56, 107.65, 7], [108.3, 112.34, 7], [112.9, 114.41, 7], [115.1, 118.53, 7], [119.57, 120.26, 8], [120.94, 121.42, 8], [121.72, 123.1, 8], [123.66, 125.04, 8], [125.56, 127.48, 8], [128.34, 128.82, 8], [129.19, 130.68, 8], [131.17, 132.66, 8], [133.1, 134.64, 8], [135.85, 136.55, 9], [136.83, 138.88, 9], [139.31, 141.54, 9], [141.95, 143.35, 9], [143.93, 145.62, 9], [146.13, 148.0, 9], [148.43, 151.51, 9], [152.68, 154.52, 10], [155.0, 155.91, 10], [156.37, 159.76, 10], [160.21, 161.87, 10], [162.42, 164.18, 10], [164.79, 165.29, 11], [165.71, 168.09, 11], [168.8, 169.32, 12], [169.73, 171.88, 12], [172.21, 172.69, 12], [173.26, 175.83, 12], [176.21, 177.47, 12], [178.18, 178.77, 13], [179.23, 181.96, 13], [182.31, 183.81, 13], [184.56, 185.12, 14], [185.12, 188.01, 14], [188.01, 188.36, 14], [188.36, 189.62, 14], [189.62, 191.24, 14], [192.02, 192.49, 15], [192.9, 196.16, 15], [196.86, 197.3, 16], [197.86, 198.45, 16], [198.76, 199.81, 16], [200.35, 204.1, 16], [204.58, 205.04, 17], [205.45, 206.8, 17], [207.31, 207.72, 18], [207.72, 211.27, 18], [211.27, 211.8, 18], [212.46, 212.95, 19], [213.36, 214.6, 19], [215.19, 216.29, 20], [216.29, 216.94, 20], [217.74, 218.93, 21], [219.22, 219.67, 21], [220.12, 222.1, 21], [222.39, 223.95, 21], [224.34, 225.92, 21], [226.64, 228.11, 22], [228.53, 229.73, 22], [230.17, 231.51, 22], [232.04, 234.0, 22], [234.44, 238.54, 22], [239.22, 240.24, 23], [240.65, 242.95, 23], [243.44, 245.08, 23], [245.53, 246.52, 23], [246.93, 248.7, 23], [249.41, 250.09, 24], [251.01, 254.79, 24], [255.21, 256.33, 24], [256.96, 260.49, 24], [261.37, 264.8, 24], [265.43, 266.13, 25], [266.77, 268.26, 25], [268.83, 269.99, 25], [270.45, 270.97, 25], [271.57, 273.36, 25], [273.99, 275.79, 25], [276.64, 277.41, 26], [278.22, 280.65, 26], [281.22, 284.96, 26], [285.54, 290.64, 26], [291.14, 292.37, 26], [292.68, 293.54, 26], [294.16, 295.81, 26], [296.64, 298.52, 27], [299.46, 303.47, 27], [303.78, 305.43, 27], [305.74, 307.09, 27], [307.42, 309.11, 27]];
 const EP10_SA=[[0.25, 4.56, 0], [5.03, 7.7, 0], [8.12, 12.71, 0], [13.16, 15.85, 0], [16.39, 19.07, 1], [19.69, 21.62, 1], [22.2, 23.37, 1], [23.77, 24.23, 1], [24.89, 25.79, 2], [26.34, 27.11, 2], [27.36, 30.92, 2], [31.62, 34.8, 2], [35.46, 36.52, 3], [36.78, 38.4, 3], [38.77, 42.04, 3]];
+const EP10_PARAS=["Unga veetu water motor start aagumbodhu, light oru second dim aagudhaa? Andha chinna motor-ke ivlo effect-naa, factory-la irukkura periya motor-ai direct-aa start pannaa? Inga paarunga. Operator Ravi, thirty HP motor-ai direct-aa start panraaru. Current saadharana current-ai vida ezhu, ettu madangu varudhu. Factory full-aa light dim aagudhu. Pakkathu machine trip aagudhu. Ravi shock aagittaaru.", "Adhai thadukka dhaan, Star Delta starter. Indha video-la, technician Kumar oda sendhu, oru real Star Delta panel-ai paarpom. Appuram Mitsubishi FX3U PLC-la, timer vechu full sequence build pannuvom. Naduvula oru quiz irukku. Answer kadaisila.", "Kumar panel-ai thirakkuraaru. Moonu contactor irukku. Main contactor, KM onnu. Star contactor, KM rendu. Delta contactor, KM moonu. Keezha overload relay.", "Appuram Kumar motor terminal box-ai thirakkuraaru. Aaru terminal irukku. U onnu, V onnu, W onnu. U rendu, V rendu, W rendu.", "Star connection-la, U rendu, V rendu, W rendu, moonaiyum onna short pannuvom. Appo ovvoru winding-kum full four fifteen volt varaadhu. Root moonula oru pangu dhaan, kitta thatta two forty volt. Current-um torque-um, moonula oru pangu-aa kuraiyum. Motor mella start aagum.", "Delta connection-la, ovvoru winding-um full four fifteen volt-ku nerdiyaa connect aagum. Full power. Full torque.", "Ippo Ravi thirumba Start press panraaru. Main-um Star-um ON. Motor mella speed edukkudhu. Light dim aagala. Kitta thatta eighty percent speed vandhadhum, timer mudiyudhu. Star OFF. Oru chinna gap. Appuram Delta ON. Motor full speed. Ravi happy.", "Timer evlo vekkanum? Kumar clamp meter vechu, motor full speed-ku vara edukkura time-ai measure panraaru. Adhukku yetha maadhiri timer set panraaru. Manufacturer manual-la, pothuvaa six second-ku mela recommend pannuvaanga.", "Ippo PLC. Inputs. X zero, Start button. X one, Stop button. X two, overload relay contact. Outputs. Y zero, Main contactor. Y one, Star contactor. Y two, Delta contactor.", "Rung onnu. Run memory M zero-ku self-holding. Start contact-ku parallel-aa M zero contact. Series-la Stop-um overload-um. Ravi Start press pannaa M zero ON. Button-ai vittaalum, holding contact pidichukkum. Stop press pannaalo, overload trip aanaalo, path udanji M zero OFF.", "Last video-la SET RESET paathom. Inga yen adhu use pannala? Simple Start Stop control-ku, self-holding orey rung-la ellaathaiyum kaattum. Kumar maadhiri technician trace panna easy. Method-ai application-ku yetha maadhiri choose pannanum.", "Rung rendu. M zero ON-naa, Y zero, Main contactor ON.", "Rung moonu. M zero ON-naa, timer T zero start aagum. K eighty. FX3U-la T zero, nooru millisecond timer. So K eighty-naa, ettu second.", "Rung naalu. M zero ON, T zero innum mudiyala, Delta-vum OFF. Appo Y one, Star contactor ON.", "Rung anju. T zero mudinjadhum, innoru timer T one start aagum. K onnu. Zero point one second. Idhu dhaan andha chinna gap.", "Rung aaru. T one mudinjadhum, Star OFF-aa irundhaa, Y two, Delta contactor ON.", "Ippo quiz. Ravi kekkuraaru. Andha gap timer edhukku? T zero mudinja udane, Star OFF, Delta ON, orey scan-la pannaa enna aagum?", "Option A. Motor smooth-aa delta-ku maarum.", "Option B. Star contactor release aagura munnaadi Delta close aagi, short circuit. Flash, trip.", "Option C. Motor reverse direction-la odum.", "Unga answer-ai comment pannunga. Kadaisila sollren.", "Inga oru mukkiyamaana vishayam. Interlock. Star rung-la Delta-oda NC contact. Delta rung-la Star-oda NC contact. Rendum orey nerathula ON aagave koodaadhu.", "Aana PLC interlock mattum podhaadhu. Kumar oru contactor-ai kaatturaaru. Contact weld aagi stuck aagalaam. PLC OFF sonnaalum contactor OFF aagaadhu. Adhanaala panel-la, contactor-oda auxiliary NC contact vechu, hardware interlock-um kandippaa venum.", "Power cut-ku appuram enna aagum? Power pogumbodhu M zero OFF aagi, holding path udanjidum. Current vandhaalum motor thaanaa start aagaadhu. Ravi Start press pannanum. Idhu self-holding-oda safety advantage.", "Common mistakes. Timer romba kammi-naa, motor speed edukkura munnaadiye Delta-ku pogum. Periya current spike varum. Timer romba adhigam-naa, motor romba neram Star-la odi, heat aagum. Overload relay-ai motor full load current-ku correct-aa set pannunga.", "Quick summary. Star-la mella start. Timer mudinjadhum gap. Appuram Delta. Interlock software-layum, hardware-layum. Power cut-ku appuram auto start illa.", "Ippo quiz answer. Contactor-ku mechanical release time irukku. PLC output OFF aanaalum, contact open aaga konjam time edukkum. Gap illaama Delta ON pannaa, Star contact innum close-la irukkumbodhe Delta close aagum. Phase-ku phase short circuit. So answer B. Adhanaala dhaan andha chinna gap timer.", "Correct-aa sonnavangalukku next video-la shout-out. Next video-la, motor-ai forward, reverse, interlock-oda run pannuvom. Video useful-aa irundhaa like pannunga. Electrician friend-kku share pannunga. Factory Decode Tamil-ai subscribe pannunga."];
+const EP10_SPARAS=["Unga veetu water motor start aagumbodhu, light oru second dim aagudhaa? Andha chinna motor-ke ivlo effect-naa, factory-la irukkura periya motor-ai direct-aa start pannaa? Current ezhu, ettu madangu varum! Line full-aa dim aagum, pakkathu machine trip aagum.", "Adhanaala dhaan factory-la Star Delta. Mudhalla Star-la mella start. Timer mudinjadhum Delta. Full power.", "Aana oru question. Star OFF, Delta ON, gap illaama orey nerathula pannaa enna aagum? Motor smooth-aa odumaa? Illa flash aagi trip aagumaa?", "Unga guess-ai comment pannunga. Answer, keezha full video-la. Like pannunga, share pannunga, Factory Decode Tamil-ai subscribe pannunga."];
 const EP10_POSE=[[0.1, "think_a"], [4.0, "tilt_r"], [9.94, "point_2"], [12.29, "point_3"], [13.69, "point_level"], [14.62, "point_2"], [16.02, "point_3"], [17.42, "point_level"], [18.41, "talk_a"], [19.81, "talk_b"], [20.53, "talk_c"], [22.21, "explain_a"], [24.11, "point_2"], [25.51, "point_3"], [27.07, "point_2"], [28.47, "point_3"], [29.87, "point_level"], [31.27, "present2"], [31.88, "point_2"], [33.28, "point_3"], [34.68, "point_level"], [36.08, "present2"], [37.14, "explain_b"], [40.4, "talk_a"], [42.02, "point_2"], [44.9, "point_3"], [45.68, "point_2"], [47.08, "point_3"], [47.95, "point_2"], [49.35, "point_3"], [50.29, "talk_c"], [52.31, "explain_a"], [53.71, "talk_b"], [55.22, "explain_b"], [56.85, "talk_a"], [58.25, "talk_b"], [59.59, "talk_c"], [60.99, "talk_d"], [62.67, "point_2"], [64.07, "point_3"], [65.47, "point_level"], [66.87, "present2"], [68.24, "point_2"], [69.64, "point_3"], [71.04, "point_level"], [71.86, "point_2"], [73.26, "point_3"], [74.66, "point_level"], [75.71, "point_2"], [77.11, "point_3"], [78.65, "point_2"], [80.05, "point_3"], [81.08, "point_2"], [82.48, "point_3"], [83.88, "point_level"], [85.28, "present2"], [86.23, "explain_a"], [87.17, "point_2"], [90.18, "point_3"], [91.09, "point_2"], [92.84, "explain_b"], [94.24, "talk_c"], [94.72, "talk_a"], [96.37, "point_2"], [97.77, "point_3"], [99.17, "point_level"], [99.39, "point_2"], [100.51, "talk_c"], [101.8, "point_2"], [103.17, "explain_a"], [104.73, "explain_b"], [106.41, "think_a"], [108.15, "talk_a"], [110.17, "talk_b"], [112.75, "point_2"], [114.15, "point_3"], [114.95, "talk_c"], [116.66, "talk_d"], [119.42, "explain_a"], [120.79, "explain_b"], [121.57, "point_2"], [122.97, "point_3"], [123.51, "point_2"], [124.91, "point_3"], [125.41, "point_2"], [126.81, "point_3"], [128.19, "talk_a"], [129.04, "point_2"], [130.44, "point_3"], [131.02, "point_2"], [132.42, "point_3"], [132.95, "point_2"], [134.35, "point_3"], [135.7, "point_2"], [138.08, "point_3"], [139.16, "point_2"], [140.56, "point_3"], [141.8, "talk_c"], [143.2, "talk_d"], [143.78, "point_2"], [145.18, "point_3"], [145.98, "point_2"], [147.38, "point_3"], [148.28, "point_2"], [149.68, "point_3"], [151.08, "point_level"], [152.53, "explain_a"], [153.93, "talk_b"], [154.85, "tilt_r"], [156.22, "point_2"], [157.62, "point_3"], [159.02, "point_level"], [160.06, "explain_b"], [161.46, "talk_c"], [162.27, "talk_a"], [163.67, "talk_b"], [164.64, "point_2"], [166.96, "point_3"], [168.65, "point_2"], [170.98, "point_3"], [172.06, "point_2"], [174.51, "point_3"], [176.06, "point_2"], [177.46, "point_3"], [178.03, "point_2"], [180.48, "point_3"], [181.88, "point_level"], [182.16, "point_2"], [183.56, "point_3"], [184.41, "point_2"], [186.37, "point_3"], [187.77, "point_level"], [187.86, "point_2"], [189.47, "talk_c"], [189.61, "point_3"], [190.87, "talk_d"], [191.87, "point_2"], [194.15, "point_3"], [195.55, "point_level"], [196.71, "explain_b"], [197.71, "explain_a"], [198.61, "think_a"], [200.2, "tilt_r"], [204.43, "explain_b"], [205.3, "point_2"], [206.7, "point_3"], [207.16, "explain_b"], [207.57, "worry2"], [209.34, "shrug2"], [211.12, "explain_b"], [213.21, "talk_a"], [215.04, "explain_b"], [216.14, "talk_c"], [217.59, "explain_a"], [219.07, "explain_b"], [219.97, "point_2"], [221.37, "point_3"], [222.24, "point_2"], [223.64, "point_3"], [224.19, "worry2"], [225.59, "shrug2"], [226.49, "worry2"], [227.89, "shrug2"], [228.38, "point_2"], [230.02, "worry2"], [231.42, "shrug2"], [231.89, "point_2"], [233.29, "point_3"], [234.29, "point_2"], [235.69, "point_3"], [237.09, "point_level"], [238.49, "present2"], [239.07, "think_a"], [240.5, "point_2"], [241.9, "point_3"], [243.29, "point_2"], [244.69, "point_3"], [245.38, "point_2"], [246.78, "talk_a"], [248.18, "talk_b"], [249.26, "worry2"], [250.86, "point_2"], [252.26, "point_3"], [253.66, "point_level"], [255.06, "worry2"], [258.58, "shrug2"], [261.22, "point_2"], [262.62, "point_3"], [264.02, "point_level"], [265.28, "explain_c"], [266.62, "point_2"], [268.02, "point_3"], [268.68, "point_2"], [271.42, "talk_c"], [272.82, "talk_d"], [273.84, "point_2"], [275.24, "point_3"], [276.49, "explain_b"], [278.07, "point_2"], [279.47, "point_3"], [281.07, "point_2"], [282.47, "point_3"], [283.87, "point_level"], [285.39, "point_2"], [286.79, "point_3"], [288.19, "point_level"], [289.59, "present2"], [290.99, "worry2"], [292.53, "explain_a"], [294.01, "point_2"], [295.41, "point_3"], [296.49, "talk_b"], [297.89, "explain_b"], [301.32, "talk_c"], [303.63, "talk_b"], [305.03, "explain_b"], [305.59, "talk_b"], [306.99, "explain_b"], [307.27, "wavebye"]];
 const EP10_SPOSE=[[0.1, "think_a"], [4.88, "tilt_r"], [7.97, "point_2"], [9.37, "point_3"], [10.77, "point_level"], [12.17, "present2"], [13.01, "talk_a"], [14.41, "talk_b"], [16.24, "point_2"], [17.64, "point_3"], [19.04, "point_level"], [19.54, "point_2"], [20.94, "point_3"], [22.05, "point_2"], [23.62, "talk_c"], [24.74, "explain_a"], [26.19, "think_a"], [27.21, "tilt_r"], [31.47, "think_a"], [35.31, "explain_b"], [38.03, "talk_c"], [38.62, "wavebye"]];
 /* star / delta winding diagram: e.mode 'star'|'delta', e.live = [[t,0|1]] current dots */
+/* ---- v21 engagement engine: karaoke captions (exact spoken words), always-moving camera, floating cards ---- */
+function drawKcap(e,c,tl){const ws=e.words;if(!ws||!ws.length)return;const fs=e.size||30;c.save();c.font=`700 ${fs}px ${ngFam()}`;
+  const gap=fs*.32,maxW=e.maxW||900,lines=[[]];let lw=0;ws.forEach(w=>{const ww=c.measureText(w.w).width;if(lw+ww>maxW&&lines[lines.length-1].length){lines.push([]);lw=0}lines[lines.length-1].push({...w,ww});lw+=ww+gap});
+  const lh=fs*1.35,totH=lines.length*lh+18,bw=Math.min(maxW,Math.max(...lines.map(L=>L.reduce((a,w)=>a+w.ww+gap,-gap))))+40,bx=e.cx-bw/2,by=e.cy-totH;
+  c.globalAlpha*=.96;ngRR(c,bx,by,bw,totH,18);c.fillStyle='rgba(255,255,255,.93)';c.fill();c.lineWidth=3;c.strokeStyle=O2;c.stroke();c.globalAlpha/=.96;
+  lines.forEach((L,li)=>{const W_=L.reduce((a,w)=>a+w.ww+gap,-gap);let x=e.cx-W_/2;const y=by+9+lh*li+lh/2;
+    L.forEach(w=>{const on=tl>=w.t,cur=on&&tl<w.e;if(cur){const k=Math.min(1,(tl-w.t)/.12);c.save();c.fillStyle='#fde047';ngRR(c,x-6,y-fs*.62,w.ww+12,fs*1.24,8);c.fill();c.restore()}
+      c.fillStyle=on?O2:'#9aa3b2';c.textAlign='left';c.textBaseline='middle';const s=cur?1.08:1;c.save();c.translate(x+w.ww/2,y);c.scale(s,s);c.fillText(w.w,-w.ww/2,1);c.restore();x+=w.ww+gap})});c.restore()}
+function o2captions(s,A,paras,o){const SP=paras.map(p=>(p.match(/[^.?!]+[.?!]*/g)||[]).map(x=>x.trim()).filter(Boolean));const k={};
+  A.forEach(([a,b,p],idx)=>{const i=k[p]||0;k[p]=i+1;const txt=(SP[p]||[])[i];if(!txt)return;const ws=txt.split(/\s+/),L=ws.reduce((x,w)=>x+w.length+1,0);let t=a;
+    const words=ws.map(w=>{const d=(b-a)*(w.length+1)/L,o_={w,t,e:t+d};t+=d;return o_});const nx=A[idx+1],end=nx?Math.min(nx[0],b+.6):b+.6;
+    s.els.push({id:uid++,type:'ngd',kind:'kcap',x:0,y:0,w:W,h:H,cx:o.cx,cy:o.cy,maxW:o.maxW,size:o.size,words,noPop:true,draw:.1,delay:0,withPrev:true,entrance:'none',motion:'none',win:[a-.05,end]})})}
+function o2camera(s,cuts,o={}){const ev=s.els.filter(e=>e.type==='ngd'&&e.win&&!['mg','wipe2','flash','kcap'].includes(e.kind)&&e.w<W*.9).map(e=>({t:e.win[0],x:e.x+e.w/2,y:e.y+e.h/2}));
+  s.els.filter(e=>e.type==='stick'&&e.win).forEach(e=>ev.push({t:e.win[0]+.2,x:(e.x||0)+(e.size||400)/2,y:(e.y||0)+(e.size||400)/2}));
+  ev.sort((a,b)=>a.t-b.t);const ks=[{t:0,x:W/2,y:H/2,z:1}];let n=0;
+  ev.forEach(v=>{if(v.t-ks[ks.length-1].t<1.1)return;const z=1.02+(n++%3)*.012;ks.push({t:v.t,x:W/2+(v.x-W/2)*.07,y:H/2+(v.y-H/2)*.06,z})});
+  (cuts||[]).forEach(t=>ks.push({t:t-.05,x:W/2,y:H/2,z:1,cut:1}));ks.sort((a,b)=>a.t-b.t);
+  /* continuous motion: each move lasts until the next keyframe; long holds get a slow drift keyframe in between */
+  const out=[];ks.forEach((k,i)=>{const nx=ks[i+1];out.push(k);if(nx&&nx.t-k.t>3){const m=(k.t+nx.t)/2;out.push({t:m,x:k.x+(i%2?5:-5),y:k.y+3,z:k.z+.01})}});
+  out.forEach((k,i)=>{const nx=out[i+1];k.d=k.cut?.3:Math.max(.6,Math.min(3,nx?nx.t-k.t:1))});s.cam=out}
+
 function drawSD(e,c,tl){const cx=e.x+e.w/2,cy=e.y+e.h/2,R=Math.min(e.w,e.h)*.36,ink=O2,live=o2t(tl,e.live);
   const coil=(x1,y1,x2,y2,lab)=>{const L=Math.hypot(x2-x1,y2-y1),ux=(x2-x1)/L,uy=(y2-y1)/L,nx=-uy,ny=ux,a=L*.25,b=L*.75,n=8;
     c.beginPath();c.moveTo(x1,y1);c.lineTo(x1+ux*a,y1+uy*a);for(let i=1;i<=n;i++){const t=a+(b-a)*i/n,s=(i%2?1:-1)*12;c.lineTo(x1+ux*t+nx*s,y1+uy*t+ny*s)}c.lineTo(x2,y2);c.lineWidth=5;c.strokeStyle=e.col||'#b45309';c.stroke();
@@ -4501,12 +4525,12 @@ function drawSD(e,c,tl){const cx=e.x+e.w/2,cy=e.y+e.h/2,R=Math.min(e.w,e.h)*.36,
     ['L1','L2','L3'].forEach((t,i)=>ngTxt(c,t,L[i][0],L[i][1]+(i?24:-22),22,NG.navy,800));dots([L[0],P[0],P[1],L[1]])}
   if(e.title)ngTxt(c,e.title,e.x+40,e.y+10,30,NG.navy,800,'left')}
 function ep10Kit(s,A,END){const K=ep09Kit(s,A,END),{ng}=K;
-  const card=(x,y,w,h,text,win,o={})=>ng('card2',{x,y,w,h,text,...o},win);
-  const bit=(x,y,w,h,name,sub,val,win)=>ng('bit2',{x,y,w,h,name,sub,val},win);
+  const card=(x,y,w,h,text,win,o={})=>ng('card2',{x,y,w,h,text,float:1,...o},win);
+  const bit=(x,y,w,h,name,sub,val,win)=>ng('bit2',{x,y,w,h,name,sub,val,float:1},win);
   const wipe=t=>ng('wipe2',{x:0,y:0,w:W,h:H,noPop:true},[t-.38,t+.38]);
   const actor=(look,beats,win,o={})=>{const st=addStick({scene:s,quiet:true,look,action:beats[0][1],size:o.size||460,x:o.x??40,y:o.y??(H-(o.size||460)-10),facing:o.facing||1,entrance:'pop',delay:0,withPrev:true,draw:.1,name:o.name||look});st.win=win;st.beats=beats.map(([t,pose])=>({t,pose,blend:.3}));st.speak=[];return st};
   const presenter=(win,o={})=>{const st=addStick({scene:s,quiet:true,look:'office',action:'idle_a',size:o.size||420,x:o.x??-30,y:o.y??(H-(o.size||420)-6),facing:1,entrance:'pop',delay:0,withPrev:true,draw:.1,name:'Presenter'});
-    st.win=win;const bs=(o.poses||EP10_POSE).filter(b=>b[0]>=win[0]-.5&&b[0]<win[1]);st.beats=[{t:0,pose:bs.length?bs[0][1]:'idle_a',blend:.3},...bs.map(([t,p])=>({t:t-win[0],pose:p,blend:.3}))];st.speak=[[0,win[1]-win[0]]];return st};
+    st.win=win;const bs=(o.poses||EP10_POSE).filter(b=>b[0]>=win[0]-.5&&b[0]<win[1]);st.beats=[{t:win[0],pose:bs.length?bs[0][1]:'idle_a',blend:.3},...bs.map(([t,p])=>({t,pose:p,blend:.3}))];st.speak=[[win[0],win[1]]];return st};
   const RUNG=(x,y,w,items,win,o={})=>ng('rung',{x,y,w,h:70,items,drawOn:true,...o},win);
   return{...K,card,bit,wipe,actor,presenter,RUNG};
 }
@@ -4518,12 +4542,12 @@ async function buildEp10(){
   const K=ep10Kit(s,A,END),{ng,T,PS,card,bit,wipe,actor,presenter,RUNG}=K,RED=NG.red,GRN=NG.grn,BLU=NG.blue,PUR='#7c3aed',ORG='#f59e0b';
   const P=(a,b=a)=>[PS(a),b>=27?END:PS(b+1)],dark=(t0,t1)=>ng('flash',{x:0,y:0,w:W,h:H,noPop:true,color:'#111827'},[t0,t1]);
   /* k0 HOOK – Ravi starts a 30 HP motor direct, lights dim, trip */
-  actor('worker',[[0,'op_press_start'],[T(0,5)-.2,'op_lights_dim'],[T(0,7),'op_cover_ears']],[0,PS(1)],{x:20,size:500});
-  card(620,60,560,90,'Veetu motor = light dim',[0,T(0,2)]);
-  card(620,60,560,90,'30 HP motor – DIRECT start',[T(0,3),PS(1)],{bg:'#fef3c7'});
-  bit(620,190,330,130,'CURRENT','starting current',[[0,'1×'],[T(0,4)+.4,'7–8×']],[T(0,4),PS(1)]);
+  actor('worker',[[0,'op_press_start'],[T(0,5)-.2,'op_lights_dim'],[T(0,7),'op_cover_ears']],[0,PS(1)],{x:250,size:460});
+  card(740,60,500,90,'Veetu motor = light dim',[0,T(0,2)]);
+  card(740,60,500,90,'30 HP motor – DIRECT start',[T(0,3),PS(1)],{bg:'#fef3c7'});
+  bit(740,190,330,130,'CURRENT','starting current',[[0,'1×'],[T(0,4)+.4,'7–8×']],[T(0,4),PS(1)]);
   for(let i=0;i<3;i++)dark(T(0,5)+i*.7,T(0,5)+i*.7+.45);
-  card(620,360,330,90,'TRIP!',[T(0,6),PS(1)],{bg:RED,emoji:'⚡',size:40});
+  card(740,360,330,90,'TRIP!',[T(0,6),PS(1)],{bg:RED,emoji:'⚡',size:40});
   /* k1 INTRO – Star Delta, Kumar, FX3U timer, quiz */
   wipe(PS(1));presenter(P(1));
   card(380,60,520,120,'STAR – DELTA',P(1),{bg:ORG,size:56});
@@ -4533,38 +4557,38 @@ async function buildEp10(){
   card(380,450,460,84,'Quiz – answer kadaisila',[T(1,3),PS(2)],{bg:'#dbeafe',emoji:'🎯'});
   /* k2–k3 PANEL + TERMINAL BOX (Kumar) */
   wipe(PS(2));
-  actor('tech',[[0,'tc_open_panel'],[T(2,1),'tc_point_contactors']],P(2),{x:20,size:520});
-  [['KM1','MAIN'],['KM2','STAR'],['KM3','DELTA']].forEach(([a,b],i)=>card(760,70+i*110,440,90,a+' · '+b,[T(2,2+i),PS(3)],{bg:['#dbeafe','#fef3c7','#ede9fe'][i]}));
-  card(760,410,440,90,'Overload relay',[T(2,5),PS(3)]);
-  actor('tech',[[0,'tc_motor_box']],P(3),{x:20,size:520});
-  ['U1','V1','W1'].forEach((t,i)=>card(760+i*150,140,130,90,t,[T(3,2)+i*.5,PS(4)],{size:40}));
-  ['U2','V2','W2'].forEach((t,i)=>card(760+i*150,290,130,90,t,[T(3,3)+i*.5,PS(4)],{size:40,bg:'#fef3c7'}));
-  card(760,440,430,84,'6 terminals',[T(3,1),PS(4)]);
+  actor('tech',[[0,'tc_open_panel'],[T(2,1),'tc_point_contactors']],P(2),{x:250,size:470});
+  [['KM1','MAIN'],['KM2','STAR'],['KM3','DELTA']].forEach(([a,b],i)=>card(780,70+i*110,440,90,a+' · '+b,[T(2,2+i),PS(3)],{bg:['#dbeafe','#fef3c7','#ede9fe'][i]}));
+  card(780,410,440,90,'Overload relay',[T(2,5),PS(3)]);
+  actor('tech',[[0,'tc_motor_box']],P(3),{x:250,size:470});
+  ['U1','V1','W1'].forEach((t,i)=>card(780+i*150,140,130,90,t,[T(3,2)+i*.5,PS(4)],{size:40}));
+  ['U2','V2','W2'].forEach((t,i)=>card(780+i*150,290,130,90,t,[T(3,3)+i*.5,PS(4)],{size:40,bg:'#fef3c7'}));
+  card(780,440,430,84,'6 terminals',[T(3,1),PS(4)]);
   /* k4–k5 STAR vs DELTA (presenter) */
   wipe(PS(4));presenter(P(4,5));
   ng('sdiag',{x:380,y:60,w:440,h:440,mode:'star',title:'STAR',vlab:'≈240 V',live:[[T(4,4),1]]},P(4,5));
-  card(380,540,440,80,'U2 V2 W2 = short',[T(4,0)+1,PS(5)]);
+  card(380,500,440,80,'U2 V2 W2 = short',[T(4,0)+1,PS(5)]);
   card(860,120,380,90,'415 ÷ √3 ≈ 240 V',[T(4,2),PS(5)],{bg:'#fef3c7'});
   card(860,240,380,90,'Current, torque = ⅓',[T(4,3),PS(5)]);
   card(860,360,380,90,'Mella start',[T(4,4),PS(5)],{bg:'#dcfce7'});
   ng('sdiag',{x:820,y:60,w:440,h:440,mode:'delta',title:'DELTA',vlab:'415 V',live:[[T(5,0)+1,1]]},P(5));
-  card(860,540,360,80,'Full power · full torque',[T(5,1),PS(6)],{bg:'#dcfce7'});
+  card(860,500,360,80,'Full power · full torque',[T(5,1),PS(6)],{bg:'#dcfce7'});
   /* k6 SEQUENCE (Ravi) */
   wipe(PS(6));
-  actor('worker',[[0,'op_press_start'],[T(6,2),'op_wait_watch'],[T(6,8),'op_thumbs_motor']],P(6),{x:20,size:500});
+  actor('worker',[[0,'op_press_start'],[T(6,2),'op_wait_watch'],[T(6,8),'op_thumbs_motor']],P(6),{x:250,size:460});
   const sec=[];for(let i=0;i<=8;i++)sec.push([T(6,1)+i*(T(6,5)-T(6,1))/8,i+' s']);
-  bit(600,60,300,110,'KM1 MAIN','',[[0,0],[T(6,1),1]],P(6));bit(920,60,300,110,'KM2 STAR','',[[0,0],[T(6,1),1],[T(6,5),0]],P(6));
-  bit(600,200,300,110,'KM3 DELTA','',[[0,0],[T(6,7),1]],P(6));bit(920,200,300,110,'T0 timer','star time',[[0,'0 s'],...sec],[T(6,1),PS(7)]);
-  card(600,350,620,84,'Light dim aagala ✓',[T(6,3),T(6,5)],{bg:'#dcfce7'});
-  card(600,350,300,84,'Star OFF',[T(6,5),PS(7)]);card(920,350,300,84,'GAP 0.1 s',[T(6,6),PS(7)],{bg:'#fef3c7'});
-  card(600,460,620,84,'Delta ON → full speed',[T(6,7),PS(7)],{bg:'#dcfce7'});
+  bit(740,60,250,110,'KM1 MAIN','',[[0,0],[T(6,1),1]],P(6));bit(1005,60,250,110,'KM2 STAR','',[[0,0],[T(6,1),1],[T(6,5),0]],P(6));
+  bit(740,200,250,110,'KM3 DELTA','',[[0,0],[T(6,7),1]],P(6));bit(1005,200,250,110,'T0 timer','star time',[[0,'0 s'],...sec],[T(6,1),PS(7)]);
+  card(740,350,515,84,'Light dim aagala ✓',[T(6,3),T(6,5)],{bg:'#dcfce7'});
+  card(740,350,250,84,'Star OFF',[T(6,5),PS(7)]);card(1005,350,250,84,'GAP 0.1 s',[T(6,6),PS(7)],{bg:'#fef3c7'});
+  card(740,460,515,84,'Delta ON → full speed',[T(6,7),PS(7)],{bg:'#dcfce7'});
   /* k7 TIMER SETTING (Kumar) */
   wipe(PS(7));
-  actor('tech',[[0,'tc_clamp_meter'],[T(7,2),'tc_set_timer']],P(7),{x:20,size:520});
-  card(720,90,500,90,'Timer evlo?',[PS(7),T(7,1)],{emoji:'🤔'});
-  card(720,90,500,90,'Measure start time',[T(7,1),PS(8)]);
-  card(720,220,500,90,'Timer set',[T(7,2),PS(8)]);
-  card(720,350,500,90,'Manual: 6 s+',[T(7,3),PS(8)],{bg:'#fef3c7'});
+  actor('tech',[[0,'tc_clamp_meter'],[T(7,2),'tc_set_timer']],P(7),{x:250,size:470});
+  card(740,90,500,90,'Timer evlo?',[PS(7),T(7,1)],{emoji:'🤔'});
+  card(740,90,500,90,'Measure start time',[T(7,1),PS(8)]);
+  card(740,220,500,90,'Timer set',[T(7,2),PS(8)]);
+  card(740,350,500,90,'Manual: 6 s+',[T(7,3),PS(8)],{bg:'#fef3c7'});
   /* k8 PLC I/O */
   wipe(PS(8));presenter(P(8,15));
   card(380,40,860,80,'FX3U  I/O',[PS(8),PS(9)],{bg:NG.navy});
@@ -4589,14 +4613,14 @@ async function buildEp10(){
   RUNG(400,270,820,[{k:'NO',label:'M0',on:M0},{k:'NC',label:'T0',on:[[0,1],[tD,0]]},{k:'NC',label:'Y2',on:[[0,1],[tG,0]]},{k:'COIL',label:'Y1 STAR',on:Y1}],[PS(13),PS(16)],{num:'4',power:Y1});
   RUNG(400,370,820,[{k:'NO',label:'T0',on:T0d},{k:'COIL',label:'T1 K1 (0.1 s)',on:T1d}],[PS(14),PS(16)],{num:'5',power:T0d});
   RUNG(400,470,820,[{k:'NO',label:'T1',on:T1d},{k:'NC',label:'Y1',on:[[0,1],[run0,0],[tD,1]]},{k:'COIL',label:'Y2 DELTA',on:Y2}],[PS(15),PS(16)],{num:'6',power:Y2});
-  card(400,580,400,80,'T0: 100 ms timer',[T(12,3),PS(13)],{bg:'#fef3c7'});card(840,580,380,80,'K80 = 8 s',[T(12,4),PS(13)],{bg:'#fef3c7'});
-  card(400,580,820,80,'Run!  Star → gap → Delta',[run0-.4,PS(16)],{bg:'#dcfce7'});
+  card(400,548,400,64,'T0: 100 ms timer',[T(12,3),PS(13)],{bg:'#fef3c7'});card(840,548,380,64,'K80 = 8 s',[T(12,4),PS(13)],{bg:'#fef3c7'});
+  card(400,548,820,64,'Run!  Star → gap → Delta',[run0-.4,PS(16)],{bg:'#dcfce7'});
   /* k16–k20 QUIZ (Ravi asks) */
   wipe(PS(16));
-  actor('worker',[[0,'op_ask']],P(16),{x:20,size:500});
-  card(600,70,620,110,'QUIZ',[PS(16),PS(17)],{bg:ORG,size:52,emoji:'🎯'});
-  card(600,220,620,100,'Gap timer illaama?',[T(16,2),PS(17)],{bg:'#fef3c7'});
-  card(600,360,620,100,'Star OFF + Delta ON – same scan',[T(16,3),PS(17)]);
+  actor('worker',[[0,'op_ask']],P(16),{x:250,size:460});
+  card(740,70,500,110,'QUIZ',[PS(16),PS(17)],{bg:ORG,size:52,emoji:'🎯'});
+  card(740,220,500,100,'Gap timer illaama?',[T(16,2),PS(17)],{bg:'#fef3c7'});
+  card(740,360,500,100,'Star OFF + Delta ON – same scan',[T(16,3),PS(17)]);
   presenter(P(17,21));
   card(380,60,860,90,'Enna aagum?',[PS(17),PS(21)],{bg:ORG});
   [['A','Smooth-aa Delta-ku',GRN],['B','Short circuit · flash, trip',RED],['C','Reverse-la odum',BLU]].forEach(([l,t,c],i)=>{card(380,180+i*120,110,100,l,[PS(17+i),PS(21)],{bg:c,size:52});card(510,180+i*120,730,100,t,[PS(17+i)+.3,PS(21)])});
@@ -4605,22 +4629,22 @@ async function buildEp10(){
   wipe(PS(21));
   RUNG(400,150,820,[{k:'NO',label:'M0'},{k:'NC',label:'T0'},{k:'NC',label:'Y2 (interlock)'},{k:'COIL',label:'Y1 STAR'}],[T(21,2),PS(22)],{num:'4'});
   RUNG(400,300,820,[{k:'NO',label:'T1'},{k:'NC',label:'Y1 (interlock)'},{k:'COIL',label:'Y2 DELTA'}],[T(21,3),PS(22)],{num:'6'});
-  card(400,560,400,80,'INTERLOCK',[T(21,1),PS(22)],{bg:PUR});
+  card(400,545,400,70,'INTERLOCK',[T(21,1),PS(22)],{bg:PUR});
   card(400,440,820,84,'Rendum orey nerathula ON aagave koodaadhu',[T(21,4),PS(22)],{bg:'#fee2e2'});
   /* k22 HARDWARE INTERLOCK (Kumar) */
   wipe(PS(22));
-  actor('tech',[[0,'tc_point_contactors'],[T(22,1),'tc_check_interlock']],P(22),{x:20,size:520});
-  card(720,70,500,90,'PLC interlock mattum podhaadhu',[PS(22),PS(23)],{bg:'#fef3c7'});
-  card(720,200,500,90,'Contact WELD → stuck',[T(22,2),PS(23)],{bg:'#fee2e2',emoji:'⚠️'});
-  card(720,330,500,90,'PLC OFF… contactor ON!',[T(22,3),PS(23)]);
-  card(720,460,500,90,'Aux NC = hardware interlock',[T(22,4),PS(23)],{bg:'#dcfce7',tick:T(22,4)+1.5});
+  actor('tech',[[0,'tc_point_contactors'],[T(22,1),'tc_check_interlock']],P(22),{x:250,size:470});
+  card(740,70,500,90,'PLC interlock mattum podhaadhu',[PS(22),PS(23)],{bg:'#fef3c7'});
+  card(740,200,500,90,'Contact WELD → stuck',[T(22,2),PS(23)],{bg:'#fee2e2',emoji:'⚠️'});
+  card(740,330,500,90,'PLC OFF… contactor ON!',[T(22,3),PS(23)]);
+  card(740,460,500,90,'Aux NC = hardware interlock',[T(22,4),PS(23)],{bg:'#dcfce7',tick:T(22,4)+1.5});
   /* k23 POWER CUT (Ravi) */
   wipe(PS(23));dark(PS(23),PS(23)+1.2);
-  actor('worker',[[0,'op_wait_watch'],[T(23,3),'op_press_start']],P(23),{x:20,size:500});
-  card(620,70,580,90,'Power cut?',[PS(23),PS(24)],{emoji:'🔌'});
-  bit(620,200,330,120,'M0','run memory',[[0,1],[T(23,1),0]],P(23));
-  card(620,360,580,90,'No auto start',[T(23,2),PS(24)],{bg:'#dcfce7'});
-  card(620,480,580,90,'Self-holding = safe',[T(23,4),PS(24)],{bg:'#ccfbf1',tick:T(23,4)+1});
+  actor('worker',[[0,'op_wait_watch'],[T(23,3),'op_press_start']],P(23),{x:250,size:460});
+  card(740,70,500,90,'Power cut?',[PS(23),PS(24)],{emoji:'🔌'});
+  bit(740,200,330,120,'M0','run memory',[[0,1],[T(23,1),0]],P(23));
+  card(740,360,500,90,'No auto start',[T(23,2),PS(24)],{bg:'#dcfce7'});
+  card(740,480,500,90,'Self-holding = safe',[T(23,4),PS(24)],{bg:'#ccfbf1',tick:T(23,4)+1});
   /* k24 COMMON MISTAKES */
   wipe(PS(24));presenter(P(24,27));
   card(380,50,860,90,'Common mistakes',[PS(24),PS(25)],{bg:'#fee2e2',emoji:'⚠️'});
@@ -4644,6 +4668,8 @@ async function buildEp10(){
   card(380,170,860,90,'Next: Forward / Reverse + interlock',[T(27,1),END],{bg:PUR});
   card(380,300,410,100,'LIKE',[T(27,2),END],{bg:BLU,emoji:'👍',size:40});card(830,300,410,100,'SHARE',[T(27,3),END],{bg:NG.teal,emoji:'↗️',size:40});
   card(530,440,560,110,'SUBSCRIBE',[T(27,4),END],{bg:RED,emoji:'🔔',size:48});
+  [[0,PS(1)],[PS(2),PS(4)],[PS(6),PS(8)],[PS(16),PS(17)],[PS(22),PS(24)]].forEach(w=>presenter(w,{size:300,x:-20,y:H-306}));
+  o2captions(s,A,EP10_PARAS,{cx:810,cy:H-34,maxW:860,size:28});o2camera(s,[1,2,4,6,7,8,9,10,11,16,21,22,23,24,25,26,27].map(k=>PS(k)));
   S.captions=false;S.showHand=false;S.cur=0;S.pin=false;S.t=1;refresh();
 }
 async function buildEp10Short(){
@@ -4653,7 +4679,7 @@ async function buildEp10Short(){
   const s=newScene({name:'EP10 Short – Star-Delta',style:'white',transition:'cut',trans:0,hold:0});s.minDur=END;S.scenes.push(s);
   const K=ep10Kit(s,A,END),{ng,T,PS,card,bit,wipe,actor,presenter}=K,RED=NG.red,GRN=NG.grn,ORG='#f59e0b';
   const dark=(t0,t1)=>ng('flash',{x:0,y:0,w:W,h:H,noPop:true,color:'#111827'},[t0,t1]);
-  actor('worker',[[0,'op_press_start'],[T(0,2),'op_lights_dim'],[T(0,3),'op_cover_ears']],[0,PS(1)],{x:20,size:620,y:620});
+  actor('worker',[[0,'op_press_start'],[T(0,2),'op_lights_dim'],[T(0,3),'op_cover_ears']],[0,PS(1)],{x:300,size:470,y:H-480});
   card(60,80,600,110,'Light dim aagudhaa?',[0,T(0,1)],{emoji:'💡'});
   card(60,80,600,110,'Periya motor – direct!',[T(0,1),PS(1)],{bg:'#fef3c7'});
   bit(60,230,360,140,'CURRENT','',[[0,'1×'],[T(0,2),'7–8×']],[T(0,2),PS(1)]);
@@ -4661,19 +4687,20 @@ async function buildEp10Short(){
   card(440,230,220,140,'TRIP!',[T(0,3)+.5,PS(1)],{bg:RED,size:40});
   wipe(PS(1));
   card(60,80,600,130,'STAR – DELTA',[PS(1),PS(2)],{bg:ORG,size:56});
-  ng('sdiag',{x:90,y:250,w:540,h:540,mode:'star',title:'STAR',vlab:'≈240 V',live:[[T(1,1),1]]},[T(1,1),T(1,2)]);
-  ng('sdiag',{x:90,y:250,w:540,h:540,mode:'delta',title:'DELTA',vlab:'415 V',live:[[T(1,2),1]]},[T(1,2),PS(2)]);
-  card(60,830,600,100,'Mella start → Full power',[T(1,1),PS(2)],{bg:'#dcfce7'});
+  ng('sdiag',{x:110,y:250,w:500,h:470,mode:'star',title:'STAR',vlab:'≈240 V',live:[[T(1,1),1]]},[T(1,1),T(1,2)]);
+  ng('sdiag',{x:110,y:250,w:500,h:470,mode:'delta',title:'DELTA',vlab:'415 V',live:[[T(1,2),1]]},[T(1,2),PS(2)]);
   wipe(PS(2));
-  actor('worker',[[0,'op_ask']],[PS(2),PS(3)],{x:20,size:600,y:640});
+  actor('worker',[[0,'op_ask']],[PS(2),PS(3)],{x:300,size:470,y:H-480});
   card(60,80,600,110,'Gap illaama?',[PS(2),PS(3)],{bg:ORG,size:44,emoji:'🤔'});
   card(60,230,600,100,'Star OFF + Delta ON',[T(2,1),PS(3)]);
   card(60,360,290,110,'Smooth?',[T(2,2),PS(3)],{bg:GRN,size:36});card(370,360,290,110,'Flash, trip?',[T(2,3),PS(3)],{bg:RED,size:30});
-  wipe(PS(3));presenter([PS(3),END],{poses:EP10_SPOSE,x:-20,y:850,size:430});
+  wipe(PS(3));
   card(60,100,600,120,'Guess-ai COMMENT!',[PS(3),END],{emoji:'💬',bg:'#dbeafe'});
   card(60,260,600,110,'Answer ↓ full video',[T(3,1),END]);
   card(60,410,290,100,'LIKE',[T(3,2),END],{bg:NG.blue,emoji:'👍',size:34});card(370,410,290,100,'SHARE',[T(3,3),END],{bg:NG.teal,emoji:'↗️',size:34});
   card(110,560,500,120,'SUBSCRIBE',[T(3,4),END],{bg:RED,emoji:'🔔',size:44});
+  presenter([0,END],{poses:EP10_SPOSE,x:-30,y:H-376,size:370});
+  o2captions(s,A,EP10_SPARAS,{cx:360,cy:800,maxW:640,size:30});o2camera(s,[1,2,3].map(k=>PS(k)));
   S.captions=false;S.showHand=false;S.cur=0;S.pin=false;S.t=1;refresh();
 }
 
