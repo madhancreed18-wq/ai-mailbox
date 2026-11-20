@@ -70,3 +70,30 @@ Save the 6 PNGs in `images/` and write `047-from-chatgpt.md` with the file names
 
 ## Next step for the owner
 Ask ChatGPT to read 046. Generate one sheet per message so each sheet gets full detail, and attach `office-32-poses.png` each time so the character stays the same.
+
+---
+
+## Added: EP10 action poses for the operator and the technician (they act, they don't talk)
+EP10 is "Star-Delta Starter". Only the office stickman speaks. The **operator** and the **technician** do the factory actions, so draw them **with their normal closed or small mouths** (no magenta dot, no lip-sync needed).
+
+Same rules as the pose sheets above: same character as the reference, same size in every cell, full body with feet on one baseline, pure white background, thick clean black outline, flat colours, no ground shadow, the name in bold caps **below** each figure, a 4×2 grid, PNG 2048×1024 or larger. **No brand names or logos** on any equipment.
+
+**operator-actions-ep10.png**: the operator from `assets/people/operator-engineer-16-poses.png` (blue shirt, navy trousers):
+1. PRESS START: pressing a big green push button on a grey panel door at chest height (draw the panel door with the green START and red STOP buttons)
+2. LIGHTS DIM: looking up at a ceiling tube light that is half dim, surprised
+3. COVER EARS: both hands near the ears, wincing (motor humming loud)
+4. POINT MOTOR: pointing down-right at a big grey induction motor on the floor
+5. PRESS STOP: pressing a red mushroom STOP button
+6. WAIT WATCH: arms crossed, watching a panel, counting time
+7. THUMBS UP MOTOR: thumbs up next to a running motor (motion lines on the shaft)
+8. ASK: one hand raised like asking a question, curious face
+
+**technician-actions-ep10.png**: the technician from `assets/tech/technician-14-poses.png` (dark grey shirt with orange shoulders):
+1. OPEN PANEL: swinging open a grey electrical panel door with one hand
+2. POINT CONTACTORS: pointing inside an open panel at three grey contactors in a row, labelled KM1, KM2, KM3
+3. SET TIMER: turning a small timer dial inside the panel with a screwdriver
+4. CLAMP METER: holding a clamp meter around one cable, looking at its display
+5. MOTOR TERMINAL BOX: leaning over an opened motor terminal box (six studs, three brass links) with a spanner
+6. CHECK INTERLOCK: holding a small contactor in one hand, pointing at its auxiliary contact block on top with the other
+7. METER ON PANEL: reading a multimeter with probes on the panel terminals
+8. ALL OK: thumbs up beside a closed panel with a green RUN lamp lit
