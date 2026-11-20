@@ -995,13 +995,15 @@ TECH_SPR.push(...TECH_TOOLS_SPR);
 const SPRSETS={office:()=>OFFICE_SPR,worker:()=>WORKER_SPR,engineer:()=>ENG_SPR,tech:()=>TECH_SPR,host:()=>HOST_SPR,equip:()=>EQUIP_SPR,apprentice:()=>APPR_SPR};
 /* drawn mouths for mouth-less sprites (v2): viseme picked from narration loudness */
 function drawMouthViseme(S_,e,tl,bg,ink){
-  if(S_.manchor&&typeof OFFMOUTH_SPR!=='undefined'){/* v20.2: the owner's preferred OLD office mouths (mailbox 036), placed at the pose's magenta anchor */
+  if(S_.manchor){/* v20.3: mouths borrowed from the ORIGINAL office poses (the drawn style the owner likes), placed at the magenta anchor */
     let nm=e._mouthRest||'m_closed';const sp=e.speak&&e.speak.some(w=>tl>=w[0]&&tl<w[1]);
     if(sp){const o=mouthAmt(RT,tl),bk=Math.floor(RT*6.5),r=((bk*2654435761)>>>0)%7;nm=o<.12?'m_closed':o<.3?'m_small':o<.55?'m_medium':'m_wide';if(o>.3&&r===0)nm='m_o';else if(o>.3&&r===1)nm='m_ee'}
-    const MS=OFFMOUTH_SPR,M=MS.find(x=>x.n===nm)||MS[0],P=osprPaths(M),ref=MS.find(x=>x.n==='m_wide')||M;
-    let tw=S_.head[2]*.78;if(S_.eyes&&S_.eyes.length===2){const[a,b]=S_.eyes;tw=(b[2]-a[0])*.72}
-    const k=tw/(ref.w||M.w)*(S_.mset==='office34'?.9:1);
-    ctx.save();ctx.translate(S_.manchor[0],S_.manchor[1]+M.h*k/2);ctx.scale(k,k);ctx.fillStyle=bg;ctx.fill(P.sil);P.lay.forEach(([c,pp])=>{ctx.fillStyle=c==='@ink'?ink:c;ctx.fill(pp)});ctx.restore();return}
+    const SRC={m_closed:'stand',m_small:'hips',m_medium:'present',m_wide:'stop',m_o:'cheek',m_ee:'clasp',m_smile:'idle',m_sad:'worry'};
+    const O=OFFICE_SPR.find(x=>x.n===(SRC[nm]||'stand'));if(!O||!O.mouth)return;
+    const m=O.mouth,P=osprPaths(O),k=S_.head[2]/O.head[2],cx=(m[0]+m[2])/2,cy=(m[1]+m[3])/2,pad=2;
+    ctx.save();ctx.translate(S_.manchor[0],S_.manchor[1]);ctx.scale(k*(S_.mset==='office34'?.9:1),k);ctx.translate(-cx,-cy);
+    ctx.beginPath();ctx.rect(m[0]-pad,m[1]-pad,m[2]-m[0]+pad*2,m[3]-m[1]+pad*2);ctx.clip();
+    if(P.ink){ctx.fillStyle=ink;ctx.fill(P.ink)}P.lay.forEach(([c,pp])=>{ctx.fillStyle=c==='@ink'?ink:c;ctx.fill(pp)});ctx.restore();return}
   if(S_.eyes.length!==2)return;const[a,b]=S_.eyes,ex=(a[0]+b[2])/2,span=b[2]-a[0],eh=Math.max(a[3]-a[1],b[3]-b[1]),my=Math.max(a[3],b[3])+eh*.62,tw=span*.72;
   let nm=e._mouthRest||'m_closed';
   const sp=e.speak&&e.speak.some(w=>tl>=w[0]&&tl<w[1]);
@@ -4452,7 +4454,7 @@ async function buildOfficeTest(){
   stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('16:9');S.narrOff=0;S.art='';
   const END=24,s=newScene({name:'Office stickman – natural motion test',style:'white',transition:'cut',trans:0,hold:0});s.minDur=END;S.scenes.push(s);
   const seq=[[0,'idle_a'],[1.2,'talk_a'],[2.2,'talk_b'],[3.2,'talk_c'],[4.2,'talk_d'],[5.2,'explain_a'],[6.6,'explain_b'],[8,'explain_c'],[9.4,'nod'],
-    [10.4,'point_1'],[11.0,'point_2'],[11.6,'point_3'],[13.2,'point_4'],[13.8,'point_level'],[15,'present'],[16.2,'think_a'],[17.4,'think_b'],[18.6,'surprise'],[19.6,'worry'],[20.6,'shrug'],[21.8,'tilt_r'],[23,'idle_b']];
+    [10.4,'point_1'],[11.0,'point_2'],[11.6,'point_3'],[13.2,'point_4'],[13.8,'point_level'],[15,'present2'],[16.2,'think_a'],[17.4,'think_b'],[18.6,'surprise'],[19.6,'worry2'],[20.6,'shrug2'],[21.8,'tilt_r'],[23,'idle_b']];
   const h=addStick({scene:s,quiet:true,look:'office',action:'idle_a',size:600,x:340,y:H-606,facing:1,entrance:'pop',delay:0,withPrev:true,draw:.3,name:'Presenter'});
   h.win=[0,END];h.beats=seq.map(([t,pose])=>({t,pose,blend:.3}));h.speak=[[0,END]];
   seq.forEach(([t,pose],i)=>s.els.push({id:uid++,type:'ngd',kind:'label',x:900,y:40,w:340,h:50,text:pose,size:30,color:NG.navy,win:[t,i<seq.length-1?seq[i+1][0]:END],noPop:true,draw:.1,delay:0,withPrev:true,entrance:'none',motion:'none'}));

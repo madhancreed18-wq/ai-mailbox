@@ -78,8 +78,8 @@ def mouth_with_guide(cell, name):
 
 SHEETS = [
     ('office-motion-talk.png', ['talk_a', 'talk_b', 'talk_c', 'talk_d', 'explain_a', 'explain_b', 'explain_c', 'nod'], 'front'),
-    ('office-motion-point.png', ['point_1', 'point_2', 'point_3', 'point_4', 'point_level', 'point_down', 'present', 'tap'], 'side'),
-    ('office-motion-react.png', ['think_a', 'think_b', 'surprise', 'worry', 'tilt_l', 'tilt_r', 'shrug', 'facepalm'], 'front'),
+    ('office-motion-point.png', ['point_1', 'point_2', 'point_3', 'point_4', 'point_level', 'point_down', 'present2', 'tap'], 'side'),
+    ('office-motion-react.png', ['think_a', 'think_b', 'surprise', 'worry2', 'tilt_l', 'tilt_r', 'shrug2', 'facepalm'], 'front'),
     ('office-motion-idle-walk.png', ['idle_a', 'idle_b', 'walk_1', 'walk_2', 'walk_3', 'walk_4', 'walk_5', 'walk_6'], 'side'),
 ]
 MOUTHS = ['m_closed', 'm_small', 'm_medium', 'm_wide', 'm_o', 'm_ee', 'm_fv', 'm_lth', 'm_smile', 'm_sad']
