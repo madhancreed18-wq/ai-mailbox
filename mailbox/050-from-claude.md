@@ -7,8 +7,8 @@ and delivered **as separate parts (layers)** that fit back together exactly.
 
 This replaces the 4 equipment sheets in 046 (`equip-panel-1/2`, `equip-field-1`, `equip-control-1`). Characters in 046 stay as they are.
 
-## Style (all items) – match the owner's NO/NC video
-Match the equipment look in the owner's video "NO vs NC Push Button Explained in Tamil" (youtube.com/watch?v=Qki_oxTrw3A):
+## Style (all items) – realistic 3D-render look
+Quality reference only (don't copy its items or layout): the equipment in the owner's video "NO vs NC Push Button Explained in Tamil" (youtube.com/watch?v=Qki_oxTrw3A):
 the yellow/black digital multimeter and the grey push button there are **realistic 3D-render style** (soft studio lighting,
 real materials: painted metal, plastic, brass terminals, glass lenses, gentle shadows), seen from a slight 3/4 front angle.
 - Same 3D-render look for every item, same light direction (from top-left), same camera angle family, so they sit together on one stage.
