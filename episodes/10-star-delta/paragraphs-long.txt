@@ -1,0 +1,55 @@
+Unga veetu water motor start aagumbodhu, light oru second dim aagudhaa? Andha chinna motor-ke ivlo effect-naa, factory-la irukkura periya motor-ai direct-aa start pannaa? Inga paarunga. Operator Ravi, thirty HP motor-ai direct-aa start panraaru. Current saadharana current-ai vida ezhu, ettu madangu varudhu. Factory full-aa light dim aagudhu. Pakkathu machine trip aagudhu. Ravi shock aagittaaru.
+
+Adhai thadukka dhaan, Star Delta starter. Indha video-la, technician Kumar oda sendhu, oru real Star Delta panel-ai paarpom. Appuram Mitsubishi FX3U PLC-la, timer vechu full sequence build pannuvom. Naduvula oru quiz irukku. Answer kadaisila.
+
+Kumar panel-ai thirakkuraaru. Moonu contactor irukku. Main contactor, KM onnu. Star contactor, KM rendu. Delta contactor, KM moonu. Keezha overload relay.
+
+Appuram Kumar motor terminal box-ai thirakkuraaru. Aaru terminal irukku. U onnu, V onnu, W onnu. U rendu, V rendu, W rendu.
+
+Star connection-la, U rendu, V rendu, W rendu, moonaiyum onna short pannuvom. Appo ovvoru winding-kum full four fifteen volt varaadhu. Root moonula oru pangu dhaan, kitta thatta two forty volt. Current-um torque-um, moonula oru pangu-aa kuraiyum. Motor mella start aagum.
+
+Delta connection-la, ovvoru winding-um full four fifteen volt-ku nerdiyaa connect aagum. Full power. Full torque.
+
+Ippo Ravi thirumba Start press panraaru. Main-um Star-um ON. Motor mella speed edukkudhu. Light dim aagala. Kitta thatta eighty percent speed vandhadhum, timer mudiyudhu. Star OFF. Oru chinna gap. Appuram Delta ON. Motor full speed. Ravi happy.
+
+Timer evlo vekkanum? Kumar clamp meter vechu, motor full speed-ku vara edukkura time-ai measure panraaru. Adhukku yetha maadhiri timer set panraaru. Manufacturer manual-la, pothuvaa six second-ku mela recommend pannuvaanga.
+
+Ippo PLC. Inputs. X zero, Start button. X one, Stop button. X two, overload relay contact. Outputs. Y zero, Main contactor. Y one, Star contactor. Y two, Delta contactor.
+
+Rung onnu. Run memory M zero-ku self-holding. Start contact-ku parallel-aa M zero contact. Series-la Stop-um overload-um. Ravi Start press pannaa M zero ON. Button-ai vittaalum, holding contact pidichukkum. Stop press pannaalo, overload trip aanaalo, path udanji M zero OFF.
+
+Last video-la SET RESET paathom. Inga yen adhu use pannala? Simple Start Stop control-ku, self-holding orey rung-la ellaathaiyum kaattum. Kumar maadhiri technician trace panna easy. Method-ai application-ku yetha maadhiri choose pannanum.
+
+Rung rendu. M zero ON-naa, Y zero, Main contactor ON.
+
+Rung moonu. M zero ON-naa, timer T zero start aagum. K eighty. FX3U-la T zero, nooru millisecond timer. So K eighty-naa, ettu second.
+
+Rung naalu. M zero ON, T zero innum mudiyala, Delta-vum OFF. Appo Y one, Star contactor ON.
+
+Rung anju. T zero mudinjadhum, innoru timer T one start aagum. K onnu. Zero point one second. Idhu dhaan andha chinna gap.
+
+Rung aaru. T one mudinjadhum, Star OFF-aa irundhaa, Y two, Delta contactor ON.
+
+Ippo quiz. Ravi kekkuraaru. Andha gap timer edhukku? T zero mudinja udane, Star OFF, Delta ON, orey scan-la pannaa enna aagum?
+
+Option A. Motor smooth-aa delta-ku maarum.
+
+Option B. Star contactor release aagura munnaadi Delta close aagi, short circuit. Flash, trip.
+
+Option C. Motor reverse direction-la odum.
+
+Unga answer-ai comment pannunga. Kadaisila sollren.
+
+Inga oru mukkiyamaana vishayam. Interlock. Star rung-la Delta-oda NC contact. Delta rung-la Star-oda NC contact. Rendum orey nerathula ON aagave koodaadhu.
+
+Aana PLC interlock mattum podhaadhu. Kumar oru contactor-ai kaatturaaru. Contact weld aagi stuck aagalaam. PLC OFF sonnaalum contactor OFF aagaadhu. Adhanaala panel-la, contactor-oda auxiliary NC contact vechu, hardware interlock-um kandippaa venum.
+
+Power cut-ku appuram enna aagum? Power pogumbodhu M zero OFF aagi, holding path udanjidum. Current vandhaalum motor thaanaa start aagaadhu. Ravi Start press pannanum. Idhu self-holding-oda safety advantage.
+
+Common mistakes. Timer romba kammi-naa, motor speed edukkura munnaadiye Delta-ku pogum. Periya current spike varum. Timer romba adhigam-naa, motor romba neram Star-la odi, heat aagum. Overload relay-ai motor full load current-ku correct-aa set pannunga.
+
+Quick summary. Star-la mella start. Timer mudinjadhum gap. Appuram Delta. Interlock software-layum, hardware-layum. Power cut-ku appuram auto start illa.
+
+Ippo quiz answer. Contactor-ku mechanical release time irukku. PLC output OFF aanaalum, contact open aaga konjam time edukkum. Gap illaama Delta ON pannaa, Star contact innum close-la irukkumbodhe Delta close aagum. Phase-ku phase short circuit. So answer B. Adhanaala dhaan andha chinna gap timer.
+
+Correct-aa sonnavangalukku next video-la shout-out. Next video-la, motor-ai forward, reverse, interlock-oda run pannuvom. Video useful-aa irundhaa like pannunga. Electrician friend-kku share pannunga. Factory Decode Tamil-ai subscribe pannunga.
