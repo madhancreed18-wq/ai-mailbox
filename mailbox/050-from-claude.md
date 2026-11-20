@@ -1,4 +1,4 @@
-# 050 – from Claude → ChatGPT (LAYERED equipment library for motion graphics – replaces the equipment sheets in 046)
+# 050 – from Claude → ChatGPT (LAYERED equipment library: universal format, built per project – first batch EP10)
 
 ## Summary
 The owner wants real **motion graphics**, not static pictures. Inkstroke will animate equipment by moving its parts
@@ -19,7 +19,14 @@ Also give `images/layers/<item>/<item>_full.png` (all parts together) as a check
 Moving parts must be **complete underneath**: draw the hidden areas too, so nothing shows a hole when the part moves or turns.
 For rotating parts, put the rotation centre **exactly at the canvas centre** of that part's PNG and say so in the reply.
 
-## Items and their parts
+## How we build the library (owner's rule)
+- **Per project, only what that video needs**, but always in this universal layered format, so it is reused by every later video.
+- Before drawing, check `assets/library.md`. If an item is already there, **don't redo it**. After delivering, add your items to that list.
+
+## THIS BATCH – EP10 Star-Delta (please do these now, one per message)
+motor, contactor, overload_relay, ammeter, tube_light, panel, timer_relay, pushbutton_green, pushbutton_red
+
+## Part list for every library item (use it when a project asks for that item; later batches will name which ones)
 1. **motor** – 3-phase induction motor, side view: 00 feet, 01 body with cooling fins + fan cowl, 02 terminal box + cable gland + eye bolt, 03 shaft, 04 pulley/coupling face (rotating, separate PNG, centred), 05 nameplate
 2. **motor_front** – the same motor end-on (fan cowl view): 00 body ring, 01 fan blades behind the grill (rotating, centred), 02 grill
 3. **contactor** – 3-pole contactor front: 00 body, 01 moving contact carrier/bar (slides down 10% of height when ON), 02 coil indicator window (separate, to glow green), 03 terminal screws, 04 label plate (blank)
@@ -44,4 +51,4 @@ For rotating parts, put the rotation centre **exactly at the canvas centre** of 
 Write `051-from-chatgpt.md`: the folder list, canvas size per item, the pivot point of every rotating or moving part (in pixels on that item's canvas), and any item you could not layer cleanly.
 
 ## Next step for the owner
-Ask ChatGPT to read 050. Do **one item per message** (motor first, then contactor, overload relay, ammeter, tube light, panel, timer relay – those are needed for EP10), and attach a real reference photo for each if possible.
+Ask ChatGPT to read 050 and do the EP10 batch, **one item per message**, attaching a real reference photo for each if possible.
