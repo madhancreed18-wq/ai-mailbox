@@ -159,6 +159,7 @@ textarea{resize:vertical;min-height:64px}
 <script src="sprites_b.js"></script>
 <script src="sprites_c.js"></script>
 <script src="sprites_d.js"></script>
+<script src="sprites_e.js"></script>
 <script src="vendor/three.iife.js"></script>
 <script>
 (()=>{
@@ -994,6 +995,11 @@ TECH_SPR.push(...TECH_TOOLS_SPR);
 const SPRSETS={office:()=>OFFICE_SPR,worker:()=>WORKER_SPR,engineer:()=>ENG_SPR,tech:()=>TECH_SPR,host:()=>HOST_SPR,equip:()=>EQUIP_SPR,apprentice:()=>APPR_SPR};
 /* drawn mouths for mouth-less sprites (v2): viseme picked from narration loudness */
 function drawMouthViseme(S_,e,tl,bg,ink){
+  if(S_.manchor&&typeof OFFMOUTH2_SPR!=='undefined'){/* v20: mouth anchored at the pose's magenta dot, sized from the head guide */
+    let nm=e._mouthRest||'m_closed';const sp=e.speak&&e.speak.some(w=>tl>=w[0]&&tl<w[1]);
+    if(sp){const o=mouthAmt(RT,tl),bk=Math.floor(RT*6.5),r=((bk*2654435761)>>>0)%9;nm=o<.12?'m_closed':o<.3?'m_small':o<.55?'m_medium':'m_wide';if(o>.3&&r===0)nm='m_o';else if(o>.3&&r===1)nm='m_ee';else if(o>.12&&o<.45&&r===2)nm='m_fv';else if(o>.3&&r===3)nm='m_lth'}
+    const MS=S_.mset==='office34'?OFFMOUTH34_SPR:OFFMOUTH2_SPR,M=MS.find(x=>x.n===nm)||MS[0],P=osprPaths(M),k=S_.head[2]/M.hr*(S_.mset==='office34'?.88:1);
+    ctx.save();ctx.translate(S_.manchor[0],S_.manchor[1]);ctx.scale(k,k);ctx.fillStyle=bg;ctx.fill(P.sil);P.lay.forEach(([c,pp])=>{ctx.fillStyle=c==='@ink'?ink:c;ctx.fill(pp)});ctx.restore();return}
   if(S_.eyes.length!==2)return;const[a,b]=S_.eyes,ex=(a[0]+b[2])/2,span=b[2]-a[0],eh=Math.max(a[3]-a[1],b[3]-b[1]),my=Math.max(a[3],b[3])+eh*.62,tw=span*.72;
   let nm=e._mouthRest||'m_closed';
   const sp=e.speak&&e.speak.some(w=>tl>=w[0]&&tl<w[1]);
@@ -2266,6 +2272,7 @@ const TPL={
  fdtnpn:{name:'FDT – LED ON, X0 OFF: NPN vs PNP (Tamil, 16:9)',desc:'5:20 motion-graphics explainer · current paths, sink/source, S/S common, quiz · load the long narration',style:'white',scenes:[]},
  ep09:{name:'EP09 – Latching: SET/RST vs Holding (5:53)',desc:'3D lift, FX3U, mixie · 5 guess beats · decode moment · mid-video challenge · load narration-long.wav',style:'white',scenes:[]},
  ep09s:{name:'EP09 Short – Lift button latching (9:16)',desc:'0:37 · 3D lift hook, decode, power-cut danger, CTA',style:'white',scenes:[]},
+ officetest:{name:'Office stickman – natural motion test',desc:'32 new poses (mailbox 047) with anchored lip-sync mouths',style:'white',scenes:[]},
  ep09v2:{name:'EP09 v2 – SET RESET (2D cards, 7:11)',desc:'Phone notification → machine alarm · emoji cards · wipe transitions · load v2 narration-long.wav',style:'white',scenes:[]},
  ep09v2s:{name:'EP09 v2 Short – SET RESET (9:16)',desc:'0:49 · notification hook · twist · challenge · CTA',style:'white',scenes:[]},
  fdtnpns:{name:'FDT Short – LED ON, X0 OFF? (9:16)',desc:'0:46 · hook, swap, clue, CTA · load the Shorts narration',style:'white',scenes:[]},
@@ -4437,6 +4444,18 @@ async function buildEp09v2Short(){S.art='sketch';try{await document.fonts.load('
   o2zone(s,PZ);host([0,END],POSE,PH);o2schedule(s);S.captions=false;S.showHand=true;S.cur=0;S.pin=false;S.t=1;refresh();
 }
 
+
+/* ---------- v20 office natural-motion test (mailbox 047 assets) ---------- */
+async function buildOfficeTest(){
+  stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('16:9');S.narrOff=0;S.art='';
+  const END=24,s=newScene({name:'Office stickman – natural motion test',style:'white',transition:'cut',trans:0,hold:0});s.minDur=END;S.scenes.push(s);
+  const seq=[[0,'idle_a'],[1.2,'talk_a'],[2.2,'talk_b'],[3.2,'talk_c'],[4.2,'talk_d'],[5.2,'explain_a'],[6.6,'explain_b'],[8,'explain_c'],[9.4,'nod'],
+    [10.4,'point_1'],[11.0,'point_2'],[11.6,'point_3'],[13.2,'point_4'],[13.8,'point_level'],[15,'present'],[16.2,'think_a'],[17.4,'think_b'],[18.6,'surprise'],[19.6,'worry'],[20.6,'shrug'],[21.8,'tilt_r'],[23,'idle_b']];
+  const h=addStick({scene:s,quiet:true,look:'office',action:'idle_a',size:600,x:340,y:H-606,facing:1,entrance:'pop',delay:0,withPrev:true,draw:.3,name:'Presenter'});
+  h.win=[0,END];h.beats=seq.map(([t,pose])=>({t,pose,blend:.3}));h.speak=[[0,END]];
+  seq.forEach(([t,pose],i)=>s.els.push({id:uid++,type:'ngd',kind:'label',x:900,y:40,w:340,h:50,text:pose,size:30,color:NG.navy,win:[t,i<seq.length-1?seq[i+1][0]:END],noPop:true,draw:.1,delay:0,withPrev:true,entrance:'none',motion:'none'}));
+  S.captions=false;S.showHand=false;S.cur=0;S.pin=false;S.t=1;refresh();
+}
 /* ---------- NGD 02 – NPN vs PNP sensors (explainer, Renderforest-style structure) ----------
    Structure: hook (fault) → promise → the three wires → PNP → NPN → matching rule → the fault explained → how to check → recap + CTA.
    One scene, elements shown in time windows; captions from NGD02_SCRIPT (silent draft timing ≈ 2.5 words/s).
@@ -4604,6 +4623,7 @@ async function loadTemplate(key){S.art='';
   if(key==='ngd02')return buildNgd02();
   if(key==='fdtnpn')return buildFdtNpn();
   if(key==='fdtnpns')return buildFdtNpnShort();
+  if(key==='officetest')return buildOfficeTest();
   if(key==='ep09v2')return buildEp09v2();
   if(key==='ep09v2s')return buildEp09v2Short();
   if(key==='ep09')return buildEp09();
