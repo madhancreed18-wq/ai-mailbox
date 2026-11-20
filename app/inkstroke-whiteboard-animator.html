@@ -2280,6 +2280,7 @@ const TPL={
  fdtnpn:{name:'FDT – LED ON, X0 OFF: NPN vs PNP (Tamil, 16:9)',desc:'5:20 motion-graphics explainer · current paths, sink/source, S/S common, quiz · load the long narration',style:'white',scenes:[]},
  ep09:{name:'EP09 – Latching: SET/RST vs Holding (5:53)',desc:'3D lift, FX3U, mixie · 5 guess beats · decode moment · mid-video challenge · load narration-long.wav',style:'white',scenes:[]},
  ep09s:{name:'EP09 Short – Lift button latching (9:16)',desc:'0:37 · 3D lift hook, decode, power-cut danger, CTA',style:'white',scenes:[]},
+ sd3dtest:{name:'Star-Delta 3D stage test',desc:'real 3D panel, contactors, motor, ammeter, light',style:'white',scenes:[]},
  sdmgtest:{name:'Star-Delta motion graphic test',desc:'animated contactors, current, motor, ammeter, light, timer',style:'white',scenes:[]},
  ep10:{name:'EP10 – Star-Delta starter (5:09)',desc:'Presenter + Ravi (operator) + Kumar (technician) · star/delta diagram · ladder · quiz · load episodes/10 narration-long.wav',style:'white',scenes:[]},
  ep10s:{name:'EP10 Short – Star-Delta (9:16)',desc:'0:42 · light dim hook · star/delta · quiz',style:'white',scenes:[]},
@@ -3972,6 +3973,74 @@ function g3Mixie(){const B=g3Base('#f1ece4'),{T,S,cam,M,box,cyl,label}=B;
     cam.position.set(2.6-tl*.01,1.5,5.2);cam.lookAt(0,.3,0)}}
 }
 const G3_BUILD={lift:g3Lift,switches:g3Switches,fx3u:g3Fx3u,mixie:g3Mixie};
+/* ---- v23 real 3D Star-Delta stage (g3 shot 'sdstage'): panel with KM1/KM2/KM3 + overload, cable runs with moving
+   current, induction motor with spinning coupling, ammeter, factory tube light. State from sdModel(e.seq,t).
+   Camera: e.cams [[t,'wide'|'panel'|'km'|'ammeter'|'motor'|'light']] eased between presets. ---- */
+function g3SDStage(){const B=g3Base('#e8edf3'),{T,S,cam,M,box,cyl,label}=B;
+  box(16,.1,9,M('#cfd6df',{r:.9}),0,-1.55,0);box(16,7,.1,M('#eef1f5',{r:.95}),0,1.9,-3.2);
+  // ---- panel (open cabinet) ----
+  const P=new T.Group();P.position.set(-2.6,.35,-2.4);S.add(P);
+  box(3.6,3.6,.2,M('#cbd2da',{r:.6,m:.2}),0,0,0,P);box(3.8,3.8,.3,M('#9aa5b1',{r:.5,m:.3}),0,0,-.25,P);
+  box(3.2,.08,.12,M('#b8c0c9',{m:.8,r:.3}),0,.85,.16,P);box(3.2,.08,.12,M('#b8c0c9',{m:.8,r:.3}),0,-.55,.16,P);
+  const KM=[],ph=['#e11d48','#f59e0b','#2563eb'];
+  [['KM1','MAIN',-1.05],['KM2','STAR',0],['KM3','DELTA',1.05]].forEach(([n,l,x],i)=>{const g=new T.Group();g.position.set(x,.85,.42);P.add(g);
+    box(.72,1.0,.5,M('#e5e7eb',{r:.45}),0,0,0,g);box(.74,.22,.52,M('#d1d5db',{r:.5}),0,.48,0,g);box(.74,.22,.52,M('#d1d5db',{r:.5}),0,-.48,0,g);
+    for(let j=0;j<3;j++){cyl(.045,.045,.06,M('#c8a24a',{m:.9,r:.25}),-.22+j*.22,.55,.2,g,16).rotation.x=Math.PI/2;cyl(.045,.045,.06,M('#c8a24a',{m:.9,r:.25}),-.22+j*.22,-.55,.2,g,16).rotation.x=Math.PI/2}
+    box(.42,.3,.04,M('#1f2937',{r:.4}),0,.02,.26,g);const bar=box(.38,.1,.07,M('#e5e7eb',{r:.3}),0,.1,.3,g);
+    const led=box(.09,.06,.03,new T.MeshStandardMaterial({color:'#374151',emissive:'#22c55e',emissiveIntensity:0}),.24,.3,.27,g);
+    label(n,.5,.14,0,-.3,.27,g,{size:64,color:'#111827'});label(l,.6,.12,0,-.72,.06,g,{size:52,color:'#374151'});
+    KM.push({bar,led,v:0})});
+  const ol=new T.Group();ol.position.set(-1.05,-.3,.42);P.add(ol);box(.72,.5,.45,M('#d1d5db',{r:.5}),0,0,0,ol);const olb=cyl(.07,.07,.06,M('#2563eb',{r:.4}),.18,0,.24,ol,24);olb.rotation.x=Math.PI/2;label('OVERLOAD',.6,.1,0,-.36,.06,ol,{size:46,color:'#374151'});
+  // bus bars
+  [0,1,2].forEach(k=>box(3.2,.05,.05,M(ph[k],{m:.4,r:.4}),0,1.55-k*.1,.18,P));
+  // ---- cables with moving current pulses ----
+  const runs=[],mkRun=(pts,col,group)=>{const curve=new T.CatmullRomCurve3(pts.map(p=>new T.Vector3(...p)),false,'catmullrom',.05);const tube=new T.Mesh(new T.TubeGeometry(curve,80,.035,8,false),M(col,{r:.5}));S.add(tube);
+    const dots=[];for(let q=0;q<6;q++){const d=new T.Mesh(new T.SphereGeometry(.06,10,10),new T.MeshBasicMaterial({color:'#fde047'}));d.visible=false;S.add(d);dots.push(d)}runs.push({curve,dots,group});};
+  const pw=(x,y)=>[P.position.x+x,P.position.y+y,P.position.z+.62];
+  [0,1,2].forEach(k=>{const kx=-1.05-.22+k*.22;mkRun([pw(kx,1.5-k*.1),pw(kx,1.4)],ph[k],'feed1');const dx=1.05-.22+k*.22;mkRun([pw(dx,1.5-k*.1),pw(dx,1.4)],ph[k],'feed3');
+    mkRun([pw(kx,.3),pw(kx,-.05-k*.08),[-.6+k*.12,-1.2,-1.0+k*.05],[1.2,-.9,-.1+k*.08],[2.0,-.15,.05]],ph[k],'out');
+    mkRun([[2.2,-.15,.25],[1.4,-1.0,.8+k*.06],[-.2,-1.35,.6],pw(1.05-.22+k*.22,.3)],'#4b5563','d');
+    mkRun([[2.2,-.15,.25],[1.2,-1.1,1.0+k*.06],[-.6,-1.38,.7],pw(-.22+k*.22,.3)],'#6b7280','s')});
+  // ---- motor ----
+  const MO=new T.Group();MO.position.set(2.9,-.75,.3);S.add(MO);const mb=M('#2f5f8f',{r:.45,m:.35});
+  const body=cyl(.62,.62,1.7,mb,0,0,0,MO,48);body.rotation.z=Math.PI/2;
+  for(let i=0;i<18;i++){const a=i/18*Math.PI*2;const f=box(1.5,.07,.12,mb,0,Math.cos(a)*.66,Math.sin(a)*.66,MO);f.rotation.x=a}
+  const cowl=cyl(.6,.5,.45,M('#285481',{r:.5,m:.3}),-1.05,0,0,MO,40);cowl.rotation.z=Math.PI/2;for(let i=0;i<6;i++){const v=box(.02,.6,.04,M('#0f1e30',{r:.6}),-1.28,0,-.25+i*.1,MO)}
+  const shield=cyl(.55,.62,.25,mb,.97,0,0,MO,40);shield.rotation.z=Math.PI/2;
+  const shaft=cyl(.08,.08,.7,M('#d1d5db',{m:.9,r:.2}),1.4,0,0,MO,20);shaft.rotation.z=Math.PI/2;
+  const pul=new T.Group();pul.position.set(1.72,0,0);MO.add(pul);const pr=cyl(.38,.38,.14,M('#9ca3af',{m:.85,r:.25}),0,0,0,pul,40);pr.rotation.z=Math.PI/2;
+  for(let k=0;k<5;k++){const sp=box(.16,.6,.06,M('#4b5563',{m:.5,r:.4}),.02,0,0,pul);sp.rotation.x=k*Math.PI/5}
+  box(.5,.32,.5,mb,.1,.78,0,MO);cyl(.06,.06,.18,M('#111827',{r:.5}),.42,.78,0,MO,12).rotation.z=Math.PI/2;
+  [[-.55],[.55]].forEach(([x])=>box(.35,.25,1.25,M('#1f3b5c',{r:.6}),x,-.68,0,MO));
+  label('MOTOR',.9,.2,0,0,.67,MO,{size:72,color:'#ffffff'});
+  // ---- ammeter ----
+  const AM=new T.Group();AM.position.set(.35,1.55,-3.05);S.add(AM);box(1.1,.95,.15,M('#111827',{r:.5}),0,0,0,AM);
+  const face=B.tex((c,W_,H_)=>{c.fillStyle='#f8fafc';c.fillRect(0,0,W_,H_);c.strokeStyle='#111827';c.lineWidth=6;c.beginPath();c.arc(W_/2,H_*.92,H_*.72,Math.PI*1.12,Math.PI*1.88);c.stroke();
+    for(let v=0;v<=8;v+=2){const a=Math.PI*(1.12+.76*v/8);c.beginPath();c.moveTo(W_/2+Math.cos(a)*H_*.62,H_*.92+Math.sin(a)*H_*.62);c.lineTo(W_/2+Math.cos(a)*H_*.72,H_*.92+Math.sin(a)*H_*.72);c.stroke();c.font='bold 44px Arial';c.fillStyle=v>=6?'#dc2626':'#111827';c.textAlign='center';c.fillText(v+'×',W_/2+Math.cos(a)*H_*.5,H_*.92+Math.sin(a)*H_*.5+14)}
+    c.font='bold 34px Arial';c.fillStyle='#374151';c.fillText('CURRENT',W_/2,H_*.68)},512,400);
+  const fm=new T.Mesh(new T.PlaneGeometry(.96,.75),new T.MeshBasicMaterial({map:face}));fm.position.set(0,.02,.08);AM.add(fm);
+  const nd=new T.Group();nd.position.set(0,-.3,.09);AM.add(nd);const needle=new T.Mesh(new T.BoxGeometry(.02,.5,.01),new T.MeshBasicMaterial({color:'#dc2626'}));needle.position.y=.25;nd.add(needle);
+  // ---- tube light ----
+  const TL=new T.Group();TL.position.set(.35,3.3,-1.4);S.add(TL);box(2.6,.08,.3,M('#d1d5db',{m:.6,r:.3}),0,.1,0,TL);
+  const tubeM=new T.MeshStandardMaterial({color:'#f8fafc',emissive:'#fff7d6',emissiveIntensity:1.6});const tb=new T.Mesh(new T.CylinderGeometry(.06,.06,2.4,16),tubeM);tb.rotation.z=Math.PI/2;TL.add(tb);
+  const lamp=new T.PointLight('#fff4d6',4,9);lamp.position.set(.35,3.0,-1);S.add(lamp);
+  // ---- camera presets [pos xyz, target xyz] ----
+  const CAM={wide:[.3,1.4,8.4,.2,.25,-.6],panel:[-2.3,1.0,3.6,-2.5,.6,-2.0],km:[-2.0,1.35,1.9,-2.45,1.2,-2.0],ammeter:[.35,1.6,-.6,.35,1.55,-3.0],motor:[4.6,.5,4.2,3.5,-.6,.3],light:[.3,2.4,3.2,.3,3.0,-1.4]};
+  let cprev=null,ang=0,lastT=0;
+  return{B,update(tl,e){const Md=sdModel(e.seq,tl),st=SDM[Md.mode]||SDM.off;
+    [0,1,2].forEach(i=>{const k=[0,1,2][i],want=st[i===0?0:i===1?1:2];const K=KM[i];K.v+=(want-K.v)*.35;K.bar.position.y=.1-K.v*.16;K.bar.material.color.set(K.v>.5?'#22c55e':'#e5e7eb');K.led.material.emissiveIntensity=want?2.4:0;K.led.material.color.set(want?'#14532d':'#374151')});
+    const live={feed1:st[0],out:st[0],feed3:st[2],d:st[2],s:st[1]},fl=(tl*(.35+Md.I*.12))%1;
+    runs.forEach(r=>{const on=live[r.group]&&Md.I>0;r.dots.forEach((d,q)=>{d.visible=!!on;if(on){const p=r.curve.getPointAt(((q/r.dots.length)+fl)%1);d.position.copy(p);d.material.color.set(Md.I>4?'#ef4444':'#fde047')}})});
+    const dt=Math.max(0,Math.min(.1,tl-lastT));lastT=tl;ang+=dt*Md.s*28;pul.rotation.x=ang;MO.position.y=-.75+(Md.I>4?Math.sin(tl*60)*.012:0);
+    nd.rotation.z=-(Math.PI*(1.12+.76*Math.min(8,Md.I)/8)-Math.PI*1.5)+(Md.I>4?Math.sin(tl*45)*.02:0);
+    const br=Md.mode==='trip'?0:Math.max(.12,1-Math.max(0,Md.I-1.5)*.14)*(Md.I>4?(.7+.3*Math.sin(tl*33)):1);tubeM.emissiveIntensity=1.6*br;lamp.intensity=4*br;B.hemi.intensity=.5+.6*br;
+    if(Md.mode==='short'&&Md.since<.8){B.S.background.set('#fff7ae')}else B.S.background.set('#e8edf3');
+    const cl=e.cams||[[0,'wide']];let ci=0;cl.forEach(([t0],i)=>{if(tl>=t0)ci=i});const cur=CAM[cl[ci][1]]||CAM.wide,from=ci?CAM[cl[ci-1][1]]||CAM.wide:cur;
+    const f=g3ease(g3c((tl-cl[ci][0])/1.2)),now=from.map((v,i)=>v+(cur[i]-v)*f);
+    cam.position.set(now[0]+Math.sin(tl*.3)*.06,now[1]+Math.sin(tl*.23)*.03,now[2]);cam.lookAt(now[3],now[4],now[5])}}
+}
+G3_BUILD.sdstage=g3SDStage;
+
 function drawG3(e,c,tl){if(!window.THREE){ngTxt(c,'3D: '+e.shot,e.x+e.w/2,e.y+e.h/2,28,NG.navy,800);return}
   const sc=typeof curScale==='number'?curScale:1,w=Math.max(64,Math.round(e.w*sc)),h=Math.max(36,Math.round(e.h*sc)),r=g3R(w,h);
   const key=e.shot+'#'+e.id,s=G3D.shots[key]||(G3D.shots[key]=G3_BUILD[e.shot]());s.B.cam.aspect=w/h;s.B.cam.updateProjectionMatrix();s.update(tl,e);r.render(s.B.S,s.B.cam);
@@ -4522,6 +4591,38 @@ function sdModel(seq,t){let s=0,I=0,mode='off',t0=0,prevMode='off';const segs=(s
   const since=t-t0;
   if(mode==='dol')I=1+6.5*(1-s);else if(mode==='star')I=.6+1.9*(1-s/.8);else if(mode==='delta')I=1+1.4*Math.exp(-since/.5);else if(mode==='short')I=10;else I=0;
   return{s,I,mode,since,prevMode}}
+/* realistic 3-phase induction motor, side view; ang = rotor angle, vib = vibration px */
+function drawMotorReal(c,cx,cy,L,R,ang,vib,ink){c.save();c.translate(cx,cy+(vib?Math.sin(ang*7)*vib:0));const x0=-L/2,x1=L/2;
+  const metal=(y0,y1,a,b,cc)=>{const g=c.createLinearGradient(0,y0,0,y1);g.addColorStop(0,a);g.addColorStop(.45,b);g.addColorStop(1,cc);return g};
+  // feet
+  c.fillStyle='#1f3b5c';[[x0+L*.12],[x1-L*.32]].forEach(([fx])=>{c.beginPath();c.moveTo(fx,R*.75);c.lineTo(fx+L*.2,R*.75);c.lineTo(fx+L*.24,R*1.12);c.lineTo(fx-L*.04,R*1.12);c.closePath();c.fill();c.lineWidth=3;c.strokeStyle=ink;c.stroke()});
+  // fan cowl (back, left)
+  c.beginPath();c.moveTo(x0,-R*.92);c.lineTo(x0-R*.55,-R*.78);c.quadraticCurveTo(x0-R*.75,0,x0-R*.55,R*.78);c.lineTo(x0,R*.92);c.closePath();c.fillStyle=metal(-R,R,'#3d6b99','#6f9cc8','#24456b');c.fill();c.lineWidth=3;c.strokeStyle=ink;c.stroke();
+  for(let i=-3;i<=3;i++){c.beginPath();c.moveTo(x0-R*.6,i*R*.2);c.lineTo(x0-R*.08,i*R*.2);c.lineWidth=4;c.strokeStyle='#14263b';c.stroke()}
+  // body with cooling fins
+  ngRR(c,x0,-R,L,2*R,R*.18);c.fillStyle=metal(-R,R,'#2b5a8a','#6fa0d0','#1d3d61');c.fill();c.lineWidth=3.5;c.strokeStyle=ink;c.stroke();
+  for(let i=-6;i<=6;i++){const yy=i*R*.14;c.beginPath();c.moveTo(x0+R*.12,yy);c.lineTo(x1-R*.12,yy);c.lineWidth=3;c.strokeStyle='rgba(10,25,45,.55)';c.stroke();c.beginPath();c.moveTo(x0+R*.12,yy+3);c.lineTo(x1-R*.12,yy+3);c.lineWidth=1.5;c.strokeStyle='rgba(255,255,255,.35)';c.stroke()}
+  // nameplate
+  ngRR(c,x0+L*.38,-R*.18,L*.2,R*.36,4);c.fillStyle='#e5e7eb';c.fill();c.lineWidth=2;c.strokeStyle=ink;c.stroke();for(let i=0;i<3;i++){c.beginPath();c.moveTo(x0+L*.4,-R*.08+i*R*.09);c.lineTo(x0+L*.56,-R*.08+i*R*.09);c.lineWidth=1.5;c.strokeStyle='#6b7280';c.stroke()}
+  // terminal box + gland
+  ngRR(c,-L*.12,-R*1.42,L*.24,R*.46,5);c.fillStyle=metal(-R*1.42,-R*.96,'#3d6b99','#7aa7d4','#24456b');c.fill();c.lineWidth=3;c.strokeStyle=ink;c.stroke();
+  [[-1,-1],[1,-1]].forEach(([sx_])=>{c.beginPath();c.arc(sx_*L*.09,-R*1.34,3,0,7);c.fillStyle=ink;c.fill()});
+  ngRR(c,L*.12,-R*1.3,R*.22,R*.18,3);c.fillStyle='#111827';c.fill();
+  // eye bolt
+  c.beginPath();c.arc(-L*.3,-R*1.12,R*.12,0,7);c.lineWidth=5;c.strokeStyle='#9ca3af';c.stroke();c.beginPath();c.moveTo(-L*.3,-R*1.0);c.lineTo(-L*.3,-R);c.lineWidth=5;c.stroke();
+  // front end shield
+  c.beginPath();c.moveTo(x1,-R*.88);c.quadraticCurveTo(x1+R*.42,-R*.6,x1+R*.42,0);c.quadraticCurveTo(x1+R*.42,R*.6,x1,R*.88);c.closePath();c.fillStyle=metal(-R,R,'#3d6b99','#86b2dc','#24456b');c.fill();c.lineWidth=3;c.strokeStyle=ink;c.stroke();
+  c.beginPath();c.ellipse(x1+R*.42,0,R*.1,R*.26,0,0,7);c.fillStyle='#4b5563';c.fill();c.stroke();
+  // shaft
+  const sh=x1+R*.42;const sg=c.createLinearGradient(0,-R*.12,0,R*.12);sg.addColorStop(0,'#9ca3af');sg.addColorStop(.5,'#f3f4f6');sg.addColorStop(1,'#6b7280');
+  c.fillStyle=sg;c.fillRect(sh,-R*.11,R*.7,R*.22);c.lineWidth=2.5;c.strokeStyle=ink;c.strokeRect(sh,-R*.11,R*.7,R*.22);
+  const ky=Math.sin(ang)*R*.08;c.fillStyle='#374151';c.fillRect(sh+R*.15,ky-2,R*.4,4);
+  // coupling pulley with rotating spokes (seen at an angle)
+  const px=sh+R*.78,pr=R*.62;c.beginPath();c.ellipse(px,0,pr*.32,pr,0,0,7);c.fillStyle=metal(-pr,pr,'#9ca3af','#e5e7eb','#6b7280');c.fill();c.lineWidth=3;c.strokeStyle=ink;c.stroke();
+  for(let k=0;k<5;k++){const a=ang+k*Math.PI*2/5;c.beginPath();c.moveTo(px,0);c.lineTo(px+Math.cos(a)*pr*.28,Math.sin(a)*pr*.9);c.lineWidth=4;c.strokeStyle='#374151';c.stroke()}
+  c.beginPath();c.ellipse(px,0,pr*.08,pr*.22,0,0,7);c.fillStyle='#1f2937';c.fill();
+  c.restore()}
+
 function drawSDMG(e,c,tl){const{x,y,w,h}=e,M=sdModel(e.seq,tl),st=SDM[M.mode]||SDM.off,ink=O2,cu='#b45309';
   const close=k=>{const tc=(e.seq||[]).filter(([,m])=>(SDM[m]||[0,0,0])[k]!==undefined);let v=0,lt=-9,prev=0;tc.forEach(([a,m])=>{if(tl>=a){const nv=(SDM[m]||[0,0,0])[k];if(nv!==v){prev=v;v=nv;lt=a}}});const p=Math.min(1,(tl-lt)/.12);return{v:prev+(v-prev)*p,lt,opening:v===0&&tl-lt<.25&&prev===1}};
   const sx=v=>x+v*w,sy=v=>y+v*h,flow=M.I>0?(tl*(.6+M.I*.35))%1:0;
@@ -4557,12 +4658,9 @@ function drawSDMG(e,c,tl){const{x,y,w,h}=e,M=sdModel(e.seq,tl),st=SDM[M.mode]||S
   [0,1,2].forEach(j=>wire([[pole(1,j),t2y+26+j*8],[pole(2,j),t2y+26+j*8],[pole(2,j),ky+chh]],live&&st[1],null));             // -> KM2
   // star point bar on KM2 top
   c.beginPath();c.moveTo(pole(2,0)-6,ky-8);c.lineTo(pole(2,2)+6,ky-8);c.lineWidth=6;c.strokeStyle=st[1]?'#16a34a':ink;c.stroke();ngTxt(c,'star point',pole(2,1),ky-24,14,'#6b7280',700);
-  // motor body + spinning fan
-  const ang=(tl*M.s*22)%(Math.PI*2);c.save();c.translate(mx,my+mr*.6);
-  o2box(c,-mr*1.3,-mr*.9,mr*2.6,mr*1.8,20,'#94a3b8',4,false);for(let f=-3;f<=3;f++){c.beginPath();c.moveTo(-mr*1.1,f*mr*.22);c.lineTo(mr*1.1,f*mr*.22);c.lineWidth=2;c.strokeStyle='#64748b';c.stroke()}
-  c.fillStyle='#475569';c.fillRect(mr*1.3,-8,mr*.6,16);
-  c.save();c.translate(mr*1.9,0);c.rotate(ang);for(let b=0;b<4;b++){c.rotate(Math.PI/2);c.beginPath();c.ellipse(0,-mr*.32,mr*.11,mr*.32,0,0,7);c.fillStyle='#f59e0b';c.fill();c.lineWidth=2;c.strokeStyle=ink;c.stroke()}c.restore();
-  ngTxt(c,'MOTOR',0,0,22,'#fff',800);if(M.s>.05){for(let q=0;q<3;q++){c.beginPath();c.arc(mr*1.9,0,mr*.55+q*8,-.6+ang,.2+ang);c.lineWidth=2;c.strokeStyle='rgba(31,36,48,.35)';c.stroke()}}c.restore();
+  // motor (realistic side view, rotor angle from speed)
+  const ang=(tl*M.s*22)%(Math.PI*2);drawMotorReal(c,mx+mr*.4,my+mr*.75,mr*2.6,mr*.78,ang,M.I>4?1.4:M.s>.05?.4:0,ink);
+  if(M.s>.05){for(let q=0;q<3;q++){c.beginPath();c.arc(mx+mr*.4+mr*1.3+mr*1.05,my+mr*.75,mr*.6+q*9,-.5,.5);c.lineWidth=2;c.strokeStyle='rgba(31,36,48,.3)';c.stroke()}}
   ngTxt(c,M.s>.02?Math.round(M.s*1440)+' rpm':'0 rpm',mx+mr*1.6,my+mr*1.6,22,ink,800);
   // ammeter
   const ax=sx(.82),ay=sy(.30),ar=Math.min(w,h)*.15,Iv=Math.min(9,M.I),na=Math.PI*(1.1+.8*Iv/9)+(M.I>4?Math.sin(tl*40)*.02:0);
@@ -4780,6 +4878,13 @@ async function buildEp10Short(){
 }
 
 
+
+async function buildSd3dTest(){stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('16:9');S.narrOff=0;S.art='';
+  const END=24,s=newScene({name:'Star-Delta 3D stage test',style:'white',transition:'cut',trans:0,hold:0});s.minDur=END;S.scenes.push(s);
+  s.els.push({id:uid++,type:'ngd',kind:'g3',shot:'sdstage',x:0,y:0,w:W,h:H,noPop:true,draw:.1,delay:0,withPrev:true,entrance:'none',motion:'none',win:[0,END],
+    seq:[[0,'off'],[1.5,'dol'],[5,'trip'],[7,'star'],[15,'gap'],[15.15,'delta'],[20,'short'],[21,'trip']],
+    cams:[[0,'wide'],[1.6,'ammeter'],[3.6,'light'],[5.2,'wide'],[7,'km'],[9.5,'motor'],[12,'ammeter'],[14.2,'km'],[17,'motor'],[19.5,'km'],[21.5,'wide']]});
+  S.captions=false;S.showHand=false;S.cur=0;S.pin=false;S.t=1;refresh()}
 async function buildSdmgTest(){stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('16:9');S.narrOff=0;S.art='sketch';
   const END=22,s=newScene({name:'Star-Delta motion graphic test',style:'white',transition:'cut',trans:0,hold:0});s.minDur=END;S.scenes.push(s);
   s.els.push({id:uid++,type:'ngd',kind:'sdmg',x:40,y:30,w:1200,h:660,tset:8,seq:[[0,'off'],[1,'dol'],[4.5,'trip'],[7,'star'],[15,'gap'],[15.15,'delta'],[19,'short'],[20.2,'trip']],noPop:true,draw:.1,delay:0,withPrev:true,entrance:'none',motion:'none',win:[0,END]});
@@ -4953,6 +5058,7 @@ async function loadTemplate(key){S.art='';
   if(key==='fdtnpns')return buildFdtNpnShort();
   if(key==='officetest')return buildOfficeTest();
   if(key==='ep10cast')return buildEp10Cast();
+  if(key==='sd3dtest')return buildSd3dTest();
   if(key==='sdmgtest')return buildSdmgTest();
   if(key==='ep10')return buildEp10();
   if(key==='ep10s')return buildEp10Short();
