@@ -21,3 +21,8 @@ Before requesting anything, check this list. After an asset arrives and is trace
 | Asset | File |
 |---|---|
 | Channel intro (6 s FD logo) | assets/brand/intro.mp4 (insert with tools/add_intro.py) |
+
+## 3D stage – Star-Delta (in-house, v23/v24)
+- `g3` shot `sdstage` in the app: panel (KM1 MAIN / KM2 STAR / KM3 DELTA, overload relay, bus bars, cable runs with moving current dots), motor with spinning shaft, ammeter, tube light.
+- State timeline `seq` (off/dol/star/gap/delta/short/trip) and camera presets `cams` (wide/panel/km/ammeter/motor/light). Options: inset `x,y,w,h,rr,frame`; `dist` pulls the camera back (portrait); `S.g3q`/`e.q` = internal 3D resolution factor (0.62 long, 0.7 Short) for render speed.
+- Used by EP10 v3 (templates `ep10v3`, `ep10v3s`). Replaces the equipment-image request in mailbox 050 for this episode.

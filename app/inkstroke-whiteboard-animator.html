@@ -2282,6 +2282,8 @@ const TPL={
  ep09s:{name:'EP09 Short – Lift button latching (9:16)',desc:'0:37 · 3D lift hook, decode, power-cut danger, CTA',style:'white',scenes:[]},
  sd3dtest:{name:'Star-Delta 3D stage test',desc:'real 3D panel, contactors, motor, ammeter, light',style:'white',scenes:[]},
  sdmgtest:{name:'Star-Delta motion graphic test',desc:'animated contactors, current, motor, ammeter, light, timer',style:'white',scenes:[]},
+ ep10v3s:{name:'EP10 v3 Short – Star-Delta 3D (0:42)',desc:'3D stage on top, actors + presenter below, answer not revealed',style:'white',scenes:[]},
+ ep10v3:{name:'EP10 v3 – Star-Delta on the 3D stage (5:09)',desc:'real 3D panel/motor/ammeter/light follow the narration; ladder with live 3D inset; presenter always talking',style:'white',scenes:[]},
  ep10:{name:'EP10 – Star-Delta starter (5:09)',desc:'Presenter + Ravi (operator) + Kumar (technician) · star/delta diagram · ladder · quiz · load episodes/10 narration-long.wav',style:'white',scenes:[]},
  ep10s:{name:'EP10 Short – Star-Delta (9:16)',desc:'0:42 · light dim hook · star/delta · quiz',style:'white',scenes:[]},
  ep10cast:{name:'EP10 cast check',desc:'Operator + technician EP10 action poses',style:'white',scenes:[]},
@@ -4036,13 +4038,13 @@ function g3SDStage(){const B=g3Base('#e8edf3'),{T,S,cam,M,box,cyl,label}=B;
     const br=Md.mode==='trip'?0:Math.max(.12,1-Math.max(0,Md.I-1.5)*.14)*(Md.I>4?(.7+.3*Math.sin(tl*33)):1);tubeM.emissiveIntensity=1.6*br;lamp.intensity=4*br;B.hemi.intensity=.5+.6*br;
     if(Md.mode==='short'&&Md.since<.8){B.S.background.set('#fff7ae')}else B.S.background.set('#e8edf3');
     const cl=e.cams||[[0,'wide']];let ci=0;cl.forEach(([t0],i)=>{if(tl>=t0)ci=i});const cur=CAM[cl[ci][1]]||CAM.wide,from=ci?CAM[cl[ci-1][1]]||CAM.wide:cur;
-    const f=g3ease(g3c((tl-cl[ci][0])/1.2)),now=from.map((v,i)=>v+(cur[i]-v)*f);
+    const f=g3ease(g3c((tl-cl[ci][0])/1.2)),now=from.map((v,i)=>v+(cur[i]-v)*f);if(e.dist)for(let i=0;i<3;i++)now[i]=now[i+3]+(now[i]-now[i+3])*e.dist;
     cam.position.set(now[0]+Math.sin(tl*.3)*.06,now[1]+Math.sin(tl*.23)*.03,now[2]);cam.lookAt(now[3],now[4],now[5])}}
 }
 G3_BUILD.sdstage=g3SDStage;
 
 function drawG3(e,c,tl){if(!window.THREE){ngTxt(c,'3D: '+e.shot,e.x+e.w/2,e.y+e.h/2,28,NG.navy,800);return}
-  const sc=typeof curScale==='number'?curScale:1,w=Math.max(64,Math.round(e.w*sc)),h=Math.max(36,Math.round(e.h*sc)),r=g3R(w,h);
+  const sc=(typeof curScale==='number'?curScale:1)*(e.q||S.g3q||1),w=Math.max(64,Math.round(e.w*sc)),h=Math.max(36,Math.round(e.h*sc)),r=g3R(w,h);
   const key=e.shot+'#'+e.id,s=G3D.shots[key]||(G3D.shots[key]=G3_BUILD[e.shot]());s.B.cam.aspect=w/h;s.B.cam.updateProjectionMatrix();s.update(tl,e);r.render(s.B.S,s.B.cam);
   c.save();if(e.rr){ngRR(c,e.x,e.y,e.w,e.h,e.rr);c.clip()}c.drawImage(r.domElement,e.x,e.y,e.w,e.h);c.restore();
   if(e.frame){c.lineWidth=4;c.strokeStyle=e.frame;ngRR(c,e.x,e.y,e.w,e.h,e.rr||0);c.stroke()}}
@@ -4845,6 +4847,102 @@ async function buildEp10(){
   o2captions(s,A,EP10_PARAS,{cx:810,cy:H-34,maxW:860,size:28});o2camera(s,[1,2,4,6,7,8,9,10,11,16,21,22,23,24,25,26,27].map(k=>PS(k)));
   S.captions=false;S.showHand=false;S.cur=0;S.pin=false;S.t=1;refresh();
 }
+/* ---------- EP10 v3 – Star-Delta on the real 3D stage ----------
+   Main visual = g3 'sdstage' (state + camera follow the narration). Ladder parts: rungs on the left, live 3D inset.
+   Presenter small bottom-left, lip-synced all the time. Ravi / Kumar only at their action moments. Small state chip, no captions. */
+async function buildEp10v3(){
+  stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('16:9');S.narrOff=0;S.art='sketch';S.g3q=.62;
+  try{await document.fonts.load('700 30px InkHand')}catch(_){}
+  const A=EP10_A,END=309.6;
+  const s=newScene({name:'EP10 v3 – Star-Delta (3D)',style:'white',transition:'cut',trans:0,hold:0});s.minDur=END;S.scenes.push(s);
+  const K=ep10Kit(s,A,END),{ng,T,PS,card,bit,actor,presenter,RUNG}=K,RED=NG.red,GRN=NG.grn,BLU=NG.blue,PUR='#7c3aed',ORG='#f59e0b';
+  const P=(a,b=a)=>[PS(a),b>=27?END:PS(b+1)];
+  const chip=(t,win,bg=NG.navy)=>card(28,22,Math.min(520,60+t.length*17),62,t,win,{bg,size:28});
+  /* ---- state sequence + camera for the main 3D stage ---- */
+  const seq=[[0,'off'],[T(0,3)+.8,'dol'],[T(0,6),'trip'],[T(6,1),'star'],[T(6,5),'gap'],[T(6,7),'delta'],[T(23,0)+.6,'trip'],
+    [PS(24),'star'],[PS(24)+4,'gap'],[PS(24)+4.12,'delta'],[T(26,3)+1,'short'],[T(26,4)+1.2,'trip'],[PS(27),'star'],[PS(27)+3,'gap'],[PS(27)+3.12,'delta']];
+  const cams=[[0,'light'],[1.4,'wide'],[T(0,1),'motor'],[T(0,1)+2.7,'wide'],[T(0,2),'km'],[T(0,3),'panel'],[T(0,4),'ammeter'],[T(0,5),'light'],[T(0,6),'wide'],[PS(1),'wide'],[PS(2),'panel'],[T(2,1),'km'],[PS(3),'motor'],[PS(4),'wide'],
+    [PS(6),'panel'],[T(6,1),'km'],[T(6,2),'motor'],[T(6,3),'light'],[T(6,4),'ammeter'],[T(6,5),'km'],[T(6,8),'motor'],[PS(7),'km'],
+    [PS(16),'wide'],[PS(22),'km'],[PS(23),'light'],[T(23,1),'wide'],[PS(24),'motor'],[T(24,1),'ammeter'],[T(24,3),'motor'],[PS(25),'wide'],
+    [PS(26),'km'],[T(26,5),'wide'],[PS(27),'motor'],[T(27,2),'wide']];
+  const stage=win=>ng('g3',{shot:'sdstage',x:0,y:0,w:W,h:H,noPop:true,seq,cams},win);
+  stage([0,PS(8)]);stage([PS(16),PS(21)]);stage([PS(22),END]);
+  /* ---- ladder section: live 3D inset (top-right) ---- */
+  const run0=T(15,1)+1.2,tD=run0+3,tG=tD+.6;
+  const iseq=[[0,'off'],[PS(8),'star'],[PS(8)+3,'gap'],[PS(8)+3.12,'delta'],[run0-1,'off'],[run0,'star'],[tD,'gap'],[tG,'delta']];
+  ng('g3',{shot:'sdstage',x:930,y:90,w:330,h:186,rr:16,frame:'#1f2430',noPop:true,seq:iseq,cams:[[0,'wide']]},[PS(8),PS(16)]);
+  ng('g3',{shot:'sdstage',x:930,y:90,w:330,h:186,rr:16,frame:'#1f2430',noPop:true,seq:[[0,'delta']],cams:[[0,'km']]},[PS(21),PS(22)]);
+  /* k0 HOOK */
+  presenter([0,END],{size:330,x:-20,y:H-336});
+  chip('Veetu motor → light dim?',[0,T(0,2)]);chip('30 HP – DIRECT START',[T(0,3),T(0,6)],RED);chip('TRIP!',[T(0,6),PS(1)],RED);
+  actor('worker',[[0,'op_press_start'],[T(0,5),'op_lights_dim'],[T(0,7),'op_cover_ears']],[T(0,2),PS(1)],{x:930,size:320,y:H-330});
+  /* k1 INTRO */
+  chip('STAR – DELTA STARTER',P(1),ORG);
+  actor('tech',[[0,'tc_all_ok']],[T(1,1),PS(2)],{x:930,size:320,y:H-330});
+  card(760,110,470,80,'FX3U + timer',[T(1,2),PS(2)]);card(760,210,470,80,'Quiz – answer kadaisila',[T(1,3),PS(2)],{bg:'#fef3c7'});
+  /* k2–k3 PANEL / TERMINALS */
+  chip('PANEL',[PS(2),T(2,1)]);chip('KM1 MAIN',[T(2,2),T(2,3)],BLU);chip('KM2 STAR',[T(2,3),T(2,4)],ORG);chip('KM3 DELTA',[T(2,4),T(2,5)],PUR);chip('OVERLOAD RELAY',[T(2,5),PS(3)]);
+  chip('MOTOR TERMINALS',P(3));
+  ['U1','V1','W1'].forEach((t,i)=>card(800+i*140,110,120,80,t,[T(3,2)+i*.4,PS(4)],{size:36}));['U2','V2','W2'].forEach((t,i)=>card(800+i*140,220,120,80,t,[T(3,3)+i*.4,PS(4)],{size:36,bg:'#fef3c7'}));
+  /* k4–k5 STAR / DELTA diagram on a side board */
+  card(740,40,510,560,'',P(4,5),{bg:'#ffffff'});
+  ng('sdiag',{x:770,y:90,w:450,h:450,mode:'star',title:'STAR',vlab:'≈240 V',live:[[T(4,4),1]]},P(4));
+  ng('sdiag',{x:770,y:90,w:450,h:450,mode:'delta',title:'DELTA',vlab:'415 V',live:[[T(5,0)+1,1]]},P(5));
+  chip('STAR: ⅓ current, mella start',[T(4,3),PS(5)],ORG);chip('DELTA: full power',P(5),PUR);
+  /* k6 SEQUENCE */
+  actor('worker',[[0,'op_press_start'],[T(6,2),'op_wait_watch'],[T(6,8),'op_thumbs_motor']],P(6),{x:930,size:320,y:H-330});
+  chip('START',[PS(6),T(6,1)],GRN);chip('MAIN + STAR ON',[T(6,1),T(6,5)],ORG);chip('STAR OFF',[T(6,5),T(6,6)]);chip('GAP 0.1 s',[T(6,6),T(6,7)],RED);chip('DELTA ON – FULL SPEED',[T(6,7),PS(7)],PUR);
+  /* k7 TIMER */
+  actor('tech',[[0,'tc_clamp_meter'],[T(7,2),'tc_set_timer']],P(7),{x:930,size:320,y:H-330});
+  chip('TIMER = motor start time',P(7));card(760,110,470,80,'Manual: 6 s+',[T(7,3),PS(8)],{bg:'#fef3c7'});
+  /* k8 PLC I/O */
+  chip('FX3U  I/O',P(8));
+  [['X0','Start'],['X1','Stop'],['X2','Overload']].forEach(([a,b],i)=>card(360,110+i*100,260,80,a+' · '+b,[T(8,2+i),PS(9)],{bg:'#dbeafe'}));
+  [['Y0','Main'],['Y1','Star'],['Y2','Delta']].forEach(([a,b],i)=>card(650,110+i*100,260,80,a+' · '+b,[T(8,6+i),PS(9)],{bg:'#dcfce7'}));
+  /* k9 RUNG 1 */
+  chip('RUNG 1 · SELF-HOLDING',P(9),NG.teal);
+  const st1=[[T(9,4),1],[T(9,5),0]],m0=[[T(9,4)+.2,1],[T(9,6)+1,0]];
+  ng('rung',{drawOn:true,x:360,y:200,w:540,h:130,num:'1',items:[{k:'NO',label:'X0 START',on:st1,par:{label:'M0',on:m0}},{k:'NC',label:'X1 STOP',on:[[0,1],[T(9,6)+1,0]]},{k:'NC',label:'X2 OL',on:[[0,1]]},{k:'COIL',label:'M0 RUN',on:m0}],power:[[T(9,4),1],[T(9,6)+1,0]]},P(9));
+  /* k10 why not SET/RESET */
+  chip('SET/RESET? Inga thevai illa',P(10),PUR);
+  card(360,140,260,140,'SET / RESET',[T(10,1),PS(11)],{strike:T(10,2)});card(650,140,260,140,'Self-holding',[T(10,2),PS(11)],{bg:'#ccfbf1',tick:T(10,3)});
+  /* k11–k15 RUNGS 2–6 (with live run) */
+  const M0=[[run0,1]],T0d=[[tD,1]],Y1=[[run0,1],[tD,0]],T1d=[[tG,1]],Y2=[[tG,1]];
+  chip('RUNGS 2 – 6',[PS(11),run0-.4],NG.navy);chip('LIVE RUN: STAR → GAP → DELTA',[run0-.4,PS(16)],GRN);
+  RUNG(360,105,540,[{k:'NO',label:'M0',on:M0},{k:'COIL',label:'Y0 MAIN',on:M0}],[PS(11),PS(16)],{num:'2',power:M0});
+  RUNG(360,195,540,[{k:'NO',label:'M0',on:M0},{k:'COIL',label:'T0 K80 (8 s)',on:T0d}],[PS(12),PS(16)],{num:'3',power:M0});
+  RUNG(360,285,540,[{k:'NO',label:'M0',on:M0},{k:'NC',label:'T0',on:[[0,1],[tD,0]]},{k:'NC',label:'Y2',on:[[0,1],[tG,0]]},{k:'COIL',label:'Y1 STAR',on:Y1}],[PS(13),PS(16)],{num:'4',power:Y1});
+  RUNG(360,375,540,[{k:'NO',label:'T0',on:T0d},{k:'COIL',label:'T1 K1 (0.1 s)',on:T1d}],[PS(14),PS(16)],{num:'5',power:T0d});
+  RUNG(360,465,540,[{k:'NO',label:'T1',on:T1d},{k:'NC',label:'Y1',on:[[0,1],[run0,0],[tD,1]]},{k:'COIL',label:'Y2 DELTA',on:Y2}],[PS(15),PS(16)],{num:'6',power:Y2});
+  /* k16–k20 QUIZ */
+  chip('QUIZ 🎯',[PS(16),PS(21)],ORG);
+  actor('worker',[[0,'op_ask']],P(16),{x:930,size:320,y:H-330});
+  card(760,110,470,90,'Gap timer illaama?',[T(16,2),PS(17)],{bg:'#fef3c7'});
+  [['A','Smooth-aa Delta-ku',GRN],['B','Short circuit · flash, trip',RED],['C','Reverse-la odum',BLU]].forEach(([l,t,c],i)=>{card(700,110+i*110,90,90,l,[PS(17+i),PS(21)],{bg:c,size:44});card(800,110+i*110,450,90,t,[PS(17+i)+.3,PS(21)])});
+  card(700,450,550,80,'Comment pannunga!',[PS(20),PS(21)],{bg:'#dbeafe'});
+  /* k21 SOFTWARE INTERLOCK */
+  chip('INTERLOCK',P(21),PUR);
+  RUNG(360,150,540,[{k:'NO',label:'M0'},{k:'NC',label:'T0'},{k:'NC',label:'Y2 ◀'},{k:'COIL',label:'Y1 STAR'}],[T(21,2),PS(22)],{num:'4'});
+  RUNG(360,300,540,[{k:'NO',label:'T1'},{k:'NC',label:'Y1 ◀'},{k:'COIL',label:'Y2 DELTA'}],[T(21,3),PS(22)],{num:'6'});
+  /* k22 HARDWARE INTERLOCK */
+  chip('HARDWARE INTERLOCK',P(22),RED);
+  actor('tech',[[0,'tc_point_contactors'],[T(22,1),'tc_check_interlock']],P(22),{x:930,size:320,y:H-330});
+  card(760,110,470,80,'Contact WELD → stuck',[T(22,2),PS(23)],{bg:'#fee2e2'});card(760,210,470,80,'Aux NC interlock',[T(22,4),PS(23)],{bg:'#dcfce7',tick:T(22,4)+1.2});
+  /* k23 POWER CUT */
+  chip('POWER CUT',[PS(23),T(23,2)],'#111827');chip('NO AUTO START ✓',[T(23,2),PS(24)],GRN);
+  actor('worker',[[0,'op_wait_watch'],[T(23,3),'op_press_start']],P(23),{x:930,size:320,y:H-330});
+  /* k24 MISTAKES */
+  chip('TIMER kammi → current spike',[T(24,1),T(24,3)],RED);chip('TIMER adhigam → motor heat',[T(24,3),T(24,4)],RED);chip('OVERLOAD = motor FLC',[T(24,4),PS(25)],BLU);chip('COMMON MISTAKES',[PS(24),T(24,1)],RED);
+  /* k25 SUMMARY */
+  chip('SUMMARY',P(25));['Star → mella start','Timer → gap','Delta → full power','Interlock: soft + hard','Power cut → no auto start'].forEach((t,i)=>card(800,100+i*90,440,74,t,[T(25,1+i),PS(26)],{tick:T(25,1+i)+.6}));
+  /* k26 ANSWER */
+  chip('ANSWER',[PS(26),T(26,4)],ORG);chip('SHORT CIRCUIT!',[T(26,4),T(26,5)],RED);chip('ANSWER: B',[T(26,5),PS(27)],NG.navy);
+  /* k27 CTA */
+  chip('NEXT: FORWARD / REVERSE',[T(27,1),END],PUR);
+  card(800,130,420,90,'LIKE',[T(27,2),END],{bg:BLU,emoji:'👍',size:40});card(800,240,420,90,'SHARE',[T(27,3),END],{bg:NG.teal,emoji:'↗️',size:40});card(800,350,420,100,'SUBSCRIBE',[T(27,4),END],{bg:RED,emoji:'🔔',size:44});
+  S.captions=false;S.showHand=false;S.cur=0;S.pin=false;S.t=1;refresh();
+}
+
 async function buildEp10Short(){
   stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('9:16');S.narrOff=0;S.art='sketch';
   try{await document.fonts.load('700 30px InkHand')}catch(_){}
@@ -4879,6 +4977,31 @@ async function buildEp10Short(){
 
 
 
+async function buildEp10v3Short(){
+  stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('9:16');S.narrOff=0;S.art='sketch';S.g3q=.7;
+  try{await document.fonts.load('700 30px InkHand')}catch(_){}
+  const A=EP10_SA,END=42.4;
+  const s=newScene({name:'EP10 v3 Short – Star-Delta 3D',style:'white',transition:'cut',trans:0,hold:0});s.minDur=END;S.scenes.push(s);
+  const K=ep10Kit(s,A,END),{ng,T,PS,card,actor,presenter}=K,RED=NG.red,GRN=NG.grn,ORG='#f59e0b';
+  /* 3D stage fills the top; answer is NOT shown (no short-circuit state) */
+  const seq=[[0,'off'],[T(0,1)+.6,'dol'],[T(0,3)+.4,'trip'],[T(1,1),'star'],[T(1,2)+.6,'gap'],[T(1,2)+.72,'delta'],[PS(2)+.4,'star']];
+  const cams=[[0,'wide'],[T(0,1),'panel'],[T(0,2),'ammeter'],[T(0,3),'light'],[PS(1),'wide'],[T(1,1),'km'],[T(1,2),'motor'],[T(1,3),'ammeter'],[PS(2),'km'],[T(2,2),'motor'],[T(2,3),'km'],[PS(3),'wide']];
+  ng('g3',{shot:'sdstage',x:0,y:0,w:W,h:700,noPop:true,seq,cams,dist:1.55},[0,END]);
+  const chip=(t,win,bg=NG.navy,sz=34)=>card(30,26,Math.min(660,80+t.length*20),78,t,win,{bg,size:sz});
+  chip('Light dim aagudhaa?',[0,T(0,1)]);chip('Periya motor – DIRECT',[T(0,1),T(0,2)],RED);chip('CURRENT 7–8×',[T(0,2),T(0,3)],RED);chip('TRIP!',[T(0,3),PS(1)],RED);
+  chip('STAR – DELTA',[PS(1),T(1,1)],ORG);chip('STAR: mella start',[T(1,1),T(1,2)],ORG);chip('DELTA: full power',[T(1,2),PS(2)],'#7c3aed');
+  chip('Gap illaama?',[PS(2),T(2,1)],ORG);chip('Star OFF + Delta ON',[T(2,1),T(2,2)]);
+  card(30,26,320,78,'Smooth?',[T(2,2),PS(3)],{bg:GRN,size:34});card(370,26,320,78,'Flash, trip?',[T(2,3),PS(3)],{bg:RED,size:32});
+  chip('Guess-ai COMMENT! 💬',[PS(3),END],'#2563eb');
+  actor('worker',[[0,'op_press_start'],[T(0,3),'op_lights_dim'],[T(0,3)+1.6,'op_cover_ears']],[0,PS(1)],{x:470,size:420,y:H-560});
+  actor('tech',[[0,'tc_point_contactors'],[T(1,2),'tc_set_timer']],[PS(1),PS(2)],{x:470,size:420,y:H-560});
+  actor('worker',[[0,'op_ask']],[PS(2),PS(3)],{x:470,size:420,y:H-560});
+  card(400,760,300,90,'Answer ↓ full video',[T(3,1),END],{size:26});
+  card(400,870,300,80,'LIKE',[T(3,2),END],{bg:NG.blue,emoji:'👍',size:30});card(400,965,300,80,'SHARE',[T(3,2)+1.2,END],{bg:NG.teal,emoji:'↗️',size:30});
+  card(400,1060,300,90,'SUBSCRIBE',[T(3,2)+2.2,END],{bg:RED,emoji:'🔔',size:34});
+  presenter([0,END],{poses:EP10_SPOSE,x:-20,y:H-560,size:470});
+  S.captions=false;S.showHand=false;S.cur=0;S.pin=false;S.t=1;refresh();
+}
 async function buildSd3dTest(){stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('16:9');S.narrOff=0;S.art='';
   const END=24,s=newScene({name:'Star-Delta 3D stage test',style:'white',transition:'cut',trans:0,hold:0});s.minDur=END;S.scenes.push(s);
   s.els.push({id:uid++,type:'ngd',kind:'g3',shot:'sdstage',x:0,y:0,w:W,h:H,noPop:true,draw:.1,delay:0,withPrev:true,entrance:'none',motion:'none',win:[0,END],
@@ -5052,7 +5175,7 @@ async function buildNgd02(){
 
   S.captions=true;S.showHand=false;S.cur=0;S.pin=false;S.t=1;refresh();
 }
-async function loadTemplate(key){S.art='';
+async function loadTemplate(key){S.art='';S.g3q=0;
   if(key==='ngd02')return buildNgd02();
   if(key==='fdtnpn')return buildFdtNpn();
   if(key==='fdtnpns')return buildFdtNpnShort();
@@ -5060,6 +5183,8 @@ async function loadTemplate(key){S.art='';
   if(key==='ep10cast')return buildEp10Cast();
   if(key==='sd3dtest')return buildSd3dTest();
   if(key==='sdmgtest')return buildSdmgTest();
+  if(key==='ep10v3')return buildEp10v3();
+  if(key==='ep10v3s')return buildEp10v3Short();
   if(key==='ep10')return buildEp10();
   if(key==='ep10s')return buildEp10Short();
   if(key==='ep09v2')return buildEp09v2();
@@ -5090,7 +5215,7 @@ async function loadTemplate(key){S.art='';
       if(it.t==='text')addText({...o,draw:it.draw||1.4});else if(it.t==='arrow')addArrow(o);else if(it.t==='liquid')addLiquid(o);else if(it.t==='stick')addStick(o);else await addSvg(doodleSvg(it.k),DOODLES[it.k][0],{...o,key:it.k,flat:!!DOODLES[it.k][2]})}}
   S.cur=0;S.pin=true;S.t=0;refresh();
 }
-const TPL_STARTERS=['ep10','ep10s','ep09v2','ep09v2s','ep09','ep09s','fdtnpn','fdtnpns','ngd02','stick','plc','explainer','safety','lesson','promo','pumptank'];
+const TPL_STARTERS=['ep10v3','ep10','ep10s','ep09v2','ep09v2s','ep09','ep09s','fdtnpn','fdtnpns','ngd02','stick','plc','explainer','safety','lesson','promo','pumptank'];
 const S2V_SAMPLE="# Why motors need overload relays\n\n## The problem\nA motor is jammed on the conveyor. It keeps pulling current and gets hotter every second.\n\n## The fix\nAn overload relay measures the motor current. If it stays too high, the relay opens the contactor and the motor stops.\n\n## Remember\nThe breaker protects the cable. The overload relay protects the motor. Subscribe for more.";
 function tplGroup(g){let el=$('tpls').querySelector('.tplgrp[data-g="'+g+'"]');if(!el){el=document.createElement('div');el.className='tplgrp';el.dataset.g=g;el.style.cssText='display:flex;flex-direction:column;gap:6px';el.innerHTML='<div class="hint" style="margin:4px 0 0">'+(g==='start'?'Starters':'Episodes &amp; prototypes')+'</div>';if(g==='start')$('tpls').prepend(el);else $('tpls').appendChild(el)}return el}
 Object.entries(TPL).forEach(([k,T])=>{const b=document.createElement('button');b.type='button';b.innerHTML=`<span><i class="sw" style="background:${STYLES[T.style].bg}"></i>${esc(T.name)}</span><small>${esc(T.desc)}</small>`;
