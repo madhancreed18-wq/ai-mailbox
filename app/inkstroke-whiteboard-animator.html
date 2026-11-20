@@ -995,19 +995,13 @@ TECH_SPR.push(...TECH_TOOLS_SPR);
 const SPRSETS={office:()=>OFFICE_SPR,worker:()=>WORKER_SPR,engineer:()=>ENG_SPR,tech:()=>TECH_SPR,host:()=>HOST_SPR,equip:()=>EQUIP_SPR,apprentice:()=>APPR_SPR};
 /* drawn mouths for mouth-less sprites (v2): viseme picked from narration loudness */
 function drawMouthViseme(S_,e,tl,bg,ink){
-  if(S_.manchor){/* v20.1: one consistent mouth style (black opening, white top teeth, pink tongue), drawn in code at the pose's magenta anchor; opening follows the voice smoothly */
-    const r=S_.head[2],side=S_.mset==='office34',sq=side?.84:1,rest=e._mouthRest||'m_closed',sp=e.speak&&e.speak.some(w=>tl>=w[0]&&tl<w[1]);
-    let o=0,shape='talk';if(sp){o=Math.max(0,Math.min(1,(mouthAmt(RT,tl)-.06)/.7));const bk=Math.floor(RT*6.5),q=((bk*2654435761)>>>0)%9;if(o>.35&&q===0)shape='o';else if(o>.2&&q===1)shape='ee'}
-    ctx.save();ctx.translate(S_.manchor[0],S_.manchor[1]);ctx.lineCap=ctx.lineJoin='round';ctx.strokeStyle=ink;
-    if(o<.06){const w=r*.42*sq;ctx.lineWidth=r*.055;ctx.beginPath();
-      if(rest==='m_smile'){ctx.moveTo(-w/2,-r*.03);ctx.quadraticCurveTo(0,r*.13,w/2,-r*.03)}else if(rest==='m_sad'){ctx.moveTo(-w/2,r*.06);ctx.quadraticCurveTo(0,-r*.1,w/2,r*.06)}else{ctx.moveTo(-w/2,0);ctx.quadraticCurveTo(0,r*.025,w/2,0)}
-      ctx.stroke();ctx.restore();return}
-    let w=(r*.36+r*.26*o)*sq,hh=r*(.08+.36*o);if(shape==='o'){w=r*.3*sq;hh=r*(.22+.18*o)}else if(shape==='ee'){w=r*.62*sq;hh=r*(.1+.12*o)}
-    const y0=-hh/2,path=()=>{ctx.beginPath();ctx.moveTo(-w/2,y0);ctx.quadraticCurveTo(0,y0-hh*.18,w/2,y0);ctx.bezierCurveTo(w/2,y0+hh*1.25,-w/2,y0+hh*1.25,-w/2,y0);ctx.closePath()};
-    path();ctx.fillStyle='#1f2430';ctx.fill();ctx.save();path();ctx.clip();
-    ctx.fillStyle='#ffffff';ctx.fillRect(-w,y0-hh,w*2,hh*(shape==='ee'?.55:.3)+hh);
-    if(hh>r*.13&&shape!=='ee'){ctx.fillStyle='#ff7f96';ctx.beginPath();ctx.ellipse(0,y0+hh*1.02,w*.3,hh*.42,0,0,Math.PI*2);ctx.fill()}
-    ctx.restore();path();ctx.lineWidth=r*.05;ctx.stroke();ctx.restore();return}
+  if(S_.manchor&&typeof OFFMOUTH_SPR!=='undefined'){/* v20.2: the owner's preferred OLD office mouths (mailbox 036), placed at the pose's magenta anchor */
+    let nm=e._mouthRest||'m_closed';const sp=e.speak&&e.speak.some(w=>tl>=w[0]&&tl<w[1]);
+    if(sp){const o=mouthAmt(RT,tl),bk=Math.floor(RT*6.5),r=((bk*2654435761)>>>0)%7;nm=o<.12?'m_closed':o<.3?'m_small':o<.55?'m_medium':'m_wide';if(o>.3&&r===0)nm='m_o';else if(o>.3&&r===1)nm='m_ee'}
+    const MS=OFFMOUTH_SPR,M=MS.find(x=>x.n===nm)||MS[0],P=osprPaths(M),ref=MS.find(x=>x.n==='m_wide')||M;
+    let tw=S_.head[2]*.78;if(S_.eyes&&S_.eyes.length===2){const[a,b]=S_.eyes;tw=(b[2]-a[0])*.72}
+    const k=tw/(ref.w||M.w)*(S_.mset==='office34'?.9:1);
+    ctx.save();ctx.translate(S_.manchor[0],S_.manchor[1]+M.h*k/2);ctx.scale(k,k);ctx.fillStyle=bg;ctx.fill(P.sil);P.lay.forEach(([c,pp])=>{ctx.fillStyle=c==='@ink'?ink:c;ctx.fill(pp)});ctx.restore();return}
   if(S_.eyes.length!==2)return;const[a,b]=S_.eyes,ex=(a[0]+b[2])/2,span=b[2]-a[0],eh=Math.max(a[3]-a[1],b[3]-b[1]),my=Math.max(a[3],b[3])+eh*.62,tw=span*.72;
   let nm=e._mouthRest||'m_closed';
   const sp=e.speak&&e.speak.some(w=>tl>=w[0]&&tl<w[1]);
