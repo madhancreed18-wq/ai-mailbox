@@ -14,7 +14,8 @@ Before requesting anything, check this list. After an asset arrives and is trace
 ## Equipment – layered motion-graphic parts (mailbox 050 format)
 | Asset | Requested in | Status |
 |---|---|---|
-| motor, contactor, overload_relay, ammeter, tube_light, panel, timer_relay, pushbutton_green, pushbutton_red | 050 (EP10) | requested |
+| motor | 050 (EP10), delivered in 051 | 6 transparent layers + full check, 2048×1024; `images/layers/motor/`; editable Blender source; integration pending |
+| contactor, overload_relay, ammeter, tube_light, panel, timer_relay, pushbutton_green, pushbutton_red | 050 (EP10) | requested; not yet delivered |
 
 ## Brand
 | Asset | File |

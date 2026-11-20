@@ -1,0 +1,236 @@
+{
+  "asset": "motor",
+  "status": "first item of EP10 batch, source/render delivery; app integration pending",
+  "canvas": [
+    2048,
+    1024
+  ],
+  "alpha": "straight RGBA",
+  "camera": "orthographic three-quarter side, key light top-left",
+  "stack": "alpha-over in ascending order, all layers positioned at (0,0)",
+  "rotation": {
+    "part": "motor_04_coupling_face.png",
+    "pivot_px": [
+      1024,
+      512
+    ],
+    "axis_world": "X",
+    "warning": "A three-quarter disk is an ellipse: 2D image rotation is stylized, not a physically correct shaft rotation. Use the supplied Blender rotor for correct 3D motion.",
+    "source_node": "Coupling rotation pivot",
+    "assembly": "Animate the 3D source node: it rotates shaft/key and coupling together."
+  },
+  "parts": [
+    {
+      "file": "motor_00_feet.png",
+      "order": 0,
+      "objects": [
+        "Continuous mounting foot",
+        "Cast foot web",
+        "Foot washer",
+        "Mounting bolt",
+        "Cast foot web.001",
+        "Foot washer.001",
+        "Mounting bolt.001",
+        "Continuous mounting foot.001",
+        "Cast foot web.002",
+        "Foot washer.002",
+        "Mounting bolt.002",
+        "Cast foot web.003",
+        "Foot washer.003",
+        "Mounting bolt.003"
+      ],
+      "canvas": [
+        2048,
+        1024
+      ],
+      "pivot_px": null
+    },
+    {
+      "file": "motor_01_body.png",
+      "order": 1,
+      "objects": [
+        "Stator cast housing",
+        "Longitudinal cooling fin 00",
+        "Longitudinal cooling fin 01",
+        "Longitudinal cooling fin 02",
+        "Longitudinal cooling fin 03",
+        "Longitudinal cooling fin 04",
+        "Longitudinal cooling fin 05",
+        "Longitudinal cooling fin 06",
+        "Longitudinal cooling fin 07",
+        "Longitudinal cooling fin 08",
+        "Longitudinal cooling fin 09",
+        "Longitudinal cooling fin 10",
+        "Longitudinal cooling fin 11",
+        "Longitudinal cooling fin 12",
+        "Longitudinal cooling fin 13",
+        "Longitudinal cooling fin 14",
+        "Longitudinal cooling fin 15",
+        "Longitudinal cooling fin 16",
+        "Longitudinal cooling fin 17",
+        "Longitudinal cooling fin 18",
+        "Longitudinal cooling fin 19",
+        "Longitudinal cooling fin 20",
+        "Longitudinal cooling fin 21",
+        "Longitudinal cooling fin 22",
+        "Longitudinal cooling fin 23",
+        "Longitudinal cooling fin 24",
+        "Longitudinal cooling fin 25",
+        "Longitudinal cooling fin 26",
+        "Longitudinal cooling fin 27",
+        "Longitudinal cooling fin 28",
+        "Longitudinal cooling fin 29",
+        "Longitudinal cooling fin 30",
+        "Longitudinal cooling fin 31",
+        "Longitudinal cooling fin 32",
+        "Longitudinal cooling fin 33",
+        "Drive end shield",
+        "Front bearing boss",
+        "Bearing seal",
+        "End shield radial rib 00",
+        "End shield radial rib 01",
+        "End shield radial rib 02",
+        "End shield radial rib 03",
+        "End shield radial rib 04",
+        "End shield radial rib 05",
+        "End shield radial rib 06",
+        "End shield radial rib 07",
+        "End shield radial rib 08",
+        "End shield radial rib 09",
+        "End shield radial rib 10",
+        "End shield radial rib 11",
+        "End shield radial rib 12",
+        "End shield radial rib 13",
+        "End shield radial rib 14",
+        "End shield radial rib 15",
+        "End shield radial rib 16",
+        "End shield radial rib 17",
+        "End shield hex bolt",
+        "End shield hex bolt.001",
+        "End shield hex bolt.002",
+        "End shield hex bolt.003",
+        "Rear fan cowl",
+        "Rear cowl end",
+        "Fan cowl ventilation slot 00",
+        "Fan cowl ventilation slot 01",
+        "Fan cowl ventilation slot 02",
+        "Fan cowl ventilation slot 03",
+        "Fan cowl ventilation slot 04",
+        "Fan cowl ventilation slot 05",
+        "Fan cowl ventilation slot 06",
+        "Fan cowl ventilation slot 07",
+        "Fan cowl ventilation slot 08",
+        "Fan cowl ventilation slot 09",
+        "Fan cowl ventilation slot 10",
+        "Fan cowl ventilation slot 11"
+      ],
+      "canvas": [
+        2048,
+        1024
+      ],
+      "pivot_px": null
+    },
+    {
+      "file": "motor_02_terminal_box.png",
+      "order": 2,
+      "objects": [
+        "Terminal box pedestal",
+        "Terminal enclosure",
+        "Terminal lid gasket",
+        "Terminal lid",
+        "Terminal lid screw",
+        "Terminal lid screw.001",
+        "Terminal lid screw.002",
+        "Terminal lid screw.003",
+        "Cable gland threaded boss",
+        "Cable gland nut",
+        "Cable gland lip",
+        "Lifting eye plinth",
+        "Eye threaded stem",
+        "Lifting eye"
+      ],
+      "canvas": [
+        2048,
+        1024
+      ],
+      "pivot_px": null
+    },
+    {
+      "file": "motor_03_shaft.png",
+      "order": 3,
+      "objects": [
+        "Drive shaft",
+        "Shaft key"
+      ],
+      "canvas": [
+        2048,
+        1024
+      ],
+      "pivot_px": null
+    },
+    {
+      "file": "motor_04_coupling_face.png",
+      "order": 4,
+      "objects": [
+        "Coupling hub",
+        "Coupling disk",
+        "Coupling central bore",
+        "Coupling recessed bolt socket",
+        "Coupling socket steel rim",
+        "Coupling recessed bolt socket.001",
+        "Coupling socket steel rim.001",
+        "Coupling recessed bolt socket.002",
+        "Coupling socket steel rim.002",
+        "Coupling recessed bolt socket.003",
+        "Coupling socket steel rim.003",
+        "Rotation index"
+      ],
+      "canvas": [
+        2048,
+        1024
+      ],
+      "pivot_px": [
+        1024,
+        512
+      ]
+    },
+    {
+      "file": "motor_05_nameplate.png",
+      "order": 5,
+      "objects": [
+        "Blank motor nameplate",
+        "Nameplate rivet",
+        "Nameplate rivet.001",
+        "Nameplate rivet.002",
+        "Nameplate rivet.003"
+      ],
+      "canvas": [
+        2048,
+        1024
+      ],
+      "pivot_px": null
+    }
+  ],
+  "full": "motor_full.png",
+  "source": "../build_motor.py",
+  "editable_scene": "motor.blend",
+  "sources": [
+    {
+      "url": "https://www.weg.net/institutional/CA/es/news/productos-y-soluciones/new-weg-w22",
+      "image": "https://static.weg.net/news/notice-CA-0157/03_noticia_detalhe_w.jpg",
+      "use": "drive-end fins, machined shaft and keyway photo reference"
+    },
+    {
+      "url": "https://www.meritocomercial.com.br/motor-eletrico-weg-w22-125-cv-4-polos-ip55-trifasico-220v380v440v-4001001008932-p1032875",
+      "use": "full housing, feet, terminal box, fan cowl and lifting-eye reference"
+    }
+  ],
+  "limitations": [
+    "Generic visual model, not a dimensioned manufacturer replica.",
+    "Blank nameplate and no branding or ratings.",
+    "No motor internals, cables or driven load are implied.",
+    "Coupling front face is intentionally canvas-centred, so the full motor is left of canvas centre.",
+    "Independent layers have self-shading but no inter-layer cast shadows, preserving clean removal."
+  ],
+  "registration": "Stack all six images at (0,0), without individual cropping/recentering."
+}

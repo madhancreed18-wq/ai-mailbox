@@ -1,0 +1,107 @@
+{
+  "canvas": [
+    2048,
+    1024
+  ],
+  "coupling_pivot_px": [
+    1024,
+    512
+  ],
+  "inspection": "Body isolated layer and composed full preview visually inspected; all PNG dimensions, alpha and stack registration checked programmatically. No app runtime integration test performed.",
+  "layers": [
+    {
+      "file": "motor_00_feet.png",
+      "size": [
+        2048,
+        1024
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        277,
+        371,
+        968,
+        727
+      ],
+      "sha256": "deaf3c4680336979c3cfce426ffb2e6d6c919870a68bcd1e69b97f3d350f38f9"
+    },
+    {
+      "file": "motor_01_body.png",
+      "size": [
+        2048,
+        1024
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        239,
+        136,
+        967,
+        645
+      ],
+      "sha256": "2dbfccf954fb8b15bc1658ad45814f4d33612da672566aaa1fee985aa9edc41c"
+    },
+    {
+      "file": "motor_02_terminal_box.png",
+      "size": [
+        2048,
+        1024
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        329,
+        125,
+        732,
+        533
+      ],
+      "sha256": "651f4ea4c21a7b0c26164f531f968149c1f1eb891999a4944885ccd977c777ee"
+    },
+    {
+      "file": "motor_03_shaft.png",
+      "size": [
+        2048,
+        1024
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        856,
+        438,
+        1012,
+        534
+      ],
+      "sha256": "92b5310e3982665da27181070da418908046dc77c919f49946920e162d453137"
+    },
+    {
+      "file": "motor_04_coupling_face.png",
+      "size": [
+        2048,
+        1024
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        948,
+        431,
+        1064,
+        586
+      ],
+      "sha256": "8fa8a43ac6cc840488b6e8480c98b7762be2b0fdba92a60e4e7f53c48460c8ef"
+    },
+    {
+      "file": "motor_05_nameplate.png",
+      "size": [
+        2048,
+        1024
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        394,
+        223,
+        548,
+        318
+      ],
+      "sha256": "8bc165365227af2064d9622ac02720268b8817539997988ea0c49b8ca534a5a1"
+    }
+  ],
+  "stack_alpha_max_error": 0.0,
+  "opaque_rgb_mean_absolute_error": 0.035836224287390375,
+  "color_note": "Blender composites linear light; reference browser/Pillow alpha-over blends encoded sRGB. Alpha silhouette is identical; subpixel edge colors can differ.",
+  "rotation_test": "Native source coupling rendered at 60 degrees about X and visually inspected; complete loop not rendered."
+}
