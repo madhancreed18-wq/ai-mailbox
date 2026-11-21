@@ -2282,6 +2282,7 @@ const TPL={
  ep09s:{name:'EP09 Short – Lift button latching (9:16)',desc:'0:37 · 3D lift hook, decode, power-cut danger, CTA',style:'white',scenes:[]},
  sd3dtest:{name:'Star-Delta 3D stage test',desc:'real 3D panel, contactors, motor, ammeter, light',style:'white',scenes:[]},
  sdmgtest:{name:'Star-Delta motion graphic test',desc:'animated contactors, current, motor, ammeter, light, timer',style:'white',scenes:[]},
+ hometest:{name:'Home 3D test – switch, tube light, water pump',desc:'hook scene for EP10',style:'white',scenes:[]},
  ep10v3s:{name:'EP10 v3 Short – Star-Delta 3D (0:42)',desc:'3D stage on top, actors + presenter below, answer not revealed',style:'white',scenes:[]},
  ep10v3:{name:'EP10 v3 – Star-Delta on the 3D stage (5:09)',desc:'real 3D panel/motor/ammeter/light follow the narration; ladder with live 3D inset; presenter always talking',style:'white',scenes:[]},
  ep10:{name:'EP10 – Star-Delta starter (5:09)',desc:'Presenter + Ravi (operator) + Kumar (technician) · star/delta diagram · ladder · quiz · load episodes/10 narration-long.wav',style:'white',scenes:[]},
@@ -4042,6 +4043,58 @@ function g3SDStage(){const B=g3Base('#e8edf3'),{T,S,cam,M,box,cyl,label}=B;
     cam.position.set(now[0]+Math.sin(tl*.3)*.06,now[1]+Math.sin(tl*.23)*.03,now[2]);cam.lookAt(now[3],now[4],now[5])}}
 }
 G3_BUILD.sdstage=g3SDStage;
+/* ---- shot: home – switch board, tube light, monoblock water pump, overhead tank ---- */
+function g3Home(){const B=g3Base('#f3efe7'),{T,S,cam,M,box,cyl,label}=B;
+  box(16,.1,10,M('#c9b9a3',{r:.95}),0,-1.55,0);box(16,7,.12,M('#f2e6cf',{r:.95}),0,1.9,-3.2);box(16,.12,10,M('#f7f1e6',{r:.95}),0,5.3,0);
+  box(16,.5,.14,M('#d8c7aa',{r:.9}),0,-1.3,-3.12);                                       // skirting
+  // window (left) for a home feel
+  box(1.8,1.6,.08,M('#bfdbfe',{r:.2,e:'#93c5fd',ei:.25}),-5.2,1.6,-3.13);box(1.95,.08,.1,M('#ffffff',{r:.5}),-5.2,.8,-3.1);box(.06,1.6,.1,M('#ffffff',{r:.5}),-5.2,1.6,-3.1);
+  // ---- tube light ----
+  const TL=new T.Group();TL.position.set(-2.4,3.4,-3.0);S.add(TL);box(2.4,.08,.25,M('#d1d5db',{m:.5,r:.35}),0,.1,0,TL);
+  const tubeM=new T.MeshStandardMaterial({color:'#f8fafc',emissive:'#fff7d6',emissiveIntensity:1.6});const tb=new T.Mesh(new T.CylinderGeometry(.06,.06,2.2,16),tubeM);tb.rotation.z=Math.PI/2;TL.add(tb);
+  const lamp=new T.PointLight('#fff4d6',6,11);lamp.position.set(-2.4,3.1,-2.3);S.add(lamp);
+  // ---- switch board ----
+  const SB=new T.Group();SB.position.set(.2,.6,-3.12);S.add(SB);box(1.3,.8,.06,M('#fafafa',{r:.4}),0,0,0,SB);
+  const sw=[];for(let i=0;i<4;i++){const s=box(.16,.26,.05,M(i===3?'#ef4444':'#e5e7eb',{r:.35}),-.45+i*.3,.05,.05,SB);sw.push(s)}
+  const swLed=box(.06,.04,.03,new T.MeshStandardMaterial({color:'#7f1d1d',emissive:'#ef4444',emissiveIntensity:0}),.45,.27,.05,SB);
+  label('MOTOR',.36,.09,.45,-.25,.05,SB,{size:56,color:'#374151'});
+  box(1.8,.7,.6,M('#8b5e3c',{r:.7}),-3.6,-1.2,-2.6);box(1.4,.8,.08,M('#111827',{r:.3}),-3.6,-.4,-2.8);   // TV table
+  // ---- wire switch → pump ----
+  const wire=new T.CatmullRomCurve3([[.65,.45,-3.06],[1.6,.4,-3.06],[2.3,-1.0,-3.0],[2.7,-1.28,-1.6],[2.9,-1.0,-.35]].map(p=>new T.Vector3(...p)));
+  S.add(new T.Mesh(new T.TubeGeometry(wire,60,.03,8,false),M('#1f2937',{r:.6})));
+  const wd=[];for(let q=0;q<5;q++){const d=new T.Mesh(new T.SphereGeometry(.055,10,10),new T.MeshBasicMaterial({color:'#fde047'}));d.visible=false;S.add(d);wd.push(d)}
+  // ---- monoblock pump on a plinth ----
+  box(1.9,.25,1.2,M('#9ca3af',{r:.9}),3.1,-1.42,-.2);
+  const PU=new T.Group();PU.position.set(3.0,-.92,-.2);S.add(PU);const pb=M('#2563eb',{r:.45,m:.3});
+  const body=cyl(.34,.34,.9,pb,0,0,0,PU,40);body.rotation.z=Math.PI/2;for(let i=0;i<12;i++){const a=i/12*Math.PI*2;const f=box(.8,.04,.07,pb,0,Math.cos(a)*.36,Math.sin(a)*.36,PU);f.rotation.x=a}
+  const vol=cyl(.42,.42,.3,M('#1e3a8a',{r:.5,m:.3}),.6,0,0,PU,40);vol.rotation.z=Math.PI/2;
+  const fan=new T.Group();fan.position.set(-.52,0,0);PU.add(fan);for(let k=0;k<4;k++){const bl=box(.03,.5,.08,M('#0f172a',{r:.5}),0,0,0,fan);bl.rotation.x=k*Math.PI/4}
+  box(.6,.12,.5,M('#1e3a8a',{r:.6}),0,-.38,0,PU);
+  // ---- delivery pipe up through the ceiling ----
+  const pipeC=new T.CatmullRomCurve3([[3.75,-.92,-.2],[4.3,-.92,-.2],[4.5,-.6,-.2],[4.5,5.3,-.2]].map(p=>new T.Vector3(...p)),false,'catmullrom',.02);
+  S.add(new T.Mesh(new T.TubeGeometry(pipeC,80,.07,10,false),M('#e5e7eb',{r:.5})));
+  const water=[];for(let q=0;q<9;q++){const d=new T.Mesh(new T.SphereGeometry(.065,10,10),new T.MeshBasicMaterial({color:'#38bdf8'}));d.visible=false;S.add(d);water.push(d)}
+  const CAM={wide:[.2,1.5,9.2,.3,.8,-1.6],switch:[.2,.75,-1.0,.2,.6,-3.1],light:[-2.4,2.2,1.0,-2.4,3.2,-3.0],pump:[2.6,-.1,2.9,3.3,-.9,-.3],room:[-1.2,1.6,5.6,-1.0,1.6,-2.4]};
+  let ang=0,lastT=0;
+  return{B,update(tl,e){const seq=e.seq||[[0,'off']];let mode='off',t0=0;seq.forEach(([t,m])=>{if(tl>=t){mode=m;t0=t}});const since=tl-t0;
+    const on=mode==='start'||mode==='run';sw[3].rotation.x=on?.35:-.35;swLed.material.emissiveIntensity=on?2.5:0;
+    const inr=mode==='start'?Math.max(0,1-since/(e.dip||1.6)):0,s=on?(mode==='run'?1:Math.min(1,since/1.6)):0;
+    const br=on?1-.82*Math.min(1,inr*1.4)*(.8+.2*Math.sin(tl*38)):1;tubeM.emissiveIntensity=1.6*br*br;tubeM.color.setScalar(.25+.72*br);lamp.intensity=6*br*br;B.hemi.intensity=.3+.8*br;B.key.intensity=.8+1.2*br;
+    const dt=Math.max(0,Math.min(.1,tl-lastT));lastT=tl;ang+=dt*s*30;fan.rotation.x=ang;PU.position.y=-.92+(inr>.2?Math.sin(tl*55)*.012:0);
+    const fl=(tl*.5)%1;wd.forEach((d,q)=>{d.visible=on;if(on){d.position.copy(wire.getPointAt((q/wd.length+fl)%1));d.material.color.set(inr>.3?'#ef4444':'#fde047')}});
+    const fw=(tl*.35)%1;water.forEach((d,q)=>{d.visible=on&&s>.6;if(d.visible)d.position.copy(pipeC.getPointAt((q/water.length+fw)%1))});
+    const cl=e.cams||[[0,'wide']];let ci=0;cl.forEach(([c0],i)=>{if(tl>=c0)ci=i});const cur=CAM[cl[ci][1]]||CAM.wide,from=ci?CAM[cl[ci-1][1]]||CAM.wide:cur;
+    const f=g3ease(g3c((tl-cl[ci][0])/1.2)),now=from.map((v,i)=>v+(cur[i]-v)*f);if(e.dist)for(let i=0;i<3;i++)now[i]=now[i+3]+(now[i]-now[i+3])*e.dist;
+    cam.position.set(now[0]+Math.sin(tl*.3)*.06,now[1]+Math.sin(tl*.23)*.03,now[2]);cam.lookAt(now[3],now[4],now[5])}}
+}
+G3_BUILD.home=g3Home;
+async function buildHomeTest(){
+  stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('16:9');S.narrOff=0;S.art='sketch';S.g3q=.62;
+  const s=newScene({name:'Home 3D test',style:'white',transition:'cut',trans:0,hold:0});s.minDur=14;S.scenes.push(s);
+  s.els.push({id:uid++,type:'ngd',kind:'g3',name:'g3',draw:.1,delay:0,withPrev:true,entrance:'draw',motion:'none',shot:'home',x:0,y:0,w:W,h:H,noPop:true,win:[0,14],seq:[[0,'off'],[4,'start'],[7,'run']],cams:[[0,'wide'],[1.2,'switch'],[2.6,'wide'],[7.5,'pump'],[10.5,'wide']]});
+  S.captions=false;S.showHand=false;S.cur=0;S.t=1;refresh();
+}
+
 
 function drawG3(e,c,tl){if(!window.THREE){ngTxt(c,'3D: '+e.shot,e.x+e.w/2,e.y+e.h/2,28,NG.navy,800);return}
   const sc=(typeof curScale==='number'?curScale:1)*(e.q||S.g3q||1),w=Math.max(64,Math.round(e.w*sc)),h=Math.max(36,Math.round(e.h*sc)),r=g3R(w,h);
@@ -5183,6 +5236,7 @@ async function loadTemplate(key){S.art='';S.g3q=0;
   if(key==='ep10cast')return buildEp10Cast();
   if(key==='sd3dtest')return buildSd3dTest();
   if(key==='sdmgtest')return buildSdmgTest();
+  if(key==='hometest')return buildHomeTest();
   if(key==='ep10v3')return buildEp10v3();
   if(key==='ep10v3s')return buildEp10v3Short();
   if(key==='ep10')return buildEp10();
