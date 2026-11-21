@@ -1,0 +1,34 @@
+[
+  {
+    "key": "long",
+    "uploaded_name": "long(1).wav",
+    "bytes": 14739884,
+    "duration_seconds": 307.08,
+    "sample_rate": 24000,
+    "channels": 1,
+    "sample_width_bytes": 2,
+    "git_blob_sha1": "b00d1284b150bf487b87cac17ebe0b84ca40acc3",
+    "sha256": "995113cf75bc4199ebe64a9beb4fc2755410e3adb9e9ed7f5c810c1a490c0997",
+    "flac_file": "narration-long.flac",
+    "flac_bytes": 7195178,
+    "lossless_pcm_verified": true,
+    "pcm_sha256": "02697a7a6ea217f7c36c4b36f8a8a2ef1aa3e324d0268b0dd53a9ecd28dd86e6",
+    "flac_git_blob_sha1": "666883eae017fa3d3fc6635ed684d9ea0834d197"
+  },
+  {
+    "key": "short",
+    "uploaded_name": "shorts(1).wav",
+    "bytes": 3169964,
+    "duration_seconds": 66.04,
+    "sample_rate": 24000,
+    "channels": 1,
+    "sample_width_bytes": 2,
+    "git_blob_sha1": "4976044b02853943bbd1b49fa181fd03b4456000",
+    "sha256": "a13b4fb5c5aaf5e9121b439092bb4cd63c09114d6f3283e861fa0dc9a91605c1",
+    "flac_file": "narration-short.flac",
+    "flac_bytes": 1589557,
+    "lossless_pcm_verified": true,
+    "pcm_sha256": "4f5f59edb0ced6dcf64b44c17f3fe17306bbe170fd7d55f746760346b32b3b8f",
+    "flac_git_blob_sha1": "6e0a4b27aa0bf37d008be859bb531d84ef56ce7d"
+  }
+]

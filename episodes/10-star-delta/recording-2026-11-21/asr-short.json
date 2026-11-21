@@ -1,0 +1,892 @@
+{
+  "model": "mobiuslabsgmbh/faster-whisper-large-v3-turbo",
+  "duration": 66.04,
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 4.86,
+      "text": " உங்களிட்டு water motor on பண்ணும் போது, light உரி second dimm",
+      "words": [
+        {
+          "start": 0.0,
+          "end": 0.86,
+          "word": " உங்களிட்டு",
+          "probability": 0.8246594435638852
+        },
+        {
+          "start": 0.86,
+          "end": 1.26,
+          "word": " water",
+          "probability": 0.25086161494255066
+        },
+        {
+          "start": 1.26,
+          "end": 1.6,
+          "word": " motor",
+          "probability": 0.7272931337356567
+        },
+        {
+          "start": 1.6,
+          "end": 2.06,
+          "word": " on",
+          "probability": 0.547141432762146
+        },
+        {
+          "start": 2.06,
+          "end": 2.56,
+          "word": " பண்ணும்",
+          "probability": 0.9195375442504883
+        },
+        {
+          "start": 2.56,
+          "end": 2.96,
+          "word": " போது,",
+          "probability": 0.9323448538780212
+        },
+        {
+          "start": 2.96,
+          "end": 3.54,
+          "word": " light",
+          "probability": 0.8997942209243774
+        },
+        {
+          "start": 3.54,
+          "end": 3.94,
+          "word": " உரி",
+          "probability": 0.44410820802052814
+        },
+        {
+          "start": 3.94,
+          "end": 4.34,
+          "word": " second",
+          "probability": 0.732890248298645
+        },
+        {
+          "start": 4.34,
+          "end": 4.86,
+          "word": " dimm",
+          "probability": 0.4949810113757849
+        }
+      ]
+    },
+    {
+      "start": 4.86,
+      "end": 10.0,
+      "text": " அந்த சின்ன மோறிறுக்கே இவ்வளோய் effect நா, factoryல இருக்கிற 30 hp",
+      "words": [
+        {
+          "start": 4.86,
+          "end": 5.76,
+          "word": " அந்த",
+          "probability": 0.5039979161665542
+        },
+        {
+          "start": 5.76,
+          "end": 6.24,
+          "word": " சின்ன",
+          "probability": 0.8037728667259216
+        },
+        {
+          "start": 6.24,
+          "end": 6.82,
+          "word": " மோறிறுக்கே",
+          "probability": 0.6915761396288872
+        },
+        {
+          "start": 6.82,
+          "end": 7.36,
+          "word": " இவ்வளோய்",
+          "probability": 0.675143726170063
+        },
+        {
+          "start": 7.36,
+          "end": 7.56,
+          "word": " effect",
+          "probability": 0.5289785265922546
+        },
+        {
+          "start": 7.56,
+          "end": 7.9,
+          "word": " நா,",
+          "probability": 0.774788498878479
+        },
+        {
+          "start": 8.6,
+          "end": 8.82,
+          "word": " factoryல",
+          "probability": 0.6240489333868027
+        },
+        {
+          "start": 8.82,
+          "end": 9.08,
+          "word": " இருக்கிற",
+          "probability": 0.7636634111404419
+        },
+        {
+          "start": 9.08,
+          "end": 9.58,
+          "word": " 30",
+          "probability": 0.35974350571632385
+        },
+        {
+          "start": 9.58,
+          "end": 10.0,
+          "word": " hp",
+          "probability": 0.47333428263664246
+        }
+      ]
+    },
+    {
+      "start": 10.0,
+      "end": 16.12,
+      "text": " motor direct start பண்ணா, currentு சாதார்ன currentவிட 7-8 மடங்கு வரும்",
+      "words": [
+        {
+          "start": 10.0,
+          "end": 10.3,
+          "word": " motor",
+          "probability": 0.35060903429985046
+        },
+        {
+          "start": 10.3,
+          "end": 10.64,
+          "word": " direct",
+          "probability": 0.4945662319660187
+        },
+        {
+          "start": 10.64,
+          "end": 11.06,
+          "word": " start",
+          "probability": 0.16762825846672058
+        },
+        {
+          "start": 11.06,
+          "end": 11.88,
+          "word": " பண்ணா,",
+          "probability": 0.83824542760849
+        },
+        {
+          "start": 12.2,
+          "end": 12.88,
+          "word": " currentு",
+          "probability": 0.339138887822628
+        },
+        {
+          "start": 12.88,
+          "end": 13.7,
+          "word": " சாதார்ன",
+          "probability": 0.7654153278895787
+        },
+        {
+          "start": 13.7,
+          "end": 14.24,
+          "word": " currentவிட",
+          "probability": 0.5744371488690376
+        },
+        {
+          "start": 14.24,
+          "end": 14.64,
+          "word": " 7",
+          "probability": 0.16937726736068726
+        },
+        {
+          "start": 14.64,
+          "end": 14.98,
+          "word": "-8",
+          "probability": 0.6456597298383713
+        },
+        {
+          "start": 14.98,
+          "end": 15.36,
+          "word": " மடங்கு",
+          "probability": 0.8424414098262787
+        },
+        {
+          "start": 15.36,
+          "end": 16.12,
+          "word": " வரும்",
+          "probability": 0.7526987552642822
+        }
+      ]
+    },
+    {
+      "start": 16.12,
+      "end": 19.7,
+      "text": " factory full light dimm, பக்கத்து machine trip்பாவும்",
+      "words": [
+        {
+          "start": 16.12,
+          "end": 16.52,
+          "word": " factory",
+          "probability": 0.8142154216766357
+        },
+        {
+          "start": 16.52,
+          "end": 17.02,
+          "word": " full",
+          "probability": 0.09569886326789856
+        },
+        {
+          "start": 17.02,
+          "end": 17.44,
+          "word": " light",
+          "probability": 0.9626507759094238
+        },
+        {
+          "start": 17.44,
+          "end": 17.84,
+          "word": " dimm,",
+          "probability": 0.985512912273407
+        },
+        {
+          "start": 18.08,
+          "end": 18.76,
+          "word": " பக்கத்து",
+          "probability": 0.7363788262009621
+        },
+        {
+          "start": 18.76,
+          "end": 18.88,
+          "word": " machine",
+          "probability": 0.22464348375797272
+        },
+        {
+          "start": 18.88,
+          "end": 19.7,
+          "word": " trip்பாவும்",
+          "probability": 0.6807229756377637
+        }
+      ]
+    },
+    {
+      "start": 20.0,
+      "end": 27.1,
+      "text": " ஏன்? மோட்டர் நிக்கும் போது அது வெரும் ஒரு வையர் கோயில் மதிரி. கரண்டத்தடுக்க எதுவுமே இல்ல.",
+      "words": [
+        {
+          "start": 20.0,
+          "end": 20.86,
+          "word": " ஏன்?",
+          "probability": 0.6700183898210526
+        },
+        {
+          "start": 20.86,
+          "end": 21.76,
+          "word": " மோட்டர்",
+          "probability": 0.7875171772071293
+        },
+        {
+          "start": 21.76,
+          "end": 22.18,
+          "word": " நிக்கும்",
+          "probability": 0.9277986586093903
+        },
+        {
+          "start": 22.18,
+          "end": 22.5,
+          "word": " போது",
+          "probability": 0.8224493563175201
+        },
+        {
+          "start": 22.5,
+          "end": 22.88,
+          "word": " அது",
+          "probability": 0.7340772449970245
+        },
+        {
+          "start": 22.88,
+          "end": 23.36,
+          "word": " வெரும்",
+          "probability": 0.7576635479927063
+        },
+        {
+          "start": 23.36,
+          "end": 23.64,
+          "word": " ஒரு",
+          "probability": 0.963300367196401
+        },
+        {
+          "start": 23.64,
+          "end": 24.18,
+          "word": " வையர்",
+          "probability": 0.5941469892859459
+        },
+        {
+          "start": 24.18,
+          "end": 24.68,
+          "word": " கோயில்",
+          "probability": 0.8551706423362097
+        },
+        {
+          "start": 24.68,
+          "end": 25.04,
+          "word": " மதிரி.",
+          "probability": 0.8553888082504273
+        },
+        {
+          "start": 25.22,
+          "end": 26.22,
+          "word": " கரண்டத்தடுக்க",
+          "probability": 0.8733575183611649
+        },
+        {
+          "start": 26.22,
+          "end": 26.84,
+          "word": " எதுவுமே",
+          "probability": 0.8077206483909062
+        },
+        {
+          "start": 26.84,
+          "end": 27.1,
+          "word": " இல்ல.",
+          "probability": 0.8884990016619364
+        }
+      ]
+    },
+    {
+      "start": 27.6,
+      "end": 31.12,
+      "text": " அதனால் தான் பார்ட்டில் ச்தார் டல்டா ச்தார் டார் டார்",
+      "words": [
+        {
+          "start": 27.6,
+          "end": 28.28,
+          "word": " அதனால்",
+          "probability": 0.8451804041862487
+        },
+        {
+          "start": 28.28,
+          "end": 28.5,
+          "word": " தான்",
+          "probability": 0.709338016808033
+        },
+        {
+          "start": 28.5,
+          "end": 29.1,
+          "word": " பார்ட்டில்",
+          "probability": 0.5579756610095501
+        },
+        {
+          "start": 29.1,
+          "end": 29.6,
+          "word": " ச்தார்",
+          "probability": 0.7817878971497217
+        },
+        {
+          "start": 29.6,
+          "end": 29.94,
+          "word": " டல்டா",
+          "probability": 0.5348743697007498
+        },
+        {
+          "start": 29.94,
+          "end": 30.32,
+          "word": " ச்தார்",
+          "probability": 0.8396733701229095
+        },
+        {
+          "start": 30.32,
+          "end": 30.9,
+          "word": " டார்",
+          "probability": 0.4883626066148281
+        },
+        {
+          "start": 30.9,
+          "end": 31.12,
+          "word": " டார்",
+          "probability": 0.4993800938129425
+        }
+      ]
+    },
+    {
+      "start": 31.12,
+      "end": 32.08,
+      "text": " மோதல்ல ச்தார்",
+      "words": [
+        {
+          "start": 31.12,
+          "end": 31.42,
+          "word": " மோதல்ல",
+          "probability": 0.6223327939709028
+        },
+        {
+          "start": 31.42,
+          "end": 32.08,
+          "word": " ச்தார்",
+          "probability": 0.789556697010994
+        }
+      ]
+    },
+    {
+      "start": 32.08,
+      "end": 34.44,
+      "text": " ஓவுரு வைந்டிங்கும் கம்மி ஓள்டேஜ்",
+      "words": [
+        {
+          "start": 32.08,
+          "end": 32.74,
+          "word": " ஓவுரு",
+          "probability": 0.5573182900746664
+        },
+        {
+          "start": 32.74,
+          "end": 33.38,
+          "word": " வைந்டிங்கும்",
+          "probability": 0.7920094728469849
+        },
+        {
+          "start": 33.38,
+          "end": 33.82,
+          "word": " கம்மி",
+          "probability": 0.9346887826919555
+        },
+        {
+          "start": 33.82,
+          "end": 34.44,
+          "word": " ஓள்டேஜ்",
+          "probability": 0.735574808385637
+        }
+      ]
+    },
+    {
+      "start": 34.44,
+      "end": 37.22,
+      "text": " கரண்ட் மூனில ஒரு பங்கக் குறையும்",
+      "words": [
+        {
+          "start": 34.44,
+          "end": 35.26,
+          "word": " கரண்ட்",
+          "probability": 0.8063711673021317
+        },
+        {
+          "start": 35.26,
+          "end": 35.86,
+          "word": " மூனில",
+          "probability": 0.8856755375862122
+        },
+        {
+          "start": 35.86,
+          "end": 36.1,
+          "word": " ஒரு",
+          "probability": 0.7682374914487203
+        },
+        {
+          "start": 36.1,
+          "end": 36.52,
+          "word": " பங்கக்",
+          "probability": 0.781853973865509
+        },
+        {
+          "start": 36.52,
+          "end": 37.22,
+          "word": " குறையும்",
+          "probability": 0.8578678444027901
+        }
+      ]
+    },
+    {
+      "start": 37.22,
+      "end": 39.28,
+      "text": " மோட்டர் மெல்ல ச்பீட்டடக்கும்",
+      "words": [
+        {
+          "start": 37.22,
+          "end": 37.74,
+          "word": " மோட்டர்",
+          "probability": 0.87518652847835
+        },
+        {
+          "start": 37.74,
+          "end": 38.26,
+          "word": " மெல்ல",
+          "probability": 0.9172159671783447
+        },
+        {
+          "start": 38.26,
+          "end": 39.28,
+          "word": " ச்பீட்டடக்கும்",
+          "probability": 0.688537594463144
+        }
+      ]
+    },
+    {
+      "start": 39.28,
+      "end": 40.36,
+      "text": " லைட்டு டிம்மாகாது",
+      "words": [
+        {
+          "start": 39.28,
+          "end": 39.72,
+          "word": " லைட்டு",
+          "probability": 0.7042293442147118
+        },
+        {
+          "start": 39.72,
+          "end": 40.36,
+          "word": " டிம்மாகாது",
+          "probability": 0.7396017258817499
+        }
+      ]
+    },
+    {
+      "start": 40.36,
+      "end": 42.0,
+      "text": " ச்பீட்டு வந்ததும்",
+      "words": [
+        {
+          "start": 40.36,
+          "end": 41.42,
+          "word": " ச்பீட்டு",
+          "probability": 0.8020460344851017
+        },
+        {
+          "start": 41.42,
+          "end": 42.0,
+          "word": " வந்ததும்",
+          "probability": 0.9557601436972618
+        }
+      ]
+    },
+    {
+      "start": 42.0,
+      "end": 43.22,
+      "text": " டைமர் முடியும்",
+      "words": [
+        {
+          "start": 42.0,
+          "end": 42.46,
+          "word": " டைமர்",
+          "probability": 0.7723690246542295
+        },
+        {
+          "start": 42.46,
+          "end": 43.22,
+          "word": " முடியும்",
+          "probability": 0.9703310802578926
+        }
+      ]
+    },
+    {
+      "start": 43.22,
+      "end": 46.2,
+      "text": " star off, delta on, full power.",
+      "words": [
+        {
+          "start": 43.22,
+          "end": 43.6,
+          "word": " star",
+          "probability": 0.31079936027526855
+        },
+        {
+          "start": 43.6,
+          "end": 43.96,
+          "word": " off,",
+          "probability": 0.6018665432929993
+        },
+        {
+          "start": 44.4,
+          "end": 44.56,
+          "word": " delta",
+          "probability": 0.9922583699226379
+        },
+        {
+          "start": 44.56,
+          "end": 45.04,
+          "word": " on,",
+          "probability": 0.9815457463264465
+        },
+        {
+          "start": 45.44,
+          "end": 45.7,
+          "word": " full",
+          "probability": 0.9965547323226929
+        },
+        {
+          "start": 45.7,
+          "end": 46.2,
+          "word": " power.",
+          "probability": 0.9992868304252625
+        }
+      ]
+    },
+    {
+      "start": 46.44,
+      "end": 48.18,
+      "text": " அனா ஒரு குஷ்சின்",
+      "words": [
+        {
+          "start": 46.44,
+          "end": 47.04,
+          "word": " அனா",
+          "probability": 0.8002433975537618
+        },
+        {
+          "start": 47.04,
+          "end": 47.2,
+          "word": " ஒரு",
+          "probability": 0.7599614759286245
+        },
+        {
+          "start": 47.2,
+          "end": 48.18,
+          "word": " குஷ்சின்",
+          "probability": 0.6440355777740479
+        }
+      ]
+    },
+    {
+      "start": 48.18,
+      "end": 50.4,
+      "text": " star off, delta on,",
+      "words": [
+        {
+          "start": 48.18,
+          "end": 48.5,
+          "word": " star",
+          "probability": 0.8024634122848511
+        },
+        {
+          "start": 48.5,
+          "end": 49.2,
+          "word": " off,",
+          "probability": 0.9690973162651062
+        },
+        {
+          "start": 49.48,
+          "end": 49.86,
+          "word": " delta",
+          "probability": 0.9993634819984436
+        },
+        {
+          "start": 49.86,
+          "end": 50.4,
+          "word": " on,",
+          "probability": 0.9969574213027954
+        }
+      ]
+    },
+    {
+      "start": 50.6,
+      "end": 54.5,
+      "text": " ரண்டையும் gap இல்லாம் ஒரே நேரத்தில பண்ணா என்னாகும்",
+      "words": [
+        {
+          "start": 50.6,
+          "end": 51.52,
+          "word": " ரண்டையும்",
+          "probability": 0.8548784956336022
+        },
+        {
+          "start": 51.52,
+          "end": 51.76,
+          "word": " gap",
+          "probability": 0.8494593501091003
+        },
+        {
+          "start": 51.76,
+          "end": 52.36,
+          "word": " இல்லாம்",
+          "probability": 0.7035311994453272
+        },
+        {
+          "start": 52.36,
+          "end": 52.76,
+          "word": " ஒரே",
+          "probability": 0.9464699228604635
+        },
+        {
+          "start": 52.76,
+          "end": 53.22,
+          "word": " நேரத்தில",
+          "probability": 0.9128884747624397
+        },
+        {
+          "start": 53.22,
+          "end": 53.5,
+          "word": " பண்ணா",
+          "probability": 0.8383777797222137
+        },
+        {
+          "start": 53.5,
+          "end": 54.5,
+          "word": " என்னாகும்",
+          "probability": 0.8292466010898352
+        }
+      ]
+    },
+    {
+      "start": 54.5,
+      "end": 58.22,
+      "text": " motor smooth்தா ஓடுமா, இல்லை flash் ஆயிறிப்பாவுமா?",
+      "words": [
+        {
+          "start": 54.5,
+          "end": 54.86,
+          "word": " motor",
+          "probability": 0.054897572845220566
+        },
+        {
+          "start": 54.86,
+          "end": 55.72,
+          "word": " smooth்தா",
+          "probability": 0.5343793667852879
+        },
+        {
+          "start": 55.72,
+          "end": 56.2,
+          "word": " ஓடுமா,",
+          "probability": 0.8220760722955068
+        },
+        {
+          "start": 56.36,
+          "end": 56.76,
+          "word": " இல்லை",
+          "probability": 0.6022096574306488
+        },
+        {
+          "start": 56.76,
+          "end": 57.28,
+          "word": " flash்",
+          "probability": 0.5929628163576126
+        },
+        {
+          "start": 57.28,
+          "end": 58.22,
+          "word": " ஆயிறிப்பாவுமா?",
+          "probability": 0.7562458423467783
+        }
+      ]
+    },
+    {
+      "start": 58.54,
+      "end": 60.18,
+      "text": " உங்க answer comment பண்ணுங்க,",
+      "words": [
+        {
+          "start": 58.54,
+          "end": 59.04,
+          "word": " உங்க",
+          "probability": 0.8186072111129761
+        },
+        {
+          "start": 59.04,
+          "end": 59.28,
+          "word": " answer",
+          "probability": 0.6612895727157593
+        },
+        {
+          "start": 59.28,
+          "end": 59.66,
+          "word": " comment",
+          "probability": 0.5583909153938293
+        },
+        {
+          "start": 59.66,
+          "end": 60.18,
+          "word": " பண்ணுங்க,",
+          "probability": 0.8696713522076607
+        }
+      ]
+    },
+    {
+      "start": 60.38,
+      "end": 62.04,
+      "text": " correct answer full videoல,",
+      "words": [
+        {
+          "start": 60.38,
+          "end": 60.74,
+          "word": " correct",
+          "probability": 0.98209547996521
+        },
+        {
+          "start": 60.74,
+          "end": 61.18,
+          "word": " answer",
+          "probability": 0.9980795383453369
+        },
+        {
+          "start": 61.18,
+          "end": 61.54,
+          "word": " full",
+          "probability": 0.9685880541801453
+        },
+        {
+          "start": 61.54,
+          "end": 62.04,
+          "word": " videoல,",
+          "probability": 0.5322102978825569
+        }
+      ]
+    },
+    {
+      "start": 62.4,
+      "end": 63.08,
+      "text": " like பண்ணுங்க,",
+      "words": [
+        {
+          "start": 62.4,
+          "end": 62.64,
+          "word": " like",
+          "probability": 0.9864190220832825
+        },
+        {
+          "start": 62.64,
+          "end": 63.08,
+          "word": " பண்ணுங்க,",
+          "probability": 0.9758644849061966
+        }
+      ]
+    },
+    {
+      "start": 63.22,
+      "end": 66.02,
+      "text": " சேர் பண்ணுங்கள் factory decode தமிழ் சப்ஸ்கரைப் பண்ணுங்கள்",
+      "words": [
+        {
+          "start": 63.22,
+          "end": 63.48,
+          "word": " சேர்",
+          "probability": 0.5309874601662159
+        },
+        {
+          "start": 63.48,
+          "end": 63.88,
+          "word": " பண்ணுங்கள்",
+          "probability": 0.7801148096720377
+        },
+        {
+          "start": 63.88,
+          "end": 64.16,
+          "word": " factory",
+          "probability": 0.2014867067337036
+        },
+        {
+          "start": 64.16,
+          "end": 64.64,
+          "word": " decode",
+          "probability": 0.5696028172969818
+        },
+        {
+          "start": 64.64,
+          "end": 64.96,
+          "word": " தமிழ்",
+          "probability": 0.6305051237344742
+        },
+        {
+          "start": 64.96,
+          "end": 65.46,
+          "word": " சப்ஸ்கரைப்",
+          "probability": 0.6963874833150343
+        },
+        {
+          "start": 65.46,
+          "end": 66.02,
+          "word": " பண்ணுங்கள்",
+          "probability": 0.9343858228789436
+        }
+      ]
+    }
+  ]
+}

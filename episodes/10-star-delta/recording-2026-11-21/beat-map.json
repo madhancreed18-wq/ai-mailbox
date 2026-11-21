@@ -1,0 +1,223 @@
+{
+  "kind": "audio-derived section/beat map; NOT the legacy written paragraph numbering",
+  "source": "New uploads long(1).wav and shorts(1).wav, 2026-11-21",
+  "model": "mobiuslabsgmbh/faster-whisper-large-v3-turbo",
+  "faster_whisper_version": "1.2.1",
+  "method": "Tamil segment/word timestamps plus observed waveform pauses (-40 dB, 0.20 s) and 10 ms RMS edges. No proportional text timing.",
+  "mapping_status": "Revised written paragraph lists are absent from the repository. These sections group the new recording by recognized spoken anchors. Remap to the revised script before using legacy PS indices.",
+  "review_required": true,
+  "long": [
+    {
+      "id": 1,
+      "start": 0.12,
+      "end": 15.56,
+      "anchor": "Hook: home/factory motor direct start; current surge, dimming and trip"
+    },
+    {
+      "id": 2,
+      "start": 16.26,
+      "end": 29.04,
+      "anchor": "Standstill coil/current explanation and speed reducing current"
+    },
+    {
+      "id": 3,
+      "start": 29.42,
+      "end": 43.46,
+      "anchor": "Star-Delta solution and video/quiz overview"
+    },
+    {
+      "id": 4,
+      "start": 44.11,
+      "end": 55.44,
+      "anchor": "Panel: Main, Star, Delta contactors and overload relay"
+    },
+    {
+      "id": 5,
+      "start": 56.06,
+      "end": 66.83,
+      "anchor": "Motor terminal pairs: U1 V1 W1 and U2 V2 W2"
+    },
+    {
+      "id": 6,
+      "start": 67.55,
+      "end": 79.73,
+      "anchor": "Star connection, winding voltage and reduced starting current"
+    },
+    {
+      "id": 7,
+      "start": 80.6,
+      "end": 86.45,
+      "anchor": "Delta connection: full winding voltage, power and torque"
+    },
+    {
+      "id": 8,
+      "start": 87.16,
+      "end": 101.45,
+      "anchor": "Torque tradeoff and suitability for starting load"
+    },
+    {
+      "id": 9,
+      "start": 102.08,
+      "end": 121.23,
+      "anchor": "Full Start -> Star -> gap -> Delta demonstration"
+    },
+    {
+      "id": 10,
+      "start": 122.24,
+      "end": 130.59,
+      "anchor": "Choose the starting timer from actual motor behavior"
+    },
+    {
+      "id": 11,
+      "start": 131.45,
+      "end": 144.91,
+      "anchor": "FX3U input and output assignments"
+    },
+    {
+      "id": 12,
+      "start": 145.78,
+      "end": 160.55,
+      "anchor": "Rung 1: M0 self-holding and Stop/overload interruption"
+    },
+    {
+      "id": 13,
+      "start": 161.34,
+      "end": 165.38,
+      "anchor": "Rung 2: M0 drives Y0 Main"
+    },
+    {
+      "id": 14,
+      "start": 166.09,
+      "end": 175.28,
+      "anchor": "Rung 3: T0 K80 / timer timebase"
+    },
+    {
+      "id": 15,
+      "start": 175.95,
+      "end": 182.72,
+      "anchor": "Rung 4: Star contactor conditions"
+    },
+    {
+      "id": 16,
+      "start": 183.45,
+      "end": 189.67,
+      "anchor": "Rung 5: T1 K1 transition gap"
+    },
+    {
+      "id": 17,
+      "start": 190.31,
+      "end": 195.31,
+      "anchor": "Rung 6: Delta contactor conditions"
+    },
+    {
+      "id": 18,
+      "start": 195.68,
+      "end": 200.99,
+      "anchor": "New live run: Star, timer, gap, Delta"
+    },
+    {
+      "id": 19,
+      "start": 201.69,
+      "end": 209.24,
+      "anchor": "Quiz question: switching Star to Delta without a gap"
+    },
+    {
+      "id": 20,
+      "start": 209.85,
+      "end": 212.23,
+      "anchor": "Option A: smooth Delta transition"
+    },
+    {
+      "id": 21,
+      "start": 212.74,
+      "end": 215.36,
+      "anchor": "Option B: short circuit, flash, trip"
+    },
+    {
+      "id": 22,
+      "start": 215.86,
+      "end": 217.86,
+      "anchor": "Option C: reverse rotation"
+    },
+    {
+      "id": 23,
+      "start": 218.4,
+      "end": 219.45,
+      "anchor": "Comment invitation"
+    },
+    {
+      "id": 24,
+      "start": 220.36,
+      "end": 229.84,
+      "anchor": "Transition to software interlock and opposing NC contacts"
+    },
+    {
+      "id": 25,
+      "start": 230.44,
+      "end": 243.12,
+      "anchor": "Hardware interlock and welded/stuck contactor warning"
+    },
+    {
+      "id": 26,
+      "start": 243.83,
+      "end": 253.5,
+      "anchor": "Power cut and deliberate restart/self-holding behavior"
+    },
+    {
+      "id": 27,
+      "start": 254.35,
+      "end": 268.91,
+      "anchor": "Common mistakes: timer too short/long, overload setting"
+    },
+    {
+      "id": 28,
+      "start": 269.65,
+      "end": 281.03,
+      "anchor": "Quick summary including light-load limitation"
+    },
+    {
+      "id": 29,
+      "start": 281.81,
+      "end": 297.29,
+      "anchor": "Quiz answer B and mechanical contact-release explanation"
+    },
+    {
+      "id": 30,
+      "start": 297.56,
+      "end": 306.92,
+      "anchor": "Next video: forward/reverse; like/share/subscribe"
+    }
+  ],
+  "short": [
+    {
+      "id": 1,
+      "start": 0.26,
+      "end": 19.64,
+      "anchor": "Hook: home/factory motor, current surge, dimming and trip"
+    },
+    {
+      "id": 2,
+      "start": 20.33,
+      "end": 27.11,
+      "anchor": "New standstill-coil/current explanation"
+    },
+    {
+      "id": 3,
+      "start": 27.84,
+      "end": 46.26,
+      "anchor": "Star-Delta reduced-current start and timed transition"
+    },
+    {
+      "id": 4,
+      "start": 46.75,
+      "end": 58.27,
+      "anchor": "Question: Star OFF and Delta ON without a gap"
+    },
+    {
+      "id": 5,
+      "start": 58.66,
+      "end": 65.7,
+      "anchor": "Comment, full-video answer, like/share/subscribe"
+    }
+  ]
+}
