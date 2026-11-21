@@ -1602,6 +1602,7 @@ function drawNgd(e,l,st,tl){
   else if(K==='sdiag')drawSD(e,c,tl);
   else if(K==='coil2')drawCoil2(e,c,tl);
   else if(K==='ctl2')drawCtl2(e,c,tl);
+  else if(K==='tring')drawTRing(e,c,tl);
   else if(K==='kcap')drawKcap(e,c,tl);
   else if(K==='sdmg')drawSDMG(e,c,tl);
   else if(K==='emo2')drawEmo2(e,c,tl);
@@ -2285,6 +2286,7 @@ const TPL={
  ep09s:{name:'EP09 Short – Lift button latching (9:16)',desc:'0:37 · 3D lift hook, decode, power-cut danger, CTA',style:'white',scenes:[]},
  sd3dtest:{name:'Star-Delta 3D stage test',desc:'real 3D panel, contactors, motor, ammeter, light',style:'white',scenes:[]},
  sdmgtest:{name:'Star-Delta motion graphic test',desc:'animated contactors, current, motor, ammeter, light, timer',style:'white',scenes:[]},
+ ep12assets:{name:'EP12 asset test – conveyor drive, push buttons, car',desc:'3D assets for the reverse delay timer episode',style:'white',scenes:[]},
  ep11:{name:'EP11 – Forward / Reverse wiring + program (6:16)',desc:'washing machine hook, 3D FWD/REV panel with KM2 cross, control wiring, FX3U ladder',style:'white',scenes:[]},
  ep11s:{name:'EP11 Short (0:34)',desc:'washing machine → FWD/REV → question',style:'white',scenes:[]},
  ep10v4:{name:'EP10 v4 – Star-Delta explained (5:07)',desc:'explanation only: home hook, 3D stage follows every sentence, small presenter only at key moments',style:'white',scenes:[]},
@@ -4212,6 +4214,114 @@ function g3Apps(){const B=g3Base('#e8edf3'),{T,S,cam,M,box,cyl,label}=B;
     cam.position.set(now[0]+Math.sin(tl*.3)*.05,now[1]+Math.sin(tl*.23)*.03,now[2]);cam.lookAt(now[3],now[4],now[5])}}
 }
 G3_BUILD.apps=g3Apps;
+/* ---- shot: belt conveyor head drive – foot motor → flexible coupling → helical-bevel gear unit → head pulley; tail pulley with zero-speed sensor ---- */
+function g3Drive(){const B=g3Base('#e6eaef'),{T,S,cam,M,box,cyl,label}=B;
+  box(22,.1,12,M('#c9cfd6',{r:.95}),0,-1.55,-1);box(22,8,.1,M('#eceff3',{r:.95}),0,2.4,-4.2);
+  const st=M('#4b5563',{m:.55,r:.45}),yel=M('#eab308',{m:.3,r:.5});
+  // conveyor frame: two channels, legs, idlers
+  [-.8,.8].forEach(z=>{box(8.6,.22,.08,st,-1,-.15,z);for(let x=-4.8;x<=2.8;x+=1.9){box(.1,1.3,.1,st,x,-.85,z)}});
+  for(let x=-4.3;x<=2.4;x+=.75){const r=cyl(.07,.07,1.5,M('#9ca3af',{m:.7,r:.3}),x,.29,0,S,14);r.rotation.x=Math.PI/2;const rb=cyl(.06,.06,1.5,M('#9ca3af',{m:.7,r:.3}),x,-.42,0,S,12);rb.rotation.x=Math.PI/2}
+  // pulleys (lagged drums)
+  const mkP=(x)=>{const g=new T.Group();g.position.set(x,0,0);S.add(g);const d=cyl(.35,.35,1.4,M('#1f2937',{r:.85}),0,0,0,g,40);d.rotation.x=Math.PI/2;
+    for(let i=0;i<8;i++){const a=i/8*Math.PI*2;const l=box(.03,.02,1.38,M('#374151',{r:.9}),Math.cos(a)*.355,Math.sin(a)*.355,0,g);l.rotation.z=a}
+    const sh=cyl(.06,.06,2.6,M('#d1d5db',{m:.9,r:.2}),0,0,0,g,16);sh.rotation.x=Math.PI/2;[-.95,.95].forEach(z=>box(.3,.22,.18,M('#6b7280',{m:.5,r:.5}),0,-.12,z,S).position.x=x);return g};
+  const head=mkP(3),tail=mkP(-5);
+  // belt with moving texture
+  const bt=B.tex((c,w,h)=>{c.fillStyle='#111827';c.fillRect(0,0,w,h);c.strokeStyle='#374151';c.lineWidth=10;for(let x=-h;x<w+h;x+=64){c.beginPath();c.moveTo(x,0);c.lineTo(x+h*.5,h/2);c.lineTo(x,h);c.stroke()}},512,128);
+  bt.wrapS=bt.wrapT=T.RepeatWrapping;bt.repeat.set(6,1);
+  const belt=new T.Mesh(new T.BoxGeometry(8,.04,1.2),new T.MeshStandardMaterial({map:bt,roughness:.9}));belt.position.set(-1,.37,0);S.add(belt);
+  const bt2=bt.clone();bt2.needsUpdate=true;const beltB=new T.Mesh(new T.BoxGeometry(8,.04,1.2),new T.MeshStandardMaterial({color:'#111827',roughness:.9}));beltB.position.set(-1,-.37,0);S.add(beltB);
+  const loads=[0,1,2,3].map(i=>box(.55,.4,.55,M(['#b45309','#d97706','#92400e','#f59e0b'][i],{r:.85}),-4+i*2,.6,0));
+  // drive train on the outboard side (z+): head shaft → gear unit → coupling → motor
+  box(3.4,.12,1.0,st,4.4,-.62,1.75);box(.12,.95,.12,st,2.9,-1.1,1.4);box(.12,.95,.12,st,5.9,-1.1,1.4);box(.12,.95,.12,st,2.9,-1.1,2.1);box(.12,.95,.12,st,5.9,-1.1,2.1);
+  const GB=new T.Group();GB.position.set(3.0,0,1.55);S.add(GB);const gbm=M('#64748b',{m:.45,r:.5});
+  box(.95,1.0,.75,gbm,.05,-.05,0,GB);box(1.05,.12,.85,gbm,.05,-.58,0,GB);for(let i=0;i<4;i++)box(.04,.8,.78,gbm,-.32+i*.22,0,0,GB);
+  cyl(.22,.22,.12,gbm,.55,0,0,GB,24).rotation.z=Math.PI/2;label('GEAR UNIT',.7,.14,.05,.25,.39,GB,{size:56,color:'#f8fafc'});
+  // coupling
+  const CP=new T.Group();CP.position.set(3.82,0,1.55);S.add(CP);const hubA=cyl(.17,.17,.18,M('#9ca3af',{m:.85,r:.25}),-.13,0,0,CP,24);hubA.rotation.z=Math.PI/2;
+  const hubB=cyl(.17,.17,.18,M('#9ca3af',{m:.85,r:.25}),.13,0,0,CP,24);hubB.rotation.z=Math.PI/2;
+  const spider=new T.Group();CP.add(spider);const spM=M('#f97316',{r:.7});for(let i=0;i<6;i++){const a=i/6*Math.PI*2;const k=box(.08,.06,.12,spM,0,Math.cos(a)*.1,Math.sin(a)*.1,spider);k.rotation.x=a}
+  // motor (foot mounted)
+  const MO=new T.Group();MO.position.set(4.85,0,1.55);S.add(MO);const mb=M('#2f5f8f',{r:.45,m:.35});
+  const mbody=cyl(.45,.45,1.4,mb,0,0,0,MO,40);mbody.rotation.z=Math.PI/2;for(let i=0;i<14;i++){const a=i/14*Math.PI*2;const f=box(1.2,.05,.08,mb,0,Math.cos(a)*.47,Math.sin(a)*.47,MO);f.rotation.x=a}
+  cyl(.43,.38,.35,M('#285481',{r:.5,m:.3}),.85,0,0,MO,36).rotation.z=Math.PI/2;box(.32,.22,.3,M('#2b5279',{r:.5}),-.1,.55,0,MO);
+  [-.4,.4].forEach(x=>box(.22,.22,.85,M('#1f3b5c',{r:.6}),x,-.5,0,MO));
+  const msh=cyl(.05,.05,.35,M('#d1d5db',{m:.9,r:.2}),-.85,0,0,MO,12);msh.rotation.z=Math.PI/2;
+  // zero-speed sensor at tail pulley (target bolt on shaft end)
+  const tgt=new T.Group();tgt.position.set(-5,0,-1.3);S.add(tgt);const tdisk=cyl(.18,.18,.04,M('#9ca3af',{m:.8,r:.3}),0,0,0,tgt,24);tdisk.rotation.x=Math.PI/2;
+  box(.07,.07,.06,M('#e5e7eb',{m:.9,r:.2}),0,.13,-.04,tgt);
+  const sens=cyl(.07,.07,.42,M('#94a3b8',{m:.7,r:.3}),-5,.13,-1.62,S,16);sens.rotation.x=Math.PI/2;cyl(.075,.075,.05,M('#1f2937',{r:.5}),-5,.13,-1.44,S,16).rotation.x=Math.PI/2;
+  const sLed=box(.06,.06,.04,new T.MeshStandardMaterial({color:'#7f1d1d',emissive:'#ef4444',emissiveIntensity:0}),-5,.22,-1.83);
+  box(.08,.08,.5,st,-5,-.4,-1.6);box(.08,.62,.08,st,-5,-.12,-1.85);const sl=label('ZERO SPEED SENSOR',.9,.13,-5,.42,-1.9,S,{size:54,color:'#111827'});sl.rotation.y=Math.PI;
+  // slam effects
+  const sparks=[];for(let i=0;i<26;i++){const s=new T.Mesh(new T.SphereGeometry(.025,6,6),new T.MeshBasicMaterial({color:'#fde047'}));s.visible=false;S.add(s);sparks.push({s,v:[(Math.random()-.5)*3,Math.random()*3+1,(Math.random()-.2)*3]})}
+  const chips=[];for(let i=0;i<5;i++){const c=box(.07,.05,.1,spM,0,0,0);c.visible=false;chips.push({c,v:[(Math.random()-.3)*2.5,Math.random()*2+1.5,Math.random()*2+.5]})}
+  const flash=new T.PointLight('#ffd27a',0,5);flash.position.set(3.5,.6,2.4);S.add(flash);
+  const CAM={wide:[-1.5,2.6,8.4,0,-.2,0],drive:[4.4,1.4,5.0,3.9,-.2,1.4],coupling:[3.9,.6,3.4,3.85,0,1.55],pulley:[1.6,1.0,3.6,3.0,.1,.6],sensor:[-3.7,.55,-3.6,-5,.1,-1.6],belt:[-2.2,1.6,3.6,-1,.4,0]};
+  let ang=0,off=0,lastT=0;
+  return{B,update(tl,e){const Md=frModel(e.seq,tl);const sp=Md.s;
+    const dt=Math.max(0,Math.min(.1,tl-lastT));lastT=tl;ang+=dt*sp*9;off+=dt*sp*.55;
+    head.rotation.z=-ang;tail.rotation.z=-ang;tgt.rotation.z=-ang;[hubA,hubB].forEach(h=>h.rotation.x=ang*5);spider.rotation.x=ang*5;msh.rotation.x=ang*5;
+    bt.offset.x=-off;loads.forEach((b,i)=>{let x=((-4+i*2+off*8)%8+8)%8-5;b.position.x=x;b.visible=x<2.7});
+    sLed.material.emissiveIntensity=Math.abs(sp)>.05&&Math.sin(ang)>.7?2.5:0;
+    // slam: at e.slam time – violent shake, sparks, coupling spider chips fly
+    let ds=999;(e.slam||[]).forEach(t=>{if(tl>=t&&tl-t<ds)ds=tl-t});const on=ds<1.4;
+    const shk=on?Math.max(0,1-ds/1.0):0;GB.position.y=Math.sin(tl*90)*.03*shk;MO.position.y=Math.sin(tl*80+1)*.025*shk;CP.position.y=Math.sin(tl*95)*.03*shk;
+    flash.intensity=on&&ds<.35?8*(1-ds/.35):0;
+    sparks.forEach(({s,v})=>{s.visible=on&&ds<.9;if(s.visible){s.position.set(3.82+v[0]*ds,0+v[1]*ds-4.9*ds*ds,1.55+v[2]*ds*.6)}});
+    chips.forEach(({c,v})=>{c.visible=on&&ds<1.2;if(c.visible){c.position.set(3.82+v[0]*ds,v[1]*ds-4.9*ds*ds,1.55+v[2]*ds);c.rotation.set(ds*9,ds*7,0)}});
+    spider.visible=!(on&&ds<1.2)||ds<.05||!(e.breakSpider);
+    const cl=e.cams||[[0,'wide']];let ci=0;cl.forEach(([c0],i)=>{if(tl>=c0)ci=i});const cur=CAM[cl[ci][1]]||CAM.wide,from=ci?CAM[cl[ci-1][1]]||CAM.wide:cur;
+    const f=g3ease(g3c((tl-cl[ci][0])/1.1)),now=from.map((v,i)=>v+(cur[i]-v)*f);if(e.dist)for(let i=0;i<3;i++)now[i]=now[i+3]+(now[i]-now[i+3])*e.dist;
+    const sh=.05*shk;cam.position.set(now[0]+Math.sin(tl*.3)*.05+Math.sin(tl*71)*sh,now[1]+Math.sin(tl*.23)*.03+Math.sin(tl*63)*sh,now[2]);cam.lookAt(now[3],now[4],now[5])}}
+}
+G3_BUILD.drive=g3Drive;
+/* ---- shot: push-button control station – READY lamp, FORWARD, STOP, REVERSE ---- */
+function g3PBS(){const B=g3Base('#dfe4ea'),{T,S,cam,M,box,cyl,label}=B;
+  box(10,7,.1,M('#cfd5dc',{r:.95}),0,1,-1.2);box(.15,6,.15,M('#9ca3af',{m:.6,r:.4}),-1.6,1,-1.05);
+  const E=new T.Group();E.position.set(0,.6,-.8);S.add(E);box(1.5,3.6,.7,M('#c7ccd3',{r:.55}),0,0,0,E);box(1.38,3.48,.06,M('#6b7280',{r:.5}),0,0,.37,E);
+  const lampM=new T.MeshStandardMaterial({color:'#14532d',emissive:'#22c55e',emissiveIntensity:0,roughness:.3});const lamp=new T.Mesh(new T.SphereGeometry(.2,24,16,0,Math.PI*2,0,Math.PI/2),lampM);lamp.rotation.x=Math.PI/2;lamp.position.set(0,1.25,.42);E.add(lamp);
+  const lampL=new T.PointLight('#22c55e',0,2);lampL.position.set(0,1.25,.9);E.add(lampL);
+  const btn={};[['fwd',.42,'#111827','FORWARD'],['stop',-.32,'#dc2626','STOP'],['rev',-1.06,'#111827','REVERSE']].forEach(([k,y,col,lab])=>{cyl(.24,.24,.06,M('#d1d5db',{m:.7,r:.3}),0,y,.42,E,32).rotation.x=Math.PI/2;
+    const b=cyl(.18,.18,.12,M(col,{r:.4}),0,y,.48,E,32);b.rotation.x=Math.PI/2;btn[k]=b;box(.95,.2,.02,M('#f8fafc',{r:.6}),0,y-.38,.41,E);label(lab,.9,.17,0,y-.38,.43,E,{size:64,color:'#111827'})});
+  box(.95,.2,.02,M('#f8fafc',{r:.6}),0,1.25-.38,.41,E);label('READY',.9,.17,0,1.25-.38,.43,E,{size:64,color:'#111827'});
+  const finger=new T.Group();S.add(finger);const skin=M('#e0ac69',{r:.8});const fg=cyl(.09,.1,.9,skin,0,0,0,finger,16);fg.rotation.x=Math.PI/2;cyl(.09,.09,.02,M('#fde7d2',{r:.6}),0,0,-.44,finger,16).rotation.x=Math.PI/2;
+  const CAM={front:[0,.65,6.2,0,.55,-.8],close:[.6,.5,3.0,0,.2,-.8]};
+  return{B,update(tl,e){let lit=0;(e.lamp||[]).forEach(([t,v])=>{if(tl>=t)lit=v});lampM.emissiveIntensity=lit?2.6:0;lampL.intensity=lit?2:0;lampM.color.set(lit?'#86efac':'#14532d');
+    let cur=null,ct=0;(e.press||[]).forEach(([t,k])=>{if(tl>=t-.6&&tl<t+.7){cur=k;ct=t}});
+    Object.entries(btn).forEach(([k,b])=>{const d=cur===k?Math.max(0,1-Math.abs(tl-ct)/.25):0;b.position.z=.48-.06*Math.min(1,d*1.5)});
+    finger.visible=!!cur;if(cur){const y={fwd:.42,stop:-.32,rev:-1.06}[cur]+.6;const k=tl<ct?(tl-(ct-.6))/.6:1-(tl-ct)/.7;const z=-.8+.48+.5+.9*(1-g3ease(g3c(k)));finger.position.set(.05,y,z)}
+    const cl=e.cams||[[0,'front']];let ci=0;cl.forEach(([c0],i)=>{if(tl>=c0)ci=i});const c2=CAM[cl[ci][1]]||CAM.front,from=ci?CAM[cl[ci-1][1]]||CAM.front:c2;
+    const f=g3ease(g3c((tl-cl[ci][0])/1.0)),now=from.map((v,i)=>v+(c2[i]-v)*f);if(e.dist)for(let i=0;i<3;i++)now[i]=now[i+3]+(now[i]-now[i+3])*e.dist;
+    cam.position.set(now[0]+Math.sin(tl*.3)*.04,now[1]+Math.sin(tl*.23)*.03,now[2]);cam.lookAt(now[3],now[4],now[5])}}
+}
+G3_BUILD.pbs=g3PBS;
+/* ---- shot: car – forward, brake to stop, then reverse (gear shown on a dashboard sign) ---- */
+function g3Car(){const B=g3Base('#cfe6f7'),{T,S,cam,M,box,cyl,label}=B;
+  box(40,.1,10,M('#6b7280',{r:.95}),0,-1.55,0);for(let x=-20;x<20;x+=2.4)box(1.2,.02,.15,M('#f8fafc',{r:.8}),x,-1.49,1.4);box(40,.12,1.5,M('#a3a3a3',{r:.9}),0,-1.45,-3.2);
+  for(let i=0;i<10;i++){const x=-18+i*4;cyl(.12,.12,1.6,M('#6b4f2a',{r:.9}),x,-.7,-4.2,S,8);const t=new T.Mesh(new T.SphereGeometry(.7,12,10),M('#4d7c0f',{r:.9}));t.position.set(x,.6,-4.2);S.add(t)}
+  const C=new T.Group();S.add(C);const paint=M('#dc2626',{r:.35,m:.3});
+  const prof=new T.Shape();[[-1.75,-1.05],[1.75,-1.05],[1.8,-.62],[1.55,-.42],[.75,-.36],[.3,.12],[-.85,.14],[-1.45,-.34],[-1.78,-.42]].forEach(([px,py],i)=>i?prof.lineTo(px,py):prof.moveTo(px,py));prof.closePath();
+  const bodyG=new T.ExtrudeGeometry(prof,{depth:1.5,bevelEnabled:true,bevelSize:.08,bevelThickness:.08,bevelSegments:4,curveSegments:8});bodyG.translate(0,0,-.75);C.add(new T.Mesh(bodyG,paint));
+  const win=new T.Shape();[[.62,-.4],[.24,.04],[-.78,.06],[-1.3,-.38]].forEach(([px,py],i)=>i?win.lineTo(px,py):win.moveTo(px,py));win.closePath();
+  const gl=M('#0f172a',{r:.1,m:.4});[.835,-.835].forEach(z=>{const wg=new T.ShapeGeometry(win);const wm=new T.Mesh(wg,gl);wm.position.z=z;if(z<0)wm.rotation.y=Math.PI,wm.scale.x=-1;C.add(wm)});
+  box(.05,.36,1.3,gl,.47,-.18,0,C).rotation.z=-.85;box(.05,.34,1.3,gl,-1.12,-.2,0,C).rotation.z=.75;
+  [1.1,-1.1].forEach(x=>[.84,-.84].forEach(z=>{const arch=new T.Mesh(new T.CircleGeometry(.43,24,0,Math.PI),M('#111827',{r:.9}));arch.position.set(x,-1.08,z+(z>0?.001:-.001));if(z<0)arch.rotation.y=Math.PI;C.add(arch)}));
+  box(.08,.18,.4,M('#fef9c3',{r:.2,e:'#fde68a',ei:.6}),1.71,-.65,.5,C);box(.08,.18,.4,M('#fef9c3',{r:.2,e:'#fde68a',ei:.6}),1.71,-.65,-.5,C);
+  const tail=[.5,-.5].map(z=>box(.06,.16,.36,new T.MeshStandardMaterial({color:'#7f1d1d',emissive:'#ef4444',emissiveIntensity:0}),-1.71,-.62,z,C));
+  const wheels=[];[[1.1,.8],[1.1,-.8],[-1.1,.8],[-1.1,-.8]].forEach(([x,z])=>{const w=new T.Group();w.position.set(x,-1.15,z);C.add(w);const t=cyl(.36,.36,.25,M('#111827',{r:.9}),0,0,0,w,28);t.rotation.x=Math.PI/2;
+    const hub=cyl(.2,.2,.27,M('#cbd5e1',{m:.8,r:.3}),0,0,0,w,6);hub.rotation.x=Math.PI/2;wheels.push(w)});
+  const sign=B.tex((c,w,h)=>{},256,256);const gearTex={};['D','N','R'].forEach(g=>{gearTex[g]=B.tex((c,w,h)=>{c.fillStyle='#111827';c.beginPath();c.roundRect(8,8,w-16,h-16,30);c.fill();c.fillStyle=g==='R'?'#f87171':g==='D'?'#4ade80':'#e5e7eb';c.font='bold 170px sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillText(g,w/2,h/2+8)},256,256)});
+  const gs=new T.Mesh(new T.PlaneGeometry(1.0,1.0),new T.MeshBasicMaterial({map:gearTex.D,transparent:true}));gs.position.set(0,1.1,0);C.add(gs);
+  const CAM={side:[0,1.0,7.5,0,-.6,0],front:[4.5,.6,4.5,0,-.6,0]};let x=0,v=0,lastT=0,ang=0;
+  return{B,update(tl,e){let mode='fwd';(e.seq||[]).forEach(([t,m])=>{if(tl>=t)mode=m});
+    const tgt=mode==='fwd'?2.4:mode==='rev'?-1.4:0;const dt=Math.max(0,Math.min(.1,tl-lastT));lastT=tl;v+=(tgt-v)*Math.min(1,dt*(mode==='brake'?2.6:1.4));x+=v*dt;ang+=v*dt/.36;
+    C.position.x=((x+12)%24+24)%24-12;wheels.forEach(w=>w.rotation.z=-ang);tail.forEach(t=>t.material.emissiveIntensity=mode==='brake'||mode==='rev'?2.2:0);
+    gs.material.map=gearTex[mode==='rev'?'R':mode==='brake'?'N':'D'];gs.lookAt(cam.position);
+    const cl=e.cams||[[0,'side']];const cur=CAM[cl[0][1]]||CAM.side;cam.position.set(C.position.x+cur[0],cur[1],cur[2]);cam.lookAt(C.position.x+cur[3],cur[4],cur[5])}}
+}
+G3_BUILD.car=g3Car;
+
 
 
 
@@ -4976,6 +5086,13 @@ const EP11_A=[[0.0, 2.35, 0], [2.85, 5.0, 0], [5.45, 5.7, 0], [5.85, 7.0, 0], [7
 const EP11_SA=[[0.0, 5.0, 0], [5.45, 6.2, 0], [6.45, 7.8, 0], [7.8, 11.05, 1], [11.6, 13.55, 1], [13.95, 15.25, 1], [15.75, 17.88, 1], [17.88, 22.05, 2], [22.5, 23.2, 2], [23.65, 24.95, 2], [25.1, 27.3, 2], [27.3, 28.8, 3], [29.1, 30.15, 3], [30.45, 33.8, 3]];
 const EP11_POSE=[[0.0, "think_a"], [2.85, "explain_a"], [5.45, "talk_b"], [5.85, "point_level"], [7.7, "talk_c"], [8.9, "nod"], [10.84, "talk_d"], [14.15, "explain_c"], [16.3, "talk_a"], [18.35, "explain_a"], [20.55, "talk_b"], [22.5, "explain_b"], [25.15, "think_a"], [28.45, "nod"], [29.19, "worry2"], [29.5, "point_level"], [33.67, "talk_a"], [38.5, "explain_a"], [40.0, "talk_b"], [41.64, "tilt_r"], [44.7, "point_1"], [46.58, "nod"], [49.05, "point_3"], [51.8, "explain_c"], [53.35, "point_1"], [55.58, "explain_a"], [56.25, "point_3"], [57.9, "point_level"], [61.38, "talk_c"], [65.5, "point_2"], [68.0, "talk_d"], [71.1, "point_level"], [73.56, "talk_a"], [75.6, "point_2"], [78.1, "talk_b"], [81.05, "point_level"], [84.0, "talk_c"], [85.15, "point_2"], [86.36, "point_3"], [89.3, "point_level"], [92.5, "point_1"], [95.22, "explain_a"], [98.55, "point_3"], [100.95, "explain_b"], [103.7, "talk_c"], [104.52, "point_2"], [108.15, "point_3"], [109.25, "point_level"], [111.97, "talk_a"], [114.68, "point_2"], [116.45, "tilt_l"], [120.15, "point_level"], [122.85, "point_1"], [126.0, "worry2"], [128.05, "talk_d"], [129.0, "worry2"], [130.0, "worry2"], [133.0, "explain_a"], [133.98, "talk_b"], [135.3, "explain_b"], [136.9, "point_1"], [139.9, "point_2"], [142.6, "point_3"], [143.85, "point_level"], [146.47, "talk_a"], [149.1, "point_2"], [151.05, "talk_b"], [153.3, "explain_b"], [155.18, "talk_c"], [157.4, "nod"], [158.6, "point_3"], [160.31, "explain_c"], [162.02, "talk_a"], [162.6, "point_2"], [164.75, "point_3"], [166.0, "explain_b"], [167.9, "point_1"], [170.35, "nod"], [173.05, "point_3"], [176.07, "explain_c"], [179.1, "talk_a"], [180.65, "point_2"], [182.95, "talk_b"], [185.8, "point_level"], [187.57, "talk_c"], [189.95, "worry2"], [192.96, "point_3"], [194.75, "explain_c"], [197.05, "point_1"], [199.3, "point_2"], [202.26, "talk_b"], [202.7, "explain_b"], [206.35, "point_1"], [207.9, "point_2"], [208.75, "point_3"], [209.65, "explain_c"], [211.9, "point_1"], [214.1, "explain_a"], [216.6, "worry2"], [218.0, "explain_b"], [219.5, "point_1"], [220.4, "point_2"], [223.45, "talk_d"], [224.7, "point_level"], [227.75, "point_1"], [229.8, "explain_a"], [231.3, "point_3"], [233.74, "point_level"], [235.0, "point_1"], [237.4, "point_2"], [239.45, "point_3"], [241.65, "point_level"], [243.6, "talk_a"], [245.22, "explain_a"], [246.46, "point_3"], [247.46, "point_level"], [248.62, "point_1"], [249.96, "nod"], [250.72, "talk_d"], [252.4, "point_level"], [253.52, "talk_a"], [254.68, "explain_a"], [255.98, "point_3"], [257.22, "point_level"], [258.76, "point_1"], [260.58, "nod"], [261.16, "talk_d"], [262.0, "tilt_r"], [265.71, "talk_a"], [269.42, "point_2"], [270.35, "talk_b"], [271.8, "point_level"], [272.25, "worry2"], [274.05, "worry2"], [274.8, "point_3"], [275.55, "explain_c"], [277.4, "talk_a"], [279.04, "explain_a"], [280.42, "point_3"], [283.15, "explain_b"], [284.75, "talk_c"], [286.95, "nod"], [289.05, "worry2"], [292.6, "worry2"], [295.7, "talk_a"], [298.25, "explain_a"], [300.8, "talk_b"], [301.66, "think_a"], [302.65, "point_1"], [304.25, "nod"], [306.9, "talk_d"], [309.15, "explain_c"], [311.65, "talk_a"], [313.22, "worry2"], [313.9, "point_3"], [316.77, "explain_b"], [320.0, "talk_c"], [321.55, "point_2"], [324.02, "talk_d"], [327.2, "point_level"], [328.98, "talk_a"], [331.05, "explain_a"], [333.4, "talk_b"], [334.75, "point_level"], [336.95, "point_1"], [340.0, "point_2"], [341.45, "point_3"], [342.05, "point_level"], [344.08, "talk_a"], [346.6, "point_2"], [348.76, "talk_b"], [349.65, "point_level"], [350.85, "point_1"], [353.4, "nod"], [356.4, "point_3"], [359.2, "explain_c"], [360.85, "talk_a"], [362.15, "explain_a"], [363.88, "talk_b"], [365.62, "explain_b"], [367.49, "talk_c"], [369.95, "nod"], [371.85, "talk_d"], [373.75, "explain_c"]];
 const EP11_SPOSE=[[0.0, "talk_a"], [2.5, "explain_a"], [5.45, "talk_b"], [6.45, "explain_b"], [7.8, "talk_c"], [9.43, "nod"], [11.6, "point_3"], [13.95, "point_level"], [15.75, "point_1"], [17.88, "explain_a"], [19.96, "talk_b"], [22.5, "tilt_l"], [23.65, "think_a"], [25.1, "tilt_r"], [27.3, "talk_d"], [29.1, "explain_c"], [30.45, "talk_a"], [32.12, "explain_a"]];
+/* 2D: timer ring – counts while windows in e.runs [[start,end]]; label e.label, preset e.preset seconds */
+function drawTRing(e,c,tl){const x=e.x,y=e.y,w=e.w,h=e.h,cx=x+w/2,cy=y+h*.48,R=Math.min(w,h)*.36,P=e.preset||5;o2box(c,x,y,w,h,20,'#ffffff',4,true);
+  let acc=0;(e.runs||[]).forEach(([a,b])=>{if(tl>=a&&tl<b)acc=Math.min(P,tl-a)});const done=acc>=P;
+  c.save();c.lineWidth=18;c.strokeStyle='#e5e7eb';c.beginPath();c.arc(cx,cy,R,0,7);c.stroke();c.strokeStyle=done?'#16a34a':'#f59e0b';c.lineCap='round';c.beginPath();c.arc(cx,cy,R,-Math.PI/2,-Math.PI/2+Math.PI*2*acc/P);c.stroke();
+  c.fillStyle='#111827';c.textAlign='center';c.font='700 26px InkHand, "Comic Sans MS"';c.fillText(e.label||'T0',cx,cy-R*.32);c.font='700 52px InkHand, "Comic Sans MS"';c.fillText(acc.toFixed(1)+' s',cx,cy+R*.25);
+  c.font='700 22px InkHand, "Comic Sans MS"';c.fillStyle=done?'#16a34a':'#6b7280';c.fillText(done?'DONE ✓':'K'+P*10+' = '+P+' s',cx,y+h-18);c.restore()}
+
 function drawSD(e,c,tl){const cx=e.x+e.w/2,cy=e.y+e.h/2,R=Math.min(e.w,e.h)*.36,ink=O2,live=o2t(tl,e.live);
   const coil=(x1,y1,x2,y2,lab)=>{const L=Math.hypot(x2-x1,y2-y1),ux=(x2-x1)/L,uy=(y2-y1)/L,nx=-uy,ny=ux,a=L*.25,b=L*.75,n=8;
     c.beginPath();c.moveTo(x1,y1);c.lineTo(x1+ux*a,y1+uy*a);for(let i=1;i<=n;i++){const t=a+(b-a)*i/n,s=(i%2?1:-1)*12;c.lineTo(x1+ux*t+nx*s,y1+uy*t+ny*s)}c.lineTo(x2,y2);c.lineWidth=5;c.strokeStyle=e.col||'#b45309';c.stroke();
@@ -5468,6 +5585,16 @@ async function buildEp11Short(){
   S.captions=false;S.showHand=false;S.cur=0;S.pin=false;S.t=1;refresh();
 }
 
+async function buildEp12Assets(){
+  stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('16:9');S.narrOff=0;S.art='sketch';S.g3q=.62;
+  const s=newScene({name:'EP12 asset test',style:'white',transition:'cut',trans:0,hold:0});s.minDur=30;S.scenes.push(s);
+  const K=ep10Kit(s,[[0,30,0]],30),{ng}=K;
+  ng('g3',{shot:'drive',x:0,y:0,w:W,h:H,noPop:true,seq:[[0,'fwd'],[5,'off'],[5.6,'rev']],slam:[5.7],breakSpider:1,cams:[[0,'wide'],[2,'drive'],[4.6,'coupling'],[8,'sensor']]},[0,10]);
+  ng('g3',{shot:'pbs',x:0,y:0,w:W,h:H,noPop:true,press:[[11.2,'fwd'],[13,'stop'],[15,'rev']],lamp:[[0,1],[11.2,0],[18,1]],cams:[[0,'front']]},[10,20]);
+  ng('g3',{shot:'car',x:0,y:0,w:W,h:H,noPop:true,seq:[[0,'fwd'],[22.5,'brake'],[25,'rev']]},[20,30]);
+  ng('tring',{x:900,y:380,w:320,h:300,runs:[[13,30]],preset:5},[12,20]);
+  S.captions=false;S.showHand=false;S.cur=0;S.t=1;refresh();
+}
 async function buildEp10Short(){
   stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('9:16');S.narrOff=0;S.art='sketch';
   try{await document.fonts.load('700 30px InkHand')}catch(_){}
@@ -5709,6 +5836,7 @@ async function loadTemplate(key){S.art='';S.g3q=0;
   if(key==='sd3dtest')return buildSd3dTest();
   if(key==='sdmgtest')return buildSdmgTest();
   if(key==='hometest')return buildHomeTest();
+  if(key==='ep12assets')return buildEp12Assets();
   if(key==='ep11')return buildEp11();
   if(key==='ep11s')return buildEp11Short();
   if(key==='ep10v4')return buildEp10v4();
