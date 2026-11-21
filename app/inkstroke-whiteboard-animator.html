@@ -4135,12 +4135,12 @@ function g3FRStage(){const B=g3Base('#e8edf3'),{T,S,cam,M,box,cyl,label}=B;
   const face=new T.Mesh(new T.CircleGeometry(.48,48),new T.MeshBasicMaterial({map:arr}));face.position.set(.04,0,0);face.rotation.y=Math.PI/2;disc.add(face);
   label('MOTOR',.8,.18,0,0,.6,MO,{size:72,color:'#ffffff'});[[-.5],[.5]].forEach(([x])=>box(.3,.22,1.1,M('#1f3b5c',{r:.6}),x,-.6,0,MO));
   // conveyor in front-right
-  const CV=new T.Group();CV.position.set(6.0,-.95,.5);S.add(CV);box(4.2,.12,1.0,M('#1f2937',{r:.8}),0,.3,0,CV);[-2,2].forEach(x=>{const r=cyl(.16,.16,1.05,M('#9ca3af',{m:.7,r:.3}),x,.3,0,CV,24);r.rotation.x=Math.PI/2});
+  const CV=new T.Group();CV.position.set(4.52,-1.15,2.5);CV.rotation.y=-Math.PI/2;S.add(CV);cyl(.14,.14,.18,M('#374151',{m:.7,r:.3}),3.95,-.85,.5,S,20).rotation.z=Math.PI/2;box(4.2,.12,1.0,M('#1f2937',{r:.8}),0,.3,0,CV);[-2,2].forEach(x=>{const r=cyl(.16,.16,1.05,M('#9ca3af',{m:.7,r:.3}),x,.3,0,CV,24);r.rotation.x=Math.PI/2});
   [-1.6,1.6].forEach(x=>box(.1,.6,.9,M('#6b7280',{m:.5,r:.5}),x,0,0,CV));const boxes=[0,1,2].map(i=>box(.5,.4,.5,M(['#d97706','#b45309','#f59e0b'][i],{r:.8}),-1.4+i*1.4,.58,0,CV));
   // tube light
   const tubeM=new T.MeshStandardMaterial({color:'#f8fafc',emissive:'#fff7d6',emissiveIntensity:1.6});const tb=new T.Mesh(new T.CylinderGeometry(.06,.06,2.2,16),tubeM);tb.rotation.z=Math.PI/2;tb.position.set(.6,3.3,-2.9);S.add(tb);
   const flash=new T.PointLight('#fff3a0',0,6);flash.position.copy(new T.Vector3(...pw(-1.0,-.6,.9)));S.add(flash);
-  const CAM={wide:[1.3,1.0,9.6,1.0,0,-1.0],panel:[-1.6,.6,2.9,-1.6,.5,-2.2],top:[-1.6,1.55,1.3,-1.6,1.45,-2.2],kms:[-1.6,.55,1.55,-1.6,.45,-2.2],bottom:[-1.6,-.4,1.5,-1.6,-.5,-2.2],ol:[-2.3,-.5,1.0,-2.5,-.45,-2.2],motor:[3.2,.45,3.6,2.7,-.75,.5],conv:[6.6,1.6,5.4,4.9,-.6,.5]};
+  const CAM={wide:[1.3,1.0,9.6,1.0,0,-1.0],panel:[-1.6,.6,2.9,-1.6,.5,-2.2],top:[-1.6,1.55,1.3,-1.6,1.45,-2.2],kms:[-1.6,.55,1.55,-1.6,.45,-2.2],bottom:[-1.6,-.4,1.5,-1.6,-.5,-2.2],ol:[-2.3,-.5,1.0,-2.5,-.45,-2.2],motor:[2.2,.5,3.8,2.9,-.75,.5],conv:[7.6,1.9,6.2,4.2,-.8,2.0]};
   let ang=0,lastT=0,cpos=0;
   return{B,update(tl,e){const Md=frModel(e.seq,tl),m=Md.mode;
     const k1=m==='fwd'||m==='both'||m==='weld',k2=m==='rev'||m==='both';const cl=[k1,k2];
@@ -4183,6 +4183,36 @@ function g3Washer(){const B=g3Base('#f3efe7'),{T,S,cam,M,box,cyl,label}=B;
     cam.position.set(now[0]+Math.sin(tl*.3)*.05,now[1]+Math.sin(tl*.23)*.03,now[2]);cam.lookAt(now[3],now[4],now[5])}}
 }
 G3_BUILD.washer=g3Washer;
+/* ---- shot: factory forward/reverse examples – overhead crane hook (up/down) and rolling shutter (up/down) ---- */
+function g3Apps(){const B=g3Base('#e8edf3'),{T,S,cam,M,box,cyl,label}=B;
+  box(20,.1,10,M('#cfd6df',{r:.9}),0,-1.55,0);box(20,8,.1,M('#eef1f5',{r:.95}),0,2.4,-3.2);
+  // crane (left)
+  const CR=new T.Group();CR.position.set(-3.2,0,-.8);S.add(CR);const yel=M('#f59e0b',{r:.5,m:.3});
+  [-2,2].forEach(x=>box(.3,5.2,.3,M('#6b7280',{m:.5,r:.5}),x,1.05,-1.6,CR));box(4.6,.35,.4,yel,0,3.6,-1.6,CR);box(4.6,.35,.4,yel,0,3.6,1.0,CR);
+  const bridge=box(.5,.4,3.0,yel,0,3.95,-.3,CR);const hoist=box(.8,.6,.7,M('#1f2937',{r:.5}),0,3.5,-.3,CR);label('HOIST',.6,.15,0,3.5,.06,CR,{size:56,color:'#f8fafc'});
+  const cable=cyl(.03,.03,1,M('#111827',{r:.5}),0,0,-.3,CR,8);const hook=new T.Group();CR.add(hook);
+  box(.5,.35,.3,M('#dc2626',{r:.5}),0,0,0,hook);const hk=new T.Mesh(new T.TorusGeometry(.2,.06,10,24,Math.PI*1.4),M('#9ca3af',{m:.8,r:.3}));hk.position.set(0,-.38,0);hk.rotation.z=-.6;hook.add(hk);
+  const load=box(.9,.7,.9,M('#b45309',{r:.8}),0,-1.0,0,hook);
+  // rolling shutter (right)
+  const SH=new T.Group();SH.position.set(3.4,0,-2.9);S.add(SH);box(3.6,.6,.5,M('#9ca3af',{m:.5,r:.4}),0,3.3,0,SH);
+  [-1.75,1.75].forEach(x=>box(.15,4.6,.3,M('#6b7280',{m:.6,r:.4}),x,.75,0,SH));box(3.4,4.4,.05,M('#1f2937',{r:.9}),0,.75,-.2,SH);
+  const slats=new T.Group();SH.add(slats);for(let i=0;i<22;i++)box(3.35,.19,.08,M(i%2?'#cbd5e1':'#94a3b8',{m:.6,r:.35}),0,-1.4+i*.2,.02,slats);
+  const arrow=B.tex((c,w,h)=>{c.clearRect(0,0,w,h);c.fillStyle='#ef4444';c.beginPath();c.moveTo(w/2,10);c.lineTo(w-20,h*.45);c.lineTo(w*.65,h*.45);c.lineTo(w*.65,h-10);c.lineTo(w*.35,h-10);c.lineTo(w*.35,h*.45);c.lineTo(20,h*.45);c.closePath();c.fill()},128,256);
+  const mkA=(x,y,z)=>{const a=new T.Mesh(new T.PlaneGeometry(.7,1.4),new T.MeshBasicMaterial({map:arrow,transparent:true}));a.position.set(x,y,z);S.add(a);return a};
+  const aC=mkA(-1.6,1.6,.6),aS=mkA(5.8,.9,-2.4);
+  const CAM={wide:[0,1.8,10.5,0,1.0,-1.5],crane:[-1.0,1.6,5.4,-3.2,1.4,-1.0],shutter:[3.4,1.2,3.6,3.4,.9,-2.9]};
+  const pos=(list,tl)=>{let y=0,last=0,dir=0;(list||[]).forEach(([t,d])=>{if(tl>=t){y+=dir*(t-last);last=t;dir=d==='up'?1:d==='down'?-1:0}else if(t>last&&tl>last){} });return {y:y+dir*(tl-last),dir}};
+  return{B,update(tl,e){
+    const c=pos(e.crane,tl),hy=Math.max(.2,Math.min(2.6,1.4+c.y*.9));hook.position.set(0,hy,-.3);cable.scale.y=3.3-hy;cable.position.set(0,(3.3+hy)/2,-.3);
+    aC.visible=c.dir!==0;aC.rotation.z=c.dir>0?0:Math.PI;aC.material.opacity=.6+.4*Math.sin(tl*7);
+    const s=pos(e.shutter,tl),sy=Math.max(0,Math.min(3.8,1.0+s.y*1.1));slats.position.y=sy;slats.children.forEach((k,i)=>{k.visible=(-1.4+i*.2+sy)<3.0});
+    aS.visible=s.dir!==0;aS.rotation.z=s.dir>0?0:Math.PI;aS.material.opacity=.6+.4*Math.sin(tl*7);
+    const cl=e.cams||[[0,'wide']];let ci=0;cl.forEach(([c0],i)=>{if(tl>=c0)ci=i});const cur=CAM[cl[ci][1]]||CAM.wide,from=ci?CAM[cl[ci-1][1]]||CAM.wide:cur;
+    const f=g3ease(g3c((tl-cl[ci][0])/1.0)),now=from.map((v,i)=>v+(cur[i]-v)*f);if(e.dist)for(let i=0;i<3;i++)now[i]=now[i+3]+(now[i]-now[i+3])*e.dist;
+    cam.position.set(now[0]+Math.sin(tl*.3)*.05,now[1]+Math.sin(tl*.23)*.03,now[2]);cam.lookAt(now[3],now[4],now[5])}}
+}
+G3_BUILD.apps=g3Apps;
+
 
 
 /* ---- shot: home – switch board, tube light, monoblock water pump, overhead tank ---- */
@@ -5356,6 +5386,7 @@ async function buildEp11(){
       [PS(5),[]],[T(5,1),['out1','ol']],[T(5,2),['mot','motor']],[T(5,3),[]],[PS(6),['km2']],[T(6,1),['cross']],[T(6,3),[]],[PS(7),['ol']],[PS(8),[]],[T(8,1),['km1','km2']],[T(8,4),[]]],
     cams:[[0,'wide'],[T(1,1)-.4,'conv'],[T(1,4)-.3,'kms'],[T(1,6)-.6,'panel'],[PS(2),'wide'],[PS(3),'motor'],[T(3,2)-.4,'bottom'],[PS(4),'panel'],[T(4,1),'top'],[T(4,4),'panel'],
       [PS(5),'bottom'],[T(5,2),'motor'],[T(5,4),'conv'],[PS(6),'bottom'],[T(6,4)-.3,'motor'],[PS(7),'ol'],[PS(8),'kms'],[T(8,2),'bottom'],[T(8,4)-.2,'panel'],[T(8,7),'kms']]});
+  g3('apps',[T(1,2),T(1,4)],{crane:[[0,'stop'],[T(1,2)+.1,'up'],[T(1,2)+1.0,'down'],[T(1,3)-.2,'stop']],shutter:[[0,'stop'],[T(1,3),'up'],[T(1,3)+1.1,'down'],[T(1,4),'stop']],cams:[[0,'crane'],[T(1,3)-.35,'shutter']]});
   chip('Factory: conveyor ⇄',[PS(1),T(1,2)]);chip('Crane ↑↓',[T(1,2),T(1,3)]);chip('Shutter gate ↕',[T(1,3),T(1,4)]);chip('FWD button → forward',[T(1,4),T(1,4)+2.2],GRN);chip('REV button → reverse',[T(1,4)+2.2,T(1,5)],BLU);
   chip('Rendu button orey nerathula?',[T(1,5),T(1,6)],ORG);chip('FLASH!',[T(1,6),T(1,7)],RED);chip('TRIP',[T(1,7),PS(2)],RED);
   pres(P(2));chip('FORWARD / REVERSE',P(2),PUR);
@@ -5427,6 +5458,7 @@ async function buildEp11Short(){
   chip('Washing machine ↻ ↺',[0,T(0,1)]);chip('Orey motor',[T(0,1),T(0,2)],ORG);chip('Direction maarudhu',[T(0,2),PS(1)],ORG);
   ng('g3',{shot:'frstage',x:0,y:0,w:W,h:H,noPop:true,dist:1.8,seq:[[0,'fwd'],[PS(1)+1.4,'off'],[T(1,1)+.2,'rev'],[T(1,2),'off'],[T(1,3),'fwd']],
     hl:[[0,[]],[T(1,1),['cross']],[T(1,2),['km1','km2']],[PS(2),[]],[T(2,0)+1.6,['km2']]],cams:[[0,'conv'],[T(1,1),'bottom'],[T(1,2),'panel'],[PS(2),'conv'],[T(2,0)+1.4,'panel']]},[PS(1),END]);
+  ng('g3',{shot:'apps',x:0,y:0,w:W,h:H,noPop:true,dist:1.5,crane:[[0,'stop'],[PS(1)+.1,'up'],[PS(1)+1.0,'down']],cams:[[0,'crane']]},[PS(1),PS(1)+2.0]);
   chip('Crane · conveyor ⇄',[PS(1),T(1,1)]);chip('L1 ⇄ L3 = REVERSE',[T(1,1),T(1,2)],BLU);chip('2 contactor',[T(1,2),T(1,3)]);chip('KM1 FWD · KM2 REV',[T(1,3),PS(2)],GRN);
   chip('Forward odudhu…',[PS(2),T(2,0)+1.6],GRN);chip('REV button-um press!',[T(2,0)+1.6,T(2,1)],RED);chip('Enna aagum? 🤔',[T(2,1),PS(3)],ORG);
   card(60,900,600,110,'Reverse-ku maarumaa?',[T(2,2),PS(3)],{bg:BLU,size:40});card(60,1030,600,110,'Flash aagi trip?',[T(2,3),PS(3)],{bg:RED,size:40});

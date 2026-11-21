@@ -19,7 +19,7 @@ Indha video-la:
 Quiz: forward odumbodhu Stop press pannaama Reverse press pannaa enna aagum? Comment pannunga – answer video-la!
 
 0:00 Washing machine – orey motor, rendu direction
-0:10 Factory forward / reverse
+0:16 Factory – conveyor, crane, shutter
 0:35 Indha video-la
 0:47 Motor epdi reverse aagudhu?
 1:01 Power wiring – MPCB, KM1, KM2
