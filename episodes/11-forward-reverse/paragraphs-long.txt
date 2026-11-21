@@ -1,0 +1,57 @@
+Unga veetu washing machine-ai gavanichirukkeengalaa? Drum oru pakkam suthum. Nikkum. Appuram thirumbi innoru pakkam suthum. Orey motor dhaan. Direction mattum maarudhu.
+
+Factory-la idhe vishayam, aana periya motor-la. Conveyor munnaadi, pinnaadi pogudhu. Crane hook mela, keezha pogudhu. Shutter gate thirandhu, moodudhu. Operator forward button press pannaa forward, reverse button press pannaa reverse. Aana rendu button-um orey nerathula press aanaa? Panel-la flash. Trip.
+
+Indha video-la forward reverse power wiring, control wiring, FX3U PLC program, moonaiyum step by step paarpom. Naduvula oru quiz irukku. Answer kadaisila.
+
+Mudhalla, motor epdi reverse aagudhu? Three phase motor-la, edhaavadhu rendu phase-ai maathi koduthaa, motor reverse-la suthum. Inga naama L1-um L3-um maathuvom. L2 apdiye irukkum. Indha maathuradhai dhaan rendu contactor pannudhu.
+
+Power wiring. Mudhalla MPCB. Adhulendhu L1, L2, L3, forward contactor KM onnu-oda top terminal-ku pogudhu. Adhe L1, L2, L3, reverse contactor KM rendu-oda top terminal-kum pogudhu. Rendu contactor-kum input orey maadhiri.
+
+Ippo output side. KM onnu bottom terminal, T1, T2, T3, nerdiyaa overload relay-ku pogudhu. Overload-lendhu motor U, V, W. Idhu forward. Normal order.
+
+KM rendu bottom terminal-la dhaan trick. T2 nerdiyaa KM onnu T2-ku link. Aana T1-ai KM onnu T3-kum, T3-ai KM onnu T1-kum cross pannuvom. Appo KM rendu close aanaa, L1 W-ku pogum, L3 U-ku pogum. Motor reverse.
+
+Overload relay rendu contactor-kum common. Contactor-ku keezha, motor pakkam. Forward odinaalum reverse odinaalum, orey overload motor-ai protect pannum.
+
+Ippo idhai gavanichu paarunga. KM onnu-um KM rendu-um orey nerathula close aanaa? KM onnu vazhiyaa L1 U-ku pogudhu. KM rendu vazhiyaa L3-um adhe U-ku pogudhu. Phase-ku phase short circuit. Flash. Trip. Adhanaala rendum orey nerathula ON aagave koodaadhu. Idhu dhaan interlock.
+
+Ippo control wiring. PLC inputs. Forward push button, NO, X zero-ku. Reverse push button, NO, X one-ku. Stop push button, X two-ku. Overload relay contact, ninety five, ninety six, X three-ku.
+
+Stop button-um overload contact-um NC-aa wire pannuvom. Wire cut aanaalum, contact loose aanaalum, input OFF aagi motor nikkanum. Idhu fail-safe. Adhanaala ladder-la Stop-um overload-um NO contact-aa varum.
+
+PLC outputs. Y zero, KM onnu coil-ku. Y one, KM rendu coil-ku. Aana nerdiyaa illa. Y zero-lendhu, KM rendu-oda auxiliary NC contact vazhiyaa, KM onnu coil-ku pogum. Y one-lendhu, KM onnu-oda auxiliary NC contact vazhiyaa, KM rendu coil-ku pogum.
+
+Idhu dhaan hardware interlock. KM onnu close-aa irundhaa, adhoda NC contact open. PLC Y one ON sonnaalum, KM rendu coil-ku supply pogaadhu. Contact weld aagi stuck aanaalum, idhu kaappaathum.
+
+Innum safety-ku, mechanical interlock vechu contactor pair vaangalaam. Rendu contactor-kum naduvula oru lever. Onnu close aanaa, innonnu physical-aa close aaga mudiyaadhu.
+
+Ippo PLC program. Simple-aa yosichaa, ippadi ezhudhuvom. Forward button, Y zero. Reverse button, Y one. Rendu rung. Paakka correct-aa thonum. Aana forward odumbodhu Reverse press pannaa, Y zero-um Y one-um rendum ON. Adhe short circuit.
+
+Correct program. Rung onnu, Forward. X zero-ku parallel-aa Y zero contact. Idhu self-holding. Series-la X two Stop, X three overload. Appuram Y one-oda NC contact. Idhu software interlock. Kadaisila Y zero coil.
+
+Rung rendu, Reverse. X one-ku parallel-aa Y one contact. Series-la Stop, overload. Appuram Y zero-oda NC contact. Kadaisila Y one coil.
+
+Ippo live-aa odavidalaam. Forward press panrom. X zero ON. Y zero ON. KM onnu close. Motor forward. Stop press panrom. Y zero OFF. Motor nikkudhu. Reverse press panrom. Y one ON. KM rendu close. L1, L3 maarudhu. Motor reverse.
+
+Ippo quiz. Motor forward-la odumbodhu, Stop press pannaama, nerdiyaa Reverse button press pannaa, indha program-la enna aagum?
+
+Option A. Motor udane reverse-ku maarum.
+
+Option B. Short circuit. Flash, trip.
+
+Option C. Onnume aagaadhu. Motor forward-laye odum.
+
+Unga answer-ai comment pannunga.
+
+Innoru mukkiyamaana vishayam. Washing machine-la drum nikkura varaikkum wait pannittu dhaan thirumbudhu. Factory motor-um adhe maadhiri. Full speed-la forward odumbodhu udane reverse kudukka koodaadhu. Periya current spike, gearbox-ku shock. Stop-ku appuram motor muzhusaa nikkattum. Idhukku PLC-la reverse delay timer podalaam. Adhu next video-la.
+
+Power cut aanaa? Y zero, Y one self-holding-la irukku. Power pogumbodhu holding udanjidum. Power vandhaalum motor thaanaa start aagaadhu. Operator thirumba press pannanum.
+
+Common mistakes. Onnu, KM rendu output-la phase cross pannaama, straight-aa kuduppaanga. Motor reverse aagaadhu. Rendu, PLC interlock mattum pottuttu, auxiliary NC hardware interlock marandhuduvaanga. Moonu, overload relay-ai oru contactor-ku mattum poduvaanga. Reverse-la motor-ku protection illa.
+
+Quick summary. Rendu phase maathinaa reverse. KM rendu output-la L1, L3 cross. Overload common. Stop, overload NC wiring. Coil-ku munnaadi auxiliary NC interlock. Program-la self-holding-um, NC interlock-um.
+
+Quiz answer. Forward odumbodhu Y zero ON. Reverse rung-la Y zero-oda NC contact open. So Reverse press pannaalum, Y one ON aagaadhu. Motor forward-laye odum. Answer C. Reverse pannanum-naa, mudhalla Stop, appuram Reverse.
+
+Next video-la, reverse delay timer-ai PLC-la epdi podradhu nu paarpom. Video useful-aa irundhaa like pannunga. Electrician friend-kku share pannunga. Factory Decode Tamil-ai subscribe pannunga.
