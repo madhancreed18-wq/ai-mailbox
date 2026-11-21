@@ -1,0 +1,35 @@
+{
+  "topic": "Forward/reverse three-phase motor control; inferred from actual uploaded speech",
+  "recording_date": "2026-11-21",
+  "status": "machine-aligned timing draft; not listening-certified",
+  "files": {
+    "long": {
+      "uploaded_filename": "long 2.wav",
+      "channels": 1,
+      "sample_rate_hz": 24000,
+      "sample_width_bytes": 2,
+      "frames": 9016320,
+      "duration_seconds": 375.68,
+      "wav_sha256": "53b72a891de364820cc7130b7c9d11df2f759c6343d95c89dca699a6f27294ab",
+      "wav_git_blob_sha": "a40fffd5344939b0b7f977c27b9a76c283031314",
+      "pcm_sha256": "958962bb15e997f11a3004d719e6d8ba963c8fddec6531cbfaa487fe2ab0e3b6",
+      "transferred_file": "narration-long.flac",
+      "flac_sha256": "2d18a6928d0a86a8123f10bc20bccb45c4a4932272b47c39255a00504977c37a",
+      "decoded_flac_pcm_identical": true
+    },
+    "short": {
+      "uploaded_filename": "shorts 2.wav",
+      "channels": 1,
+      "sample_rate_hz": 24000,
+      "sample_width_bytes": 2,
+      "frames": 811200,
+      "duration_seconds": 33.8,
+      "wav_sha256": "5fc64281f62fa88a745a0c226e4878884f8c650b16fa67e184db02e0267ba0a4",
+      "wav_git_blob_sha": "5bf582cb9dde0a1b4e3c099a12510727fd34c7d2",
+      "pcm_sha256": "7f86c32ce517b31aaea660484c832eb9cda51a2a8e13e28ed323c31ed3e2f8f5",
+      "transferred_file": "narration-short.flac",
+      "flac_sha256": "626250b57f863f78ad5dad8b85a4921a33229f403758352fc568f615be3e9a9e",
+      "decoded_flac_pcm_identical": true
+    }
+  }
+}

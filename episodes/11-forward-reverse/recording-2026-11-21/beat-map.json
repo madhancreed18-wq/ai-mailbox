@@ -1,0 +1,268 @@
+{
+  "version": "2026-11-21-forward-reverse-upload-2",
+  "units": "seconds",
+  "status": "machine-aligned draft; not listening-certified",
+  "range_semantics": "Contiguous scene windows. Each end equals the next scene start; pauses remain in the preceding scene. Last end equals exact source duration.",
+  "source_files": {
+    "long": "long 2.wav",
+    "short": "shorts 2.wav"
+  },
+  "sections": {
+    "long": [
+      {
+        "id": 0,
+        "start": 0,
+        "end": 10.84,
+        "anchor": "Washing-machine drum: stop and reverse"
+      },
+      {
+        "id": 1,
+        "start": 10.84,
+        "end": 20,
+        "anchor": "Factory conveyor, crane and shutter examples"
+      },
+      {
+        "id": 2,
+        "start": 20,
+        "end": 29.5,
+        "anchor": "Forward/reverse buttons and simultaneous-command hook"
+      },
+      {
+        "id": 3,
+        "start": 29.5,
+        "end": 41.64,
+        "anchor": "Lesson scope: power wiring, control wiring, FX3U, quiz"
+      },
+      {
+        "id": 4,
+        "start": 41.64,
+        "end": 55.58,
+        "anchor": "Reverse principle: interchange two phases"
+      },
+      {
+        "id": 5,
+        "start": 55.58,
+        "end": 73.56,
+        "anchor": "MPCB and common L1 L2 L3 input feeds"
+      },
+      {
+        "id": 6,
+        "start": 73.56,
+        "end": 86.36,
+        "anchor": "KM1 output through overload to motor U V W"
+      },
+      {
+        "id": 7,
+        "start": 86.36,
+        "end": 98.08,
+        "anchor": "KM2 output crossover and unchanged middle phase"
+      },
+      {
+        "id": 8,
+        "start": 98.08,
+        "end": 104.52,
+        "anchor": "Resulting phase paths and reverse rotation"
+      },
+      {
+        "id": 9,
+        "start": 104.52,
+        "end": 114.68,
+        "anchor": "Common overload protection"
+      },
+      {
+        "id": 10,
+        "start": 114.68,
+        "end": 133.98,
+        "anchor": "Both contactors closed: phase-to-phase fault explanation"
+      },
+      {
+        "id": 11,
+        "start": 133.98,
+        "end": 149.1,
+        "anchor": "Control wiring and PLC input assignments"
+      },
+      {
+        "id": 12,
+        "start": 149.1,
+        "end": 158.14,
+        "anchor": "NC stop/overload physical wiring and fail-safe explanation"
+      },
+      {
+        "id": 13,
+        "start": 158.14,
+        "end": 162.02,
+        "anchor": "Healthy inputs and ladder NO instruction explanation"
+      },
+      {
+        "id": 14,
+        "start": 162.02,
+        "end": 168.92,
+        "anchor": "PLC outputs Y0/Y1 and coil assignments"
+      },
+      {
+        "id": 15,
+        "start": 168.92,
+        "end": 192.96,
+        "anchor": "Cross-coupled auxiliary NC hardware interlock"
+      },
+      {
+        "id": 16,
+        "start": 192.96,
+        "end": 202.26,
+        "anchor": "Mechanical interlock explanation"
+      },
+      {
+        "id": 17,
+        "start": 202.26,
+        "end": 218.28,
+        "anchor": "Incorrect two-rung program and simultaneous-output problem"
+      },
+      {
+        "id": 18,
+        "start": 218.28,
+        "end": 233.74,
+        "anchor": "Correct forward rung: self-hold, stop, overload, NC interlock"
+      },
+      {
+        "id": 19,
+        "start": 233.74,
+        "end": 245.22,
+        "anchor": "Correct reverse rung"
+      },
+      {
+        "id": 20,
+        "start": 245.22,
+        "end": 250.72,
+        "anchor": "Live forward-button demonstration"
+      },
+      {
+        "id": 21,
+        "start": 250.72,
+        "end": 254.68,
+        "anchor": "Live stop demonstration"
+      },
+      {
+        "id": 22,
+        "start": 254.68,
+        "end": 261.16,
+        "anchor": "Live reverse demonstration and swapped phases"
+      },
+      {
+        "id": 23,
+        "start": 261.16,
+        "end": 269.42,
+        "anchor": "Quiz scenario: reverse pressed while forward is running"
+      },
+      {
+        "id": 24,
+        "start": 269.42,
+        "end": 279.04,
+        "anchor": "Quiz options A B C"
+      },
+      {
+        "id": 25,
+        "start": 279.04,
+        "end": 280.42,
+        "anchor": "Invite quiz comments"
+      },
+      {
+        "id": 26,
+        "start": 280.42,
+        "end": 301.66,
+        "anchor": "Wait for standstill; current/gearbox shock; next delay lesson"
+      },
+      {
+        "id": 27,
+        "start": 301.66,
+        "end": 313.22,
+        "anchor": "Power loss, broken holding and restart behaviour"
+      },
+      {
+        "id": 28,
+        "start": 313.22,
+        "end": 321,
+        "anchor": "Mistake 1: missing phase crossover"
+      },
+      {
+        "id": 29,
+        "start": 321,
+        "end": 326.52,
+        "anchor": "Mistake 2: omitted auxiliary hardware interlock"
+      },
+      {
+        "id": 30,
+        "start": 326.52,
+        "end": 333.4,
+        "anchor": "Mistake 3: overload protecting only one direction"
+      },
+      {
+        "id": 31,
+        "start": 333.4,
+        "end": 348.76,
+        "anchor": "Quick summary"
+      },
+      {
+        "id": 32,
+        "start": 348.76,
+        "end": 360.84,
+        "anchor": "Quiz answer reasoning: Y0 NC blocks reverse rung"
+      },
+      {
+        "id": 33,
+        "start": 360.84,
+        "end": 365.62,
+        "anchor": "Answer C and stop-before-reverse reminder"
+      },
+      {
+        "id": 34,
+        "start": 365.62,
+        "end": 369.9,
+        "anchor": "Next lesson: reverse delay timer in PLC"
+      },
+      {
+        "id": 35,
+        "start": 369.9,
+        "end": 375.68,
+        "anchor": "Like, share and subscribe ending"
+      }
+    ],
+    "short": [
+      {
+        "id": 0,
+        "start": 0,
+        "end": 7.8,
+        "anchor": "Washing-machine analogy and direction change"
+      },
+      {
+        "id": 1,
+        "start": 7.8,
+        "end": 11.26,
+        "anchor": "Factory crane and conveyor examples"
+      },
+      {
+        "id": 2,
+        "start": 11.26,
+        "end": 17.88,
+        "anchor": "Swap two phases; forward/reverse contactors"
+      },
+      {
+        "id": 3,
+        "start": 17.88,
+        "end": 27.3,
+        "anchor": "Forward-running motor and reverse-button question"
+      },
+      {
+        "id": 4,
+        "start": 27.3,
+        "end": 30.5,
+        "anchor": "Comment answer; full-video invitation"
+      },
+      {
+        "id": 5,
+        "start": 30.5,
+        "end": 33.8,
+        "anchor": "Closing call to action"
+      }
+    ]
+  }
+}
