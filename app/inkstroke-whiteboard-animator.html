@@ -163,6 +163,7 @@ textarea{resize:vertical;min-height:64px}
 <script src="sprites_e.js"></script>
 <script src="sprites_f.js"></script>
 <script src="vendor/three.iife.js"></script>
+<script src="hands.js"></script>
 <script>
 (()=>{
 let W=1280,H=720;
@@ -4287,30 +4288,19 @@ function g3PBS(){const B=g3Base('#dfe4ea'),{T,S,cam,M,box,cyl,label}=B;
   const btn={};[['fwd',.42,'#111827','FORWARD'],['stop',-.32,'#dc2626','STOP'],['rev',-1.06,'#111827','REVERSE']].forEach(([k,y,col,lab])=>{cyl(.24,.24,.06,M('#d1d5db',{m:.7,r:.3}),0,y,.42,E,32).rotation.x=Math.PI/2;
     const b=cyl(.18,.18,.12,M(col,{r:.4}),0,y,.48,E,32);b.rotation.x=Math.PI/2;btn[k]=b;box(.95,.2,.02,M('#f8fafc',{r:.6}),0,y-.38,.41,E);label(lab,.9,.17,0,y-.38,.43,E,{size:64,color:'#111827'})});
   box(.95,.2,.02,M('#f8fafc',{r:.6}),0,1.25-.38,.41,E);label('READY',.9,.17,0,1.25-.38,.43,E,{size:64,color:'#111827'});
-  /* soft "clay" cartoon 3D hand: chubby rounded fingers, index finger up, short purple sleeve + white cuff. Fingertip at local origin, finger along +y */
-  const finger=new T.Group();S.add(finger);const HND=new T.Group();finger.add(HND);
-  const skin=new T.MeshStandardMaterial({color:'#f6c7a6',roughness:.55,metalness:0,emissive:'#5a2a12',emissiveIntensity:.06});
-  const sleeveM=new T.MeshStandardMaterial({color:'#5b55e0',roughness:.5}),cuffM=new T.MeshStandardMaterial({color:'#ffffff',roughness:.6});
-  const P=(g,m,x,y,z,rx,ry,rz,sx,sy,sz)=>{const o=new T.Mesh(g,m);o.position.set(x,y,z);o.rotation.set(rx||0,ry||0,rz||0);if(sx)o.scale.set(sx,sy,sz);HND.add(o);return o};
-  const C=(r,l)=>new T.CapsuleGeometry(r,l,10,20),Sp=r=>new T.SphereGeometry(r,28,20);
-  // index finger (pointing up), tip at y=0
-  P(C(.11,.5),skin,0,-.36,0);
-  // palm / back of hand – chubby rounded
-  P(Sp(.34),skin,.12,-.95,.02,0,0,-.12,1.0,1.15,.72);
-  // curled fingers (middle, ring, little) – rounded bumps folded toward the palm
-  [[.13,-.72],[.27,-.8],[.38,-.92]].forEach(([x,y],i)=>{P(C(.1-.008*i,.16),skin,x,y,.15,1.25,0,-.35);P(Sp(.1-.008*i),skin,x+.01,y-.12,.27)});
-  // thumb across the front
-  P(C(.11,.24),skin,-.1,-.88,.17,.5,0,.95);P(Sp(.1),skin,-.2,-.78,.24);
-  // cuff + short sleeve
-  P(new T.CylinderGeometry(.27,.27,.12,32),cuffM,.2,-1.36,.02,0,0,-.12);
-  P(C(.29,.32),sleeveM,.25,-1.68,.02,0,0,-.12);
-  HND.scale.setScalar(1.0);finger.rotation.set(-.55,0,.5);
-  const fdir=new T.Vector3(0,1,0).applyEuler(finger.rotation).normalize();
+  /* clay 3D hand – sprite planes (hover → press) from HAND_IMG, fingertip anchored at local origin, soft shadow on the panel */
+  const finger=new T.Group();S.add(finger);const HW=1.6;
+  const mkHand=k=>{const tx=new T.Texture(HAND_IMG[k]);tx.colorSpace=T.SRGBColorSpace;tx.needsUpdate=true;if(!HAND_IMG[k].complete)HAND_IMG[k].onload=()=>tx.needsUpdate=true;
+    const g=new T.Group();const tip=HAND_TIP[k];const cx=HW/2-HW*tip[0],cy=HW*tip[1]-HW/2;
+    const m=new T.Mesh(new T.PlaneGeometry(HW,HW),new T.MeshBasicMaterial({map:tx,transparent:true,alphaTest:.04,depthWrite:false}));m.position.set(cx,cy,0);g.add(m);
+    const sh=new T.Mesh(new T.PlaneGeometry(HW,HW),new T.MeshBasicMaterial({map:tx,transparent:true,alphaTest:.04,color:'#000000',opacity:.18,depthWrite:false}));sh.position.set(cx+.06,cy-.08,-.04);g.add(sh);finger.add(g);return g};
+  const hPress=mkHand('upleft'),hHover=mkHand('hover');
+  const fdir=new T.Vector3(-.62,.62,-.48).normalize();
   const CAM={front:[0,.65,6.2,0,.55,-.8],close:[.6,.5,3.0,0,.2,-.8],hand:[1.6,1.4,1.6,.5,.8,-.3],handside:[2.6,.6,-.2,.6,.8,-.2]};
   return{B,update(tl,e){let lit=0;(e.lamp||[]).forEach(([t,v])=>{if(tl>=t)lit=v});lampM.emissiveIntensity=lit?2.6:0;lampL.intensity=lit?2:0;lampM.color.set(lit?'#86efac':'#14532d');
     let cur=null,ct=0;(e.press||[]).forEach(([t,k])=>{if(tl>=t-.6&&tl<t+.7){cur=k;ct=t}});
     Object.entries(btn).forEach(([k,b])=>{const d=cur===k?Math.max(0,1-Math.abs(tl-ct)/.25):0;b.position.z=.48-.06*Math.min(1,d*1.5)});
-    finger.visible=!!cur;if(cur){const y=.6+{fwd:.42,stop:-.32,rev:-1.06}[cur];const k=tl<ct?(tl-(ct-.6))/.6:1-(tl-ct)/.7;const dd=.04+1.1*(1-g3ease(g3c(k)));finger.position.set(0,y,-.8+.54).addScaledVector(fdir,-dd)}
+    finger.visible=!!cur;if(cur){const y=.6+{fwd:.42,stop:-.32,rev:-1.06}[cur];const k=tl<ct?(tl-(ct-.6))/.6:1-(tl-ct)/.7;const kk=g3ease(g3c(k));const dd=.02+1.0*(1-kk);finger.position.set(0,y,-.8+.56).addScaledVector(fdir,-dd);hPress.visible=kk>.82;hHover.visible=!hPress.visible}
     const cl=e.cams||[[0,'front']];let ci=0;cl.forEach(([c0],i)=>{if(tl>=c0)ci=i});const c2=CAM[cl[ci][1]]||CAM.front,from=ci?CAM[cl[ci-1][1]]||CAM.front:c2;
     const f=g3ease(g3c((tl-cl[ci][0])/1.0)),now=from.map((v,i)=>v+(c2[i]-v)*f);if(e.dist)for(let i=0;i<3;i++)now[i]=now[i+3]+(now[i]-now[i+3])*e.dist;
     cam.position.set(now[0]+Math.sin(tl*.3)*.04,now[1]+Math.sin(tl*.23)*.03,now[2]);cam.lookAt(now[3],now[4],now[5])}}
