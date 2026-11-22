@@ -1788,8 +1788,8 @@ function drawNgRung(e,c,tl){
     else{c.beginPath();c.moveTo(cx-14,y-26);c.lineTo(cx-14,y+26);c.moveTo(cx+14,y-26);c.lineTo(cx+14,y+26);c.stroke();if(it.k==='NC'){c.beginPath();c.moveTo(cx-24,y+24);c.lineTo(cx+24,y-24);c.stroke()}}
     ngTxt(c,it.label,cx,y-50,20,NG.navy,800);
     if(it.val!==false&&v!=null)ngTxt(c,'='+v,cx,y+46,20,v?NG.grn:'#6b7280',800);
-    if(it.par){const pv=ngValAt(it.par.on,tl),py=y+H_,pc=pv?NG.grn:NG.ink;c.lineWidth=4;c.strokeStyle=pc;c.beginPath();c.moveTo(cx-seg*.45,y);c.lineTo(cx-seg*.45,py);c.lineTo(cx+seg*.45,py);c.lineTo(cx+seg*.45,y);c.stroke();
-      c.fillStyle='#fff';c.fillRect(cx-26,py-30,52,60);c.lineWidth=5;c.beginPath();c.moveTo(cx-14,py-26);c.lineTo(cx-14,py+26);c.moveTo(cx+14,py-26);c.lineTo(cx+14,py+26);c.stroke();ngTxt(c,it.par.label,cx,py+46,20,NG.navy,800)}});
+    if(it.par){const pv=ngValAt(it.par.on,tl),py=y+H_,pc=pv?NG.grn:NG.ink,px0=cx-seg*.45,px1=cx+seg*((it.par.span||1)-1)+seg*.45,pm=(px0+px1)/2;c.lineWidth=4;c.strokeStyle=pc;c.beginPath();c.moveTo(px0,y);c.lineTo(px0,py);c.lineTo(px1,py);c.lineTo(px1,y);c.stroke();
+      c.fillStyle='#fff';c.fillRect(pm-26,py-30,52,60);c.lineWidth=5;c.beginPath();c.moveTo(pm-14,py-26);c.lineTo(pm-14,py+26);c.moveTo(pm+14,py-26);c.lineTo(pm+14,py+26);c.stroke();ngTxt(c,it.par.label,pm,py+46,20,NG.navy,800)}});
   if(e.sweep&&tl>=e.sweep[0]&&tl<=e.sweep[1]+.2){const f=clamp((tl-e.sweep[0])/(e.sweep[1]-e.sweep[0])),sx=x+w*f;c.save();c.globalAlpha*=.22;c.fillStyle=NG.org;c.fillRect(x,y-44,sx-x,88+H_);c.restore();c.strokeStyle=NG.org;c.lineWidth=4;c.beginPath();c.moveTo(sx,y-46);c.lineTo(sx,y+46+H_);c.stroke()}
   if(e.result){const r=ngValAt(e.result,tl);if(r)ngTxt(c,r,x+w+16,y,22,r.includes('OFF')?NG.red:NG.grn,800,'left')}
 }
@@ -2286,6 +2286,8 @@ const TPL={
  ep09s:{name:'EP09 Short – Lift button latching (9:16)',desc:'0:37 · 3D lift hook, decode, power-cut danger, CTA',style:'white',scenes:[]},
  sd3dtest:{name:'Star-Delta 3D stage test',desc:'real 3D panel, contactors, motor, ammeter, light',style:'white',scenes:[]},
  sdmgtest:{name:'Star-Delta motion graphic test',desc:'animated contactors, current, motor, ammeter, light, timer',style:'white',scenes:[]},
+ ep12:{name:'EP12 – Reverse delay timer (5:12)',desc:'conveyor drive slam hook, car, coast down, PLC timer, push buttons, live run',style:'white',scenes:[]},
+ ep12s:{name:'EP12 Short (0:43)',desc:'stop→reverse slam hook, car, timer question',style:'white',scenes:[]},
  ep12assets:{name:'EP12 asset test – conveyor drive, push buttons, car',desc:'3D assets for the reverse delay timer episode',style:'white',scenes:[]},
  ep11:{name:'EP11 – Forward / Reverse wiring + program (6:16)',desc:'washing machine hook, 3D FWD/REV panel with KM2 cross, control wiring, FX3U ladder',style:'white',scenes:[]},
  ep11s:{name:'EP11 Short (0:34)',desc:'washing machine → FWD/REV → question',style:'white',scenes:[]},
@@ -4094,7 +4096,7 @@ function g3TBox(){const B=g3Base('#e8edf3'),{T,S,cam,M,box,cyl,label}=B;
 }
 G3_BUILD.tbox=g3TBox;
 /* ---- shot: forward / reverse panel – MPCB, KM1 FWD, KM2 REV (output T1<->T3 cross), aux NC, mechanical interlock, OL, motor + conveyor ---- */
-function frModel(seq,t){let mode='off',t0=0,s=0,prevT=0,prevTgt=0,spike=0;const tg=m=>m==='fwd'?1:m==='rev'?-1:0,tau=m=>m==='fwd'||m==='rev'?1.0:.7;
+function frModel(seq,t,tauOff){let mode='off',t0=0,s=0,prevT=0,prevTgt=0,spike=0;const tg=m=>m==='fwd'?1:m==='rev'?-1:0,tau=m=>m==='fwd'||m==='rev'?1.0:(tauOff||.7);
   for(const [ts,m] of (seq||[[0,'off']])){if(ts>t)break;s=prevTgt+(s-prevTgt)*Math.exp(-(ts-prevT)/tau(mode));if((m==='fwd'||m==='rev')&&s*tg(m)<-.35)spike=ts;mode=m;t0=ts;prevT=ts;prevTgt=tg(m)}
   s=prevTgt+(s-prevTgt)*Math.exp(-(t-prevT)/tau(mode));return{mode,since:t-t0,s,spike:spike&&t-spike<1.6?1-(t-spike)/1.6:0}}
 function g3FRStage(){const B=g3Base('#e8edf3'),{T,S,cam,M,box,cyl,label}=B;
@@ -4259,7 +4261,7 @@ function g3Drive(){const B=g3Base('#e6eaef'),{T,S,cam,M,box,cyl,label}=B;
   const flash=new T.PointLight('#ffd27a',0,5);flash.position.set(3.5,.6,2.4);S.add(flash);
   const CAM={wide:[-1.5,2.6,8.4,0,-.2,0],drive:[4.4,1.4,5.0,3.9,-.2,1.4],coupling:[3.9,.6,3.4,3.85,0,1.55],pulley:[1.6,1.0,3.6,3.0,.1,.6],sensor:[-3.7,.55,-3.6,-5,.1,-1.6],belt:[-2.2,1.6,3.6,-1,.4,0]};
   let ang=0,off=0,lastT=0;
-  return{B,update(tl,e){const Md=frModel(e.seq,tl);const sp=Md.s;
+  return{B,update(tl,e){const Md=frModel(e.seq,tl,e.coast);const sp=Md.s;mbody.material.emissive.set('#ff3b1f');mbody.material.emissiveIntensity=Md.spike>0?Md.spike*.9*(.8+.2*Math.sin(tl*30)):0;
     const dt=Math.max(0,Math.min(.1,tl-lastT));lastT=tl;ang+=dt*sp*9;off+=dt*sp*.55;
     head.rotation.z=-ang;tail.rotation.z=-ang;tgt.rotation.z=-ang;[hubA,hubB].forEach(h=>h.rotation.x=ang*5);spider.rotation.x=ang*5;msh.rotation.x=ang*5;
     bt.offset.x=-off;loads.forEach((b,i)=>{let x=((-4+i*2+off*8)%8+8)%8-5;b.position.x=x;b.visible=x<2.7});
@@ -4318,7 +4320,7 @@ function g3Car(){const B=g3Base('#cfe6f7'),{T,S,cam,M,box,cyl,label}=B;
     const tgt=mode==='fwd'?2.4:mode==='rev'?-1.4:0;const dt=Math.max(0,Math.min(.1,tl-lastT));lastT=tl;v+=(tgt-v)*Math.min(1,dt*(mode==='brake'?2.6:1.4));x+=v*dt;ang+=v*dt/.36;
     C.position.x=((x+12)%24+24)%24-12;wheels.forEach(w=>w.rotation.z=-ang);tail.forEach(t=>t.material.emissiveIntensity=mode==='brake'||mode==='rev'?2.2:0);
     gs.material.map=gearTex[mode==='rev'?'R':mode==='brake'?'N':'D'];gs.lookAt(cam.position);
-    const cl=e.cams||[[0,'side']];const cur=CAM[cl[0][1]]||CAM.side;cam.position.set(C.position.x+cur[0],cur[1],cur[2]);cam.lookAt(C.position.x+cur[3],cur[4],cur[5])}}
+    const cl=e.cams||[[0,'side']];const cur=CAM[cl[0][1]]||CAM.side,dd=e.dist||1;cam.position.set(C.position.x+cur[0]*dd,cur[1],cur[2]*dd);cam.lookAt(C.position.x+cur[3],cur[4],cur[5])}}
 }
 G3_BUILD.car=g3Car;
 
@@ -5088,11 +5090,15 @@ const EP11_POSE=[[0.0, "think_a"], [2.85, "explain_a"], [5.45, "talk_b"], [5.85,
 const EP11_SPOSE=[[0.0, "talk_a"], [2.5, "explain_a"], [5.45, "talk_b"], [6.45, "explain_b"], [7.8, "talk_c"], [9.43, "nod"], [11.6, "point_3"], [13.95, "point_level"], [15.75, "point_1"], [17.88, "explain_a"], [19.96, "talk_b"], [22.5, "tilt_l"], [23.65, "think_a"], [25.1, "tilt_r"], [27.3, "talk_d"], [29.1, "explain_c"], [30.45, "talk_a"], [32.12, "explain_a"]];
 /* 2D: timer ring – counts while windows in e.runs [[start,end]]; label e.label, preset e.preset seconds */
 function drawTRing(e,c,tl){const x=e.x,y=e.y,w=e.w,h=e.h,cx=x+w/2,cy=y+h*.48,R=Math.min(w,h)*.36,P=e.preset||5;o2box(c,x,y,w,h,20,'#ffffff',4,true);
-  let acc=0;(e.runs||[]).forEach(([a,b])=>{if(tl>=a&&tl<b)acc=Math.min(P,tl-a)});const done=acc>=P;
+  let acc=0;(e.runs||[]).forEach(([a,b])=>{if(tl>=a&&tl<b)acc=Math.min(P,tl-a)});if(e.map){const m=e.map;acc=0;if(tl>=m[0][0]){acc=m[m.length-1][1];for(let i=0;i<m.length-1;i++)if(tl<m[i+1][0]){acc=m[i][1]+(m[i+1][1]-m[i][1])*(tl-m[i][0])/(m[i+1][0]-m[i][0]);break}}(e.reset||[]).forEach(t=>{if(tl>=t)acc=0})}const done=acc>=P-1e-3;
   c.save();c.lineWidth=18;c.strokeStyle='#e5e7eb';c.beginPath();c.arc(cx,cy,R,0,7);c.stroke();c.strokeStyle=done?'#16a34a':'#f59e0b';c.lineCap='round';c.beginPath();c.arc(cx,cy,R,-Math.PI/2,-Math.PI/2+Math.PI*2*acc/P);c.stroke();
   c.fillStyle='#111827';c.textAlign='center';c.font='700 26px InkHand, "Comic Sans MS"';c.fillText(e.label||'T0',cx,cy-R*.32);c.font='700 52px InkHand, "Comic Sans MS"';c.fillText(acc.toFixed(1)+' s',cx,cy+R*.25);
   c.font='700 22px InkHand, "Comic Sans MS"';c.fillStyle=done?'#16a34a':'#6b7280';c.fillText(done?'DONE ✓':'K'+P*10+' = '+P+' s',cx,y+h-18);c.restore()}
 
+const EP12_A=[[0.0, 2.35, 0], [2.95, 4.35, 0], [5.0, 8.2, 0], [8.8, 9.7, 0], [9.86, 15.48, 0], [15.48, 16.6, 1], [17.25, 20.65, 1], [21.25, 21.6, 1], [22.1, 24.4, 1], [24.8, 25.7, 1], [26.15, 27.94, 1], [27.94, 28.3, 2], [28.9, 31.0, 2], [31.4, 32.75, 2], [33.25, 35.75, 2], [36.25, 38.38, 2], [38.38, 40.95, 3], [41.5, 43.5, 3], [43.9, 45.75, 3], [46.2, 47.15, 3], [47.75, 49.9, 3], [50.45, 52.36, 3], [52.36, 53.35, 4], [53.75, 55.1, 4], [55.65, 56.9, 4], [57.25, 58.8, 4], [59.2, 60.75, 4], [61.15, 62.4, 4], [62.85, 65.21, 4], [65.21, 65.95, 5], [66.4, 70.9, 5], [71.35, 75.2, 5], [75.7, 77.99, 5], [77.99, 79.0, 6], [79.55, 83.65, 6], [84.2, 86.95, 6], [87.45, 89.2, 6], [89.75, 91.03, 6], [91.03, 91.1, 7], [91.8, 92.55, 7], [93.15, 94.35, 7], [94.65, 97.35, 7], [97.55, 98.5, 7], [98.75, 99.7, 7], [100.5, 101.05, 7], [101.35, 102.7, 7], [103.0, 104.3, 7], [104.6, 106.14, 7], [106.14, 107.2, 8], [107.75, 110.1, 8], [110.65, 113.63, 8], [113.63, 114.3, 9], [114.85, 115.75, 9], [115.9, 120.7, 9], [121.2, 121.8, 9], [122.35, 123.95, 9], [124.2, 125.8, 9], [126.5, 128.52, 9], [128.52, 130.1, 10], [130.4, 132.95, 10], [133.1, 135.6, 10], [136.45, 138.6, 10], [139.4, 142.8, 10], [143.65, 146.01, 10], [146.01, 148.8, 11], [149.25, 150.45, 11], [150.95, 153.65, 11], [154.3, 157.55, 11], [157.55, 159.2, 12], [159.5, 160.1, 12], [160.65, 162.45, 12], [163.1, 164.85, 12], [165.4, 168.1, 12], [168.6, 169.81, 12], [169.81, 171.0, 13], [171.0, 173.35, 13], [173.5, 177.87, 13], [177.87, 179.5, 14], [180.15, 181.25, 14], [181.65, 183.05, 14], [183.55, 184.45, 14], [184.95, 185.75, 14], [186.0, 187.25, 14], [187.68, 188.95, 14], [189.75, 190.75, 14], [191.75, 193.3, 14], [193.8, 194.55, 14], [195.2, 196.95, 14], [197.0, 199.2, 14], [199.48, 201.54, 14], [201.54, 202.15, 15], [202.15, 207.65, 15], [208.3, 210.34, 15], [210.34, 211.05, 16], [211.5, 213.93, 16], [213.93, 214.55, 17], [214.95, 215.75, 17], [216.1, 217.62, 17], [217.62, 218.0, 18], [218.0, 221.0, 18], [221.0, 222.2, 19], [222.6, 224.18, 19], [224.18, 225.15, 20], [225.75, 229.25, 20], [229.9, 232.83, 20], [232.83, 235.65, 21], [236.15, 240.4, 21], [241.05, 243.89, 21], [243.89, 251.2, 22], [251.9, 256.05, 22], [256.05, 257.0, 23], [257.55, 260.0, 23], [260.6, 262.2, 23], [262.9, 263.3, 23], [263.65, 267.0, 23], [267.7, 271.93, 23], [271.93, 272.5, 24], [272.5, 275.75, 24], [276.15, 278.8, 24], [279.3, 281.15, 24], [281.65, 283.1, 24], [283.7, 285.55, 24], [285.95, 286.6, 24], [286.85, 288.97, 24], [288.97, 289.6, 25], [290.2, 293.55, 25], [293.95, 295.2, 25], [295.85, 297.4, 25], [297.8, 299.2, 25], [299.7, 302.6, 25], [302.75, 302.95, 25], [303.5, 306.63, 25], [306.63, 308.25, 26], [308.55, 310.05, 26], [310.45, 312.4, 26]];
+const EP12_SA=[[0.0, 2.6, 0], [3.1, 7.96, 0], [7.96, 10.25, 1], [10.65, 11.7, 1], [12.15, 13.05, 1], [13.55, 15.9, 1], [16.45, 19.86, 1], [19.86, 22.3, 2], [22.8, 23.95, 2], [24.1, 29.16, 2], [29.16, 35.75, 3], [36.2, 36.75, 3], [37.05, 38.44, 3]];
+const EP12_POSE=[[0.0, "talk_a"], [2.95, "explain_a"], [5.0, "talk_b"], [8.8, "worry2"], [9.86, "worry2"], [12.67, "nod"], [15.48, "point_3"], [17.25, "tilt_r"], [18.95, "talk_a"], [21.25, "explain_a"], [22.1, "talk_b"], [24.8, "explain_b"], [26.15, "talk_c"], [27.94, "tilt_r"], [28.9, "point_3"], [31.4, "explain_c"], [33.25, "talk_a"], [36.25, "explain_a"], [38.38, "think_a"], [41.5, "explain_b"], [43.9, "talk_c"], [46.2, "nod"], [47.75, "talk_d"], [50.45, "worry2"], [52.36, "talk_a"], [53.75, "explain_a"], [55.65, "worry2"], [57.25, "worry2"], [59.2, "worry2"], [61.15, "worry2"], [62.85, "talk_d"], [65.21, "tilt_r"], [66.4, "worry2"], [68.65, "explain_a"], [71.35, "point_3"], [73.28, "explain_b"], [75.7, "point_1"], [77.99, "tilt_r"], [79.55, "point_3"], [81.6, "explain_c"], [84.2, "talk_a"], [87.45, "explain_a"], [89.75, "talk_b"], [91.03, "point_level"], [91.8, "point_1"], [93.15, "point_2"], [94.65, "point_3"], [97.55, "explain_c"], [98.75, "talk_a"], [100.5, "explain_a"], [101.35, "point_3"], [103.0, "point_level"], [104.6, "point_1"], [106.14, "nod"], [107.75, "point_3"], [110.65, "explain_c"], [113.63, "point_1"], [114.85, "point_2"], [115.9, "point_3"], [118.3, "explain_b"], [121.2, "point_1"], [122.35, "point_2"], [124.2, "point_3"], [126.5, "point_level"], [128.52, "point_1"], [130.4, "point_2"], [133.1, "talk_b"], [136.45, "point_level"], [139.4, "point_1"], [141.1, "nod"], [143.65, "point_3"], [146.01, "point_level"], [149.25, "worry2"], [150.95, "point_2"], [154.3, "talk_b"], [155.93, "explain_b"], [157.55, "point_1"], [159.5, "nod"], [160.65, "point_3"], [163.1, "point_level"], [165.4, "point_1"], [168.6, "point_2"], [169.81, "point_3"], [171.0, "point_level"], [173.5, "talk_c"], [175.69, "nod"], [177.87, "talk_d"], [180.15, "explain_c"], [181.65, "talk_a"], [183.55, "point_2"], [184.95, "talk_b"], [186.0, "explain_b"], [187.68, "talk_c"], [189.75, "point_2"], [191.75, "talk_d"], [193.8, "explain_c"], [195.2, "talk_a"], [197.0, "explain_a"], [199.48, "talk_b"], [201.54, "explain_b"], [202.15, "talk_c"], [204.9, "nod"], [208.3, "think_a"], [210.34, "point_level"], [211.5, "talk_a"], [213.93, "point_2"], [214.95, "talk_b"], [216.1, "explain_b"], [217.62, "point_1"], [218.0, "nod"], [221.0, "talk_d"], [222.6, "explain_c"], [224.18, "talk_a"], [225.75, "point_2"], [227.5, "talk_b"], [229.9, "explain_b"], [232.83, "point_1"], [236.15, "point_2"], [238.28, "talk_d"], [241.05, "point_level"], [243.89, "point_1"], [247.54, "explain_a"], [251.9, "point_3"], [253.98, "explain_b"], [256.05, "worry2"], [257.55, "point_2"], [260.6, "talk_d"], [262.9, "point_level"], [263.65, "worry2"], [265.32, "explain_a"], [267.7, "talk_b"], [269.81, "explain_b"], [271.93, "talk_c"], [272.5, "nod"], [274.12, "talk_d"], [276.15, "worry2"], [279.3, "point_1"], [281.65, "point_2"], [283.7, "point_3"], [285.95, "explain_b"], [286.85, "talk_c"], [288.97, "nod"], [290.2, "point_3"], [291.88, "explain_c"], [293.95, "point_1"], [295.85, "explain_a"], [297.8, "point_3"], [299.7, "explain_b"], [302.75, "talk_c"], [303.5, "nod"], [306.63, "talk_d"], [308.55, "explain_c"], [310.45, "talk_a"]];
+const EP12_SPOSE=[[0.0, "talk_a"], [3.1, "tilt_r"], [5.53, "talk_b"], [7.96, "explain_b"], [10.65, "talk_c"], [12.15, "nod"], [13.55, "talk_d"], [16.45, "worry2"], [18.16, "talk_a"], [19.86, "point_2"], [22.8, "talk_b"], [24.1, "explain_b"], [26.63, "talk_c"], [29.16, "tilt_r"], [32.45, "talk_d"], [36.2, "explain_c"], [37.05, "talk_a"]];
 function drawSD(e,c,tl){const cx=e.x+e.w/2,cy=e.y+e.h/2,R=Math.min(e.w,e.h)*.36,ink=O2,live=o2t(tl,e.live);
   const coil=(x1,y1,x2,y2,lab)=>{const L=Math.hypot(x2-x1,y2-y1),ux=(x2-x1)/L,uy=(y2-y1)/L,nx=-uy,ny=ux,a=L*.25,b=L*.75,n=8;
     c.beginPath();c.moveTo(x1,y1);c.lineTo(x1+ux*a,y1+uy*a);for(let i=1;i<=n;i++){const t=a+(b-a)*i/n,s=(i%2?1:-1)*12;c.lineTo(x1+ux*t+nx*s,y1+uy*t+ny*s)}c.lineTo(x2,y2);c.lineWidth=5;c.strokeStyle=e.col||'#b45309';c.stroke();
@@ -5595,6 +5601,126 @@ async function buildEp12Assets(){
   ng('tring',{x:900,y:380,w:320,h:300,runs:[[13,30]],preset:5},[12,20]);
   S.captions=false;S.showHand=false;S.cur=0;S.t=1;refresh();
 }
+/* ---------- EP12 – Reverse delay timer ---------- */
+async function buildEp12(){
+  stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('16:9');S.narrOff=0;S.art='sketch';S.g3q=.62;
+  try{await document.fonts.load('700 30px InkHand')}catch(_){}
+  const A=EP12_A,END=312.4;
+  const s=newScene({name:'EP12 – Reverse delay timer',style:'white',transition:'cut',trans:0,hold:0});s.minDur=END;S.scenes.push(s);
+  const K=ep10Kit(s,A,END),{ng,T,PS,card,presenter,RUNG}=K,RED=NG.red,GRN=NG.grn,BLU=NG.blue,PUR='#7c3aed',ORG='#f59e0b',NAV=NG.navy;
+  const P=(a,b=a)=>[PS(a),b>=26?END:PS(b+1)];
+  const chip=(t,win,bg=NAV,o={})=>card(o.x??28,o.y??22,Math.min(660,64+t.length*17),62,t,win,{bg,size:28,instant:true});
+  const pres=win=>presenter(win,{poses:EP12_POSE,size:300,x:-10,y:H-306});
+  const g3=(shot,win,o)=>ng('g3',{shot,x:0,y:0,w:W,h:H,noPop:true,...o},win);
+  const inset=(shot,win,o)=>ng('g3',{shot,x:930,y:30,w:330,h:300,rr:16,frame:'#1f2430',noPop:true,...o},win);
+  /* k0 hook */
+  g3('drive',[0,PS(1)],{seq:[[0,'fwd'],[4.0,'off'],[8.2,'rev'],[9.2,'off']],coast:2.5,slam:[8.25],breakSpider:1,cams:[[0,'wide'],[2.4,'drive'],[7.1,'coupling'],[T(0,4),'wide']]});
+  inset('pbs',[T(0,1),T(0,4)],{press:[[4.0,'stop'],[7.9,'rev']],lamp:[[0,0]],cams:[[0,'close']]});
+  chip('Full load · FORWARD',[0,T(0,1)],GRN);chip('STOP',[T(0,1),T(0,2)],RED);chip('Motor innum suthudhu… udane REVERSE!',[T(0,2),T(0,3)],ORG);chip('COUPLING UDANJIDUM!',[T(0,3),T(0,4)],RED);chip('PLC TIMER = solution',[T(0,4),PS(1)],PUR);
+  /* k1 car */
+  g3('car',P(1),{seq:[[0,'fwd'],[T(1,3),'brake'],[T(1,4),'rev']]});
+  chip('Car: full speed FORWARD',[PS(1),T(1,1)],GRN);chip('Nerdiyaa REVERSE gear?',[T(1,1),T(1,2)],ORG);chip('Maattom ✗',[T(1,2),T(1,3)],RED);chip('Brake → muzhusaa nikkattum',[T(1,3),T(1,4)]);chip('Appuram dhaan REVERSE',[T(1,4),T(1,5)],BLU);chip('Motor-kum adhe rule',[T(1,5),PS(2)],PUR);
+  /* k2–k4 why */
+  g3('drive',[PS(2),PS(5)],{coast:2.6,seq:[[0,'fwd'],[T(2,1)+.5,'off'],[PS(3),'fwd'],[T(3,1),'rev'],[T(3,4)+1.5,'off'],[PS(4),'fwd'],[T(4,1)+.3,'rev'],[T(4,4),'off'],[T(4,6),'fwd']],slam:[T(4,1)+.35],
+    cams:[[0,'drive'],[T(2,2),'pulley'],[T(2,3),'belt'],[PS(3),'drive'],[T(3,4),'drive'],[PS(4),'coupling'],[T(4,2),'drive'],[T(4,3),'coupling'],[T(4,4),'belt'],[T(4,6),'wide']]});
+  g3('apps',[T(4,5),T(4,6)],{crane:[[0,'stop'],[T(4,5),'down'],[T(4,5)+.6,'up'],[T(4,5)+1.2,'down']],cams:[[0,'crane']]});
+  chip('YEN?',[PS(2),T(2,1)],ORG);chip('STOP → contactor OFF',[T(2,1),T(2,2)]);chip('Motor udane nikkaadhu',[T(2,2),T(2,3)],ORG);chip('Rotor + load innum suthudhu ↻',[T(2,3),T(2,4)]);chip('= COAST DOWN',[T(2,4),PS(3)],BLU);
+  chip('Ippo REVERSE contactor ON?',[PS(3),T(3,1)],ORG);chip('Field: REVERSE ↺',[T(3,1),T(3,2)],BLU);chip('Rotor: innum FORWARD ↻',[T(3,2),T(3,3)],GRN);chip('EDHIR EDHIR!',[T(3,3),T(3,4)],RED);chip('Current > starting current',[T(3,4),T(3,5)],RED);chip('Winding HEAT 🔥',[T(3,5),PS(4)],RED);
+  chip('Current mattum illa…',[PS(4),T(4,1)]);chip('Torque thideernu thirumbum',[T(4,1),T(4,2)],RED);chip('Gearbox teeth-ku ADI',[T(4,2),T(4,3)],RED);chip('Coupling, shaft SHOCK',[T(4,3),T(4,4)],RED);chip('Belt SLIP',[T(4,4),T(4,5)],ORG);chip('Crane: load AADUM',[T(4,5),T(4,6)],ORG);chip('Ellaam orey second-la!',[T(4,6),PS(5)],RED);
+  /* k5 solution */
+  g3('pbs',P(5),{press:[[PS(5)+.6,'stop'],[T(5,1)+1.6,'rev']],lamp:[[0,0],[PS(5)+5.6,1]],cams:[[0,'front']]});
+  ng('tring',{x:700,y:250,w:330,h:300,map:[[PS(5)+.6,0],[PS(5)+5.6,5]],preset:5},P(5));
+  pres(P(5));chip('Appo enna pannanum?',[PS(5),T(5,1)],ORG);chip('Motor nikkura varaikkum START ✗',[T(5,1),T(5,2)],RED);chip('PLC timer = FORCE',[T(5,2),T(5,3)],PUR);chip('REVERSE DELAY TIMER',[T(5,3),PS(6)],PUR);
+  /* k6 how long */
+  g3('drive',P(6),{coast:2.4,seq:[[0,'fwd'],[T(6,1)+.6,'off']],cams:[[0,'drive'],[T(6,2),'wide']]});
+  ng('tring',{x:930,y:40,w:320,h:290,label:'STOPWATCH',map:[[T(6,1)+.6,0],[T(6,1)+4.2,3.6]],preset:5},[T(6,1),T(6,4)]);
+  chip('Timer evlo?',[PS(6),T(6,1)],ORG);chip('Stopwatch: muzhusaa nikka evlo s?',[T(6,1),T(6,2)]);chip('Fan, heavy conveyor → adhigam',[T(6,2),T(6,3)],ORG);chip('+ konjam margin',[T(6,3),T(6,4)]);
+  card(930,40,320,290,'5 s',[T(6,4),PS(7)],{bg:'#dcfce7',size:90,instant:true});chip('Indha example: 5 SECOND',[T(6,4),PS(7)],GRN);
+  /* k7 I/O */
+  chip('FX3U  I/O',P(7));inset('pbs',P(7),{x:880,y:60,w:380,h:560,lamp:[[0,0],[T(7,9),1]],cams:[[0,'front']]});
+  [['X0','Forward button'],['X1','Reverse button'],['X2','Stop'],['X3','Overload']].forEach(([a,b],i)=>card(60,110+i*100,380,84,a+' · '+b,[T(7,2+i),PS(8)],{bg:'#dbeafe',size:30}));
+  [['Y0','FWD contactor'],['Y1','REV contactor'],['Y2','READY lamp']].forEach(([a,b],i)=>card(470,110+i*100,380,84,a+' · '+b,[T(7,7+i),PS(8)],{bg:i==2?'#dcfce7':'#fef3c7',size:30}));
+  /* k8 idea */
+  ng('tring',{x:470,y:170,w:340,h:320,map:[[T(8,1),0],[T(8,2)+1.2,5]],preset:5},P(8));
+  chip('IDEA',[PS(8),T(8,1)],PUR);card(60,170,380,90,'Motor OFF → timer ODUM',[T(8,1),PS(9)],{bg:'#fef3c7',size:28});card(60,280,380,90,'5 s → START OK ✓',[T(8,2),PS(9)],{bg:'#dcfce7',size:28});
+  /* k9–k13 rungs */
+  const lad=[PS(9),PS(14)];
+  chip('LADDER',[PS(9),PS(14)],NAV,{x:28,y:22});
+  RUNG(40,105,700,[{k:'NC',label:'Y0',on:[[0,1]]},{k:'NC',label:'Y1',on:[[0,1]]},{k:'COIL',label:'T0 K50',on:[[0,1]]}],[PS(9),PS(14)],{num:'3',power:[[0,1]]});
+  RUNG(40,230,700,[{k:'NO',label:'X0 FWD',par:{label:'Y0',span:2}},{k:'NO',label:'T0'},{k:'NO',label:'X2 STOP',on:[[0,1]]},{k:'NO',label:'X3 OL',on:[[0,1]]},{k:'NC',label:'Y1',on:[[0,1]]},{k:'COIL',label:'Y0 FWD'}],[PS(10),PS(14)],{num:'1'});
+  RUNG(40,430,700,[{k:'NO',label:'X1 REV',par:{label:'Y1',span:2}},{k:'NO',label:'T0'},{k:'NO',label:'X2 STOP',on:[[0,1]]},{k:'NO',label:'X3 OL',on:[[0,1]]},{k:'NC',label:'Y0',on:[[0,1]]},{k:'COIL',label:'Y1 REV'}],[PS(12),PS(14)],{num:'2'});
+  RUNG(40,630,700,[{k:'NO',label:'T0',on:[[0,1]]},{k:'COIL',label:'Y2 READY',on:[[0,1]]}],[PS(13),PS(14)],{num:'4',power:[[0,1]]});
+  inset('pbs',[PS(9),PS(14)],{x:860,y:60,w:400,h:400,lamp:[[0,1]],cams:[[0,'front']]});
+  const side=(t,win,bg)=>card(860,480,400,80,t,win,{bg,size:26,instant:true});
+  side('Y0 + Y1 OFF → T0 ON',[T(9,1),T(9,3)],'#fef3c7');side('K50 × 100 ms = 5 s',[T(9,3),T(9,6)],'#dcfce7');side('Motor odumbodhu T0 RESET',[T(9,6),PS(10)],'#fee2e2');
+  side('X0 + T0 = start permission',[T(10,1),T(10,3)],'#dbeafe');side('Y0 = self-holding',[T(10,3),T(10,4)],'#ccfbf1');side('Stop · OL · Y1 NC interlock',[T(10,4),PS(11)],'#ede9fe');
+  side('T0: X0 kooda mattum ✓',[PS(11),T(11,1)],'#dcfce7');side('Holding path-la ✗',[T(11,1),T(11,2)],'#fee2e2');side('Start aanadhum T0 RESET',[T(11,2),T(11,3)],'#fef3c7');side('→ motor udane nikkidum ✗',[T(11,3),PS(12)],'#fee2e2');
+  side('Reverse: adhe maadhiri',[PS(12),T(12,4)],'#dbeafe');side('Y0 NC interlock',[T(12,4),PS(13)],'#ede9fe');side('T0 ON → READY lamp',[PS(13),PS(14)],'#dcfce7');
+  /* k14 live */
+  const fP=T(14,1)+.45,sP=T(14,5)+.4,eR=T(14,8)+.55,rdy=T(14,10)+.1,fR=T(14,11)+.5;
+  g3('drive',P(14),{coast:2.6,seq:[[0,'off'],[fP+.1,'fwd'],[sP+.1,'off'],[fR+.1,'rev']],cams:[[0,'wide'],[fP+.5,'drive'],[sP+1.5,'belt'],[rdy-1,'wide'],[fR+.5,'drive']]});
+  inset('pbs',P(14),{press:[[fP,'fwd'],[sP,'stop'],[eR,'rev'],[fR,'rev']],lamp:[[0,1],[fP+.1,0],[rdy,1],[fR+.1,0]],cams:[[0,'front']]});
+  ng('tring',{x:990,y:350,w:270,h:250,map:[[sP,0],[eR,2],[rdy,5]],preset:5},[sP-.2,fR+.2]);
+  chip('LIVE',[PS(14),T(14,1)],GRN);chip('FORWARD ▶',[T(14,1),T(14,3)],GRN);chip('T0 RESET · READY OFF',[T(14,3),T(14,5)]);chip('STOP ■',[T(14,5),T(14,7)],RED);chip('T0 counting…',[T(14,7),T(14,8)],ORG);chip('2 s-la REVERSE?',[T(14,8),T(14,9)],ORG);chip('Onnume aagala ✗',[T(14,9),T(14,10)],RED);chip('5 s → READY ✓',[T(14,10),T(14,11)],GRN);chip('REVERSE ◀',[T(14,11),PS(15)],BLU);
+  /* k15–k19 quiz */
+  g3('pbs',[PS(15),PS(20)],{press:[[T(15,1)+.8,'stop'],[T(15,1)+2.8,'rev']],lamp:[[0,0]],cams:[[0,'front']]});
+  ng('tring',{x:250,y:330,w:280,h:260,map:[[T(15,1)+.8,0],[T(15,1)+2.8,2]],preset:5},[T(15,1),PS(16)]);
+  pres([PS(15),PS(20)]);chip('QUIZ 🎯',[PS(15),PS(20)],ORG);
+  card(700,100,540,90,'2 s-la REV press, vittuttaar…',[T(15,1),PS(20)],{bg:'#fef3c7',size:26});card(700,190,540,60,'5 s aanadhum?',[T(15,2),PS(20)],{size:28});
+  [['A','Thaanaa reverse start',BLU],['B','Onnume aagaadhu – thirumba press',GRN],['C','Forward start',ORG]].forEach(([l,t,c],i)=>{card(700,270+i*100,90,86,l,[PS(16+i),PS(20)],{bg:c,size:42});card(800,270+i*100,440,86,t,[PS(16+i)+.3,PS(20)],{size:24})});
+  card(700,580,540,70,'Comment pannunga! 💬',[PS(19),PS(20)],{bg:'#dbeafe',size:28});
+  /* k20 power cut bonus */
+  g3('pbs',P(20),{lamp:[[0,0],[T(20,1)+5.2,1]],cams:[[0,'front']]});ng('tring',{x:250,y:330,w:280,h:260,map:[[T(20,1)+.2,0],[T(20,1)+5.2,5]],preset:5},P(20));
+  chip('BONUS',[PS(20),T(20,1)],PUR);chip('Power vandhaalum 5 s WAIT',[T(20,1),T(20,2)],GRN);chip('Supply settle → appuram start',[T(20,2),PS(21)]);
+  /* k21 */
+  chip('Timer ≠ interlock',[PS(21),T(21,1)],RED);card(380,170,520,90,'Software interlock (Y0/Y1 NC)',[T(21,1),PS(22)],{bg:'#ede9fe',size:28});card(380,270,520,90,'Hardware: aux NC',[T(21,1)+1,PS(22)],{bg:'#ede9fe',size:28});card(380,370,520,90,'+ TIMER = extra safety',[T(21,2),PS(22)],{bg:'#dcfce7',size:28});
+  /* k22 sensor / VFD */
+  g3('drive',P(22),{seq:[[0,'fwd'],[PS(22)+.5,'off']],coast:2.4,cams:[[0,'sensor']]});
+  chip('ZERO SPEED SENSOR → stop confirm',[PS(22),T(22,1)],BLU);chip('VFD: ramp down → smooth stop',[T(22,1),PS(23)],PUR);
+  /* k23 mistakes */
+  chip('COMMON MISTAKES',[PS(23),T(23,1)],RED);
+  RUNG(40,200,700,[{k:'NO',label:'X0 FWD',par:{label:'Y0'}},{k:'NO',label:'T0'},{k:'NO',label:'X2'},{k:'COIL',label:'Y0'}],[T(23,1),T(23,3)],{num:'✗'});
+  card(40,380,700,80,'T0 holding path-la → start aagi udane STOP ✗',[T(23,2),T(23,3)],{bg:'#fee2e2',size:26,instant:true});
+  g3('drive',[T(23,3),T(23,5)],{coast:2.4,seq:[[0,'fwd'],[T(23,3)+.3,'off'],[T(23,4)+.2,'rev']],slam:[T(23,4)+.25],cams:[[0,'drive'],[T(23,4),'coupling']]});
+  chip('2. Timer romba KAMMI',[T(23,3),T(23,5)],RED);
+  g3('pbs',[T(23,5),PS(24)],{press:[[T(23,5)+1.2,'fwd']],lamp:[[0,0]],cams:[[0,'front']]});chip('3. READY lamp illa → operator confuse 🤔',[T(23,5),PS(24)],RED);
+  /* k24 summary */
+  pres(P(24));chip('SUMMARY',P(24));
+  ['Stop → coast down','Udane REV → spike + shock','Motor OFF → timer','Timer done → START','T0: X button kooda mattum','READY lamp','Interlock eppavum'].forEach((t,i)=>{const ts=T(24,1+i);card(780,80+i*84,470,70,t,[ts,PS(25)],{tick:ts+.6,size:24})});
+  /* k25 answer */
+  g3('pbs',P(25),{press:[[T(25,1)+.5,'rev']],lamp:[[0,0],[T(25,5)+.5,1]],cams:[[0,'front']]});
+  ng('tring',{x:250,y:330,w:280,h:260,map:[[PS(25),1.5],[T(25,1)+.5,2],[T(25,5)+.5,5]],preset:5},P(25));
+  chip('QUIZ ANSWER',[PS(25),T(25,1)],ORG);chip('2 s: T0 innum mudiyala',[T(25,1),T(25,2)]);chip('Y1 ON aagala',[T(25,2),T(25,3)],RED);chip('Button vittadhum signal pochu',[T(25,3),T(25,4)]);chip('PLC nyaabagam vechukkaadhu',[T(25,4),T(25,5)],ORG);chip('5 s aanaalum START ✗',[T(25,5),T(25,6)],RED);chip('ANSWER: B',[T(25,6),T(25,7)],NAV);chip('READY ON → thirumba press',[T(25,7),PS(26)],GRN);
+  /* k26 CTA */
+  pres(P(26));
+  card(800,130,420,90,'LIKE',[PS(26),END],{bg:BLU,emoji:'👍',size:40});card(800,240,420,90,'SHARE',[T(26,1),END],{bg:NG.teal,emoji:'↗️',size:40});card(800,350,420,100,'SUBSCRIBE',[T(26,2),END],{bg:RED,emoji:'🔔',size:44});
+  S.captions=false;S.showHand=false;S.cur=0;S.pin=false;S.t=1;refresh();
+}
+async function buildEp12Short(){
+  stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('9:16');S.narrOff=0;S.art='sketch';S.g3q=.7;
+  try{await document.fonts.load('700 30px InkHand')}catch(_){}
+  const A=EP12_SA,END=42.76;
+  const s=newScene({name:'EP12 Short',style:'white',transition:'cut',trans:0,hold:0});s.minDur=END;S.scenes.push(s);
+  const K=ep10Kit(s,A,END),{ng,T,PS,card,presenter}=K,RED=NG.red,GRN=NG.grn,BLU=NG.blue,ORG='#f59e0b',NAV=NG.navy,PUR='#7c3aed';
+  const chip=(t,win,bg=NAV)=>card(30,40,Math.min(660,90+t.length*21),86,t,win,{bg,size:36,instant:true});
+  const full=(shot,win,o)=>ng('g3',{shot,x:0,y:0,w:W,h:H,noPop:true,...o},win);
+  full('drive',[0,T(1,2)],{dist:1.7,coast:2.5,seq:[[0,'fwd'],[3.4,'off'],[5.0,'rev'],[6.0,'off']],slam:[5.05],breakSpider:1,cams:[[0,'coupling'],[1.4,'drive'],[4.6,'coupling']]});
+  ng('g3',{shot:'pbs',x:400,y:880,w:300,h:340,rr:16,frame:'#1f2430',noPop:true,press:[[3.4,'stop'],[4.7,'rev']],lamp:[[0,0]],cams:[[0,'close']]},[0,PS(1)]);
+  chip('STOP → udane REVERSE?',[0,T(0,1)],RED);chip('Full speed FORWARD',[T(0,1),3.4],GRN);chip('STOP… udane REVERSE!',[3.4,5.0],ORG);chip('GEARBOX? 💥',[5.0,PS(1)],RED);
+  full('car',[PS(1),T(1,2)],{dist:2.1,seq:[[0,'fwd'],[T(1,1),'brake']]});
+  chip('Car: reverse gear direct ✗',[PS(1),T(1,1)],ORG);chip('Mudhalla NIKKUVOM',[T(1,1),T(1,2)],GRN);
+  full('drive',[T(1,2),PS(2)],{dist:1.7,coast:2.6,seq:[[0,'fwd'],[T(1,2)+.2,'off'],[T(1,4)+.6,'rev'],[T(1,4)+1.6,'off']],slam:[T(1,4)+.65],cams:[[0,'drive'],[T(1,3),'belt'],[T(1,4),'coupling']]});
+  chip('Motor-um apdi dhaan',[T(1,2),T(1,3)],PUR);chip('Rotor innum suthum ↻',[T(1,3),T(1,4)]);chip('Spike + gearbox ADI',[T(1,4),PS(2)],RED);
+  full('pbs',[PS(2),END],{dist:1.25,press:[[T(2,2)+1.0,'rev'],[T(3,0)+2.4,'stop'],[T(3,0)+4.4,'rev']],lamp:[[0,0],[T(2,1)+5,1],[T(3,0)+2.4,0]],cams:[[0,'front']]});
+  ng('tring',{x:420,y:1000,w:270,h:250,map:[[T(2,1),0],[T(2,1)+5,5]],preset:5},[T(2,1),PS(3)]);
+  ng('tring',{x:420,y:1000,w:270,h:250,map:[[T(3,0)+2.4,0],[T(3,0)+4.4,2]],preset:5},[T(3,0)+2,T(3,1)]);
+  chip('PLC TIMER ⏱',[PS(2),T(2,1)],PUR);chip('Motor OFF → 5 s count',[T(2,1),T(2,2)],ORG);chip('Mudiyura varaikkum START ✗',[T(2,2),PS(3)],RED);
+  chip('STOP → 2 s-la REV, vittuttaa?',[PS(3),T(3,1)],ORG);card(40,880,340,110,'Thaanaa REVERSE aagumaa?',[T(3,0)+5,38.44],{bg:BLU,size:28});chip('Comment pannunga 💬',[T(3,1),38.44],'#2563eb');
+  presenter([38.44,END],{poses:EP12_SPOSE,x:-10,y:H-470,size:440});
+  card(400,880,300,80,'LIKE',[38.6,END],{bg:NG.blue,emoji:'👍',size:30});card(400,970,300,80,'SHARE',[39.4,END],{bg:NG.teal,emoji:'↗️',size:30});card(400,1060,300,90,'SUBSCRIBE',[40.2,END],{bg:RED,emoji:'🔔',size:32});
+  S.captions=false;S.showHand=false;S.cur=0;S.pin=false;S.t=1;refresh();
+}
+
 async function buildEp10Short(){
   stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('9:16');S.narrOff=0;S.art='sketch';
   try{await document.fonts.load('700 30px InkHand')}catch(_){}
@@ -5836,6 +5962,8 @@ async function loadTemplate(key){S.art='';S.g3q=0;
   if(key==='sd3dtest')return buildSd3dTest();
   if(key==='sdmgtest')return buildSdmgTest();
   if(key==='hometest')return buildHomeTest();
+  if(key==='ep12')return buildEp12();
+  if(key==='ep12s')return buildEp12Short();
   if(key==='ep12assets')return buildEp12Assets();
   if(key==='ep11')return buildEp11();
   if(key==='ep11s')return buildEp11Short();
@@ -5873,7 +6001,7 @@ async function loadTemplate(key){S.art='';S.g3q=0;
       if(it.t==='text')addText({...o,draw:it.draw||1.4});else if(it.t==='arrow')addArrow(o);else if(it.t==='liquid')addLiquid(o);else if(it.t==='stick')addStick(o);else await addSvg(doodleSvg(it.k),DOODLES[it.k][0],{...o,key:it.k,flat:!!DOODLES[it.k][2]})}}
   S.cur=0;S.pin=true;S.t=0;refresh();
 }
-const TPL_STARTERS=['ep11','ep11s','ep10v4','ep10v4s','ep10v3','ep10','ep10s','ep09v2','ep09v2s','ep09','ep09s','fdtnpn','fdtnpns','ngd02','stick','plc','explainer','safety','lesson','promo','pumptank'];
+const TPL_STARTERS=['ep12','ep12s','ep11','ep11s','ep10v4','ep10v4s','ep10v3','ep10','ep10s','ep09v2','ep09v2s','ep09','ep09s','fdtnpn','fdtnpns','ngd02','stick','plc','explainer','safety','lesson','promo','pumptank'];
 const S2V_SAMPLE="# Why motors need overload relays\n\n## The problem\nA motor is jammed on the conveyor. It keeps pulling current and gets hotter every second.\n\n## The fix\nAn overload relay measures the motor current. If it stays too high, the relay opens the contactor and the motor stops.\n\n## Remember\nThe breaker protects the cable. The overload relay protects the motor. Subscribe for more.";
 function tplGroup(g){let el=$('tpls').querySelector('.tplgrp[data-g="'+g+'"]');if(!el){el=document.createElement('div');el.className='tplgrp';el.dataset.g=g;el.style.cssText='display:flex;flex-direction:column;gap:6px';el.innerHTML='<div class="hint" style="margin:4px 0 0">'+(g==='start'?'Starters':'Episodes &amp; prototypes')+'</div>';if(g==='start')$('tpls').prepend(el);else $('tpls').appendChild(el)}return el}
 Object.entries(TPL).forEach(([k,T])=>{const b=document.createElement('button');b.type='button';b.innerHTML=`<span><i class="sw" style="background:${STYLES[T.style].bg}"></i>${esc(T.name)}</span><small>${esc(T.desc)}</small>`;
