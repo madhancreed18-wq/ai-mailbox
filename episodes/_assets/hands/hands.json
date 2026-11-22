@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "image_size": [
+    1024,
+    1024
+  ],
+  "coordinates": {
+    "origin": "top-left",
+    "x_positive": "right",
+    "y_positive": "down",
+    "units": "integer pixel indices, 0 through 1023",
+    "contact_definition": "Projected visible fingertip contour, selected at alpha >= 128; thumb tip for thumbs-up. The hover point is its bent index tip, not the straight-pose anchor."
+  },
+  "handedness": "right",
+  "alpha": "RGBA PNG, straight/unassociated alpha",
+  "sprites": {
+    "hand-press-upleft.png": {
+      "file": "hand-press-upleft.png",
+      "pose": "index extended up-left 45 degrees",
+      "fingertip": [
+        91,
+        125
+      ],
+      "contact_digit": "index",
+      "texture_uv_bottom_left": [
+        0.08935546875,
+        0.87744140625
+      ],
+      "alpha_at_fingertip": 231,
+      "opaque_contour_bounds": [
+        74,
+        108,
+        953,
+        982
+      ],
+      "sha256": "cffa0e719ec397092067479297c0c36bad3370b2f81f2bba976329776175aa01"
+    },
+    "hand-press-left.png": {
+      "file": "hand-press-left.png",
+      "pose": "index extended horizontally left",
+      "fingertip": [
+        40,
+        442
+      ],
+      "contact_digit": "index",
+      "texture_uv_bottom_left": [
+        0.03955078125,
+        0.56787109375
+      ],
+      "alpha_at_fingertip": 233,
+      "opaque_contour_bounds": [
+        40,
+        338,
+        990,
+        739
+      ],
+      "sha256": "ee9b86eb1931a6c9249d754fff39ce1743796e4e9cf87077aa5a243aa68626c7"
+    },
+    "hand-press-front.png": {
+      "file": "hand-press-front.png",
+      "pose": "index points away into scene depth, foreshortened, camera above-right",
+      "fingertip": [
+        391,
+        133
+      ],
+      "contact_digit": "index",
+      "texture_uv_bottom_left": [
+        0.38232421875,
+        0.86962890625
+      ],
+      "alpha_at_fingertip": 244,
+      "opaque_contour_bounds": [
+        277,
+        133,
+        947,
+        986
+      ],
+      "sha256": "ffeb37b05ad761a5cbf8bef0f064672594d4f3b0f6745e2ad47e6d8212c7ef62"
+    },
+    "hand-hover-upleft.png": {
+      "file": "hand-hover-upleft.png",
+      "pose": "index slightly bent, hovering up-left",
+      "fingertip": [
+        107,
+        181
+      ],
+      "contact_digit": "index",
+      "texture_uv_bottom_left": [
+        0.10498046875,
+        0.82275390625
+      ],
+      "alpha_at_fingertip": 229,
+      "opaque_contour_bounds": [
+        90,
+        160,
+        955,
+        984
+      ],
+      "sha256": "95823e6b12bf656c9a7139eb62d12f6e647cf90be5562cac7f859ade13a30454"
+    },
+    "hand-thumbs-up.png": {
+      "file": "hand-thumbs-up.png",
+      "pose": "thumb raised, four fingers curled",
+      "fingertip": [
+        521,
+        83
+      ],
+      "contact_digit": "thumb",
+      "texture_uv_bottom_left": [
+        0.50927734375,
+        0.91845703125
+      ],
+      "alpha_at_fingertip": 230,
+      "opaque_contour_bounds": [
+        228,
+        83,
+        897,
+        984
+      ],
+      "sha256": "14d775c819cc38247b799163ee92b75b5d4f8b7d1a659ea3a50243955bb14df3"
+    }
+  }
+}
