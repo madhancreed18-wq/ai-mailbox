@@ -1,0 +1,53 @@
+Conveyor full load-oda forward-la odudhu. Operator Stop press panraar. Motor innum suthikittu irukkumbodhe, udane Reverse press panraar. Coupling udanjidum. Indha oru second mistake-ai, PLC-la oru timer vechu epdi thadukkuradhu nu paarpom.
+
+Car-la yosichu paarunga. Full speed-la forward pogumbodhu, nerdiyaa reverse gear poduveengalaa? Maattom. Mudhalla brake pottu, car muzhusaa nikkattum. Appuram dhaan reverse. Motor-kum adhe rule dhaan.
+
+Yen? Stop press pannaa contactor OFF aagidum. Aana motor udane nikkaadhu. Rotor-um load-um innum forward-la suthikittu dhaan irukkum. Idhai coast down nu solluvom.
+
+Indha nerathula reverse contactor ON aanaa enna aagum? Magnetic field udane reverse-la suthum. Aana rotor innum forward-la suthudhu. Rendum edhir edhir. Starting current-ai vida adhigamaana current varum. Motor winding heat aagum.
+
+Current mattum illa. Torque-um thideernu thirumbum. Gearbox teeth-ku adi. Coupling, shaft-ku shock. Conveyor belt slip aagum. Crane-naa, load aadum. Idhu ellaam orey second-la nadakkum.
+
+Appo enna pannanum? Stop-ku appuram, motor muzhusaa nikkura varaikkum, reverse-um forward-um start aaga koodaadhu. Idhai operator-ai nambi vidaama, PLC-la oru timer vechu force pannuvom. Idhu dhaan reverse delay timer.
+
+Timer evlo vekkanum? Motor Stop pannittu, muzhusaa nikka evlo second aagudhu nu stopwatch vechu paarunga. Fan, heavy conveyor maadhiri load-ku adhigam time aagum. Adhai vida konjam adhigamaa set pannunga. Indha example-la anju second.
+
+Ippo PLC. FX3U-la inputs. X zero, Forward button. X one, Reverse button. X two, Stop. X three, overload. Outputs. Y zero, Forward contactor. Y one, Reverse contactor. Y two, Ready lamp.
+
+Idea idhu dhaan. Motor OFF-aa irukkumbodhu mattum oru timer odum. Anju second mudinjaa dhaan, start allow pannuvom.
+
+Rung moonu. Y zero NC, Y one NC, series-la. Rendu contactor-um OFF-aa irundhaa, timer T zero ON aagum. K fifty. T zero nooru millisecond timer. So K fifty-naa, anju second. Motor odumbodhu, T zero reset aagidum.
+
+Rung onnu, Forward. X zero-oda series-la T zero contact. Adhu start permission. Adhukku parallel-aa Y zero self-holding. Series-la Stop, overload, Y one NC interlock. Kadaisila Y zero coil.
+
+T zero-ai X zero kooda mattum dhaan podanum. Holding path-la podakoodaadhu. Yen-naa, motor start aanadhum T zero reset aagidum. Holding path-la irundhaa, motor udane nikkidum.
+
+Rung rendu, Reverse. Adhe maadhiri. X one-oda series-la T zero. Parallel-aa Y one self-holding. Stop, overload, Y zero NC interlock. Kadaisila Y one coil.
+
+Rung naalu. T zero ON-naa, Y two Ready lamp ON. Operator-ku theriyum, ippo start pannalaam nu.
+
+Ippo live-aa paarpom. Forward press panrom. Motor forward-la odudhu. T zero reset. Ready lamp OFF. Stop press panrom. Motor mella nikkudhu. T zero count aagudhu. Rendu second-la Reverse press panrom. Onnume aagala. Anju second mudinjadhum Ready lamp ON. Ippo Reverse press panrom. Motor reverse-la odudhu.
+
+Ippo oru quiz. Stop press pannittu, rendu second-la Reverse press panni, button-ai vittuduraar. Anju second aanadhum enna aagum?
+
+Option A. Motor thaanaa reverse-la start aagum.
+
+Option B. Onnume aagaadhu. Thirumba Reverse press pannanum.
+
+Option C. Motor forward-la start aagum.
+
+Unga answer-ai comment pannunga. Answer video kadaisila.
+
+Innoru bonus. Power cut-ku appuram power vandhaalum, indha timer anju second wait pannum. Supply settle aagura varaikkum, yaarum start panna mudiyaadhu.
+
+Aana timer interlock-ai replace pannaadhu. Software interlock, auxiliary NC hardware interlock, rendum kandippaa irukkanum. Timer, adhukku mela oru extra safety.
+
+Innum accurate-aa venum-naa, motor shaft-la oru zero speed sensor vechu, motor nikkudhu nu confirm pannittu reverse allow pannalaam. VFD irundhaa, ramp down vechu smooth-aa nikka vekkalaam.
+
+Common mistakes. Onnu, T zero-ai holding path-la poduradhu. Motor start aagi udane nikkum. Rendu, timer romba kammi. Motor nikkuradhukku munnaadiye reverse aagum. Moonu, Ready lamp illaama, operator-ku yen start aagala nu puriyaadhu.
+
+Quick summary. Stop-ku appuram motor coast down aagum. Udane reverse-naa current spike, mechanical shock. Motor OFF-aa irukkumbodhu timer. Timer mudinjaa dhaan start. T zero, X button kooda mattum. Ready lamp. Interlock eppavum venum.
+
+Quiz answer. Rendu second-la Reverse press pannumbodhu T zero innum mudiyala. So Y one ON aagala. Button-ai vittadhum signal pochu. PLC adhai nyaabagam vechukkaadhu. Anju second aanaalum motor start aagaadhu. Answer B. Ready lamp ON aanadhum thirumba press pannanum.
+
+Video useful-aa irundhaa like pannunga. Electrician friend-kku share pannunga. Factory Decode Tamil-ai subscribe pannunga.

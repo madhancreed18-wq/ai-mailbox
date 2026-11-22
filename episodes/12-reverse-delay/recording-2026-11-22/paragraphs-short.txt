@@ -1,0 +1,7 @@
+Conveyor full speed-la forward odudhu. Stop press panni udane Reverse press pannaa, gearbox enna aagum?
+
+Car-la full speed-la reverse gear podamaattom. Mudhalla nikkuvom. Motor-um apdi dhaan. Stop pannaalum rotor innum suthum. Udane reverse-naa current spike, gearbox-ku adi.
+
+Adhanaala PLC-la oru timer. Motor OFF aanadhum anju second count aagum. Adhu mudiyura varaikkum, Reverse press pannaalum start aagaadhu.
+
+Aana Stop pannittu rendu second-la Reverse press panni vittuttaa, anju second aanadhum motor thaanaa reverse aagumaa? Comment pannunga. Answer full video-la.

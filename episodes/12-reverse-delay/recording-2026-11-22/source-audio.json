@@ -1,0 +1,45 @@
+{
+  "topic": "EP12 reverse delay timer",
+  "recording_date": "2026-11-22",
+  "files": {
+    "long": {
+      "source": "long 3.wav",
+      "frames": 7497600,
+      "sample_rate_hz": 24000,
+      "channels": 1,
+      "sample_width_bytes": 2,
+      "duration": 312.4,
+      "source_sha256": "1930bfa40c88f34590f2d5f23cad148ad9b67d609af270b6c13e2d2cca249c2d",
+      "source_git_blob_sha": "63f913bacaf7858b14e4fa5e20ff61fc8d9c7be9",
+      "pcm_sha256": "87647b47062b50f70dc866afdf03e2e10ad61e6cb2fdefae41fd3fd70b243ee1",
+      "audio_delivery_status": "not included in this Git handoff; external raw-media upload blocked by automatic approval review",
+      "flac_pcm_exact_match_local_check": true
+    },
+    "short": {
+      "source": "shorts 3.wav",
+      "frames": 1026240,
+      "sample_rate_hz": 24000,
+      "channels": 1,
+      "sample_width_bytes": 2,
+      "duration": 42.76,
+      "source_sha256": "7205a2ea12a56c5adb35f9cb0e529d5a48c780705b58586e7dd29c8c95f727fe",
+      "source_git_blob_sha": "18c045879bddd9a8ae8c336d0285998236caf437",
+      "pcm_sha256": "f1514442fb80bdf6938b690b85f29d6b9048b7c1e13f72ab2e64daa386d5e02c",
+      "audio_delivery_status": "not included in this Git handoff; external raw-media upload blocked by automatic approval review",
+      "flac_pcm_exact_match_local_check": true
+    }
+  },
+  "script_snapshots": {
+    "long": {
+      "repo_path": "episodes/12-reverse-delay/paragraphs-long.txt",
+      "git_blob_sha": "cf783c705e1f04ec81a1dfe87e7a02a4f95e5379",
+      "nonempty_paragraph_count": 27
+    },
+    "short": {
+      "repo_path": "episodes/12-reverse-delay/paragraphs-short.txt",
+      "git_blob_sha": "bf5f89aad5bb372b05df7189222538b785ede04d",
+      "nonempty_paragraph_count": 4
+    }
+  },
+  "delivery_scope": "Timing, script snapshots, ASR diagnostics and source identity only; no raw audio or FLAC media in this commit."
+}

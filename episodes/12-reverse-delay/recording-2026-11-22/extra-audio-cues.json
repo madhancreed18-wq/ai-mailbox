@@ -1,0 +1,13 @@
+{
+  "short": [
+    {
+      "id": "extra-cta",
+      "start": 38.44,
+      "end": 42.76,
+      "outside_script": true,
+      "anchor": "Additional like/share/Factory Decode Tamil subscribe ending detected in audio after full-video invitation",
+      "instruction": "Append a CTA scene/cue after script paragraph 3; this is not a fifth source paragraph."
+    }
+  ],
+  "long": []
+}

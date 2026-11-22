@@ -1,0 +1,199 @@
+{
+  "units": "seconds",
+  "indexing": "zero-based, one row per nonempty source paragraph",
+  "status": "audio-derived model alignment draft; not full-listening-certified",
+  "script_count_correction": "058 states 28 long paragraphs; actual source contains 27 nonempty paragraphs. No extra paragraph invented.",
+  "range_semantics": "Each end is next paragraph start, retaining intervening pauses. Short script ends before an extra spoken CTA; see extra-audio-cues.json.",
+  "paragraphs": {
+    "long": [
+      {
+        "index": 0,
+        "start": 0,
+        "end": 15.48,
+        "script_text": "Conveyor full load-oda forward-la odudhu. Operator Stop press panraar. Motor innum suthikittu irukkumbodhe, udane Reverse press panraar. Coupling udanjidum. Indha oru second mistake-ai, PLC-la oru timer vechu epdi thadukkuradhu nu paarpom."
+      },
+      {
+        "index": 1,
+        "start": 15.48,
+        "end": 27.94,
+        "script_text": "Car-la yosichu paarunga. Full speed-la forward pogumbodhu, nerdiyaa reverse gear poduveengalaa? Maattom. Mudhalla brake pottu, car muzhusaa nikkattum. Appuram dhaan reverse. Motor-kum adhe rule dhaan."
+      },
+      {
+        "index": 2,
+        "start": 27.94,
+        "end": 38.38,
+        "script_text": "Yen? Stop press pannaa contactor OFF aagidum. Aana motor udane nikkaadhu. Rotor-um load-um innum forward-la suthikittu dhaan irukkum. Idhai coast down nu solluvom."
+      },
+      {
+        "index": 3,
+        "start": 38.38,
+        "end": 52.36,
+        "script_text": "Indha nerathula reverse contactor ON aanaa enna aagum? Magnetic field udane reverse-la suthum. Aana rotor innum forward-la suthudhu. Rendum edhir edhir. Starting current-ai vida adhigamaana current varum. Motor winding heat aagum."
+      },
+      {
+        "index": 4,
+        "start": 52.36,
+        "end": 65.21,
+        "script_text": "Current mattum illa. Torque-um thideernu thirumbum. Gearbox teeth-ku adi. Coupling, shaft-ku shock. Conveyor belt slip aagum. Crane-naa, load aadum. Idhu ellaam orey second-la nadakkum."
+      },
+      {
+        "index": 5,
+        "start": 65.21,
+        "end": 77.99,
+        "script_text": "Appo enna pannanum? Stop-ku appuram, motor muzhusaa nikkura varaikkum, reverse-um forward-um start aaga koodaadhu. Idhai operator-ai nambi vidaama, PLC-la oru timer vechu force pannuvom. Idhu dhaan reverse delay timer."
+      },
+      {
+        "index": 6,
+        "start": 77.99,
+        "end": 91.03,
+        "script_text": "Timer evlo vekkanum? Motor Stop pannittu, muzhusaa nikka evlo second aagudhu nu stopwatch vechu paarunga. Fan, heavy conveyor maadhiri load-ku adhigam time aagum. Adhai vida konjam adhigamaa set pannunga. Indha example-la anju second."
+      },
+      {
+        "index": 7,
+        "start": 91.03,
+        "end": 106.14,
+        "script_text": "Ippo PLC. FX3U-la inputs. X zero, Forward button. X one, Reverse button. X two, Stop. X three, overload. Outputs. Y zero, Forward contactor. Y one, Reverse contactor. Y two, Ready lamp."
+      },
+      {
+        "index": 8,
+        "start": 106.14,
+        "end": 113.63,
+        "script_text": "Idea idhu dhaan. Motor OFF-aa irukkumbodhu mattum oru timer odum. Anju second mudinjaa dhaan, start allow pannuvom."
+      },
+      {
+        "index": 9,
+        "start": 113.63,
+        "end": 128.52,
+        "script_text": "Rung moonu. Y zero NC, Y one NC, series-la. Rendu contactor-um OFF-aa irundhaa, timer T zero ON aagum. K fifty. T zero nooru millisecond timer. So K fifty-naa, anju second. Motor odumbodhu, T zero reset aagidum."
+      },
+      {
+        "index": 10,
+        "start": 128.52,
+        "end": 146.01,
+        "script_text": "Rung onnu, Forward. X zero-oda series-la T zero contact. Adhu start permission. Adhukku parallel-aa Y zero self-holding. Series-la Stop, overload, Y one NC interlock. Kadaisila Y zero coil."
+      },
+      {
+        "index": 11,
+        "start": 146.01,
+        "end": 157.55,
+        "script_text": "T zero-ai X zero kooda mattum dhaan podanum. Holding path-la podakoodaadhu. Yen-naa, motor start aanadhum T zero reset aagidum. Holding path-la irundhaa, motor udane nikkidum."
+      },
+      {
+        "index": 12,
+        "start": 157.55,
+        "end": 169.81,
+        "script_text": "Rung rendu, Reverse. Adhe maadhiri. X one-oda series-la T zero. Parallel-aa Y one self-holding. Stop, overload, Y zero NC interlock. Kadaisila Y one coil."
+      },
+      {
+        "index": 13,
+        "start": 169.81,
+        "end": 177.87,
+        "script_text": "Rung naalu. T zero ON-naa, Y two Ready lamp ON. Operator-ku theriyum, ippo start pannalaam nu."
+      },
+      {
+        "index": 14,
+        "start": 177.87,
+        "end": 201.54,
+        "script_text": "Ippo live-aa paarpom. Forward press panrom. Motor forward-la odudhu. T zero reset. Ready lamp OFF. Stop press panrom. Motor mella nikkudhu. T zero count aagudhu. Rendu second-la Reverse press panrom. Onnume aagala. Anju second mudinjadhum Ready lamp ON. Ippo Reverse press panrom. Motor reverse-la odudhu."
+      },
+      {
+        "index": 15,
+        "start": 201.54,
+        "end": 210.34,
+        "script_text": "Ippo oru quiz. Stop press pannittu, rendu second-la Reverse press panni, button-ai vittuduraar. Anju second aanadhum enna aagum?"
+      },
+      {
+        "index": 16,
+        "start": 210.34,
+        "end": 213.93,
+        "script_text": "Option A. Motor thaanaa reverse-la start aagum."
+      },
+      {
+        "index": 17,
+        "start": 213.93,
+        "end": 217.62,
+        "script_text": "Option B. Onnume aagaadhu. Thirumba Reverse press pannanum."
+      },
+      {
+        "index": 18,
+        "start": 217.62,
+        "end": 221.0,
+        "script_text": "Option C. Motor forward-la start aagum."
+      },
+      {
+        "index": 19,
+        "start": 221.0,
+        "end": 224.18,
+        "script_text": "Unga answer-ai comment pannunga. Answer video kadaisila."
+      },
+      {
+        "index": 20,
+        "start": 224.18,
+        "end": 232.83,
+        "script_text": "Innoru bonus. Power cut-ku appuram power vandhaalum, indha timer anju second wait pannum. Supply settle aagura varaikkum, yaarum start panna mudiyaadhu."
+      },
+      {
+        "index": 21,
+        "start": 232.83,
+        "end": 243.89,
+        "script_text": "Aana timer interlock-ai replace pannaadhu. Software interlock, auxiliary NC hardware interlock, rendum kandippaa irukkanum. Timer, adhukku mela oru extra safety."
+      },
+      {
+        "index": 22,
+        "start": 243.89,
+        "end": 256.05,
+        "script_text": "Innum accurate-aa venum-naa, motor shaft-la oru zero speed sensor vechu, motor nikkudhu nu confirm pannittu reverse allow pannalaam. VFD irundhaa, ramp down vechu smooth-aa nikka vekkalaam."
+      },
+      {
+        "index": 23,
+        "start": 256.05,
+        "end": 271.93,
+        "script_text": "Common mistakes. Onnu, T zero-ai holding path-la poduradhu. Motor start aagi udane nikkum. Rendu, timer romba kammi. Motor nikkuradhukku munnaadiye reverse aagum. Moonu, Ready lamp illaama, operator-ku yen start aagala nu puriyaadhu."
+      },
+      {
+        "index": 24,
+        "start": 271.93,
+        "end": 288.97,
+        "script_text": "Quick summary. Stop-ku appuram motor coast down aagum. Udane reverse-naa current spike, mechanical shock. Motor OFF-aa irukkumbodhu timer. Timer mudinjaa dhaan start. T zero, X button kooda mattum. Ready lamp. Interlock eppavum venum."
+      },
+      {
+        "index": 25,
+        "start": 288.97,
+        "end": 306.63,
+        "script_text": "Quiz answer. Rendu second-la Reverse press pannumbodhu T zero innum mudiyala. So Y one ON aagala. Button-ai vittadhum signal pochu. PLC adhai nyaabagam vechukkaadhu. Anju second aanaalum motor start aagaadhu. Answer B. Ready lamp ON aanadhum thirumba press pannanum."
+      },
+      {
+        "index": 26,
+        "start": 306.63,
+        "end": 312.4,
+        "script_text": "Video useful-aa irundhaa like pannunga. Electrician friend-kku share pannunga. Factory Decode Tamil-ai subscribe pannunga."
+      }
+    ],
+    "short": [
+      {
+        "index": 0,
+        "start": 0,
+        "end": 7.96,
+        "script_text": "Conveyor full speed-la forward odudhu. Stop press panni udane Reverse press pannaa, gearbox enna aagum?"
+      },
+      {
+        "index": 1,
+        "start": 7.96,
+        "end": 19.86,
+        "script_text": "Car-la full speed-la reverse gear podamaattom. Mudhalla nikkuvom. Motor-um apdi dhaan. Stop pannaalum rotor innum suthum. Udane reverse-naa current spike, gearbox-ku adi."
+      },
+      {
+        "index": 2,
+        "start": 19.86,
+        "end": 29.16,
+        "script_text": "Adhanaala PLC-la oru timer. Motor OFF aanadhum anju second count aagum. Adhu mudiyura varaikkum, Reverse press pannaalum start aagaadhu."
+      },
+      {
+        "index": 3,
+        "start": 29.16,
+        "end": 38.44,
+        "script_text": "Aana Stop pannittu rendu second-la Reverse press panni vittuttaa, anju second aanadhum motor thaanaa reverse aagumaa? Comment pannunga. Answer full video-la."
+      }
+    ]
+  }
+}

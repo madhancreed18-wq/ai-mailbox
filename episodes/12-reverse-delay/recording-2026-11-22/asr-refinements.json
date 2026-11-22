@@ -1,0 +1,2216 @@
+[
+  {
+    "key": "long",
+    "clip": [
+      0,
+      15
+    ],
+    "start": 0.0,
+    "end": 9.86,
+    "text": " Conveyor, Full Load, Forward, Operator, Stop, Press, Motor, Reversed, Reversed, Reversed, Reversed, Reversed, Reversed, Reversed, Reversed, Reversed, Reversed, Reversed, Reversed, Reversed, Reversed, Reversed, Reversed, Reversed, Reversed, Reversed, Reversed.",
+    "words": [
+      {
+        "start": 0.0,
+        "end": 0.78,
+        "word": " Conveyor,",
+        "probability": 0.19214489424484782
+      },
+      {
+        "start": 0.88,
+        "end": 1.06,
+        "word": " Full",
+        "probability": 0.5993324518203735
+      },
+      {
+        "start": 1.06,
+        "end": 1.36,
+        "word": " Load,",
+        "probability": 0.7564750909805298
+      },
+      {
+        "start": 1.44,
+        "end": 1.82,
+        "word": " Forward,",
+        "probability": 0.21144329011440277
+      },
+      {
+        "start": 2.02,
+        "end": 3.48,
+        "word": " Operator,",
+        "probability": 0.5109627656638622
+      },
+      {
+        "start": 3.52,
+        "end": 3.68,
+        "word": " Stop,",
+        "probability": 0.8440843224525452
+      },
+      {
+        "start": 3.9,
+        "end": 3.96,
+        "word": " Press,",
+        "probability": 0.7692623734474182
+      },
+      {
+        "start": 4.22,
+        "end": 5.22,
+        "word": " Motor,",
+        "probability": 0.6880374550819397
+      },
+      {
+        "start": 5.52,
+        "end": 6.52,
+        "word": " Reversed,",
+        "probability": 0.36088177530715865
+      },
+      {
+        "start": 6.7,
+        "end": 7.7,
+        "word": " Reversed,",
+        "probability": 0.7117728243271509
+      },
+      {
+        "start": 7.7,
+        "end": 7.72,
+        "word": " Reversed,",
+        "probability": 0.7114332566658655
+      },
+      {
+        "start": 7.72,
+        "end": 7.98,
+        "word": " Reversed,",
+        "probability": 0.7433299819628397
+      },
+      {
+        "start": 7.98,
+        "end": 8.04,
+        "word": " Reversed,",
+        "probability": 0.762308398882548
+      },
+      {
+        "start": 8.04,
+        "end": 8.04,
+        "word": " Reversed,",
+        "probability": 0.814203937848409
+      },
+      {
+        "start": 8.04,
+        "end": 8.14,
+        "word": " Reversed,",
+        "probability": 0.846414585908254
+      },
+      {
+        "start": 8.14,
+        "end": 8.6,
+        "word": " Reversed,",
+        "probability": 0.9049927989641825
+      },
+      {
+        "start": 8.6,
+        "end": 9.3,
+        "word": " Reversed,",
+        "probability": 0.9323811928431193
+      },
+      {
+        "start": 9.32,
+        "end": 9.54,
+        "word": " Reversed,",
+        "probability": 0.9395329356193542
+      },
+      {
+        "start": 9.54,
+        "end": 9.62,
+        "word": " Reversed,",
+        "probability": 0.9632553855578104
+      },
+      {
+        "start": 9.62,
+        "end": 9.8,
+        "word": " Reversed,",
+        "probability": 0.9664904872576395
+      },
+      {
+        "start": 9.8,
+        "end": 9.8,
+        "word": " Reversed,",
+        "probability": 0.9716639916102091
+      },
+      {
+        "start": 9.8,
+        "end": 9.8,
+        "word": " Reversed,",
+        "probability": 0.9757544000943502
+      },
+      {
+        "start": 9.8,
+        "end": 9.8,
+        "word": " Reversed,",
+        "probability": 0.9787335991859436
+      },
+      {
+        "start": 9.8,
+        "end": 9.8,
+        "word": " Reversed,",
+        "probability": 0.9803704023361206
+      },
+      {
+        "start": 9.86,
+        "end": 9.86,
+        "word": " Reversed,",
+        "probability": 0.9817569653193156
+      },
+      {
+        "start": 9.86,
+        "end": 9.86,
+        "word": " Reversed,",
+        "probability": 0.9837521314620972
+      },
+      {
+        "start": 9.86,
+        "end": 9.86,
+        "word": " Reversed,",
+        "probability": 0.9804972807566324
+      },
+      {
+        "start": 9.86,
+        "end": 9.86,
+        "word": " Reversed.",
+        "probability": 0.9831472635269165
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      0,
+      15
+    ],
+    "start": 9.86,
+    "end": 11.78,
+    "text": " இந்த ஒரு செக்கண்ட் மிஸ்டேக",
+    "words": [
+      {
+        "start": 9.86,
+        "end": 10.66,
+        "word": " இந்த",
+        "probability": 0.978203296661377
+      },
+      {
+        "start": 10.66,
+        "end": 11.14,
+        "word": " ஒரு",
+        "probability": 0.78863192598025
+      },
+      {
+        "start": 11.14,
+        "end": 11.42,
+        "word": " செக்கண்ட்",
+        "probability": 0.6756164961391025
+      },
+      {
+        "start": 11.42,
+        "end": 11.78,
+        "word": " மிஸ்டேக",
+        "probability": 0.810208298265934
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      0,
+      15
+    ],
+    "start": 11.78,
+    "end": 14.66,
+    "text": " PLCல ஒரு טைமர் வெச்சு எப்படித் தடுக்கிறது என்று பாப்போம்.",
+    "words": [
+      {
+        "start": 11.78,
+        "end": 12.62,
+        "word": " PLCல",
+        "probability": 0.47688139726718265
+      },
+      {
+        "start": 12.62,
+        "end": 12.96,
+        "word": " ஒரு",
+        "probability": 0.9276169538497925
+      },
+      {
+        "start": 12.96,
+        "end": 13.36,
+        "word": " טைமர்",
+        "probability": 0.6173806846141815
+      },
+      {
+        "start": 13.36,
+        "end": 13.56,
+        "word": " வெச்சு",
+        "probability": 0.7287797431151072
+      },
+      {
+        "start": 13.56,
+        "end": 13.86,
+        "word": " எப்படித்",
+        "probability": 0.8446788021496364
+      },
+      {
+        "start": 13.86,
+        "end": 14.2,
+        "word": " தடுக்கிறது",
+        "probability": 0.7925690544976128
+      },
+      {
+        "start": 14.2,
+        "end": 14.3,
+        "word": " என்று",
+        "probability": 0.591094471514225
+      },
+      {
+        "start": 14.3,
+        "end": 14.66,
+        "word": " பாப்போம்.",
+        "probability": 0.8479046411812305
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      13,
+      28.9
+    ],
+    "start": 13.0,
+    "end": 15.48,
+    "text": " timer வெறு எப்படி தடுக்கிறதுனும் பாப்போம்.",
+    "words": [
+      {
+        "start": 13.0,
+        "end": 13.2,
+        "word": " timer",
+        "probability": 0.00026625744067132473
+      },
+      {
+        "start": 13.2,
+        "end": 13.54,
+        "word": " வெறு",
+        "probability": 0.34130382677540183
+      },
+      {
+        "start": 13.54,
+        "end": 13.8,
+        "word": " எப்படி",
+        "probability": 0.8780436635017395
+      },
+      {
+        "start": 13.8,
+        "end": 14.3,
+        "word": " தடுக்கிறதுனும்",
+        "probability": 0.786228725543389
+      },
+      {
+        "start": 14.3,
+        "end": 15.48,
+        "word": " பாப்போம்.",
+        "probability": 0.7707000449299812
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      13,
+      28.9
+    ],
+    "start": 15.48,
+    "end": 17.08,
+    "text": " காரில யோஷ்சு பாருங்கள்.",
+    "words": [
+      {
+        "start": 15.48,
+        "end": 15.92,
+        "word": " காரில",
+        "probability": 0.7076976269483566
+      },
+      {
+        "start": 15.92,
+        "end": 16.28,
+        "word": " யோஷ்சு",
+        "probability": 0.7387604303658009
+      },
+      {
+        "start": 16.28,
+        "end": 17.08,
+        "word": " பாருங்கள்.",
+        "probability": 0.7989959679543972
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      13,
+      28.9
+    ],
+    "start": 17.08,
+    "end": 18.86,
+    "text": " full speedல forward போகும் போது,",
+    "words": [
+      {
+        "start": 17.08,
+        "end": 17.4,
+        "word": " full",
+        "probability": 0.312719464302063
+      },
+      {
+        "start": 17.4,
+        "end": 17.84,
+        "word": " speedல",
+        "probability": 0.4890083819627762
+      },
+      {
+        "start": 17.84,
+        "end": 18.14,
+        "word": " forward",
+        "probability": 0.7489674091339111
+      },
+      {
+        "start": 18.14,
+        "end": 18.62,
+        "word": " போகும்",
+        "probability": 0.9225984315077463
+      },
+      {
+        "start": 18.62,
+        "end": 18.86,
+        "word": " போது,",
+        "probability": 0.799746498465538
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      13,
+      28.9
+    ],
+    "start": 18.88,
+    "end": 20.72,
+    "text": " நேரிடிய reverse gear பொடுவீங்களா?",
+    "words": [
+      {
+        "start": 18.88,
+        "end": 19.46,
+        "word": " நேரிடிய",
+        "probability": 0.8344445952347347
+      },
+      {
+        "start": 19.46,
+        "end": 19.78,
+        "word": " reverse",
+        "probability": 0.32759758830070496
+      },
+      {
+        "start": 19.78,
+        "end": 20.0,
+        "word": " gear",
+        "probability": 0.935201108455658
+      },
+      {
+        "start": 20.0,
+        "end": 20.72,
+        "word": " பொடுவீங்களா?",
+        "probability": 0.6687543004751205
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      13,
+      28.9
+    ],
+    "start": 20.72,
+    "end": 22.04,
+    "text": " மாட்டம்.",
+    "words": [
+      {
+        "start": 20.72,
+        "end": 22.04,
+        "word": " மாட்டம்.",
+        "probability": 0.7882163226604462
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      13,
+      28.9
+    ],
+    "start": 22.04,
+    "end": 22.98,
+    "text": " முதலில் brake போகும்.",
+    "words": [
+      {
+        "start": 22.04,
+        "end": 22.6,
+        "word": " முதலில்",
+        "probability": 0.7523372045585087
+      },
+      {
+        "start": 22.6,
+        "end": 22.68,
+        "word": " brake",
+        "probability": 0.450296550989151
+      },
+      {
+        "start": 22.68,
+        "end": 22.98,
+        "word": " போகும்.",
+        "probability": 0.6094393928845724
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      13,
+      28.9
+    ],
+    "start": 23.0,
+    "end": 24.62,
+    "text": " கார் முழுச்சா நிக்கனம்.",
+    "words": [
+      {
+        "start": 23.0,
+        "end": 23.64,
+        "word": " கார்",
+        "probability": 0.6569294407963753
+      },
+      {
+        "start": 23.64,
+        "end": 24.06,
+        "word": " முழுச்சா",
+        "probability": 0.8479543849825859
+      },
+      {
+        "start": 24.06,
+        "end": 24.62,
+        "word": " நிக்கனம்.",
+        "probability": 0.6479611285030842
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      13,
+      28.9
+    ],
+    "start": 24.62,
+    "end": 25.38,
+    "text": " அப்படும் தான் reverse.",
+    "words": [
+      {
+        "start": 24.62,
+        "end": 25.18,
+        "word": " அப்படும்",
+        "probability": 0.7257110263620105
+      },
+      {
+        "start": 25.18,
+        "end": 25.24,
+        "word": " தான்",
+        "probability": 0.8169815465807915
+      },
+      {
+        "start": 25.24,
+        "end": 25.38,
+        "word": " reverse.",
+        "probability": 0.2401505410671234
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      13,
+      28.9
+    ],
+    "start": 25.88,
+    "end": 27.94,
+    "text": " மோடிருக்கும் அதேயை ரூல்தான்.",
+    "words": [
+      {
+        "start": 25.88,
+        "end": 26.66,
+        "word": " மோடிருக்கும்",
+        "probability": 0.823011040687561
+      },
+      {
+        "start": 26.66,
+        "end": 26.98,
+        "word": " அதேயை",
+        "probability": 0.577042706310749
+      },
+      {
+        "start": 26.98,
+        "end": 27.94,
+        "word": " ரூல்தான்.",
+        "probability": 0.6640626755025651
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      13,
+      28.9
+    ],
+    "start": 27.94,
+    "end": 28.36,
+    "text": " ஏன்?",
+    "words": [
+      {
+        "start": 27.94,
+        "end": 28.36,
+        "word": " ஏன்?",
+        "probability": 0.7213169485330582
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      90,
+      108
+    ],
+    "start": 90.0,
+    "end": 90.94,
+    "text": " For example, 5 sec.",
+    "words": [
+      {
+        "start": 90.0,
+        "end": 90.28,
+        "word": " For",
+        "probability": 0.0001815042196540162
+      },
+      {
+        "start": 90.28,
+        "end": 90.28,
+        "word": " example,",
+        "probability": 0.9949586987495422
+      },
+      {
+        "start": 90.42,
+        "end": 90.64,
+        "word": " 5",
+        "probability": 0.8454856276512146
+      },
+      {
+        "start": 90.64,
+        "end": 90.94,
+        "word": " sec.",
+        "probability": 0.36712849140167236
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      90,
+      108
+    ],
+    "start": 91.38,
+    "end": 99.54,
+    "text": " Ippoh PLC. FX3U inputs, X0 forward button, X1 reverse button, X2 stop, X3 overload.",
+    "words": [
+      {
+        "start": 91.38,
+        "end": 92.06,
+        "word": " Ippoh",
+        "probability": 0.24772068361441293
+      },
+      {
+        "start": 92.06,
+        "end": 92.56,
+        "word": " PLC.",
+        "probability": 0.9136723875999451
+      },
+      {
+        "start": 93.1,
+        "end": 93.78,
+        "word": " FX3U",
+        "probability": 0.6509318600098292
+      },
+      {
+        "start": 93.78,
+        "end": 94.04,
+        "word": " inputs,",
+        "probability": 0.0037356805987656116
+      },
+      {
+        "start": 94.5,
+        "end": 95.12,
+        "word": " X0",
+        "probability": 0.9754853546619415
+      },
+      {
+        "start": 95.12,
+        "end": 95.44,
+        "word": " forward",
+        "probability": 0.6699670553207397
+      },
+      {
+        "start": 95.44,
+        "end": 95.76,
+        "word": " button,",
+        "probability": 0.9987989664077759
+      },
+      {
+        "start": 96.02,
+        "end": 96.52,
+        "word": " X1",
+        "probability": 0.999375581741333
+      },
+      {
+        "start": 96.52,
+        "end": 96.86,
+        "word": " reverse",
+        "probability": 0.9965692758560181
+      },
+      {
+        "start": 96.86,
+        "end": 97.2,
+        "word": " button,",
+        "probability": 0.9996981620788574
+      },
+      {
+        "start": 97.62,
+        "end": 97.96,
+        "word": " X2",
+        "probability": 0.9991850852966309
+      },
+      {
+        "start": 97.96,
+        "end": 98.4,
+        "word": " stop,",
+        "probability": 0.9955547451972961
+      },
+      {
+        "start": 98.62,
+        "end": 99.14,
+        "word": " X3",
+        "probability": 0.9994069635868073
+      },
+      {
+        "start": 99.14,
+        "end": 99.54,
+        "word": " overload.",
+        "probability": 0.9952925443649292
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      90,
+      108
+    ],
+    "start": 100.0,
+    "end": 106.14,
+    "text": " OUTPUTS Y0 FORWARD CONTACTOR, Y1 REVERSE CONTACTOR, Y2 READY LAMP",
+    "words": [
+      {
+        "start": 100.0,
+        "end": 100.96,
+        "word": " OUTPUTS",
+        "probability": 0.7009977996349335
+      },
+      {
+        "start": 100.96,
+        "end": 101.76,
+        "word": " Y0",
+        "probability": 0.7168307155370712
+      },
+      {
+        "start": 101.76,
+        "end": 102.22,
+        "word": " FORWARD",
+        "probability": 0.705420528848966
+      },
+      {
+        "start": 102.22,
+        "end": 102.7,
+        "word": " CONTACTOR,",
+        "probability": 0.9533676505088806
+      },
+      {
+        "start": 102.82,
+        "end": 103.4,
+        "word": " Y1",
+        "probability": 0.9854753315448761
+      },
+      {
+        "start": 103.4,
+        "end": 103.82,
+        "word": " REVERSE",
+        "probability": 0.9792130788167318
+      },
+      {
+        "start": 103.82,
+        "end": 104.3,
+        "word": " CONTACTOR,",
+        "probability": 0.9972914904356003
+      },
+      {
+        "start": 104.42,
+        "end": 105.02,
+        "word": " Y2",
+        "probability": 0.991171807050705
+      },
+      {
+        "start": 105.02,
+        "end": 105.36,
+        "word": " READY",
+        "probability": 0.8087104360262553
+      },
+      {
+        "start": 105.36,
+        "end": 106.14,
+        "word": " LAMP",
+        "probability": 0.9463810523351034
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      90,
+      108
+    ],
+    "start": 106.14,
+    "end": 106.98,
+    "text": " IDEA",
+    "words": [
+      {
+        "start": 106.14,
+        "end": 106.98,
+        "word": " IDEA",
+        "probability": 0.5852610170841217
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      112,
+      130
+    ],
+    "start": 112.0,
+    "end": 121.66,
+    "text": " start, aloponduo. Run 3, Y0 NC, Y1 NC series, 2 contactor on off-wire and timer T0, K50.",
+    "words": [
+      {
+        "start": 112.0,
+        "end": 112.16,
+        "word": " start,",
+        "probability": 0.00284872530028224
+      },
+      {
+        "start": 112.32,
+        "end": 112.72,
+        "word": " aloponduo.",
+        "probability": 0.17869597263634204
+      },
+      {
+        "start": 113.24,
+        "end": 113.88,
+        "word": " Run",
+        "probability": 0.2375747263431549
+      },
+      {
+        "start": 113.88,
+        "end": 114.16,
+        "word": " 3,",
+        "probability": 0.6380490064620972
+      },
+      {
+        "start": 114.58,
+        "end": 115.3,
+        "word": " Y0",
+        "probability": 0.7758654654026031
+      },
+      {
+        "start": 115.3,
+        "end": 115.66,
+        "word": " NC,",
+        "probability": 0.4038095474243164
+      },
+      {
+        "start": 115.86,
+        "end": 116.3,
+        "word": " Y1",
+        "probability": 0.9971371591091156
+      },
+      {
+        "start": 116.3,
+        "end": 116.62,
+        "word": " NC",
+        "probability": 0.9810553789138794
+      },
+      {
+        "start": 116.62,
+        "end": 117.0,
+        "word": " series,",
+        "probability": 0.3374294936656952
+      },
+      {
+        "start": 117.26,
+        "end": 118.08,
+        "word": " 2",
+        "probability": 0.7717080116271973
+      },
+      {
+        "start": 118.08,
+        "end": 118.62,
+        "word": " contactor",
+        "probability": 0.522423267364502
+      },
+      {
+        "start": 118.62,
+        "end": 118.68,
+        "word": " on",
+        "probability": 0.28254878520965576
+      },
+      {
+        "start": 118.68,
+        "end": 118.88,
+        "word": " off",
+        "probability": 0.3513518273830414
+      },
+      {
+        "start": 118.88,
+        "end": 119.06,
+        "word": "-wire",
+        "probability": 0.43467751145362854
+      },
+      {
+        "start": 119.06,
+        "end": 119.2,
+        "word": " and",
+        "probability": 0.041046205908060074
+      },
+      {
+        "start": 119.2,
+        "end": 119.62,
+        "word": " timer",
+        "probability": 0.8470891714096069
+      },
+      {
+        "start": 119.62,
+        "end": 120.26,
+        "word": " T0,",
+        "probability": 0.9511591196060181
+      },
+      {
+        "start": 120.42,
+        "end": 121.66,
+        "word": " K50.",
+        "probability": 0.756032258272171
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      112,
+      130
+    ],
+    "start": 122.0,
+    "end": 123.82,
+    "text": " T0 100 millisecond timer",
+    "words": [
+      {
+        "start": 122.0,
+        "end": 122.78,
+        "word": " T0",
+        "probability": 0.9683394134044647
+      },
+      {
+        "start": 122.78,
+        "end": 123.08,
+        "word": " 100",
+        "probability": 0.4288007318973541
+      },
+      {
+        "start": 123.08,
+        "end": 123.6,
+        "word": " millisecond",
+        "probability": 0.5430193841457367
+      },
+      {
+        "start": 123.6,
+        "end": 123.82,
+        "word": " timer",
+        "probability": 0.9230718016624451
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      112,
+      130
+    ],
+    "start": 123.82,
+    "end": 125.76,
+    "text": " so K50 ना 5 second",
+    "words": [
+      {
+        "start": 123.82,
+        "end": 124.32,
+        "word": " so",
+        "probability": 0.6856366395950317
+      },
+      {
+        "start": 124.32,
+        "end": 124.96,
+        "word": " K50",
+        "probability": 0.891514241695404
+      },
+      {
+        "start": 124.96,
+        "end": 125.22,
+        "word": " ना",
+        "probability": 0.4377502519637346
+      },
+      {
+        "start": 125.22,
+        "end": 125.38,
+        "word": " 5",
+        "probability": 0.9061007499694824
+      },
+      {
+        "start": 125.38,
+        "end": 125.76,
+        "word": " second",
+        "probability": 0.362501323223114
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      112,
+      130
+    ],
+    "start": 125.76,
+    "end": 128.18,
+    "text": " motor ओडुम्पोद T0 reset",
+    "words": [
+      {
+        "start": 125.76,
+        "end": 126.74,
+        "word": " motor",
+        "probability": 0.4985128939151764
+      },
+      {
+        "start": 126.74,
+        "end": 127.3,
+        "word": " ओडुम्पोद",
+        "probability": 0.6872688279702113
+      },
+      {
+        "start": 127.3,
+        "end": 127.9,
+        "word": " T0",
+        "probability": 0.7754571437835693
+      },
+      {
+        "start": 127.9,
+        "end": 128.18,
+        "word": " reset",
+        "probability": 0.9739677309989929
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      112,
+      130
+    ],
+    "start": 128.18,
+    "end": 128.52,
+    "text": " आगिडो",
+    "words": [
+      {
+        "start": 128.18,
+        "end": 128.52,
+        "word": " आगिडो",
+        "probability": 0.8068316206336021
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      112,
+      130
+    ],
+    "start": 128.52,
+    "end": 129.88,
+    "text": " Rung 1",
+    "words": [
+      {
+        "start": 128.52,
+        "end": 129.72,
+        "word": " Rung",
+        "probability": 0.3940806195605546
+      },
+      {
+        "start": 129.72,
+        "end": 129.88,
+        "word": " 1",
+        "probability": 0.8115415573120117
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      176,
+      189
+    ],
+    "start": 176.0,
+    "end": 185.68,
+    "text": " தெரியும், இப்போ, start பணலாம் என்று, இப்போ, live-up-up, forward press பண்டுறோம், motor forwardல ஓடுது, T0 reset, ready lamp off.",
+    "words": [
+      {
+        "start": 176.0,
+        "end": 176.4,
+        "word": " தெரியும்,",
+        "probability": 0.7937743626534939
+      },
+      {
+        "start": 176.4,
+        "end": 176.62,
+        "word": " இப்போ,",
+        "probability": 0.7308314204216003
+      },
+      {
+        "start": 176.64,
+        "end": 176.74,
+        "word": " start",
+        "probability": 0.10954957455396652
+      },
+      {
+        "start": 176.74,
+        "end": 177.3,
+        "word": " பணலாம்",
+        "probability": 0.5756452238808075
+      },
+      {
+        "start": 177.3,
+        "end": 177.42,
+        "word": " என்று,",
+        "probability": 0.5404995121061802
+      },
+      {
+        "start": 178.26,
+        "end": 178.8,
+        "word": " இப்போ,",
+        "probability": 0.956239128112793
+      },
+      {
+        "start": 178.84,
+        "end": 179.04,
+        "word": " live",
+        "probability": 0.8744300603866577
+      },
+      {
+        "start": 179.04,
+        "end": 179.28,
+        "word": "-up",
+        "probability": 0.44347523525357246
+      },
+      {
+        "start": 179.28,
+        "end": 179.44,
+        "word": "-up,",
+        "probability": 0.5541558265686035
+      },
+      {
+        "start": 179.7,
+        "end": 180.44,
+        "word": " forward",
+        "probability": 0.8898406624794006
+      },
+      {
+        "start": 180.44,
+        "end": 180.8,
+        "word": " press",
+        "probability": 0.6252340078353882
+      },
+      {
+        "start": 180.8,
+        "end": 181.66,
+        "word": " பண்டுறோம்,",
+        "probability": 0.6382282939222124
+      },
+      {
+        "start": 181.66,
+        "end": 181.9,
+        "word": " motor",
+        "probability": 0.7612692713737488
+      },
+      {
+        "start": 181.9,
+        "end": 182.5,
+        "word": " forwardல",
+        "probability": 0.5847170054912567
+      },
+      {
+        "start": 182.5,
+        "end": 183.06,
+        "word": " ஓடுது,",
+        "probability": 0.8182684605320295
+      },
+      {
+        "start": 183.2,
+        "end": 183.96,
+        "word": " T0",
+        "probability": 0.805342435836792
+      },
+      {
+        "start": 183.96,
+        "end": 184.32,
+        "word": " reset,",
+        "probability": 0.8997998237609863
+      },
+      {
+        "start": 184.96,
+        "end": 185.16,
+        "word": " ready",
+        "probability": 0.9501500725746155
+      },
+      {
+        "start": 185.16,
+        "end": 185.42,
+        "word": " lamp",
+        "probability": 0.9509637355804443
+      },
+      {
+        "start": 185.42,
+        "end": 185.68,
+        "word": " off.",
+        "probability": 0.7819421887397766
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      176,
+      189
+    ],
+    "start": 186.0,
+    "end": 187.68,
+    "text": " ச்டாப் பிரச் பண்ணுறோம்.",
+    "words": [
+      {
+        "start": 186.0,
+        "end": 186.74,
+        "word": " ச்டாப்",
+        "probability": 0.6532480468352636
+      },
+      {
+        "start": 186.74,
+        "end": 186.94,
+        "word": " பிரச்",
+        "probability": 0.6629937410354614
+      },
+      {
+        "start": 186.94,
+        "end": 187.68,
+        "word": " பண்ணுறோம்.",
+        "probability": 0.5676116827461455
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      176,
+      189
+    ],
+    "start": 187.68,
+    "end": 188.98,
+    "text": " மோடர் மெல்ல நிக்கிது.",
+    "words": [
+      {
+        "start": 187.68,
+        "end": 188.24,
+        "word": " மோடர்",
+        "probability": 0.8926381826400757
+      },
+      {
+        "start": 188.24,
+        "end": 188.56,
+        "word": " மெல்ல",
+        "probability": 0.9336571216583252
+      },
+      {
+        "start": 188.56,
+        "end": 188.98,
+        "word": " நிக்கிது.",
+        "probability": 0.9100525453686714
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      187,
+      204
+    ],
+    "start": 187.0,
+    "end": 196.92,
+    "text": " Motor, மெல்ல நிக்கிது, T0 காண்ட்டாகுது. 2 सேன் ரிவர்ஸ் பரச் செய்து, 1 நுமே ஆகல, 5 सேன் முடிஜ்சதோ, ready lamp.",
+    "words": [
+      {
+        "start": 187.0,
+        "end": 188.04,
+        "word": " Motor,",
+        "probability": 2.1225760065135546e-05
+      },
+      {
+        "start": 188.26,
+        "end": 188.56,
+        "word": " மெல்ல",
+        "probability": 0.8657297968864441
+      },
+      {
+        "start": 188.56,
+        "end": 189.04,
+        "word": " நிக்கிது,",
+        "probability": 0.8809416890144348
+      },
+      {
+        "start": 189.22,
+        "end": 190.12,
+        "word": " T0",
+        "probability": 0.9590695202350616
+      },
+      {
+        "start": 190.12,
+        "end": 191.26,
+        "word": " காண்ட்டாகுது.",
+        "probability": 0.6099700443446636
+      },
+      {
+        "start": 191.36,
+        "end": 191.96,
+        "word": " 2",
+        "probability": 0.9155280590057373
+      },
+      {
+        "start": 191.96,
+        "end": 192.32,
+        "word": " सேன்",
+        "probability": 0.28659533243626356
+      },
+      {
+        "start": 192.32,
+        "end": 192.78,
+        "word": " ரிவர்ஸ்",
+        "probability": 0.5626205727458
+      },
+      {
+        "start": 192.78,
+        "end": 192.98,
+        "word": " பரச்",
+        "probability": 0.5117038488388062
+      },
+      {
+        "start": 192.98,
+        "end": 193.24,
+        "word": " செய்து,",
+        "probability": 0.5394418487946192
+      },
+      {
+        "start": 193.38,
+        "end": 193.92,
+        "word": " 1",
+        "probability": 0.4157961308956146
+      },
+      {
+        "start": 193.92,
+        "end": 194.18,
+        "word": " நுமே",
+        "probability": 0.6468323832377791
+      },
+      {
+        "start": 194.18,
+        "end": 194.48,
+        "word": " ஆகல,",
+        "probability": 0.7816576759020487
+      },
+      {
+        "start": 194.76,
+        "end": 195.36,
+        "word": " 5",
+        "probability": 0.9940875768661499
+      },
+      {
+        "start": 195.36,
+        "end": 195.8,
+        "word": " सேன்",
+        "probability": 0.7118705846369267
+      },
+      {
+        "start": 195.8,
+        "end": 196.2,
+        "word": " முடிஜ்சதோ,",
+        "probability": 0.7475452363491059
+      },
+      {
+        "start": 196.34,
+        "end": 196.64,
+        "word": " ready",
+        "probability": 0.6605575084686279
+      },
+      {
+        "start": 196.64,
+        "end": 196.92,
+        "word": " lamp.",
+        "probability": 0.6527412533760071
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      187,
+      204
+    ],
+    "start": 197.0,
+    "end": 199.48,
+    "text": " இப்போ ரிவார்ஸ் பெண்டும்.",
+    "words": [
+      {
+        "start": 197.0,
+        "end": 198.28,
+        "word": " இப்போ",
+        "probability": 0.8534483313560486
+      },
+      {
+        "start": 198.28,
+        "end": 198.7,
+        "word": " ரிவார்ஸ்",
+        "probability": 0.6440483875572681
+      },
+      {
+        "start": 198.7,
+        "end": 199.48,
+        "word": " பெண்டும்.",
+        "probability": 0.49660078529268503
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      187,
+      204
+    ],
+    "start": 199.48,
+    "end": 201.0,
+    "text": " மோடர் ரிவார்ஸ்ல ஊடுது.",
+    "words": [
+      {
+        "start": 199.48,
+        "end": 200.14,
+        "word": " மோடர்",
+        "probability": 0.7319152474403381
+      },
+      {
+        "start": 200.14,
+        "end": 200.56,
+        "word": " ரிவார்ஸ்ல",
+        "probability": 0.9254077781330455
+      },
+      {
+        "start": 200.56,
+        "end": 201.0,
+        "word": " ஊடுது.",
+        "probability": 0.7453442737460136
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      187,
+      204
+    ],
+    "start": 201.54,
+    "end": 202.94,
+    "text": " இப்போ ஒரு குச்சு.",
+    "words": [
+      {
+        "start": 201.54,
+        "end": 202.36,
+        "word": " இப்போ",
+        "probability": 0.9521997332572937
+      },
+      {
+        "start": 202.36,
+        "end": 202.5,
+        "word": " ஒரு",
+        "probability": 0.6771153584122658
+      },
+      {
+        "start": 202.5,
+        "end": 202.94,
+        "word": " குச்சு.",
+        "probability": 0.502287732437253
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      187,
+      204
+    ],
+    "start": 203.16,
+    "end": 203.82,
+    "text": " STOP",
+    "words": [
+      {
+        "start": 203.16,
+        "end": 203.82,
+        "word": " STOP",
+        "probability": 0.0912044495344162
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      201.5,
+      214
+    ],
+    "start": 201.5,
+    "end": 209.5,
+    "text": " இப்போரு quiz, stop press பணிட்டு, 2 секண்டில reverse பண்ணி, button விட்டிடறாரு, 5 секண்டில் என்ன ஆகோம்.",
+    "words": [
+      {
+        "start": 201.5,
+        "end": 202.5,
+        "word": " இப்போரு",
+        "probability": 0.7882928454450199
+      },
+      {
+        "start": 202.5,
+        "end": 202.76,
+        "word": " quiz,",
+        "probability": 0.0728110671043396
+      },
+      {
+        "start": 203.14,
+        "end": 203.9,
+        "word": " stop",
+        "probability": 0.8054780960083008
+      },
+      {
+        "start": 203.9,
+        "end": 204.18,
+        "word": " press",
+        "probability": 0.6708582043647766
+      },
+      {
+        "start": 204.18,
+        "end": 204.8,
+        "word": " பணிட்டு,",
+        "probability": 0.7452899387904576
+      },
+      {
+        "start": 204.8,
+        "end": 205.18,
+        "word": " 2",
+        "probability": 0.9210574626922607
+      },
+      {
+        "start": 205.18,
+        "end": 205.68,
+        "word": " секண்டில",
+        "probability": 0.5091174362848202
+      },
+      {
+        "start": 205.68,
+        "end": 205.9,
+        "word": " reverse",
+        "probability": 0.38003113865852356
+      },
+      {
+        "start": 205.9,
+        "end": 206.6,
+        "word": " பண்ணி,",
+        "probability": 0.5712843358516693
+      },
+      {
+        "start": 206.68,
+        "end": 206.96,
+        "word": " button",
+        "probability": 0.771465539932251
+      },
+      {
+        "start": 206.96,
+        "end": 207.98,
+        "word": " விட்டிடறாரு,",
+        "probability": 0.6754898845472119
+      },
+      {
+        "start": 208.24,
+        "end": 208.46,
+        "word": " 5",
+        "probability": 0.9478114247322083
+      },
+      {
+        "start": 208.46,
+        "end": 209.1,
+        "word": " секண்டில்",
+        "probability": 0.6174840650388173
+      },
+      {
+        "start": 209.1,
+        "end": 209.3,
+        "word": " என்ன",
+        "probability": 0.7112474143505096
+      },
+      {
+        "start": 209.3,
+        "end": 209.68,
+        "word": " ஆகோம்.",
+        "probability": 0.40232322216033933
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      201.5,
+      214
+    ],
+    "start": 210.34,
+    "end": 210.94,
+    "text": " option A,",
+    "words": [
+      {
+        "start": 210.34,
+        "end": 210.6,
+        "word": " option",
+        "probability": 0.6095831394195557
+      },
+      {
+        "start": 210.6,
+        "end": 210.94,
+        "word": " A,",
+        "probability": 0.6873984336853027
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      201.5,
+      214
+    ],
+    "start": 211.5,
+    "end": 213.24,
+    "text": " मोटर ताना रिवर्स ले स्टार्ट आगू",
+    "words": [
+      {
+        "start": 211.5,
+        "end": 211.86,
+        "word": " मोटर",
+        "probability": 0.6725349426269531
+      },
+      {
+        "start": 211.86,
+        "end": 212.36,
+        "word": " ताना",
+        "probability": 0.8599122166633606
+      },
+      {
+        "start": 212.36,
+        "end": 212.68,
+        "word": " रिवर्स",
+        "probability": 0.8472775109112263
+      },
+      {
+        "start": 212.68,
+        "end": 212.8,
+        "word": " ले",
+        "probability": 0.905459443728129
+      },
+      {
+        "start": 212.8,
+        "end": 213.06,
+        "word": " स्टार्ट",
+        "probability": 0.9249397185113695
+      },
+      {
+        "start": 213.06,
+        "end": 213.24,
+        "word": " आगू",
+        "probability": 0.7431370330353578
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      209,
+      225
+    ],
+    "start": 209.0,
+    "end": 217.62,
+    "text": " நாதும் என்ன ஆகோம். Option A, मोடர் தானா ரிவர்ஸ்லை स्टாட்டாகோம். Option B, உண்ணுமே ஆகாது, திரும்ப ரிவர்ஸ் பரெஸ் பண்ணனும்.",
+    "words": [
+      {
+        "start": 209.0,
+        "end": 209.16,
+        "word": " நாதும்",
+        "probability": 0.41564705160756904
+      },
+      {
+        "start": 209.16,
+        "end": 209.3,
+        "word": " என்ன",
+        "probability": 0.9295327663421631
+      },
+      {
+        "start": 209.3,
+        "end": 210.34,
+        "word": " ஆகோம்.",
+        "probability": 0.5482085347175598
+      },
+      {
+        "start": 210.34,
+        "end": 210.6,
+        "word": " Option",
+        "probability": 0.24347881972789764
+      },
+      {
+        "start": 210.6,
+        "end": 210.98,
+        "word": " A,",
+        "probability": 0.9784811735153198
+      },
+      {
+        "start": 211.24,
+        "end": 211.9,
+        "word": " मोடர்",
+        "probability": 0.45276823192834853
+      },
+      {
+        "start": 211.9,
+        "end": 212.4,
+        "word": " தானா",
+        "probability": 0.9126279950141907
+      },
+      {
+        "start": 212.4,
+        "end": 212.86,
+        "word": " ரிவர்ஸ்லை",
+        "probability": 0.6093878935683857
+      },
+      {
+        "start": 212.86,
+        "end": 213.88,
+        "word": " स्टாட்டாகோம்.",
+        "probability": 0.7017530019466693
+      },
+      {
+        "start": 213.88,
+        "end": 214.16,
+        "word": " Option",
+        "probability": 0.9871561527252197
+      },
+      {
+        "start": 214.16,
+        "end": 214.46,
+        "word": " B,",
+        "probability": 0.9988747239112854
+      },
+      {
+        "start": 214.94,
+        "end": 215.32,
+        "word": " உண்ணுமே",
+        "probability": 0.8319272994995117
+      },
+      {
+        "start": 215.32,
+        "end": 215.8,
+        "word": " ஆகாது,",
+        "probability": 0.8813998222351074
+      },
+      {
+        "start": 215.98,
+        "end": 216.34,
+        "word": " திரும்ப",
+        "probability": 0.8666060950074878
+      },
+      {
+        "start": 216.34,
+        "end": 216.68,
+        "word": " ரிவர்ஸ்",
+        "probability": 0.9500627054108514
+      },
+      {
+        "start": 216.68,
+        "end": 216.92,
+        "word": " பரெஸ்",
+        "probability": 0.6584735761086146
+      },
+      {
+        "start": 216.92,
+        "end": 217.62,
+        "word": " பண்ணனும்.",
+        "probability": 0.7509212419390678
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      209,
+      225
+    ],
+    "start": 217.62,
+    "end": 221.0,
+    "text": " Option C, Motor Forward ले स्टாட்டாகும்.",
+    "words": [
+      {
+        "start": 217.62,
+        "end": 218.18,
+        "word": " Option",
+        "probability": 0.184626966714859
+      },
+      {
+        "start": 218.18,
+        "end": 218.54,
+        "word": " C,",
+        "probability": 0.9018002152442932
+      },
+      {
+        "start": 218.74,
+        "end": 219.18,
+        "word": " Motor",
+        "probability": 0.794838011264801
+      },
+      {
+        "start": 219.18,
+        "end": 219.62,
+        "word": " Forward",
+        "probability": 0.6704087257385254
+      },
+      {
+        "start": 219.62,
+        "end": 219.9,
+        "word": " ले",
+        "probability": 0.373124017380178
+      },
+      {
+        "start": 219.9,
+        "end": 221.0,
+        "word": " स्टாட்டாகும்.",
+        "probability": 0.7391415375929612
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      209,
+      225
+    ],
+    "start": 221.0,
+    "end": 223.68,
+    "text": " உங்கள் ஏன்சர் கமேண்ட் பண்ணுங்க, Answer Video कட சீல.",
+    "words": [
+      {
+        "start": 221.0,
+        "end": 221.3,
+        "word": " உங்கள்",
+        "probability": 0.7699930816888809
+      },
+      {
+        "start": 221.3,
+        "end": 221.58,
+        "word": " ஏன்சர்",
+        "probability": 0.5984164582831519
+      },
+      {
+        "start": 221.58,
+        "end": 221.92,
+        "word": " கமேண்ட்",
+        "probability": 0.6661127997296197
+      },
+      {
+        "start": 221.92,
+        "end": 222.18,
+        "word": " பண்ணுங்க,",
+        "probability": 0.8037488404661417
+      },
+      {
+        "start": 222.52,
+        "end": 222.86,
+        "word": " Answer",
+        "probability": 0.6722995042800903
+      },
+      {
+        "start": 222.86,
+        "end": 223.16,
+        "word": " Video",
+        "probability": 0.5069063901901245
+      },
+      {
+        "start": 223.16,
+        "end": 223.42,
+        "word": " कட",
+        "probability": 0.6479846388101578
+      },
+      {
+        "start": 223.42,
+        "end": 223.68,
+        "word": " சீல.",
+        "probability": 0.6639065345128378
+      }
+    ]
+  },
+  {
+    "key": "long",
+    "clip": [
+      209,
+      225
+    ],
+    "start": 224.18,
+    "end": 224.88,
+    "text": " இன்னுறு bonus.",
+    "words": [
+      {
+        "start": 224.18,
+        "end": 224.78,
+        "word": " இன்னுறு",
+        "probability": 0.7824989663703101
+      },
+      {
+        "start": 224.78,
+        "end": 224.88,
+        "word": " bonus.",
+        "probability": 0.08278891444206238
+      }
+    ]
+  },
+  {
+    "key": "short",
+    "clip": [
+      27.5,
+      38.9
+    ],
+    "start": 27.5,
+    "end": 37.34,
+    "text": " பண்டாலும் start ஆகாது, ஆனா, stop பண்ணிட்டு, 2 सைக் கேண்டில் reverse பண்ணி விட்டுடா, 5 सைக் கேண்டானதோ, மோற்று தானா reverse ஆகுமா, கமன் பண்ணுங்க, answer",
+    "words": [
+      {
+        "start": 27.5,
+        "end": 27.98,
+        "word": " பண்டாலும்",
+        "probability": 0.5009621067179574
+      },
+      {
+        "start": 27.98,
+        "end": 28.16,
+        "word": " start",
+        "probability": 0.05054901912808418
+      },
+      {
+        "start": 28.16,
+        "end": 28.86,
+        "word": " ஆகாது,",
+        "probability": 0.8392429411411285
+      },
+      {
+        "start": 28.96,
+        "end": 29.68,
+        "word": " ஆனா,",
+        "probability": 0.7528300980726877
+      },
+      {
+        "start": 30.02,
+        "end": 30.34,
+        "word": " stop",
+        "probability": 0.8615291118621826
+      },
+      {
+        "start": 30.34,
+        "end": 30.98,
+        "word": " பண்ணிட்டு,",
+        "probability": 0.7687031030654907
+      },
+      {
+        "start": 30.98,
+        "end": 31.26,
+        "word": " 2",
+        "probability": 0.8921120166778564
+      },
+      {
+        "start": 31.26,
+        "end": 31.64,
+        "word": " सைக்",
+        "probability": 0.4167414605617523
+      },
+      {
+        "start": 31.64,
+        "end": 31.82,
+        "word": " கேண்டில்",
+        "probability": 0.6998275080695748
+      },
+      {
+        "start": 31.82,
+        "end": 31.96,
+        "word": " reverse",
+        "probability": 0.3596377670764923
+      },
+      {
+        "start": 31.96,
+        "end": 32.52,
+        "word": " பண்ணி",
+        "probability": 0.6922438740730286
+      },
+      {
+        "start": 32.52,
+        "end": 32.84,
+        "word": " விட்டுடா,",
+        "probability": 0.8462477251887321
+      },
+      {
+        "start": 33.16,
+        "end": 33.54,
+        "word": " 5",
+        "probability": 0.9691610932350159
+      },
+      {
+        "start": 33.54,
+        "end": 33.88,
+        "word": " सைக்",
+        "probability": 0.7014782540500164
+      },
+      {
+        "start": 33.88,
+        "end": 34.22,
+        "word": " கேண்டானதோ,",
+        "probability": 0.7360469963815477
+      },
+      {
+        "start": 34.36,
+        "end": 34.72,
+        "word": " மோற்று",
+        "probability": 0.7994757294654846
+      },
+      {
+        "start": 34.72,
+        "end": 35.12,
+        "word": " தானா",
+        "probability": 0.8575774133205414
+      },
+      {
+        "start": 35.12,
+        "end": 35.3,
+        "word": " reverse",
+        "probability": 0.2989485263824463
+      },
+      {
+        "start": 35.3,
+        "end": 35.68,
+        "word": " ஆகுமா,",
+        "probability": 0.892417061328888
+      },
+      {
+        "start": 36.0,
+        "end": 36.44,
+        "word": " கமன்",
+        "probability": 0.6004701033234596
+      },
+      {
+        "start": 36.44,
+        "end": 36.78,
+        "word": " பண்ணுங்க,",
+        "probability": 0.9032997116446495
+      },
+      {
+        "start": 37.02,
+        "end": 37.34,
+        "word": " answer",
+        "probability": 0.9332979321479797
+      }
+    ]
+  },
+  {
+    "key": "short",
+    "clip": [
+      27.5,
+      38.9
+    ],
+    "start": 37.5,
+    "end": 38.36,
+    "text": " புல் வீடியோலை",
+    "words": [
+      {
+        "start": 37.5,
+        "end": 37.82,
+        "word": " புல்",
+        "probability": 0.48723484948277473
+      },
+      {
+        "start": 37.82,
+        "end": 38.36,
+        "word": " வீடியோலை",
+        "probability": 0.664921616204083
+      }
+    ]
+  },
+  {
+    "key": "short",
+    "clip": [
+      27.5,
+      38.9
+    ],
+    "start": 38.36,
+    "end": 38.88,
+    "text": " இந்த வீடியோ",
+    "words": [
+      {
+        "start": 38.36,
+        "end": 38.76,
+        "word": " இந்த",
+        "probability": 0.9130803048610687
+      },
+      {
+        "start": 38.76,
+        "end": 38.88,
+        "word": " வீடியோ",
+        "probability": 0.8401356041431427
+      }
+    ]
+  },
+  {
+    "key": "short",
+    "clip": [
+      37,
+      42.76
+    ],
+    "start": 37.0,
+    "end": 42.48,
+    "text": " Answer full video, இந்த வீடியோ புடிச்சிருந்தா, like பண்ணங்க, share பண்ணங்க, factory decode தமிழ, subscribe பண்ணங்க.",
+    "words": [
+      {
+        "start": 37.0,
+        "end": 37.48,
+        "word": " Answer",
+        "probability": 0.009717793203890324
+      },
+      {
+        "start": 37.48,
+        "end": 37.8,
+        "word": " full",
+        "probability": 0.35173335671424866
+      },
+      {
+        "start": 37.8,
+        "end": 38.08,
+        "word": " video,",
+        "probability": 0.8153915405273438
+      },
+      {
+        "start": 38.22,
+        "end": 38.76,
+        "word": " இந்த",
+        "probability": 0.9143865555524826
+      },
+      {
+        "start": 38.76,
+        "end": 38.98,
+        "word": " வீடியோ",
+        "probability": 0.7111063400904337
+      },
+      {
+        "start": 38.98,
+        "end": 39.48,
+        "word": " புடிச்சிருந்தா,",
+        "probability": 0.8419194732393537
+      },
+      {
+        "start": 39.5,
+        "end": 39.66,
+        "word": " like",
+        "probability": 0.6784413456916809
+      },
+      {
+        "start": 39.66,
+        "end": 40.06,
+        "word": " பண்ணங்க,",
+        "probability": 0.7265569397381374
+      },
+      {
+        "start": 40.06,
+        "end": 40.2,
+        "word": " share",
+        "probability": 0.9662793278694153
+      },
+      {
+        "start": 40.2,
+        "end": 40.76,
+        "word": " பண்ணங்க,",
+        "probability": 0.9569767202649798
+      },
+      {
+        "start": 40.76,
+        "end": 41.08,
+        "word": " factory",
+        "probability": 0.8693462610244751
+      },
+      {
+        "start": 41.08,
+        "end": 41.44,
+        "word": " decode",
+        "probability": 0.41541725024580956
+      },
+      {
+        "start": 41.44,
+        "end": 41.72,
+        "word": " தமிழ,",
+        "probability": 0.6226912960410118
+      },
+      {
+        "start": 41.84,
+        "end": 42.06,
+        "word": " subscribe",
+        "probability": 0.9881781935691833
+      },
+      {
+        "start": 42.06,
+        "end": 42.48,
+        "word": " பண்ணங்க.",
+        "probability": 0.9607440488679069
+      }
+    ]
+  }
+]
