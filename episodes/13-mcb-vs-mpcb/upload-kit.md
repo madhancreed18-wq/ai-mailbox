@@ -11,10 +11,10 @@ MCB vs MPCB in Tamil – motor burn aagi pochu, aana MCB trip aagave illa. Yen? 
 
 Indha video-la:
 ✅ MCB = cable protection, MPCB = motor protection
-✅ MCB ulla: bimetal (thermal trip), coil + plunger (magnetic trip), arc chute
+✅ 3-pole MCB ulla: bimetal (thermal trip), coil + plunger (magnetic trip), arc chute
 ✅ C16 rating fixed – motor current-ku set panna mudiyaadhu
 ✅ MPCB ulla: 3 pole, current setting dial, rotary knob
-✅ MPCB magnetic trip (~13× max setting)
+✅ MPCB magnetic trip (6–10 A model-la fixed ~138 A)
 ✅ Phase loss protection – slider eppadi work aagudhu
 ✅ MPCB eppadi choose pannanum, TEST button, aux contact → PLC
 ✅ RCCB – earth leakage-ku
@@ -60,8 +60,10 @@ Answer comment pannunga 👇 (answer 4:19-la)
 Motor Burn Aachu, MCB Trip Aagala! 🔥 #shorts
 
 **Description**
-Motor burn aagi pochu, aana MCB ON-laye irukku. Electrician check pannaaru – MCB OK, wiring OK. Appo thappu enga? Unga panel-la MCB-aa MPCB-aa? Comment pannunga – full video-la answer.
+Motor burn aagi pochu, aana MCB ON-laye irukku. Electrician check pannaaru – MCB OK, wiring OK. Appo thappu enga? Unga panel-la motor-ku endha breaker? A) MCB  B) MPCB – comment pannunga! Answer full video-la.
 #shorts #MCBvsMPCB #ElectricalTamil #FactoryDecodeTamil
 
 **Related video:** set to the EP13 long video (Studio → Short → Related video).
-**Pinned comment on the Short:** Full video 👉 (paste the long video link)
+**Pinned comment on the Short:** Full video 👉 (paste the long video link) | Unga answer A-aa B-aa?
+
+**Thumbnails:** ChatGPT 070 request innum pending – vandhadhum Test & Compare-la 3 variant podunga.
