@@ -5151,7 +5151,7 @@ function drawEqv(e,c,tl){const k=e.key,m=E13_META[k];if(!m)return;const T=e13tf(
 const E13_TC={};function e13tintCanvas(k,im,a){let o=E13_TC[k];if(!o){o=document.createElement('canvas');o.width=im.naturalWidth;o.height=im.naturalHeight;E13_TC[k]=o}const g=o.getContext('2d');g.globalCompositeOperation='source-over';g.globalAlpha=1;g.clearRect(0,0,o.width,o.height);g.drawImage(im,0,0);g.globalCompositeOperation='source-atop';g.globalAlpha=a;g.fillStyle='#ff3b1f';g.fillRect(0,0,o.width,o.height);return o}
 function drawCutdev(e,c,tl){const dev=e.dev,LS=E13_META[dev+'_layers'],m0=E13_META[LS[0].key];const T=e13tf(e,tl,m0.w,m0.h);
   const val=n=>e13ramp(e[n],tl,0),gl=e13step(e.glow,tl,[]);
-  LS.forEach(l=>{const k=l.key;c.save();c.translate(T.px(0),T.py(0));c.scale(T.s,T.s);
+  const NP=e.poles||1,offs=NP===3?[-m0.w,0,m0.w]:[0];offs.forEach(ox=>LS.forEach(l=>{const k=l.key;c.save();c.translate(T.px(ox),T.py(0));c.scale(T.s,T.s);
     let rot=0,tx=0,ty=0,pv=l.pivot||[0,0];
     if(/bimetal/.test(k))rot=val('bend')*Math.PI/180;
     if(/plunger/.test(k)){const tr=l.travel||[0,0];tx=tr[0]*val('plunger');ty=tr[1]*val('plunger')}
@@ -5163,9 +5163,9 @@ function drawCutdev(e,c,tl){const dev=e.dev,LS=E13_META[dev+'_layers'],m0=E13_ME
     c.translate(pv[0]+tx,pv[1]+ty);c.rotate(rot);c.translate(-pv[0],-pv[1]);
     if(gl.includes(k)||(gl.includes('bimetal')&&/bimetal/.test(k))){c.shadowColor='#facc15';c.shadowBlur=26/T.s*3;}
     const hv=/bimetal/.test(k)?val('heat'):/coil/.test(k)?val('coilglow'):0;if(hv>0){c.shadowColor='rgba(255,70,20,'+Math.min(1,hv)+')';c.shadowBlur=40/T.s*3}
-    const im=E13_IMG[k];if(im&&im.complete){if(hv>0){const oc=e13tintCanvas(k,im,Math.min(.6,hv*.6));c.drawImage(oc,0,0)}else c.drawImage(im,0,0)}c.restore()});
+    const im=E13_IMG[k];if(im&&im.complete){if(hv>0){const oc=e13tintCanvas(k,im,Math.min(.6,hv*.6));c.drawImage(oc,0,0)}else c.drawImage(im,0,0)}c.restore()}));
   // front cover fading away (reveal)
-  const fa=e13ramp(e.front,tl,0);if(fa>0){c.save();c.globalAlpha*=fa;e13img(c,dev+'-front',T.px(0),T.py(0),m0.w*T.s,m0.h*T.s);c.restore()}
+  const fa=e13ramp(e.front,tl,0);if(fa>0){c.save();c.globalAlpha*=fa;if(NP===3)e13img(c,'mcb3p-front',T.px(-m0.w),T.py(0),3*m0.w*T.s,m0.h*T.s);else e13img(c,dev+'-front',T.px(0),T.py(0),m0.w*T.s,m0.h*T.s);c.restore()}
   // arc in the chute
   (e.arc||[]).forEach(([t0,t1])=>{if(tl<t0||tl>=t1)return;const p=E13_PARTS[dev][dev==='mcb'?'mcb-cut-arcchute':'mpcb-cut-arcchamber'],u=(tl-t0)/(t1-t0);const x=T.px(p[0]-60),y=T.py(p[1]);
     c.save();c.globalCompositeOperation='lighter';for(let j=0;j<3;j++){c.strokeStyle=j?'rgba(147,197,253,.8)':'#ffffff';c.lineWidth=(6-j*2)*T.s*2.2;c.beginPath();c.moveTo(x,y);for(let q=1;q<=7;q++)c.lineTo(x+q*12*T.s*(1+u*2.5),y+Math.sin(tl*90+q*2+j)*14*T.s*(1+u));c.stroke()}
@@ -5879,11 +5879,11 @@ async function buildEp13(){
   bg(P(1));swipe(PS(1)-.25);
   eq('home-db',[PS(1),T(1,1)],{cam:[[0,550,366,1.0],[PS(1)+.3,550,366,1.0],[PS(1)+1.6,670,390,1.7]],camDur:1.2,callouts:[[PS(1)+1.8,[670,330],'Single-pole MCB-kal',150,-200]],clearCallouts:T(1,1)});chip('VEETU DB → MCB',[PS(1),T(1,1)],BLU);
   eq('din',[T(1,1),PS(2)],{cam:[[0,810,473,1],[T(1,1),810,473,1],[T(1,1)+.1,800,470,1.9],[T(1,2),810,473,1.0],[T(1,3),810,800,1.3],[T(1,4),810,473,1.0]],camDur:1.0,
-    callouts:[[T(1,1)+.6,[800,470],'MPCB → motor-ku munnaadi',120,-260],[T(1,2)+.2,[420,470],'MCB',-140,-220]],clearCallouts:T(1,3)});
+    callouts:[[T(1,1)+.6,[800,470],'MPCB → motor-ku munnaadi',120,-260]],clearCallouts:T(1,3)});
   chip('FACTORY PANEL → MPCB',[T(1,1),T(1,2)],PUR);chip('Rendume CIRCUIT BREAKER',[T(1,2),T(1,3)]);chip('Rendume DIN RAIL-la',[T(1,3),T(1,4)]);chip('Protect panradhu: vera vera!',[T(1,4),PS(2)],RED);
   /* ===== k2 names ===== */
   bg(P(2));
-  eq('mcb-front',P(2),{x:60,y:110,w:420,h:560,alpha:[[PS(2),0],[PS(2)+.3,1]]});eq('mpcb-front',[T(2,2),PS(3)],{x:700,y:110,w:520,h:560,alpha:[[T(2,2),0],[T(2,2)+.3,1]]});
+  eq('mcb3p-front',P(2),{x:60,y:110,w:420,h:560,alpha:[[PS(2),0],[PS(2)+.3,1]]});eq('mpcb-front',[T(2,2),PS(3)],{x:700,y:110,w:520,h:560,alpha:[[T(2,2),0],[T(2,2)+.3,1]]});
   card(60,30,520,70,'MCB = Miniature Circuit Breaker',[PS(2),PS(3)],{bg:'#dbeafe',size:24,instant:true});card(660,30,580,70,'MPCB = Motor Protection Circuit Breaker',[T(2,2),PS(3)],{bg:'#ede9fe',size:22,instant:true});
   card(140,600,260,70,'→ CABLE',[T(2,1),PS(3)],{bg:'#dcfce7',size:30,instant:true});card(830,600,260,70,'→ MOTOR',[T(2,3),PS(3)],{bg:'#dcfce7',size:30,instant:true});
   ng('burn',{x:430,y:260,w:420,h:300,noPop:true,blast:-9,box:[380,118],alpha:1},[T(2,4),PS(3)]);chip('Indha vidhyaasam = motor burn!',[T(2,4),PS(3)],RED);
@@ -5892,15 +5892,15 @@ async function buildEp13(){
   const mcbCam=[[0,MC[0],MC[1],1],[T(3,1),140,250,1.9],[T(3,2),140,560,1.9],[T(3,3),110,900,1.7],[T(3,4),100,330,1.9],[T(3,5),135,620,2.2],[T(3,6),180,500,2.0],
     [PS(4),MC[0],MC[1],1.0],[T(4,1),110,820,1.6],[T(4,2),130,600,1.6],[T(4,3),MC[0],MC[1],1.0],
     [PS(5),110,420,1.5],[T(5,1),100,330,2.0],[T(5,2),140,560,1.8],[T(5,4),190,470,2.2],[PS(6),MC[0],MC[1],1.0]];
-  cut('mcb',[PS(3),PS(6)],{cam:mcbCam,front:[[PS(3),1],[PS(3)+.2,1],[PS(3)+1.3,0]],
+  cut('mcb',[PS(3),PS(6)],{poles:3,cam:mcbCam,front:[[PS(3),1],[PS(3)+.2,1],[PS(3)+1.3,0]],
     callouts:[[T(3,1),[140,120],'ON / OFF toggle',170,-10],[T(3,2),'latch','Latch',170,0],[T(3,3),'mcb-cut-bimetal','Bimetal strip',170,-40],[T(3,4),'mcb-cut-coil','Magnetic coil + plunger',160,10],[T(3,5),'mcb-cut-fixed-contact','Contacts',170,30],[T(3,6),'mcb-cut-arcchute','Arc chute',120,-60]],clearCallouts:PS(4),
     glow:[[0,[]],[T(3,3),['bimetal']],[T(3,4),['mcb-cut-coil','mcb-cut-plunger']],[T(3,5),['mcb-cut-fixed-contact','mcb-cut-moving-contact']],[T(3,6),['mcb-cut-arcchute']],[PS(4),[]],[T(5,1),['mcb-cut-coil']],[T(5,3),[]]],
     heat:[[PS(4),0],[T(4,1),.2],[T(4,2),1],[T(4,3),.6],[PS(5),0]],bend:[[PS(4),0],[T(4,1),0],[T(4,2)+.2,9],[PS(5),9],[PS(5)+.4,0]],
     latch:[[T(4,2),0],[T(4,2)+.3,1],[PS(5),1],[PS(5)+.4,0],[T(5,2),0],[T(5,2)+.12,1]],contact:[[T(4,2)+.2,0],[T(4,2)+.45,1],[PS(5),1],[PS(5)+.4,0],[T(5,1)+.25,0],[T(5,1)+.35,1]],
     coilglow:[[T(5,1),0],[T(5,1)+.15,1],[T(5,3),.3]],plunger:[[T(5,1),0],[T(5,1)+.18,1]],arc:[[T(5,1)+.3,T(5,1)+1.1],[T(5,4)+.2,T(5,4)+1.6]]});
-  chip('MCB ULLA (1 pole – 3-pole-la idhey moonu)',[PS(3),T(3,1)],BLU);chip('OVERLOAD',[PS(4),T(4,1)],ORG);chip('Bimetal soodu → valaiyum',[T(4,1),T(4,2)],ORG);chip('Latch → contact OPEN',[T(4,2),T(4,3)]);chip('= THERMAL TRIP (mella)',[T(4,3),PS(5)],ORG);
+  chip('3-POLE MCB ULLA – moonu pole, orey mechanism',[PS(3),T(3,1)],BLU);chip('OVERLOAD',[PS(4),T(4,1)],ORG);chip('Bimetal soodu → valaiyum',[T(4,1),T(4,2)],ORG);chip('Latch → contact OPEN',[T(4,2),T(4,3)]);chip('= THERMAL TRIP (mella)',[T(4,3),PS(5)],ORG);
   chip('SHORT CIRCUIT ⚡ 1000 A+',[PS(5),T(5,1)],RED);chip('Coil = magnet → plunger ADI',[T(5,1),T(5,2)],RED);chip('Millisecond-la TRIP',[T(5,2),T(5,3)],RED);chip('= MAGNETIC TRIP (udane)',[T(5,3),T(5,4)],RED);chip('Arc chute → spark anaiyum',[T(5,4),PS(6)],BLU);
-  eq('mcb-front',P(6),{x:300,y:0,w:680,h:H,cam:[[0,140,654,1],[PS(6)+.2,140,560,1.9]],marks:[[T(6,0)+.6,PS(7),245,520,'🔒','#111827'],[T(6,3),PS(7),40,330,'?','#dc2626']]});
+  eq('mcb3p-front',P(6),{x:240,y:0,w:800,h:H,cam:[[0,359,550,1],[PS(6)+.2,359,430,1.5]],marks:[[T(6,0)+.6,PS(7),359,640,'FIXED','#dc2626'],[T(6,3),PS(7),40,180,'?','#dc2626']]});
   chip('MCB rating FIXED',[PS(6),T(6,1)],BLU);chip('C16 = 16 A',[T(6,1),T(6,2)]);chip('Cable-ku yetha maadhiri',[T(6,2),T(6,3)],GRN);chip('Motor current? theriyaadhu ✗',[T(6,3),PS(7)],RED);
   /* ===== k7–k10 MPCB inside ===== */
   bg([PS(7),PS(11)],'#e6e9ee');swipe(PS(7)-.25);
