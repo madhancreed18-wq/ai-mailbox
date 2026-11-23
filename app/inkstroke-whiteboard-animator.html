@@ -5197,6 +5197,39 @@ const EP13_A=[[0.6, 1.8, 0], [2.25, 3.05, 0], [3.35, 6.4, 0], [6.8, 9.4, 0], [9.
 const EP13_SA=[[0.6, 2.2, 0], [2.26, 5.12, 0], [5.12, 7.3, 1], [7.7, 8.8, 1], [9.35, 10.55, 1], [11.2, 12.08, 1], [12.08, 14.1, 2], [14.6, 16.1, 2], [16.65, 19.12, 2], [19.12, 21.3, 3], [22.1, 25.42, 3], [25.42, 29.5, 4], [29.8, 30.45, 4], [30.9, 32.36, 4], [32.36, 37.7, 5], [37.7, 39.8, 6]];
 const EP13_POSE=[[0.6, "worry2"], [2.25, "worry2"], [3.35, "point_3"], [6.8, "point_level"], [9.75, "talk_c"], [12.45, "nod"], [14.88, "point_3"], [17.0, "point_level"], [20.05, "talk_a"], [21.9, "explain_a"], [24.0, "talk_b"], [26.9, "point_level"], [29.8, "talk_c"], [31.55, "point_2"], [35.05, "talk_d"], [37.05, "worry2"], [38.8, "talk_a"], [40.56, "point_2"], [42.85, "talk_b"], [44.75, "explain_b"], [46.8, "point_1"], [48.45, "point_2"], [51.45, "point_3"], [52.5, "point_level"], [54.68, "talk_a"], [56.36, "explain_a"], [58.55, "point_3"], [60.9, "point_level"], [62.95, "talk_c"], [63.8, "point_2"], [65.47, "talk_d"], [67.75, "point_level"], [70.45, "talk_a"], [72.1, "explain_a"], [73.85, "point_3"], [76.24, "point_level"], [78.2, "point_1"], [80.1, "nod"], [81.8, "talk_d"], [84.2, "point_level"], [86.6, "talk_a"], [88.7, "point_2"], [92.35, "point_3"], [94.0, "explain_b"], [96.25, "talk_c"], [97.42, "point_2"], [101.3, "point_3"], [104.25, "point_level"], [106.0, "talk_a"], [108.5, "point_2"], [110.92, "talk_b"], [113.34, "point_level"], [115.47, "talk_c"], [117.8, "point_2"], [119.45, "talk_d"], [122.7, "explain_c"], [124.36, "point_1"], [127.55, "explain_a"], [130.68, "point_3"], [133.85, "explain_b"], [135.55, "worry2"], [138.15, "nod"], [140.05, "worry2"], [142.72, "point_level"], [144.63, "talk_a"], [147.1, "point_2"], [148.8, "talk_b"], [151.05, "point_level"], [153.6, "talk_c"], [155.05, "point_2"], [156.94, "talk_d"], [158.84, "explain_c"], [160.9, "point_1"], [163.43, "explain_a"], [166.55, "point_3"], [169.05, "worry2"], [171.25, "worry2"], [173.0, "nod"], [173.7, "point_3"], [175.65, "explain_c"], [178.0, "point_1"], [180.65, "think_a"], [182.78, "point_3"], [183.8, "point_level"], [184.7, "talk_c"], [186.36, "point_2"], [186.9, "point_3"], [187.9, "explain_c"], [189.82, "point_1"], [190.35, "point_2"], [191.2, "point_3"], [193.0, "explain_b"], [195.1, "point_1"], [196.04, "think_a"], [199.2, "point_3"], [200.8, "explain_c"], [202.85, "point_1"], [205.9, "point_2"], [207.52, "talk_b"], [209.14, "point_level"], [211.3, "talk_c"], [214.3, "point_2"], [216.26, "talk_d"], [218.22, "worry2"], [221.03, "talk_a"], [224.15, "point_2"], [225.5, "worry2"], [226.35, "point_level"], [228.25, "point_1"], [230.57, "nod"], [233.45, "point_3"], [235.29, "explain_c"], [237.14, "talk_a"], [238.7, "point_2"], [240.75, "point_3"], [244.05, "explain_b"], [245.4, "point_1"], [247.65, "nod"], [250.4, "point_3"], [252.8, "explain_c"], [253.65, "point_1"], [255.62, "explain_a"], [258.05, "worry2"], [259.8, "explain_b"], [262.05, "talk_c"], [263.77, "nod"], [265.8, "point_3"], [267.18, "explain_c"], [268.8, "talk_a"], [270.65, "explain_a"]];
 const EP13_SPOSE=[[0.6, "worry2"], [2.26, "worry2"], [5.12, "talk_b"], [7.7, "point_level"], [9.35, "talk_c"], [11.2, "tilt_l"], [12.08, "talk_d"], [14.6, "point_level"], [16.65, "talk_a"], [19.12, "explain_a"], [22.1, "worry2"], [23.76, "explain_b"], [25.42, "think_a"], [27.46, "nod"], [29.8, "tilt_l"], [30.9, "explain_c"], [32.36, "talk_a"], [35.03, "explain_a"], [37.7, "talk_b"]];
+/* ---- shot: real factory panel in 3D – ChatGPT renders as textures inside a modelled enclosure; door swings, camera dollies in, breakers fly out ---- */
+function g3TexImg(T,key){const im=E13_IMG[key],t=new T.Texture(im);t.colorSpace=T.SRGBColorSpace||t.colorSpace;const up=()=>{t.needsUpdate=true};if(im.complete)up();else im.addEventListener('load',up);return t}
+function g3PanelImg(){const B=g3Base('#dfe4ea'),{T,S,cam,M,box}=B;
+  const PW=6.4,PH=PW*946/1620,D=.9,grey=M('#c9ced6',{r:.55,m:.15});
+  const px=(x,y)=>[(x/1620-.5)*PW,(.5-y/946)*PH];
+  // enclosure shell
+  box(PW+.5,PH+.5,.1,M('#b8bec7',{r:.6}),0,0,-.06);
+  box(.15,PH+.5,D,grey,-(PW+.35)/2,0,D/2-.1);box(.15,PH+.5,D,grey,(PW+.35)/2,0,D/2-.1);
+  box(PW+.5,.15,D,grey,0,(PH+.35)/2,D/2-.1);box(PW+.5,.15,D,grey,0,-(PH+.35)/2,D/2-.1);
+  // back plate = real panel render
+  const pl=new T.Mesh(new T.PlaneGeometry(PW,PH),new T.MeshStandardMaterial({map:g3TexImg(T,'din'),roughness:.7}));pl.position.z=.0;pl.receiveShadow=true;S.add(pl);
+  // door on a left hinge
+  const hinge=new T.Group();hinge.position.set(-(PW+.5)/2,0,D-.05);S.add(hinge);
+  const door=box(PW+.5,PH+.5,.08,M('#cdd2d9',{r:.5,m:.2}),(PW+.5)/2,0,0,hinge);
+  box(.12,.9,.14,M('#2b2f36',{r:.4,m:.6}),PW+.2,0,.1,hinge);                       // handle
+  box(1.4,.5,.02,M('#f59e0b',{r:.5}),(PW+.5)/2,PH/2-.2,.05,hinge);                // warning plate
+  // highlight ring around the motor breaker
+  const [hx,hy]=px(620,470);
+  const ring=new T.Mesh(new T.TorusGeometry(.62,.035,10,60),new T.MeshBasicMaterial({color:'#dc2626',transparent:true,opacity:0}));ring.scale.y=1.6;ring.position.set(hx,hy,.12);S.add(ring);
+  // breakers that fly out (alpha textures)
+  const card=(key,w)=>{const m=E13_META[key],h=w*m.h/m.w;const g=new T.Mesh(new T.PlaneGeometry(w,h),new T.MeshStandardMaterial({map:g3TexImg(T,key),transparent:true,alphaTest:.05,roughness:.6,side:T.DoubleSide}));g.visible=false;S.add(g);return g};
+  const cA=card('mcb3p-3q',.44),cB=card('mpcb-3q',.44);const veil=new T.Mesh(new T.PlaneGeometry(30,30),new T.MeshBasicMaterial({color:'#eef1f5',transparent:true,opacity:0,depthWrite:false}));veil.position.z=1.05;S.add(veil);
+  return{B,update(tl,e){
+    const t0=e.t0??0,o=g3ease(g3c((tl-t0-.2)/1.3));hinge.rotation.y=-1.9*o;
+    const d=g3ease(g3c((tl-t0-.9)/2.2)),ph=e.poll??1e9,q=g3ease(g3c((tl-ph)/.9));
+    const p0=[2.2,1.0,13.5],p1=[hx+.4,hy+.2,4.6],p2=[hx,hy,4.0];
+    let cp=p0.map((v,i)=>v+(p1[i]-v)*d);cp=cp.map((v,i)=>v+(p2[i]-v)*q);
+    const lk=[0+(hx-0)*d,0+(hy-0)*d,0];
+    cam.position.set(cp[0]+Math.sin(tl*.4)*.05,cp[1]+Math.sin(tl*.3)*.04,cp[2]);cam.lookAt(lk[0],lk[1],lk[2]);
+    veil.material.opacity=.82*q;const rv=g3c((tl-t0-2.6)/.4)*(1-q);ring.material.opacity=rv*(.55+.45*Math.sin(tl*8));
+    [[cA,.34],[cB,-.34]].forEach(([c,dy],i)=>{const k=g3ease(g3c((tl-ph-i*.3)/.8));c.visible=k>0;if(k>0){c.position.set(hx,hy+dy*k,.15+1.45*k);c.rotation.y=(1-k)*1.2*(i?-1:1)+Math.sin(tl*1.5+i)*.06;c.rotation.x=(1-k)*.4}});}}
+}
+G3_BUILD.panelimg=g3PanelImg;
 function drawSD(e,c,tl){const cx=e.x+e.w/2,cy=e.y+e.h/2,R=Math.min(e.w,e.h)*.36,ink=O2,live=o2t(tl,e.live);
   const coil=(x1,y1,x2,y2,lab)=>{const L=Math.hypot(x2-x1,y2-y1),ux=(x2-x1)/L,uy=(y2-y1)/L,nx=-uy,ny=ux,a=L*.25,b=L*.75,n=8;
     c.beginPath();c.moveTo(x1,y1);c.lineTo(x1+ux*a,y1+uy*a);for(let i=1;i<=n;i++){const t=a+(b-a)*i/n,s=(i%2?1:-1)*12;c.lineTo(x1+ux*t+nx*s,y1+uy*t+ny*s)}c.lineTo(x2,y2);c.lineWidth=5;c.strokeStyle=e.col||'#b45309';c.stroke();
@@ -5894,7 +5927,7 @@ async function buildEp13(){
   chip('SLIDER: 3 bimetal-kkum mela',[PS(12),T(12,2)],PUR);chip('1 phase pochu → adhu valaiyaadhu',[T(12,2),T(12,4)],RED);chip('Vidhyaasam → SEEKIRAM TRIP ✓',[T(12,4),PS(13)],GRN);
   /* ===== k13 answer to the hook ===== */
   bg(P(13));ng('burn',{x:0,y:120,w:700,h:560,noPop:true,blast:-9,box:[380,118],tint:[[T(13,3),0],[T(13,3)+.5,1]]},P(13));eq('mcb3p-front',P(13),{x:760,y:90,w:440,h:620});
-  chip('Hook answer',[PS(13),T(13,1)],ORG);chip('MCB rating ≫ motor current',[T(13,1),T(13,2)],RED);chip('Phase loss? MCB-ku theriyaadhu',[T(13,2),T(13,3)],RED);chip('Motor overheat → BURN',[T(13,3),T(13,4)],RED);chip('MCB: "idhu overload illa"',[T(13,4),PS(14)]);
+  chip('Motor yen burn aachu?',[PS(13),T(13,1)],ORG);chip('MCB rating ≫ motor current',[T(13,1),T(13,2)],RED);chip('Phase loss? MCB-ku theriyaadhu',[T(13,2),T(13,3)],RED);chip('Motor overheat → BURN',[T(13,3),T(13,4)],RED);chip('MCB: "idhu overload illa"',[T(13,4),PS(14)]);
   /* ===== k14–k18 quiz ===== */
   bg([PS(14),PS(19)]);eq('mpcb-front',[PS(14),PS(19)],{x:560,y:60,w:720,h:640,cam:[[0,319,629,1],[T(14,3),375,290,2.2]]});pres([PS(14),PS(19)]);chip('QUIZ',[PS(14),PS(19)],ORG);
   card(230,90,330,80,'FLC = 8 A',[T(14,1),PS(19)],{bg:'#fef3c7',size:34});card(230,180,330,80,'Range 6–10 A',[T(14,2),PS(19)],{bg:'#ede9fe',size:30});card(230,270,330,70,'Dial evlo?',[T(14,3),PS(19)],{size:28});
@@ -5949,7 +5982,7 @@ async function buildEp13Short(){
   eq('mcb3p-3q',[PS(2),PS(4)],{x:0,y:420,w:360,h:520});eq('mpcb-3q',[PS(2),PS(4)],{x:360,y:420,w:360,h:520});card(60,250,250,80,'MCB',[PS(2),PS(4)],{bg:'#dbeafe',size:36,instant:true});card(410,250,250,80,'MPCB',[PS(2),PS(4)],{bg:'#ede9fe',size:36,instant:true});
   chip('Paarkka orey maadhiri…',[PS(2),T(2,2)],PUR);chip('Orey size? Orey DIN rail!',[T(2,2),PS(3)],PUR);
   card(380,980,300,110,'Idha → SAFE ✓',[PS(3),PS(4)],{bg:'#dcfce7',size:34});card(40,980,300,110,'Adha → BURN ✗',[T(3,1),PS(4)],{bg:'#fee2e2',size:34});chip('Endha onnu?',[PS(3),PS(4)],ORG);
-  eq('din',[PS(4),PS(5)],{x:-60,y:330,w:840,h:600});chip('Unga panel-la endha breaker?',[PS(4),T(4,1)],ORG);chip('MCB-aa? MPCB-aa?',[T(4,1),PS(5)],PUR);card(140,1000,440,110,'Comment pannunga',[T(4,2),PS(5)],{bg:'#dbeafe',size:34});
+  const swS=t0=>ng('swipe',{t0,dur:.6,x:0,y:0,w:W,h:H,noPop:true},[t0,t0+1.05]);[PS(1),PS(2),PS(4),PS(5)].forEach(t=>swS(t-.3));ng('g3',{shot:'panelimg',x:0,y:0,w:W,h:H,noPop:true,t0:PS(4),poll:T(4,1)},[PS(4),PS(5)]);chip('Unga panel-la endha breaker?',[PS(4),T(4,1)],ORG);card(40,250,250,86,'A · MCB',[T(4,1)+.5,PS(5)],{bg:'#dbeafe',size:36,instant:true});card(40,1030,250,86,'B · MPCB',[T(4,1)+.8,PS(5)],{bg:'#ede9fe',size:36,instant:true});chip('MCB-aa? MPCB-aa?',[T(4,1),PS(5)],PUR);card(330,1140,370,100,'Comment: A / B',[T(4,2),PS(5)],{bg:'#fef3c7',size:36,instant:true});
   chip('Answer: FULL VIDEO',[PS(5),PS(6)],GRN);ng('arrowdn',{x:260,y:620,w:200,h:560},[T(5,0)+1.2,PS(6)+.2]);card(150,430,420,110,'⬇ keezha LINK',[T(5,0)+1.2,PS(6)],{bg:RED,size:40});
   presenter([PS(6),END],{poses:EP13_SPOSE,x:-10,y:H-470,size:440});eq('hand-thumbs-up',[PS(6),END],{x:380,y:760,w:320,h:360});card(150,560,420,110,'SUBSCRIBE 🔔',[PS(6)-.2,END],{bg:RED,size:40,instant:true});
   S.captions=false;S.showHand=false;S.cur=0;S.pin=false;S.t=1;refresh();
