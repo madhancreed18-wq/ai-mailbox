@@ -1,0 +1,87 @@
+{
+  "method": "Built-in imagegen; one call per asset, targeted terminal hardware edits; ffmpeg Lanczos export and alpha cleanup.",
+  "prompts": [
+    {
+      "key": "072MCB",
+      "prompt": "Use case: product-mockup. Create one physically believable catalogue-quality generic single-pole C16 miniature circuit breaker, an isolated photoreal product render on genuine transparent alpha, landscape canvas 1536x1024. Image1 is the user's silhouette guide: use ONLY the LEFT white MCB, ignore the right MCCB and all infographic/text. Image2 is a real catalogue photo for hardware detail. Render ONE 18mm wide pole, 85mm tall and about70mm deep. White/light grey moulded plastic throughout, ribbed side face with small circular recesses; standard stepped DIN profile with a substantial rear base and a narrower raised central front nose about45mm high. Top and bottom terminal towers behind the raised front nose, round wire-entry holes facing front and recessed steel screw heads accessed from above, physically plausible copper/brass box clamps. One grey toggle on the front nose, lever UP ON. Only front print C16 and boxed6000, no other product text. A short horizontal silver35mm DIN rail passes behind it and extends just20mm each side, breaker actually clipped to it. No wires. Camera30degrees from front toward the device's LEFT, elevation12degrees, mild long-lens perspective, whole unit and rail visible with generous transparent margin. Studio light upper-left, subtle real plastic texture, crisp refined edges, copper barely visible within terminals. No huge black side slabs, no deep cube, no invented rear accessory box, no brand or logo or copied label. Product proportions and stepped silhouette are most important. Background fully transparent, no ground plane, no shadow outside object."
+    },
+    {
+      "key": "072MPCB",
+      "prompt": "Use case: product-mockup. Create one generic3-pole motor protection circuit breaker, a believable industrial product photograph, landscape1536x1024, real transparent alpha. Reference is an actual rotary motor breaker catalogue photo: use its compact stepped DIN silhouette and terminal architecture, NOT its branding or colour scheme. Requested generic unit:45mm wide, about90mm tall,95mm deep. Light grey moulded plastic body and sidewall, raised front control nose distinct from the rear mounting base, compact sloping/stepped shoulders and horizontal ventilation slots above the front control area. It must read as a MOTOR PROTECTION BREAKER, not a smooth rectangular relay box. Three separate recessed steel terminal screws across top, three across bottom, round front-facing wire-entry openings. Top identities exactly1/L1,3/L2,5/L3; bottom2/T1,4/T2,6/T3. Large BLACK round rotary operating control in centre-front, prominent paddle UP at I/ON; O/OFF at lower-left and TRIP intermediate marking. Above the main rotary knob, a SMALL screwdriver-slot current dial with scale6,7,8,9,10 and A; small RED TEST pushbutton beside it. Legible precise black labels. No trademark, no QR code, no manufacturer/model name. Short horizontal silver35mm DIN rail behind the unit, just20mm exposed each side, physically clipped on it. Camera30degrees from front toward LEFT side,12degrees above, long-lens perspective. White/grey plastic with realistic shallow moulding detail, steel screws, neutral upper-left studio lighting. Entire device and rail visible centred, no crop. Transparent background, no pedestal or ground shadow. Do not add another breaker or explanatory graphics."
+    },
+    {
+      "key": "072MCB3Q",
+      "prompt": "Use case: product-mockup. Reference is the approved new single-pole MCB style; derive a matching THREE-POLE C16 MCB from it. Real transparent alpha,1536x1024landscape. Three18mm white/lightgrey modules side by side, total54mm width,85mm height,70mm depth. Standard stepped DIN profile, raised45mm central front nose, no black side slabs. Exactly THREE grey toggle levers joined by ONE common horizontal darkgrey toggle bar, all UP ON. Three distinct terminal screw/box-clamp positions top and three bottom, one per module. Circular front cable openings with recessed screws ABOVE in the top-facing access wells. Print only C16 and boxed6000 on each module front. White/lightgrey moulded sidewall and realistic ribs and recesses. On short35mm silver DIN rail, rail horizontal behind middle and extends20mm each side. Camera30degrees from front toward left,12degrees above, longlens. Same neutral upper-left studio lighting and materials as reference. Whole device and rail visible centred with70px margin. Only the breaker assembly and rail, no wires, no logo, no background/shadow/pedestal. Make it recognisably a3-pole MCB and preserve reference stepped nose silhouette."
+    },
+    {
+      "key": "072MCB3Front",
+      "prompt": "Use case: product-mockup. Reference gives generic1-pole MCB materials and stepped shape. Create matching THREE-POLE C16 MCB, STRAIGHT FRONT orthographic view with no side perspective or visible top, real transparent background. Square1536x1536canvas. Three white18mm modules adjacent,54mm total width and85mm height. Device centred vertically; body about1300pixels high and825pixels wide, preserving54:85physical face ratio. Exactly three terminal holes/screws across top, three across bottom. Three front grey levers joined by ONE common horizontal grey toggle bar, all UP in ON position. C16 and boxed6000 on each pole front. Raised white central45mm nose, terminal towers above/below, small bottomDIN release tabs. No rail in this view. Same lightgrey plastic and steel screws as reference, neutral upper-left studio light. No brand, no watermark, no black side slabs, no accessories, no groundshadow. Match originalEP13front asset style but with realistic moulded detail."
+    },
+    {
+      "key": "072HomeDB",
+      "prompt": "Use case: product-mockup. Realistic front-facing photograph of a small domestic wall-mounted electrical distribution board on a clean white plaster wall, landscape1536x1024. White rectangular enclosure, cover OPEN hinged to left, complete cover and enclosure inside frame. Internal deadfront removed for an educational look; no person present. One double-pole main isolator on LEFT with mechanically joined red handles, then exactly SIX single-pole MCBs with linked-independent individual grey levers to its right, all mounted in a neat single horizontal row on35mm silver DINrail. EachMCB is a narrow real modular stepped white breaker with screw terminals top/bottom, grey toggle on raised central nose. Plausible neat domestic wiring: brown line from main isolator to insulated comb busbar feeding lowerMCBterminals, six separate brown outgoing circuits from upperterminals; blue neutral conductors neatly routed to a blue insulated neutral terminalbar; green-yellow earths to a separate earthbar bonded to metalwork. Wiring neatly arranged around row, no loose stripped conductor tails, no sparks, no floating ends. Whitewall visibly surroundsboard. Highquality photographic/CADrealism, neutral lighting upper-left, crisp equipment detail. NO emoji, no people, no brands/logos, no headings or marketingtext, no additional devices, no cartoon. This is a domesticdistributionboard, not an industrialcontrolpanel."
+    },
+    {
+      "key": "072HomeDBFixed",
+      "prompt": "Use case: precise-object-edit. Correct this same home distribution board photo while preserving its white enclosure, open left door, front camera, realistic materials and white wall. There are currently seven grey single-pole MCBs: REMOVE the rightmost grey MCB so the final row contains exactly ONE two-pole main isolator with two joined red levers, then exactly SIX single-pole MCBs with six grey levers. Remove the seventh outgoing brown wire as well. Cover the lower phase comb busbar with a proper lightgrey insulating shroud; only contact teeth enter lower breaker terminals. Fix main supply wiring coherently: brown incoming LINE goes into TOP LEFT main pole; blue incoming NEUTRAL goes into TOP RIGHT main pole. Main lower LEFT output supplies the phase comb feeding only the SIX MCB lower terminals; main lower RIGHT output is blue and routes to the blue neutralbar. DO NOT connect the neutral main pole to phase comb. Six brown outgoing MCB circuits leave the six TOP terminals. Keep blue neutralbar and green-yellow earthbar and neat insulated wiring. No brands or marketing labels. Wider framing so the whole cover is visible with a small whitewall margin. Landscape1536x1024. Photoreal rather than schematic."
+    },
+    {
+      "key": "072MotorRail",
+      "prompt": "Use case: precise-object-edit. Reference is the THREE-POLE C16 miniature circuit breaker for the motor hook. Preserve its exact three-pole white stepped body, three grey levers joined by common UP/ON grey toggle bar, C16/6000 prints, top three and bottom three terminals, DINrail, and same left-front camera angle and upper-left lighting. Add exactly THREE neatly insulated phase cables, brown,black,grey, one leaving each of the three LOWER wire-entry terminals. They run DOWN below device in three parallel paths and continue to the bottom edge of the frame. Cable ends are intentionally out of frame. No neutral wire, no blue, no fourth cable. Keep all equipment including top terminals entirely within the canvas. Landscape1536x1024 genuine transparent background, no cast shadow, no wall, no text beyond existing tinyC16/6000, no motor needed in this asset. Make device slightly smaller about750px high to leave routing space underneath while preserving geometry."
+    },
+    {
+      "key": "072MCBFixed",
+      "prompt": "Use case: precise-object-edit. Correct ONLY terminal hardware in this same MCB product image. This is single-pole with one top and one bottom terminal. The round holes facing the camera are currently occupied by steel cross-head screws. Replace each front-facing screw with a realistic ROUND WIRE ENTRY opening: dark empty bore with a copper/brass clamp tongue deeper inside, NO crosshead screw filling that front opening. Screwdriver access and the recessed steel clamping screw belong on the perpendicular TOP surface of each terminal tower, visible in the existing rectangular wells in three-quarter views; bottom terminals mirror that construction. For the straight front view show round dark wire-entry holes, with the clamping screws mostly hidden above/below, do not change to perspective. Preserve everything else: exact white stepped18mm-per-pole moulded housing, raised45mmnose, C16 and boxed6000 text, grey UP ON lever and commonbar for three-pole versions, shortDINrail if present, camera angle, composition and lighting. Where cables enter lower terminals, keep them exiting their original three clamp bores. Do not add wires to unwired assets. True transparent alpha, no halo or dust specks, no background, no new text, no logos. Whole subject visible. This is a minimal hardware correction, not a redesign."
+    },
+    {
+      "key": "072MCB3QFixed",
+      "prompt": "Use case: precise-object-edit. Correct ONLY terminal hardware in this same MCB product image. This is three-pole with exactly three top and three bottom terminals. The round holes facing the camera are currently occupied by steel cross-head screws. Replace each front-facing screw with a realistic ROUND WIRE ENTRY opening: dark empty bore with a copper/brass clamp tongue deeper inside, NO crosshead screw filling that front opening. Screwdriver access and the recessed steel clamping screw belong on the perpendicular TOP surface of each terminal tower, visible in the existing rectangular wells in three-quarter views; bottom terminals mirror that construction. For the straight front view show round dark wire-entry holes, with the clamping screws mostly hidden above/below, do not change to perspective. Preserve everything else: exact white stepped18mm-per-pole moulded housing, raised45mmnose, C16 and boxed6000 text, grey UP ON lever and commonbar for three-pole versions, shortDINrail if present, camera angle, composition and lighting. Where cables enter lower terminals, keep them exiting their original three clamp bores. Do not add wires to unwired assets. True transparent alpha, no halo or dust specks, no background, no new text, no logos. Whole subject visible. This is a minimal hardware correction, not a redesign."
+    },
+    {
+      "key": "072MCB3FrontFixed",
+      "prompt": "Use case: precise-object-edit. Correct ONLY terminal hardware in this same MCB product image. This is three-pole straight-front orthographic view; preserve front view and squarecanvas. The round holes facing the camera are currently occupied by steel cross-head screws. Replace each front-facing screw with a realistic ROUND WIRE ENTRY opening: dark empty bore with a copper/brass clamp tongue deeper inside, NO crosshead screw filling that front opening. Screwdriver access and the recessed steel clamping screw belong on the perpendicular TOP surface of each terminal tower, visible in the existing rectangular wells in three-quarter views; bottom terminals mirror that construction. For the straight front view show round dark wire-entry holes, with the clamping screws mostly hidden above/below, do not change to perspective. Preserve everything else: exact white stepped18mm-per-pole moulded housing, raised45mmnose, C16 and boxed6000 text, grey UP ON lever and commonbar for three-pole versions, shortDINrail if present, camera angle, composition and lighting. Where cables enter lower terminals, keep them exiting their original three clamp bores. Do not add wires to unwired assets. True transparent alpha, no halo or dust specks, no background, no new text, no logos. Whole subject visible. This is a minimal hardware correction, not a redesign."
+    },
+    {
+      "key": "072MotorRailFixed",
+      "prompt": "Use case: precise-object-edit. Correct ONLY terminal hardware in this same MCB product image. This is three-pole with brown,black,grey cables; preserve exactly these three cables and out-of-frame lower ends. The round holes facing the camera are currently occupied by steel cross-head screws. Replace each front-facing screw with a realistic ROUND WIRE ENTRY opening: dark empty bore with a copper/brass clamp tongue deeper inside, NO crosshead screw filling that front opening. Screwdriver access and the recessed steel clamping screw belong on the perpendicular TOP surface of each terminal tower, visible in the existing rectangular wells in three-quarter views; bottom terminals mirror that construction. For the straight front view show round dark wire-entry holes, with the clamping screws mostly hidden above/below, do not change to perspective. Preserve everything else: exact white stepped18mm-per-pole moulded housing, raised45mmnose, C16 and boxed6000 text, grey UP ON lever and commonbar for three-pole versions, shortDINrail if present, camera angle, composition and lighting. Where cables enter lower terminals, keep them exiting their original three clamp bores. Do not add wires to unwired assets. True transparent alpha, no halo or dust specks, no background, no new text, no logos. Whole subject visible. This is a minimal hardware correction, not a redesign."
+    }
+  ],
+  "exports": [
+    [
+      "mcb-3q-v2.png",
+      "exec-77761cb5-79e5-4e70-8a9d-813a954a0bc6.png",
+      1536,
+      1024
+    ],
+    [
+      "mpcb-3q-v2.png",
+      "exec-8f027cd5-5fcd-4c9c-bce5-9ca3ab61c582.png",
+      1536,
+      1024
+    ],
+    [
+      "mcb3p-3q.png",
+      "exec-577e5ccf-1126-41e3-8154-61a20dbe6bff.png",
+      1536,
+      1024
+    ],
+    [
+      "mcb3p-front.png",
+      "exec-b3656123-448b-4791-bddb-a525fa911652.png",
+      1536,
+      1536
+    ],
+    [
+      "mcb3p-onrail-motor.png",
+      "exec-e89fdcb8-947f-4e70-ae57-acb92f40d831.png",
+      1536,
+      1024
+    ],
+    [
+      "home-db.png",
+      "exec-4be1c5c2-fd91-43e8-b001-1de59b1343eb.png",
+      1536,
+      1024
+    ]
+  ]
+}

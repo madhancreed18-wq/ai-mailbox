@@ -1,0 +1,72 @@
+{
+  "batch": "072",
+  "origin": "top-left",
+  "method": "imagegen catalogue-reference guided illustrations; not metrology-calibrated CAD",
+  "front_alignment": "mcb3p-front nontransparent bounds y115..1422, vs old mcb-front y115..1420;1536px canvas height",
+  "assets": [
+    {
+      "file": "mcb-3q-v2.png",
+      "size_px": [
+        1536,
+        1024
+      ],
+      "sha256": "4194371e79d51adc7581a238ed0b5a6d947de799c38ed809c7b5885a5e670eb2",
+      "transparent": true,
+      "view": "left-front three-quarter"
+    },
+    {
+      "file": "mpcb-3q-v2.png",
+      "size_px": [
+        1536,
+        1024
+      ],
+      "sha256": "75a7f5bd9f8b0025f7fc4e0c88a95d34d6e64daf7effe7a86815df54250101c3",
+      "transparent": true,
+      "view": "left-front three-quarter"
+    },
+    {
+      "file": "mcb3p-3q.png",
+      "size_px": [
+        1536,
+        1024
+      ],
+      "sha256": "dbaba7b6b66e6d0be1496b6a3df753454096d4f69faf8bcfba7c4d1f550559c7",
+      "transparent": true,
+      "view": "left-front three-quarter"
+    },
+    {
+      "file": "mcb3p-front.png",
+      "size_px": [
+        1536,
+        1536
+      ],
+      "sha256": "fcfb828856a2418e79771354e711422aa111a9c30c7342f4a1eccf7610eadd02",
+      "transparent": true,
+      "view": "front"
+    },
+    {
+      "file": "mcb3p-onrail-motor.png",
+      "size_px": [
+        1536,
+        1024
+      ],
+      "sha256": "eb68d10f9c2c9db0d13e23e61c880f90cf46a7e7cfec4625cf3eba4f20ca5ff7",
+      "transparent": true,
+      "view": "left-front three-quarter"
+    },
+    {
+      "file": "home-db.png",
+      "size_px": [
+        1536,
+        1024
+      ],
+      "sha256": "0ec59a383c6c0deb994e863a3da6de2587c7a603dbecafa7156b7be5bb477646",
+      "transparent": false,
+      "view": "front"
+    }
+  ],
+  "reuse": {
+    "factory-panel.png": "byte-identical alias of din-panel.png"
+  },
+  "camera_limit": "Matched left-front/elevated visual direction, not a measured camera calibration. Do not infer exact pixels/mm from generated silhouettes."
+}
