@@ -1,0 +1,51 @@
+Motor burn aagi pochu! Aana MCB, trip aagave illa. Motor-ku MCB dhaan pottirundhaanga. Paarkka MCB-um MPCB-um orey maadhiri dhaan irukku. Aana ulla, rendum romba vidhyaasam. Adhu enna nu indha video-la paarpom.
+
+Veetu DB-la MCB irukku. Factory panel-la motor-ku munnaadi MPCB irukku. Rendume circuit breaker dhaan. Rendume DIN rail-la dhaan fix aagudhu. Aana rendum protect panradhu vera vera vishayam.
+
+MCB-naa Miniature Circuit Breaker. Adhu cable-ai protect pannudhu. MPCB-naa Motor Protection Circuit Breaker. Adhu motor-ai protect pannudhu. Indha oru vidhyaasam dhaan, motor burn aanadhukku kaaranam.
+
+Mudhalla MCB-ai thirandhu paarpom. Mela ON OFF toggle. Keezha latch mechanism. Oru bimetal strip. Oru magnetic coil, adhukkulla plunger. Fixed contact, moving contact. Pakkathula arc chute.
+
+Overload-la, adhigamaana current romba neram pogum. Bimetal sooduaagi mella valaiyum. Latch-ai thalli, contact-ai thirakkum. Idhu thermal trip.
+
+Short circuit-la, aayiram ampere current paayum. Coil magnet aagi, plunger udane adikkum. Sila millisecond-la trip. Idhu magnetic trip. Arc chute, spark-ai pirichu anaikkum.
+
+MCB-la rating fixed. C sixteen-naa, sixteen ampere. Adhu cable-ku yetha maadhiri. Motor current enna nu adhukku theriyaadhu.
+
+Ippo MPCB-ai thirandhu paarpom. Moonu phase-kkum moonu pole. Ovvoru pole-layum bimetal, adhukku mela heater winding. Magnetic coil, plunger, contacts, arc chamber. Mela oru rotary knob.
+
+Mukkiyamaana vishayam, indha current setting dial. Six-lendhu ten ampere maadhiri oru range irukkum. Motor nameplate-la irukkura full load current-ku, indha dial-ai set pannuvom. Dial thirumbumbodhu, ulla oru cam, bimetal evlo valaiyanum nu maathudhu.
+
+Overload-la, motor current setting-ai thaandinaa, moonu bimetal-um valaiyum. MPCB trip aagum. Motor start aagumbodhu varra starting current-ku trip aagaadhu. Adhukku yetha maadhiri design.
+
+Short circuit-ku, MPCB-layum magnetic trip irukku. Setting-oda kitta thatta padhimoonu madangu current-la udane trip.
+
+Ippo MPCB-oda special feature. Phase loss protection. Oru phase fuse pochu, illa wire loose. Motor rendu phase-la odum. Current adhigamaagi, winding sooduaagum.
+
+MPCB-kkulla, moonu bimetal-kkum mela oru slider irukku. Moonu-um orey alavu valanjaa, slider orey maadhiri nagarum. Oru phase pochunaa, andha bimetal valaiyaadhu. Matha rendu valaiyum. Indha vidhyaasatha slider pudichu, seekiram trip pannum.
+
+Ippo first question-ku answer. Motor-ku MCB pottaa, rating cable-ku yetha maadhiri, motor current-ai vida romba adhigam. Phase loss-ai MCB-ku kandupudikka theriyaadhu. Motor overheat aagi burn aagum. MCB-ku idhu overload illa.
+
+Ippo oru quiz. Motor nameplate-la full load current eight ampere. MPCB range six-lendhu ten ampere. Dial-ai evlo-la set pannanum?
+
+Option A. Ten ampere. Maximum-la vechaa trip aagaadhu.
+
+Option B. Eight ampere. Motor full load current.
+
+Option C. Six ampere. Kammiyaa vechaa safe.
+
+Unga answer-ai comment pannunga. Answer video kadaisila.
+
+MPCB-ai epdi choose pannuvadhu? Motor full load current, MPCB range-oda naduvula varanum. Eight ampere motor-ku, six-lendhu ten range correct. Breaking capacity kA-um check pannanum.
+
+MPCB-la TEST button irukku. Press pannaa, trip mechanism vela seyyudhaa nu check pannalaam. Aux contact add panni, trip aanadhai PLC-ku signal-aa anuppalaam.
+
+Rendukkum common-aa, earth leakage shock-ku MCB-um trip aagaadhu, MPCB-um trip aagaadhu. Adhukku RCCB dhaan.
+
+Common mistakes. Onnu, motor-ku MCB poduradhu. Rendu, MPCB dial-ai maximum-la vekkuradhu. Moonu, motor current range-kku veliya irukkura MPCB vaanguradhu.
+
+Quick summary. MCB, cable protection, fixed rating. MPCB, motor protection, adjustable dial. Rendulayum thermal-um magnetic-um. MPCB-la phase loss protection extra. Dial-ai motor full load current-ku set pannunga.
+
+Quiz answer. Dial-ai motor nameplate full load current-ku dhaan set pannanum. Ten-la vechaa, overload-la late-aa trip aagum, motor sooduaagum. Six-la vechaa, normal running-laye trip aagum. Answer B, eight ampere.
+
+Video useful-aa irundhaa like pannunga. Electrician friend-kku share pannunga. Factory Decode Tamil-ai subscribe pannunga.
