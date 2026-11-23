@@ -1,0 +1,218 @@
+{
+  "canvas": [
+    1024,
+    1536
+  ],
+  "camera": "fixed orthographic front",
+  "units": "pixels, top-left origin",
+  "internal_geometry_status": "generic educational mechanism, not an OEM manufacturing section",
+  "layers": [
+    {
+      "file": "mcb-cut-housing.png",
+      "canvas": [
+        1024,
+        1536
+      ],
+      "composite_order": 0,
+      "position_px": [
+        0,
+        0
+      ],
+      "illustrative_motion": true,
+      "objects": [
+        "Back housing shell",
+        "Housing side wall",
+        "Housing side wall.001",
+        "Housing end wall",
+        "Housing end wall.001",
+        "DIN rear fixed hook",
+        "DIN rear lower clip",
+        "DIN bottom release pull tab",
+        "Moulded side step",
+        "Moulded side step.001"
+      ]
+    },
+    {
+      "file": "mcb-cut-terminals.png",
+      "canvas": [
+        1024,
+        1536
+      ],
+      "composite_order": 1,
+      "position_px": [
+        0,
+        0
+      ],
+      "illustrative_motion": true,
+      "objects": [
+        "Terminal brass cage",
+        "Cable aperture",
+        "Terminal screw",
+        "Screwdriver slot",
+        "Terminal brass cage.001",
+        "Cable aperture.001",
+        "Terminal screw.001",
+        "Screwdriver slot.001"
+      ]
+    },
+    {
+      "file": "mcb-cut-coil.png",
+      "canvas": [
+        1024,
+        1536
+      ],
+      "composite_order": 2,
+      "position_px": [
+        0,
+        0
+      ],
+      "illustrative_motion": true,
+      "objects": [
+        "Magnetic steel frame",
+        "Copper solenoid winding",
+        "Top terminal to solenoid",
+        "Solenoid to moving pivot"
+      ]
+    },
+    {
+      "file": "mcb-cut-bimetal.png",
+      "canvas": [
+        1024,
+        1536
+      ],
+      "composite_order": 3,
+      "position_px": [
+        0,
+        0
+      ],
+      "illustrative_motion": true,
+      "objects": [
+        "Bimetal thermal strip",
+        "Bimetal to bottom terminal"
+      ],
+      "pivot_px": [
+        450.56,
+        1186.09
+      ],
+      "bimetal_tip_px": [
+        450.56,
+        834.01
+      ]
+    },
+    {
+      "file": "mcb-cut-fixed-contact.png",
+      "canvas": [
+        1024,
+        1536
+      ],
+      "composite_order": 4,
+      "position_px": [
+        0,
+        0
+      ],
+      "illustrative_motion": true,
+      "objects": [
+        "Fixed contact to thermal strip",
+        "Fixed silver contact"
+      ]
+    },
+    {
+      "file": "mcb-cut-arcchute.png",
+      "canvas": [
+        1024,
+        1536
+      ],
+      "composite_order": 5,
+      "position_px": [
+        0,
+        0
+      ],
+      "illustrative_motion": true,
+      "objects": [
+        "Arc splitter plate 00",
+        "Arc splitter plate 01",
+        "Arc splitter plate 02",
+        "Arc splitter plate 03",
+        "Arc splitter plate 04",
+        "Arc splitter plate 05",
+        "Arc splitter plate 06",
+        "Arc splitter plate 07",
+        "Arc splitter plate 08",
+        "Arc chute insulating support",
+        "Arc chute insulating support.001"
+      ]
+    },
+    {
+      "file": "mcb-cut-moving-contact.png",
+      "canvas": [
+        1024,
+        1536
+      ],
+      "composite_order": 6,
+      "position_px": [
+        0,
+        0
+      ],
+      "illustrative_motion": true,
+      "objects": [
+        "Moving copper contact arm",
+        "Silver moving contact"
+      ],
+      "pivot_px": [
+        435.2,
+        746.0
+      ]
+    },
+    {
+      "file": "mcb-cut-plunger.png",
+      "canvas": [
+        1024,
+        1536
+      ],
+      "composite_order": 7,
+      "position_px": [
+        0,
+        0
+      ],
+      "illustrative_motion": true,
+      "objects": [
+        "Plunger",
+        "Striker tip"
+      ],
+      "pivot_px": [
+        465.92,
+        349.92
+      ],
+      "travel_px": [
+        0.0,
+        44.0
+      ]
+    },
+    {
+      "file": "mcb-cut-toggle-latch.png",
+      "canvas": [
+        1024,
+        1536
+      ],
+      "composite_order": 8,
+      "position_px": [
+        0,
+        0
+      ],
+      "illustrative_motion": true,
+      "objects": [
+        "Toggle internal rocker",
+        "Rocker axle",
+        "Toggle latch linkage",
+        "Trip latch from bimetal",
+        "Mechanism rivet",
+        "Mechanism rivet.001",
+        "Toggle grip ON"
+      ],
+      "pivot_px": [
+        512.0,
+        555.29
+      ]
+    }
+  ]
+}

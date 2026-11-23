@@ -1,0 +1,1095 @@
+{
+  "schema_version": 1,
+  "requested_png_count": 46,
+  "coordinates": "full untrimmed canvas, origin top-left, +x right, +y down; UV pixel centre = ((x+0.5)/W, 1-(y+0.5)/H)",
+  "alpha": "straight RGBA; reference sheets opaque white",
+  "source_status": "Original generic educational models; envelope and selected mounting dimensions informed by official sheets. Not an OEM internal section.",
+  "assets": [
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/din-panel.png",
+      "size_px": [
+        1920,
+        1080
+      ],
+      "mode": "RGBA",
+      "sha256": "f5ab8615c932b77f499736481c7ce22ccb96c6f1b479d123a9beb35427c4ad3e",
+      "transparent_background": true
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/fire-1.png",
+      "size_px": [
+        1024,
+        1024
+      ],
+      "mode": "RGBA",
+      "sha256": "79e7e3e8122adc6c4171e4b3e00a7f35506cb1dc8819940c140ab785f0d9df13",
+      "transparent_background": true,
+      "anchors_px": {
+        "base": [
+          512,
+          920
+        ]
+      },
+      "uniform_family_scale": 1.0
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/fire-2.png",
+      "size_px": [
+        1024,
+        1024
+      ],
+      "mode": "RGBA",
+      "sha256": "8eba1c0786d911bf7312c1247f2f2eb6c15f8409f0b7026985cbacc4d6e1b37c",
+      "transparent_background": true,
+      "anchors_px": {
+        "base": [
+          512,
+          920
+        ]
+      },
+      "uniform_family_scale": 1.0
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/fire-3.png",
+      "size_px": [
+        1024,
+        1024
+      ],
+      "mode": "RGBA",
+      "sha256": "69ac59cf22d7213a7e50eb2bc7e2b6c934a34312e8c40c90678b7e87b64a62e0",
+      "transparent_background": true,
+      "anchors_px": {
+        "base": [
+          512,
+          920
+        ]
+      },
+      "uniform_family_scale": 1.0
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/fire-4.png",
+      "size_px": [
+        1024,
+        1024
+      ],
+      "mode": "RGBA",
+      "sha256": "73a480ec51b1d77263e3f0738b9c9a3e56e5e2117feaa26ad512b27b3dddbca7",
+      "transparent_background": true,
+      "anchors_px": {
+        "base": [
+          512,
+          920
+        ]
+      },
+      "uniform_family_scale": 1.0
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/mcb-3q.png",
+      "size_px": [
+        1536,
+        1536
+      ],
+      "mode": "RGBA",
+      "sha256": "af9c92b0523ff7d32fef7dec92c9931f52fd91210d1c38588b43cbfe6bdb39b3",
+      "transparent_background": true
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/mcb-cut-arcchute.png",
+      "size_px": [
+        1024,
+        1536
+      ],
+      "mode": "RGBA",
+      "sha256": "ef11e777ffb5dbe3b59ed3c352bbefa0b89450c1637174945592406fe276a21d",
+      "transparent_background": true,
+      "layer": {
+        "file": "mcb-cut-arcchute.png",
+        "canvas": [
+          1024,
+          1536
+        ],
+        "composite_order": 5,
+        "position_px": [
+          0,
+          0
+        ],
+        "illustrative_motion": false,
+        "objects": [
+          "Arc splitter plate 00",
+          "Arc splitter plate 01",
+          "Arc splitter plate 02",
+          "Arc splitter plate 03",
+          "Arc splitter plate 04",
+          "Arc splitter plate 05",
+          "Arc splitter plate 06",
+          "Arc splitter plate 07",
+          "Arc splitter plate 08",
+          "Arc chute insulating support",
+          "Arc chute insulating support.001"
+        ],
+        "motion": "none"
+      }
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/mcb-cut-bimetal.png",
+      "size_px": [
+        1024,
+        1536
+      ],
+      "mode": "RGBA",
+      "sha256": "9de5cd42666a3187dbba35a1dc7fad155c6ada309afcaab1136566554c44c4f2",
+      "transparent_background": true,
+      "layer": {
+        "file": "mcb-cut-bimetal.png",
+        "canvas": [
+          1024,
+          1536
+        ],
+        "composite_order": 3,
+        "position_px": [
+          0,
+          0
+        ],
+        "illustrative_motion": true,
+        "objects": [
+          "Bimetal thermal strip",
+          "Bimetal to bottom terminal"
+        ],
+        "pivot_px": [
+          450.56,
+          1186.09
+        ],
+        "bimetal_tip_px": [
+          450.56,
+          834.01
+        ],
+        "motion": "bend"
+      }
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/mcb-cut-coil.png",
+      "size_px": [
+        1024,
+        1536
+      ],
+      "mode": "RGBA",
+      "sha256": "91a12802a14b4280c09fa7aacd19bb34fc2f05c47c4051f73d558d2ecfad0880",
+      "transparent_background": true,
+      "layer": {
+        "file": "mcb-cut-coil.png",
+        "canvas": [
+          1024,
+          1536
+        ],
+        "composite_order": 2,
+        "position_px": [
+          0,
+          0
+        ],
+        "illustrative_motion": false,
+        "objects": [
+          "Magnetic steel frame",
+          "Copper solenoid winding",
+          "Top terminal to solenoid",
+          "Solenoid to moving pivot"
+        ],
+        "motion": "none"
+      }
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/mcb-cut-fixed-contact.png",
+      "size_px": [
+        1024,
+        1536
+      ],
+      "mode": "RGBA",
+      "sha256": "09a082fa8d03a187e1ccb8836df895de479c02233a622a6fd20ef3c1e702e577",
+      "transparent_background": true,
+      "layer": {
+        "file": "mcb-cut-fixed-contact.png",
+        "canvas": [
+          1024,
+          1536
+        ],
+        "composite_order": 4,
+        "position_px": [
+          0,
+          0
+        ],
+        "illustrative_motion": false,
+        "objects": [
+          "Fixed contact to thermal strip",
+          "Fixed silver contact"
+        ],
+        "motion": "none"
+      }
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/mcb-cut-housing.png",
+      "size_px": [
+        1024,
+        1536
+      ],
+      "mode": "RGBA",
+      "sha256": "c4fe9eb8eff8019c99ba611bcdd82c036910b3b64e22dd7d8d94305bce96cef5",
+      "transparent_background": true,
+      "layer": {
+        "file": "mcb-cut-housing.png",
+        "canvas": [
+          1024,
+          1536
+        ],
+        "composite_order": 0,
+        "position_px": [
+          0,
+          0
+        ],
+        "illustrative_motion": false,
+        "objects": [
+          "Back housing shell",
+          "Housing side wall",
+          "Housing side wall.001",
+          "Housing end wall",
+          "Housing end wall.001",
+          "DIN rear fixed hook",
+          "DIN rear lower clip",
+          "DIN bottom release pull tab",
+          "Moulded side step",
+          "Moulded side step.001"
+        ],
+        "motion": "none"
+      }
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/mcb-cut-moving-contact.png",
+      "size_px": [
+        1024,
+        1536
+      ],
+      "mode": "RGBA",
+      "sha256": "b265fbccb9b0d633fcf175d6583cb1b18ffce6a6d04a7c2fbaa2e68b195e9d30",
+      "transparent_background": true,
+      "layer": {
+        "file": "mcb-cut-moving-contact.png",
+        "canvas": [
+          1024,
+          1536
+        ],
+        "composite_order": 6,
+        "position_px": [
+          0,
+          0
+        ],
+        "illustrative_motion": true,
+        "objects": [
+          "Moving copper contact arm",
+          "Silver moving contact"
+        ],
+        "pivot_px": [
+          435.2,
+          746.0
+        ],
+        "motion": "rotate"
+      }
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/mcb-cut-plunger.png",
+      "size_px": [
+        1024,
+        1536
+      ],
+      "mode": "RGBA",
+      "sha256": "49900f8d4855f72f635c5eb7ae0b2b9b62d87a33a03f6ee5ae55d3b3277de088",
+      "transparent_background": true,
+      "layer": {
+        "file": "mcb-cut-plunger.png",
+        "canvas": [
+          1024,
+          1536
+        ],
+        "composite_order": 7,
+        "position_px": [
+          0,
+          0
+        ],
+        "illustrative_motion": true,
+        "objects": [
+          "Plunger",
+          "Striker tip"
+        ],
+        "pivot_px": [
+          465.92,
+          349.92
+        ],
+        "travel_px": [
+          0.0,
+          44.0
+        ],
+        "motion": "translate"
+      }
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/mcb-cut-terminals.png",
+      "size_px": [
+        1024,
+        1536
+      ],
+      "mode": "RGBA",
+      "sha256": "330cb8b04b891d0fc84f6521575c48c9b8080aec9a503b03877f816c26bec9db",
+      "transparent_background": true,
+      "layer": {
+        "file": "mcb-cut-terminals.png",
+        "canvas": [
+          1024,
+          1536
+        ],
+        "composite_order": 1,
+        "position_px": [
+          0,
+          0
+        ],
+        "illustrative_motion": false,
+        "objects": [
+          "Terminal brass cage",
+          "Cable aperture",
+          "Terminal screw",
+          "Screwdriver slot",
+          "Terminal brass cage.001",
+          "Cable aperture.001",
+          "Terminal screw.001",
+          "Screwdriver slot.001"
+        ],
+        "motion": "none"
+      }
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/mcb-cut-toggle-latch.png",
+      "size_px": [
+        1024,
+        1536
+      ],
+      "mode": "RGBA",
+      "sha256": "77810ecf746438dcb910c1ed6ba53fb57c2aa86a73a9c439950972db031c56a6",
+      "transparent_background": true,
+      "layer": {
+        "file": "mcb-cut-toggle-latch.png",
+        "canvas": [
+          1024,
+          1536
+        ],
+        "composite_order": 8,
+        "position_px": [
+          0,
+          0
+        ],
+        "illustrative_motion": true,
+        "objects": [
+          "Toggle internal rocker",
+          "Rocker axle",
+          "Toggle latch linkage",
+          "Trip latch from bimetal",
+          "Mechanism rivet",
+          "Mechanism rivet.001",
+          "Toggle grip ON"
+        ],
+        "pivot_px": [
+          512.0,
+          555.29
+        ],
+        "motion": "rotate"
+      }
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/mcb-front.png",
+      "size_px": [
+        1024,
+        1536
+      ],
+      "mode": "RGBA",
+      "sha256": "a21d2ee94f76000f5ab513402c03fc6476c739a489c22fa326a15d38d5ce82fa",
+      "transparent_background": true
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/motor-3q-burnt.png",
+      "size_px": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "sha256": "f046915d101178b7070e36084d7e8e342978a0dd3fb6609eeb3bf67ff373dc3c",
+      "transparent_background": true
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/motor-3q.png",
+      "size_px": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "sha256": "6e9d2382673966be8a8e3bd2e41ca64d3dd9c8793e2d1d7c67ddb4d290c8a2b2",
+      "transparent_background": true
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/mpcb-3q.png",
+      "size_px": [
+        1536,
+        1536
+      ],
+      "mode": "RGBA",
+      "sha256": "a4e463d94ae6c1bb51d88c46e7303f2bd1081f02a58329648763df69e36514b5",
+      "transparent_background": true
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/mpcb-cut-arcchamber.png",
+      "size_px": [
+        1536,
+        1536
+      ],
+      "mode": "RGBA",
+      "sha256": "a099ffe541c74916f2f3c90fc0ce43e6f5a0035f31173eaf71d77a07bb881c5a",
+      "transparent_background": true,
+      "layer": {
+        "file": "mpcb-cut-arcchamber.png",
+        "canvas": [
+          1536,
+          1536
+        ],
+        "composite_order": 5,
+        "position_px": [
+          0,
+          0
+        ],
+        "illustrative_motion": false,
+        "objects": [
+          "Arc chamber splitter",
+          "Arc chamber splitter.001",
+          "Arc chamber splitter.002",
+          "Arc chamber splitter.003",
+          "Arc chamber splitter.004",
+          "Arc chamber splitter.005",
+          "Arc chamber splitter.006",
+          "Arc chamber splitter.007",
+          "Arc chamber splitter.008",
+          "Arc chamber splitter.009",
+          "Arc chamber splitter.010",
+          "Arc chamber splitter.011",
+          "Arc chamber splitter.012",
+          "Arc chamber splitter.013",
+          "Arc chamber separator"
+        ],
+        "motion": "none"
+      }
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/mpcb-cut-bimetal-heater.png",
+      "size_px": [
+        1536,
+        1536
+      ],
+      "mode": "RGBA",
+      "sha256": "ad3d7f767e1d454ad7f86a0e51f53002d26ebf8ccb84cef0003d8414b74be9f8",
+      "transparent_background": true,
+      "layer": {
+        "file": "mpcb-cut-bimetal-heater.png",
+        "canvas": [
+          1536,
+          1536
+        ],
+        "composite_order": 3,
+        "position_px": [
+          0,
+          0
+        ],
+        "illustrative_motion": true,
+        "objects": [
+          "Heated bimetal strip",
+          "Continuous wrapped heater winding",
+          "Thermal exit to lower terminal"
+        ],
+        "pivot_px": [
+          570.72,
+          1206.28
+        ],
+        "bimetal_tip_px": [
+          570.72,
+          882.63
+        ],
+        "motion": "bend"
+      }
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/mpcb-cut-coil.png",
+      "size_px": [
+        1536,
+        1536
+      ],
+      "mode": "RGBA",
+      "sha256": "6c6f40b57790a8b1c041eefdd7a766443cf98f9517a9030217a3e88ad2673a5d",
+      "transparent_background": true,
+      "layer": {
+        "file": "mpcb-cut-coil.png",
+        "canvas": [
+          1536,
+          1536
+        ],
+        "composite_order": 2,
+        "position_px": [
+          0,
+          0
+        ],
+        "illustrative_motion": false,
+        "objects": [
+          "Magnetic steel frame",
+          "Copper solenoid winding",
+          "Top terminal to magnetic winding"
+        ],
+        "motion": "none"
+      }
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/mpcb-cut-dial-cam.png",
+      "size_px": [
+        1536,
+        1536
+      ],
+      "mode": "RGBA",
+      "sha256": "190ad954381cffd529e0aa6f90ffdc0c50300847f4ca68e786a6ec3640215b5e",
+      "transparent_background": true,
+      "layer": {
+        "file": "mpcb-cut-dial-cam.png",
+        "canvas": [
+          1536,
+          1536
+        ],
+        "composite_order": 9,
+        "position_px": [
+          0,
+          0
+        ],
+        "illustrative_motion": true,
+        "objects": [
+          "Setting dial",
+          "6",
+          "8",
+          "10",
+          "Setting screwdriver index",
+          "Eccentric setting cam",
+          "Cam shifts trip lever"
+        ],
+        "pivot_px": [
+          824.37,
+          424.12
+        ],
+        "motion": "rotate"
+      }
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/mpcb-cut-fixed-contact.png",
+      "size_px": [
+        1536,
+        1536
+      ],
+      "mode": "RGBA",
+      "sha256": "02e1b2f3bfd9ca453198f7123edd4637f709c641a22459d3353d7ea06b86a8b2",
+      "transparent_background": true,
+      "layer": {
+        "file": "mpcb-cut-fixed-contact.png",
+        "canvas": [
+          1536,
+          1536
+        ],
+        "composite_order": 4,
+        "position_px": [
+          0,
+          0
+        ],
+        "illustrative_motion": false,
+        "objects": [
+          "Double break fixed silver contact",
+          "Fixed pole conductor",
+          "Double break fixed silver contact.001",
+          "Fixed pole conductor.001"
+        ],
+        "motion": "none"
+      }
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/mpcb-cut-housing.png",
+      "size_px": [
+        1536,
+        1536
+      ],
+      "mode": "RGBA",
+      "sha256": "c732d517c0d5c3829be744c3fd486421a2cad8e0d1833c475bb5daf75ae21a4a",
+      "transparent_background": true,
+      "layer": {
+        "file": "mpcb-cut-housing.png",
+        "canvas": [
+          1536,
+          1536
+        ],
+        "composite_order": 0,
+        "position_px": [
+          0,
+          0
+        ],
+        "illustrative_motion": false,
+        "objects": [
+          "Back housing shell",
+          "Housing side wall",
+          "Housing side wall.001",
+          "Housing end wall",
+          "Housing end wall.001",
+          "DIN rear fixed hook",
+          "DIN rear lower clip",
+          "DIN bottom release pull tab",
+          "Unopened pole front",
+          "Unopened pole front.001",
+          "TEST button",
+          "TEST",
+          "Other pole hidden bimetal tip",
+          "Other pole hidden bimetal tip.001"
+        ],
+        "motion": "none"
+      }
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/mpcb-cut-knob-mechanism.png",
+      "size_px": [
+        1536,
+        1536
+      ],
+      "mode": "RGBA",
+      "sha256": "2d0007669928e516695382169556e8c381508bc5af4acc5a44c20c35cda85ef3",
+      "transparent_background": true,
+      "layer": {
+        "file": "mpcb-cut-knob-mechanism.png",
+        "canvas": [
+          1536,
+          1536
+        ],
+        "composite_order": 8,
+        "position_px": [
+          0,
+          0
+        ],
+        "illustrative_motion": true,
+        "objects": [
+          "Rotary mechanism hub",
+          "ON rotary handle",
+          "I",
+          "O",
+          "Knob trip linkage"
+        ],
+        "pivot_px": [
+          810.28,
+          707.31
+        ],
+        "motion": "rotate"
+      }
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/mpcb-cut-moving-contact.png",
+      "size_px": [
+        1536,
+        1536
+      ],
+      "mode": "RGBA",
+      "sha256": "4c68c57741ab3354b2761428b0132b7266f8bdb7ee6fcb9216baadfa49e74bfb",
+      "transparent_background": true,
+      "layer": {
+        "file": "mpcb-cut-moving-contact.png",
+        "canvas": [
+          1536,
+          1536
+        ],
+        "composite_order": 6,
+        "position_px": [
+          0,
+          0
+        ],
+        "illustrative_motion": true,
+        "objects": [
+          "Double break moving bridge",
+          "Moving bridge silver tip",
+          "Moving bridge silver tip.001",
+          "Moving bridge actuator"
+        ],
+        "pivot_px": [
+          570.72,
+          801.71
+        ],
+        "travel_px": [
+          0.0,
+          40.46
+        ],
+        "motion": "translate"
+      }
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/mpcb-cut-phaseloss-slide.png",
+      "size_px": [
+        1536,
+        1536
+      ],
+      "mode": "RGBA",
+      "sha256": "c56a8f1ab70b77c869cb136dde84d49bcf32c7d3759c3e36bb94a1e18566ba8c",
+      "transparent_background": true,
+      "layer": {
+        "file": "mpcb-cut-phaseloss-slide.png",
+        "canvas": [
+          1536,
+          1536
+        ],
+        "composite_order": 10,
+        "position_px": [
+          0,
+          0
+        ],
+        "illustrative_motion": true,
+        "objects": [
+          "Phase-loss differential slider",
+          "Bimetal sensing tab",
+          "Bimetal sensing tab.001",
+          "Bimetal sensing tab.002"
+        ],
+        "pivot_px": [
+          768.0,
+          882.63
+        ],
+        "travel_px": [
+          21.14,
+          0.0
+        ],
+        "motion": "translate"
+      }
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/mpcb-cut-plunger.png",
+      "size_px": [
+        1536,
+        1536
+      ],
+      "mode": "RGBA",
+      "sha256": "e8634a871c23bd0abc4df3470cdd9f3b51a0a71749db76454b2729147fe3b9b4",
+      "transparent_background": true,
+      "layer": {
+        "file": "mpcb-cut-plunger.png",
+        "canvas": [
+          1536,
+          1536
+        ],
+        "composite_order": 7,
+        "position_px": [
+          0,
+          0
+        ],
+        "illustrative_motion": true,
+        "objects": [
+          "Magnetic plunger",
+          "Trip striker"
+        ],
+        "pivot_px": [
+          570.72,
+          424.12
+        ],
+        "travel_px": [
+          0.0,
+          40.45
+        ],
+        "motion": "translate"
+      }
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/mpcb-cut-terminals.png",
+      "size_px": [
+        1536,
+        1536
+      ],
+      "mode": "RGBA",
+      "sha256": "8b623e83cc45801095d5366194b7c9291bd86c0248379624a05baef08a1767b8",
+      "transparent_background": true,
+      "layer": {
+        "file": "mpcb-cut-terminals.png",
+        "canvas": [
+          1536,
+          1536
+        ],
+        "composite_order": 1,
+        "position_px": [
+          0,
+          0
+        ],
+        "illustrative_motion": false,
+        "objects": [
+          "Terminal brass cage",
+          "Cable aperture",
+          "Terminal screw",
+          "Screwdriver slot",
+          "Terminal brass cage.001",
+          "Cable aperture.001",
+          "Terminal screw.001",
+          "Screwdriver slot.001",
+          "1/L1",
+          "2/T1",
+          "Terminal brass cage.002",
+          "Cable aperture.002",
+          "Terminal screw.002",
+          "Screwdriver slot.002",
+          "Terminal brass cage.003",
+          "Cable aperture.003",
+          "Terminal screw.003",
+          "Screwdriver slot.003",
+          "3/L2",
+          "4/T2",
+          "Terminal brass cage.004",
+          "Cable aperture.004",
+          "Terminal screw.004",
+          "Screwdriver slot.004",
+          "Terminal brass cage.005",
+          "Cable aperture.005",
+          "Terminal screw.005",
+          "Screwdriver slot.005",
+          "5/L3",
+          "6/T3"
+        ],
+        "motion": "none"
+      }
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/mpcb-front.png",
+      "size_px": [
+        1536,
+        1536
+      ],
+      "mode": "RGBA",
+      "sha256": "03e55739301ab4e14824fcaee834875bc990d0f2417ccee838792232f97f2587",
+      "transparent_background": true
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/ref-contactor-sheet.png",
+      "size_px": [
+        2400,
+        1600
+      ],
+      "mode": "RGB",
+      "sha256": "c41296855461a5f4a10d607f213d98e788f03562c3092fd8ed053275e38badcb",
+      "transparent_background": false
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/ref-mcb-sheet.png",
+      "size_px": [
+        2400,
+        1600
+      ],
+      "mode": "RGB",
+      "sha256": "e25046a41fbee137c06428f901f76cea61a05fa008f3a543bd542c6c7db91f1d",
+      "transparent_background": false
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/ref-motor-sheet.png",
+      "size_px": [
+        2400,
+        1600
+      ],
+      "mode": "RGB",
+      "sha256": "5ca30695a66ae1eb7f1f0703c8c87a5b894241021e753a9ae970360c8404665e",
+      "transparent_background": false
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/ref-mpcb-sheet.png",
+      "size_px": [
+        2400,
+        1600
+      ],
+      "mode": "RGB",
+      "sha256": "bdd13ec12bd04d3b3f1f8db790ebdf74270e2c83ea0865312fee30f47fb55ad3",
+      "transparent_background": false
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/smoke-1.png",
+      "size_px": [
+        1024,
+        1024
+      ],
+      "mode": "RGBA",
+      "sha256": "bded2ae7ba33ecc35d2595164ad964a85367a293b8c4876ec2aa0c975deeb135",
+      "transparent_background": true,
+      "anchors_px": {
+        "base": [
+          512,
+          920
+        ]
+      },
+      "uniform_family_scale": 0.892578125
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/smoke-2.png",
+      "size_px": [
+        1024,
+        1024
+      ],
+      "mode": "RGBA",
+      "sha256": "50ac2f2e039b3992c2cd8133e32db1a718c220ca20654d24fd8f5c67f642e09f",
+      "transparent_background": true,
+      "anchors_px": {
+        "base": [
+          512,
+          920
+        ]
+      },
+      "uniform_family_scale": 0.892578125
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/smoke-3.png",
+      "size_px": [
+        1024,
+        1024
+      ],
+      "mode": "RGBA",
+      "sha256": "a0f621aaaec53420b17e4275515f72931f7a043d3f311f4aa7e5f38927fbcbbf",
+      "transparent_background": true,
+      "anchors_px": {
+        "base": [
+          512,
+          920
+        ]
+      },
+      "uniform_family_scale": 0.892578125
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/smoke-4.png",
+      "size_px": [
+        1024,
+        1024
+      ],
+      "mode": "RGBA",
+      "sha256": "8155d055d53af1b341610dc6148bd82d929d8183ad1a2b66c64e413a18f36955",
+      "transparent_background": true,
+      "anchors_px": {
+        "base": [
+          512,
+          920
+        ]
+      },
+      "uniform_family_scale": 0.892578125
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/soot-mark.png",
+      "size_px": [
+        1024,
+        1024
+      ],
+      "mode": "RGBA",
+      "sha256": "32c8a814d4d048c25c1ac77be7bc92dd863a6f687e3c8db6d9dcc7ecc02eae93",
+      "transparent_background": true,
+      "anchors_px": {
+        "centre": [
+          512,
+          512
+        ]
+      }
+    },
+    {
+      "file": "episodes/13-mcb-vs-mpcb/assets/spark-burst.png",
+      "size_px": [
+        1024,
+        1024
+      ],
+      "mode": "RGBA",
+      "sha256": "8f85adaa5aa315a5a914b2c6305051a05b1494e5dfc945543545116ae14acffb",
+      "transparent_background": true,
+      "anchors_px": {
+        "centre": [
+          512,
+          512
+        ]
+      }
+    },
+    {
+      "file": "episodes/_assets/hands/hand-pen-draw.png",
+      "size_px": [
+        1024,
+        1024
+      ],
+      "mode": "RGBA",
+      "sha256": "2a2c9a230c3e333c1bcffd5f726ec4539947012f864e7a9d594ba6dcaec4f750",
+      "transparent_background": true,
+      "anchors_px": {
+        "pen_tip": [
+          62,
+          127
+        ]
+      },
+      "anchor_accuracy": "pen silhouette endpoint; other hand contact points are visually selected centres"
+    },
+    {
+      "file": "episodes/_assets/hands/hand-pen-draw-2.png",
+      "size_px": [
+        1024,
+        1024
+      ],
+      "mode": "RGBA",
+      "sha256": "381c0e265560d0acb7aa856eb50cb69633861b5c63ee973027757603d25fca5d",
+      "transparent_background": true,
+      "anchors_px": {
+        "pen_tip": [
+          62,
+          125
+        ]
+      },
+      "anchor_accuracy": "pen silhouette endpoint; other hand contact points are visually selected centres"
+    },
+    {
+      "file": "episodes/_assets/hands/hand-eraser.png",
+      "size_px": [
+        1024,
+        1024
+      ],
+      "mode": "RGBA",
+      "sha256": "6b1c58927abe014f7e1c20d0c0cf180784b2d357bbd9474fe0149c59d6198359",
+      "transparent_background": true,
+      "anchors_px": {
+        "felt_contact_centre": [
+          177,
+          499
+        ]
+      },
+      "anchor_accuracy": "pen silhouette endpoint; other hand contact points are visually selected centres"
+    },
+    {
+      "file": "episodes/_assets/hands/hand-swipe.png",
+      "size_px": [
+        1024,
+        1024
+      ],
+      "mode": "RGBA",
+      "sha256": "fdc26722f692037da5aa5345ec6d852d536888ff94dc75151e809cdfa108bc5f",
+      "transparent_background": true,
+      "anchors_px": {
+        "palm_centre": [
+          480,
+          510
+        ]
+      },
+      "anchor_accuracy": "pen silhouette endpoint; other hand contact points are visually selected centres"
+    },
+    {
+      "file": "episodes/_assets/hands/hand-flashlight.png",
+      "size_px": [
+        1024,
+        1024
+      ],
+      "mode": "RGBA",
+      "sha256": "086e9e208fc8f7b363d51a3be0d7eedf26eb2daafab4d4160596adb8ccdaa72b",
+      "transparent_background": true,
+      "anchors_px": {
+        "lens_centre": [
+          155,
+          205
+        ]
+      },
+      "anchor_accuracy": "pen silhouette endpoint; other hand contact points are visually selected centres"
+    }
+  ]
+}

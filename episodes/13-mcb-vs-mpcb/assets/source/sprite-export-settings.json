@@ -1,0 +1,149 @@
+[
+  {
+    "key": "ep13HandPen1",
+    "name": "hand-pen-draw.png",
+    "dest": "hands"
+  },
+  {
+    "key": "ep13HandPen2",
+    "name": "hand-pen-draw-2.png",
+    "dest": "hands"
+  },
+  {
+    "key": "ep13HandEraser",
+    "name": "hand-eraser.png",
+    "dest": "hands"
+  },
+  {
+    "key": "ep13HandSwipe",
+    "name": "hand-swipe.png",
+    "dest": "hands"
+  },
+  {
+    "key": "ep13HandFlash",
+    "name": "hand-flashlight.png",
+    "dest": "hands"
+  },
+  {
+    "key": "ep13Smoke1",
+    "name": "smoke-1.png",
+    "dest": "assets",
+    "base_px": [
+      512,
+      920
+    ],
+    "export_translation_px": [
+      55,
+      73
+    ],
+    "family_uniform_scale": 0.892578125
+  },
+  {
+    "key": "ep13Smoke2",
+    "name": "smoke-2.png",
+    "dest": "assets",
+    "base_px": [
+      512,
+      920
+    ],
+    "export_translation_px": [
+      58,
+      54
+    ],
+    "family_uniform_scale": 0.892578125
+  },
+  {
+    "key": "ep13Smoke3",
+    "name": "smoke-3.png",
+    "dest": "assets",
+    "base_px": [
+      512,
+      920
+    ],
+    "export_translation_px": [
+      55,
+      48
+    ],
+    "family_uniform_scale": 0.892578125
+  },
+  {
+    "key": "ep13Smoke4",
+    "name": "smoke-4.png",
+    "dest": "assets",
+    "base_px": [
+      512,
+      920
+    ],
+    "export_translation_px": [
+      55,
+      56
+    ],
+    "family_uniform_scale": 0.892578125
+  },
+  {
+    "key": "ep13Fire1",
+    "name": "fire-1.png",
+    "dest": "assets",
+    "base_px": [
+      512,
+      920
+    ],
+    "export_translation_px": [
+      2,
+      -35
+    ],
+    "family_uniform_scale": 1.0
+  },
+  {
+    "key": "ep13Fire2",
+    "name": "fire-2.png",
+    "dest": "assets",
+    "base_px": [
+      512,
+      920
+    ],
+    "export_translation_px": [
+      3,
+      -51
+    ],
+    "family_uniform_scale": 1.0
+  },
+  {
+    "key": "ep13Fire3",
+    "name": "fire-3.png",
+    "dest": "assets",
+    "base_px": [
+      512,
+      920
+    ],
+    "export_translation_px": [
+      3,
+      -63
+    ],
+    "family_uniform_scale": 1.0
+  },
+  {
+    "key": "ep13Fire4",
+    "name": "fire-4.png",
+    "dest": "assets",
+    "base_px": [
+      512,
+      920
+    ],
+    "export_translation_px": [
+      -2,
+      -59
+    ],
+    "family_uniform_scale": 1.0
+  },
+  {
+    "key": "ep13Spark",
+    "name": "spark-burst.png",
+    "dest": "assets"
+  },
+  {
+    "key": "ep13Soot",
+    "name": "soot-mark.png",
+    "dest": "assets"
+  }
+]

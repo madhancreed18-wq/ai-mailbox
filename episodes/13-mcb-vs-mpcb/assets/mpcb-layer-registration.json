@@ -1,0 +1,307 @@
+{
+  "canvas": [
+    1536,
+    1536
+  ],
+  "camera": "fixed orthographic front",
+  "units": "pixels, top-left origin",
+  "internal_geometry_status": "generic educational mechanism, not an OEM manufacturing section",
+  "layers": [
+    {
+      "file": "mpcb-cut-housing.png",
+      "canvas": [
+        1536,
+        1536
+      ],
+      "composite_order": 0,
+      "position_px": [
+        0,
+        0
+      ],
+      "illustrative_motion": true,
+      "objects": [
+        "Back housing shell",
+        "Housing side wall",
+        "Housing side wall.001",
+        "Housing end wall",
+        "Housing end wall.001",
+        "DIN rear fixed hook",
+        "DIN rear lower clip",
+        "DIN bottom release pull tab",
+        "Unopened pole front",
+        "Unopened pole front.001",
+        "TEST button",
+        "TEST",
+        "Other pole hidden bimetal tip",
+        "Other pole hidden bimetal tip.001"
+      ]
+    },
+    {
+      "file": "mpcb-cut-terminals.png",
+      "canvas": [
+        1536,
+        1536
+      ],
+      "composite_order": 1,
+      "position_px": [
+        0,
+        0
+      ],
+      "illustrative_motion": true,
+      "objects": [
+        "Terminal brass cage",
+        "Cable aperture",
+        "Terminal screw",
+        "Screwdriver slot",
+        "Terminal brass cage.001",
+        "Cable aperture.001",
+        "Terminal screw.001",
+        "Screwdriver slot.001",
+        "1/L1",
+        "2/T1",
+        "Terminal brass cage.002",
+        "Cable aperture.002",
+        "Terminal screw.002",
+        "Screwdriver slot.002",
+        "Terminal brass cage.003",
+        "Cable aperture.003",
+        "Terminal screw.003",
+        "Screwdriver slot.003",
+        "3/L2",
+        "4/T2",
+        "Terminal brass cage.004",
+        "Cable aperture.004",
+        "Terminal screw.004",
+        "Screwdriver slot.004",
+        "Terminal brass cage.005",
+        "Cable aperture.005",
+        "Terminal screw.005",
+        "Screwdriver slot.005",
+        "5/L3",
+        "6/T3"
+      ]
+    },
+    {
+      "file": "mpcb-cut-coil.png",
+      "canvas": [
+        1536,
+        1536
+      ],
+      "composite_order": 2,
+      "position_px": [
+        0,
+        0
+      ],
+      "illustrative_motion": true,
+      "objects": [
+        "Magnetic steel frame",
+        "Copper solenoid winding",
+        "Top terminal to magnetic winding"
+      ]
+    },
+    {
+      "file": "mpcb-cut-bimetal-heater.png",
+      "canvas": [
+        1536,
+        1536
+      ],
+      "composite_order": 3,
+      "position_px": [
+        0,
+        0
+      ],
+      "illustrative_motion": true,
+      "objects": [
+        "Heated bimetal strip",
+        "Continuous wrapped heater winding",
+        "Thermal exit to lower terminal"
+      ],
+      "pivot_px": [
+        570.72,
+        1206.28
+      ],
+      "bimetal_tip_px": [
+        570.72,
+        882.63
+      ]
+    },
+    {
+      "file": "mpcb-cut-fixed-contact.png",
+      "canvas": [
+        1536,
+        1536
+      ],
+      "composite_order": 4,
+      "position_px": [
+        0,
+        0
+      ],
+      "illustrative_motion": true,
+      "objects": [
+        "Double break fixed silver contact",
+        "Fixed pole conductor",
+        "Double break fixed silver contact.001",
+        "Fixed pole conductor.001"
+      ]
+    },
+    {
+      "file": "mpcb-cut-arcchamber.png",
+      "canvas": [
+        1536,
+        1536
+      ],
+      "composite_order": 5,
+      "position_px": [
+        0,
+        0
+      ],
+      "illustrative_motion": true,
+      "objects": [
+        "Arc chamber splitter",
+        "Arc chamber splitter.001",
+        "Arc chamber splitter.002",
+        "Arc chamber splitter.003",
+        "Arc chamber splitter.004",
+        "Arc chamber splitter.005",
+        "Arc chamber splitter.006",
+        "Arc chamber splitter.007",
+        "Arc chamber splitter.008",
+        "Arc chamber splitter.009",
+        "Arc chamber splitter.010",
+        "Arc chamber splitter.011",
+        "Arc chamber splitter.012",
+        "Arc chamber splitter.013",
+        "Arc chamber separator"
+      ]
+    },
+    {
+      "file": "mpcb-cut-moving-contact.png",
+      "canvas": [
+        1536,
+        1536
+      ],
+      "composite_order": 6,
+      "position_px": [
+        0,
+        0
+      ],
+      "illustrative_motion": true,
+      "objects": [
+        "Double break moving bridge",
+        "Moving bridge silver tip",
+        "Moving bridge silver tip.001",
+        "Moving bridge actuator"
+      ],
+      "pivot_px": [
+        570.72,
+        801.71
+      ],
+      "travel_px": [
+        0.0,
+        40.46
+      ]
+    },
+    {
+      "file": "mpcb-cut-plunger.png",
+      "canvas": [
+        1536,
+        1536
+      ],
+      "composite_order": 7,
+      "position_px": [
+        0,
+        0
+      ],
+      "illustrative_motion": true,
+      "objects": [
+        "Magnetic plunger",
+        "Trip striker"
+      ],
+      "pivot_px": [
+        570.72,
+        424.12
+      ],
+      "travel_px": [
+        0.0,
+        40.45
+      ]
+    },
+    {
+      "file": "mpcb-cut-knob-mechanism.png",
+      "canvas": [
+        1536,
+        1536
+      ],
+      "composite_order": 8,
+      "position_px": [
+        0,
+        0
+      ],
+      "illustrative_motion": true,
+      "objects": [
+        "Rotary mechanism hub",
+        "ON rotary handle",
+        "I",
+        "O",
+        "Knob trip linkage"
+      ],
+      "pivot_px": [
+        810.28,
+        707.31
+      ]
+    },
+    {
+      "file": "mpcb-cut-dial-cam.png",
+      "canvas": [
+        1536,
+        1536
+      ],
+      "composite_order": 9,
+      "position_px": [
+        0,
+        0
+      ],
+      "illustrative_motion": true,
+      "objects": [
+        "Setting dial",
+        "6",
+        "8",
+        "10",
+        "Setting screwdriver index",
+        "Eccentric setting cam",
+        "Cam shifts trip lever"
+      ],
+      "pivot_px": [
+        824.37,
+        424.12
+      ]
+    },
+    {
+      "file": "mpcb-cut-phaseloss-slide.png",
+      "canvas": [
+        1536,
+        1536
+      ],
+      "composite_order": 10,
+      "position_px": [
+        0,
+        0
+      ],
+      "illustrative_motion": true,
+      "objects": [
+        "Phase-loss differential slider",
+        "Bimetal sensing tab",
+        "Bimetal sensing tab.001",
+        "Bimetal sensing tab.002"
+      ],
+      "pivot_px": [
+        768.0,
+        882.63
+      ],
+      "travel_px": [
+        21.14,
+        0.0
+      ]
+    }
+  ]
+}
