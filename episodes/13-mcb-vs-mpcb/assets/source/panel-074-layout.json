@@ -1,0 +1,31 @@
+{
+  "camera": "identical069camera; orthographic285mm, centre0/0/70",
+  "MPCB_origin_mm": [
+    -25,
+    -2,
+    27
+  ],
+  "contactor_origin_mm": [
+    45,
+    -3,
+    33
+  ],
+  "MCB_centre_mm": [
+    -75.4,
+    -57,
+    70.5
+  ],
+  "MCB_change": "wider3Pbody; centre3.4mmleftofold1Pcentre to avoid collision; original85mmheight",
+  "optional_wiring": "not added; preserve original duct/rail/backplate layout",
+  "contactor_objects": [
+    "Contactor grey base",
+    "Contactor front body",
+    "Contactor actuator",
+    "Contactor terminal block",
+    "Contactor terminal block.001",
+    "Contactor terminal block.002",
+    "Contactor terminal block.003",
+    "Contactor terminal block.004",
+    "Contactor terminal block.005"
+  ]
+}

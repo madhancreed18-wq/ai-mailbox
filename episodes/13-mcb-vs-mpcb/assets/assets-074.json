@@ -1,0 +1,762 @@
+{
+  "schema_version": 1,
+  "canvas": [
+    1536,
+    1536
+  ],
+  "units": "full source pixels; top-left origin, +x right, +y down",
+  "camera": "one locked orthographic camera for front and all layers",
+  "closed_controls_identical_objects": true,
+  "static_occlusion": "Housing and terminal depth holdouts baked into isolated part layers; motion past retained covers should be masked by the housing. Two other pole heaters are hidden behind retained covers.",
+  "knob_pivot_px": [
+    867.01,
+    768.0
+  ],
+  "dial_pivot_px": [
+    569.99,
+    584.13
+  ],
+  "test_centre_px": [
+    569.99,
+    768.0
+  ],
+  "outline": "common shell geometry, same silhouette envelope; front cover intentionally removed",
+  "internal_geometry_status": "generic illustrative mechanism, not an OEM internal construction drawing",
+  "layers": [
+    {
+      "file": "mpcb-cut-housing-v2.png",
+      "canvas": [
+        1536,
+        1536
+      ],
+      "position_px": [
+        0,
+        0
+      ],
+      "composite_order": 0,
+      "motion": "none",
+      "objects": [
+        "Back housing shell",
+        "Housing side wall",
+        "Housing side wall.001",
+        "Housing end wall",
+        "Housing end wall.001",
+        "DIN rear fixed hook",
+        "DIN rear lower clip",
+        "DIN bottom release pull tab",
+        "Stepped outer white cheek",
+        "Stepped outer white cheek.001",
+        "Stepped cross shoulder",
+        "Stepped cross shoulder.001",
+        "Housing fastener",
+        "Housing fastener horizontal recess",
+        "Housing fastener vertical recess",
+        "Housing fastener.001",
+        "Housing fastener horizontal recess.001",
+        "Housing fastener vertical recess.001",
+        "Housing fastener.002",
+        "Housing fastener horizontal recess.002",
+        "Housing fastener vertical recess.002",
+        "Housing fastener.003",
+        "Housing fastener horizontal recess.003",
+        "Housing fastener vertical recess.003",
+        "Upper louvred nose",
+        "Horizontal ventilation aperture",
+        "Horizontal ventilation aperture.001",
+        "Horizontal ventilation aperture.002",
+        "Horizontal ventilation aperture.003",
+        "Horizontal ventilation aperture.004",
+        "Horizontal ventilation aperture.005",
+        "Horizontal ventilation aperture.006",
+        "Horizontal ventilation aperture.007",
+        "Horizontal ventilation aperture.008",
+        "Horizontal ventilation aperture.009",
+        "Horizontal ventilation aperture.010",
+        "Horizontal ventilation aperture.011",
+        "Horizontal ventilation aperture.012",
+        "Horizontal ventilation aperture.013",
+        "Horizontal ventilation aperture.014",
+        "Horizontal ventilation aperture.015",
+        "Horizontal ventilation aperture.016",
+        "Horizontal ventilation aperture.017",
+        "Horizontal ventilation aperture.018",
+        "Horizontal ventilation aperture.019",
+        "Horizontal ventilation aperture.020",
+        "Other poles retained cover",
+        "Other poles retained cover.001"
+      ]
+    },
+    {
+      "file": "mpcb-cut-terminals-v2.png",
+      "canvas": [
+        1536,
+        1536
+      ],
+      "position_px": [
+        0,
+        0
+      ],
+      "composite_order": 1,
+      "motion": "none",
+      "objects": [
+        "Screw clamp enclosure",
+        "Round terminal well",
+        "Brass clamp rim",
+        "Recessed clamping screw",
+        "Recessed clamping screw horizontal recess",
+        "Recessed clamping screw vertical recess",
+        "Cable entry from top",
+        "1/L1",
+        "Screw clamp enclosure.001",
+        "Round terminal well.001",
+        "Brass clamp rim.001",
+        "Recessed clamping screw.001",
+        "Recessed clamping screw horizontal recess.001",
+        "Recessed clamping screw vertical recess.001",
+        "Cable entry from top.001",
+        "2/T1",
+        "Screw clamp enclosure.002",
+        "Round terminal well.002",
+        "Brass clamp rim.002",
+        "Recessed clamping screw.002",
+        "Recessed clamping screw horizontal recess.002",
+        "Recessed clamping screw vertical recess.002",
+        "Cable entry from top.002",
+        "3/L2",
+        "Screw clamp enclosure.003",
+        "Round terminal well.003",
+        "Brass clamp rim.003",
+        "Recessed clamping screw.003",
+        "Recessed clamping screw horizontal recess.003",
+        "Recessed clamping screw vertical recess.003",
+        "Cable entry from top.003",
+        "4/T2",
+        "Screw clamp enclosure.004",
+        "Round terminal well.004",
+        "Brass clamp rim.004",
+        "Recessed clamping screw.004",
+        "Recessed clamping screw horizontal recess.004",
+        "Recessed clamping screw vertical recess.004",
+        "Cable entry from top.004",
+        "5/L3",
+        "Screw clamp enclosure.005",
+        "Round terminal well.005",
+        "Brass clamp rim.005",
+        "Recessed clamping screw.005",
+        "Recessed clamping screw horizontal recess.005",
+        "Recessed clamping screw vertical recess.005",
+        "Cable entry from top.005",
+        "6/T3"
+      ]
+    },
+    {
+      "file": "mpcb-cut-coil-v2.png",
+      "canvas": [
+        1536,
+        1536
+      ],
+      "position_px": [
+        0,
+        0
+      ],
+      "composite_order": 2,
+      "motion": "none",
+      "objects": [
+        "Magnetic steel frame",
+        "Copper solenoid winding",
+        "Top terminal to winding"
+      ]
+    },
+    {
+      "file": "mpcb-cut-bimetal-heater-v2.png",
+      "canvas": [
+        1536,
+        1536
+      ],
+      "position_px": [
+        0,
+        0
+      ],
+      "composite_order": 3,
+      "motion": "bend",
+      "objects": [
+        "Bimetal strip",
+        "Continuous heater around bimetal",
+        "Lower terminal thermal conductor",
+        "Bimetal strip.001",
+        "Continuous heater around bimetal.001",
+        "Lower terminal thermal conductor.001",
+        "Bimetal strip.002",
+        "Continuous heater around bimetal.002",
+        "Lower terminal thermal conductor.002"
+      ],
+      "pivot_px": [
+        569.99,
+        1135.74
+      ],
+      "bimetal_tip_px": [
+        569.99,
+        852.86
+      ],
+      "bimetals": [
+        {
+          "fixed_end_px": [
+            569.99,
+            1135.74
+          ],
+          "tip_px": [
+            569.99,
+            852.86
+          ]
+        },
+        {
+          "fixed_end_px": [
+            768.0,
+            1135.74
+          ],
+          "tip_px": [
+            768.0,
+            852.86
+          ]
+        },
+        {
+          "fixed_end_px": [
+            966.01,
+            1135.74
+          ],
+          "tip_px": [
+            966.01,
+            852.86
+          ]
+        }
+      ]
+    },
+    {
+      "file": "mpcb-cut-fixed-contact-v2.png",
+      "canvas": [
+        1536,
+        1536
+      ],
+      "position_px": [
+        0,
+        0
+      ],
+      "composite_order": 4,
+      "motion": "none",
+      "objects": [
+        "Fixed copper contact conductor",
+        "Fixed silver contact",
+        "Fixed copper contact conductor.001",
+        "Fixed silver contact.001"
+      ]
+    },
+    {
+      "file": "mpcb-cut-arcchamber-v2.png",
+      "canvas": [
+        1536,
+        1536
+      ],
+      "position_px": [
+        0,
+        0
+      ],
+      "composite_order": 5,
+      "motion": "none",
+      "objects": [
+        "Parallel steel arc splitter",
+        "Parallel steel arc splitter.001",
+        "Parallel steel arc splitter.002",
+        "Parallel steel arc splitter.003",
+        "Parallel steel arc splitter.004",
+        "Parallel steel arc splitter.005",
+        "Parallel steel arc splitter.006",
+        "Parallel steel arc splitter.007",
+        "Parallel steel arc splitter.008",
+        "Parallel steel arc splitter.009",
+        "Parallel steel arc splitter.010",
+        "Parallel steel arc splitter.011",
+        "Parallel steel arc splitter.012",
+        "Parallel steel arc splitter.013",
+        "Parallel steel arc splitter.014",
+        "Parallel steel arc splitter.015",
+        "Arc chamber insulating backing"
+      ]
+    },
+    {
+      "file": "mpcb-cut-moving-contact-v2.png",
+      "canvas": [
+        1536,
+        1536
+      ],
+      "position_px": [
+        0,
+        0
+      ],
+      "composite_order": 6,
+      "motion": "translate",
+      "objects": [
+        "Double-break moving contact bridge",
+        "Moving silver contact",
+        "Moving silver contact.001",
+        "Contact bridge actuator"
+      ],
+      "pivot_px": [
+        569.99,
+        701.53
+      ],
+      "travel_px": [
+        0.0,
+        42.43
+      ]
+    },
+    {
+      "file": "mpcb-cut-plunger-v2.png",
+      "canvas": [
+        1536,
+        1536
+      ],
+      "position_px": [
+        0,
+        0
+      ],
+      "composite_order": 7,
+      "motion": "translate",
+      "objects": [
+        "Steel magnetic plunger",
+        "Lower trip striker"
+      ],
+      "pivot_px": [
+        569.99,
+        470.98
+      ],
+      "travel_px": [
+        0.0,
+        42.44
+      ]
+    },
+    {
+      "file": "mpcb-cut-phaseloss-slide-v2.png",
+      "canvas": [
+        1536,
+        1536
+      ],
+      "position_px": [
+        0,
+        0
+      ],
+      "composite_order": 8,
+      "motion": "translate",
+      "objects": [
+        "Phase-loss differential slider",
+        "Differential thermal sensing finger",
+        "Differential thermal sensing finger.001",
+        "Differential thermal sensing finger.002"
+      ],
+      "pivot_px": [
+        768.0,
+        850.03
+      ],
+      "travel_px": [
+        16.97,
+        0.0
+      ]
+    },
+    {
+      "file": "mpcb-cut-knob-mechanism-v2.png",
+      "canvas": [
+        1536,
+        1536
+      ],
+      "position_px": [
+        0,
+        0
+      ],
+      "composite_order": 9,
+      "motion": "rotate",
+      "objects": [
+        "Rotary detent plate",
+        "Rotary black knob",
+        "Vertical ON paddle",
+        "White ON index",
+        "I/ON",
+        "TRIP",
+        "O/OFF",
+        "Red TEST bezel",
+        "Red TEST pushbutton",
+        "TEST",
+        "TEST trip pushrod",
+        "Rotary internal spindle",
+        "Common trip linkage"
+      ],
+      "pivot_px": [
+        867.01,
+        768.0
+      ]
+    },
+    {
+      "file": "mpcb-cut-dial-cam-v2.png",
+      "canvas": [
+        1536,
+        1536
+      ],
+      "position_px": [
+        0,
+        0
+      ],
+      "composite_order": 10,
+      "motion": "rotate",
+      "objects": [
+        "Small overload dial",
+        "Overload screwdriver slot",
+        "6",
+        "Dial calibration tick",
+        "7",
+        "Dial calibration tick.001",
+        "8",
+        "Dial calibration tick.002",
+        "9",
+        "Dial calibration tick.003",
+        "10",
+        "Dial calibration tick.004",
+        "A",
+        "Eccentric setting cam",
+        "Cam trip lever"
+      ],
+      "pivot_px": [
+        569.99,
+        584.13
+      ]
+    }
+  ],
+  "closed_objects": [
+    "Back housing shell",
+    "Housing side wall",
+    "Housing side wall.001",
+    "Housing end wall",
+    "Housing end wall.001",
+    "DIN rear fixed hook",
+    "DIN rear lower clip",
+    "DIN bottom release pull tab",
+    "Stepped outer white cheek",
+    "Stepped outer white cheek.001",
+    "Stepped cross shoulder",
+    "Stepped cross shoulder.001",
+    "Housing fastener",
+    "Housing fastener horizontal recess",
+    "Housing fastener vertical recess",
+    "Housing fastener.001",
+    "Housing fastener horizontal recess.001",
+    "Housing fastener vertical recess.001",
+    "Housing fastener.002",
+    "Housing fastener horizontal recess.002",
+    "Housing fastener vertical recess.002",
+    "Housing fastener.003",
+    "Housing fastener horizontal recess.003",
+    "Housing fastener vertical recess.003",
+    "Upper louvred nose",
+    "Horizontal ventilation aperture",
+    "Horizontal ventilation aperture.001",
+    "Horizontal ventilation aperture.002",
+    "Horizontal ventilation aperture.003",
+    "Horizontal ventilation aperture.004",
+    "Horizontal ventilation aperture.005",
+    "Horizontal ventilation aperture.006",
+    "Horizontal ventilation aperture.007",
+    "Horizontal ventilation aperture.008",
+    "Horizontal ventilation aperture.009",
+    "Horizontal ventilation aperture.010",
+    "Horizontal ventilation aperture.011",
+    "Horizontal ventilation aperture.012",
+    "Horizontal ventilation aperture.013",
+    "Horizontal ventilation aperture.014",
+    "Horizontal ventilation aperture.015",
+    "Horizontal ventilation aperture.016",
+    "Horizontal ventilation aperture.017",
+    "Horizontal ventilation aperture.018",
+    "Horizontal ventilation aperture.019",
+    "Horizontal ventilation aperture.020",
+    "Other poles retained cover",
+    "Other poles retained cover.001",
+    "Single-piece removable control facade",
+    "MOTOR PROTECTION",
+    "BREAKER",
+    "Screw clamp enclosure",
+    "Round terminal well",
+    "Brass clamp rim",
+    "Recessed clamping screw",
+    "Recessed clamping screw horizontal recess",
+    "Recessed clamping screw vertical recess",
+    "Cable entry from top",
+    "1/L1",
+    "Screw clamp enclosure.001",
+    "Round terminal well.001",
+    "Brass clamp rim.001",
+    "Recessed clamping screw.001",
+    "Recessed clamping screw horizontal recess.001",
+    "Recessed clamping screw vertical recess.001",
+    "Cable entry from top.001",
+    "2/T1",
+    "Screw clamp enclosure.002",
+    "Round terminal well.002",
+    "Brass clamp rim.002",
+    "Recessed clamping screw.002",
+    "Recessed clamping screw horizontal recess.002",
+    "Recessed clamping screw vertical recess.002",
+    "Cable entry from top.002",
+    "3/L2",
+    "Screw clamp enclosure.003",
+    "Round terminal well.003",
+    "Brass clamp rim.003",
+    "Recessed clamping screw.003",
+    "Recessed clamping screw horizontal recess.003",
+    "Recessed clamping screw vertical recess.003",
+    "Cable entry from top.003",
+    "4/T2",
+    "Screw clamp enclosure.004",
+    "Round terminal well.004",
+    "Brass clamp rim.004",
+    "Recessed clamping screw.004",
+    "Recessed clamping screw horizontal recess.004",
+    "Recessed clamping screw vertical recess.004",
+    "Cable entry from top.004",
+    "5/L3",
+    "Screw clamp enclosure.005",
+    "Round terminal well.005",
+    "Brass clamp rim.005",
+    "Recessed clamping screw.005",
+    "Recessed clamping screw horizontal recess.005",
+    "Recessed clamping screw vertical recess.005",
+    "Cable entry from top.005",
+    "6/T3",
+    "Rotary detent plate",
+    "Rotary black knob",
+    "Vertical ON paddle",
+    "White ON index",
+    "I/ON",
+    "TRIP",
+    "O/OFF",
+    "Red TEST bezel",
+    "Red TEST pushbutton",
+    "TEST",
+    "TEST trip pushrod",
+    "Rotary internal spindle",
+    "Common trip linkage",
+    "Small overload dial",
+    "Overload screwdriver slot",
+    "6",
+    "Dial calibration tick",
+    "7",
+    "Dial calibration tick.001",
+    "8",
+    "Dial calibration tick.002",
+    "9",
+    "Dial calibration tick.003",
+    "10",
+    "Dial calibration tick.004",
+    "A",
+    "Eccentric setting cam",
+    "Cam trip lever"
+  ],
+  "files": [
+    {
+      "file": "factory-panel-3p.png",
+      "size_px": [
+        1920,
+        1080
+      ],
+      "sha256": "862ec46690d7871979772337210a2dfc4d51b7729f141a41ef25f1946f384cf3",
+      "alpha_bbox_px": [
+        152,
+        68,
+        1767,
+        1011
+      ]
+    },
+    {
+      "file": "mpcb-front-v2.png",
+      "size_px": [
+        1536,
+        1536
+      ],
+      "sha256": "d5022b63ee0af825d7e60ae8ba1f7493777113d1dd832a62013746baa0bcd7bc",
+      "alpha_bbox_px": [
+        450,
+        117,
+        1085,
+        1446
+      ]
+    },
+    {
+      "file": "mpcb-cut-housing-v2.png",
+      "size_px": [
+        1536,
+        1536
+      ],
+      "sha256": "3965cba8938ed27d2db3ea9b60428a0695ff085b04666edb1fb8875102c972dc",
+      "alpha_bbox_px": [
+        450,
+        117,
+        1085,
+        1446
+      ]
+    },
+    {
+      "file": "mpcb-cut-terminals-v2.png",
+      "size_px": [
+        1536,
+        1536
+      ],
+      "sha256": "421ead729dee38e86b37871e7ce2ac331bfa888bdc23a659be59e1b966c7ab00",
+      "alpha_bbox_px": [
+        478,
+        146,
+        1057,
+        1361
+      ]
+    },
+    {
+      "file": "mpcb-cut-coil-v2.png",
+      "size_px": [
+        1536,
+        1536
+      ],
+      "sha256": "ff069e9ae751c8611bdbdb0ba2742e63e0d4409fff9067dca23658fd05472b4b",
+      "alpha_bbox_px": [
+        516,
+        400,
+        623,
+        534
+      ]
+    },
+    {
+      "file": "mpcb-cut-bimetal-heater-v2.png",
+      "size_px": [
+        1536,
+        1536
+      ],
+      "sha256": "bd021abb8be9c2aa3b62e89c2e341d30010c206aa0c237f16d709c246f9a4be7",
+      "alpha_bbox_px": [
+        535,
+        853,
+        603,
+        1128
+      ]
+    },
+    {
+      "file": "mpcb-cut-fixed-contact-v2.png",
+      "size_px": [
+        1536,
+        1536
+      ],
+      "sha256": "d9fdfca1abab19d84897ca823795ca14c394deb51b007b97a95b07e984bf853d",
+      "alpha_bbox_px": [
+        506,
+        537,
+        633,
+        839
+      ]
+    },
+    {
+      "file": "mpcb-cut-arcchamber-v2.png",
+      "size_px": [
+        1536,
+        1536
+      ],
+      "sha256": "38fc49e4748274bad7a9285df443f19bb8432a2772bf983e03c7956026fc78b3",
+      "alpha_bbox_px": [
+        478,
+        577,
+        661,
+        746
+      ]
+    },
+    {
+      "file": "mpcb-cut-moving-contact-v2.png",
+      "size_px": [
+        1536,
+        1536
+      ],
+      "sha256": "1a0d3db3d5d00dc69760b018285cc013deca26b44fbbadec7130a9cbcf3e99bb",
+      "alpha_bbox_px": [
+        506,
+        687,
+        664,
+        746
+      ]
+    },
+    {
+      "file": "mpcb-cut-plunger-v2.png",
+      "size_px": [
+        1536,
+        1536
+      ],
+      "sha256": "33aceb21aa5ccdbe8b8f4a56f02c7769f5914e55bf6448d316ffea0fa3c2f8ae",
+      "alpha_bbox_px": [
+        552,
+        400,
+        587,
+        604
+      ]
+    },
+    {
+      "file": "mpcb-cut-phaseloss-slide-v2.png",
+      "size_px": [
+        1536,
+        1536
+      ],
+      "sha256": "f0bb85ad77bef2f2bb7a04ced32fa6e0a69111538e51d77fa035d51a24cf6769",
+      "alpha_bbox_px": [
+        492,
+        837,
+        1043,
+        876
+      ]
+    },
+    {
+      "file": "mpcb-cut-knob-mechanism-v2.png",
+      "size_px": [
+        1536,
+        1536
+      ],
+      "sha256": "3474e0b92a576ee2ac4e143fd2e2606fccafd30e5440dd7865361d79c7a101f7",
+      "alpha_bbox_px": [
+        529,
+        535,
+        1046,
+        947
+      ]
+    },
+    {
+      "file": "mpcb-cut-dial-cam-v2.png",
+      "size_px": [
+        1536,
+        1536
+      ],
+      "sha256": "2cbdc5a5ea63ed7ef375d234f941921d2424962ac025c347cba96ecf910ab2e6",
+      "alpha_bbox_px": [
+        493,
+        506,
+        643,
+        857
+      ]
+    }
+  ],
+  "validation": {
+    "png_count": 13,
+    "dimensions_modes_transparency_nonempty": "passed",
+    "front_cut_alpha_silhouette_mismatch_pixels": 0,
+    "hidden_pole_heater_occlusion": "passed at3pole centres",
+    "front_alpha_bbox_px": [
+      450,
+      117,
+      1085,
+      1446
+    ],
+    "inspection": "front, panel and complete cutaway composite inspected as still images; final video not reviewed"
+  },
+  "notes": [
+    "Static layer occlusion uses housing and terminal holdouts.",
+    "Phase-loss slider composites before the nearer knob/dial, so it does not draw over the handle.",
+    "Travel values are illustrative, not OEM mechanism measurements."
+  ]
+}
