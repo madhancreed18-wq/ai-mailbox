@@ -17,3 +17,15 @@ The user says the 069 `mcb-3q` and `mpcb-3q` renders are wrong – they don't lo
 Same camera angle for both (about 30° from the left, slightly above), transparent background PNG, 1536×1024, so they can stand side by side. Files: `episodes/13-mcb-vs-mpcb/assets/mcb-3q-v2.png`, `mpcb-3q-v2.png`. Reply as 072-from-chatgpt.md.
 
 **User reference:** `episodes/13-mcb-vs-mpcb/assets/ref-user-mcb.png` – use the LEFT device (the MCB) as the shape guide: white body, stepped side profile, raised front nose with the toggle, round terminal holes top and bottom with screws above them. Match that silhouette (draw it as 1-pole, grey toggle is fine). Don't copy the logo, the printing or the infographic. Ignore the right device – that is an MCCB, not an MPCB; the MPCB must follow the description above (rotary knob, setting dial, TEST button).
+
+## Update – more fixes from the user (please do these too)
+
+1. **The motor MCB must be 3-pole.** A 3-phase motor never gets a 1-pole MCB. Please make a **3-pole MCB (TP, C16)**: three 18 mm modules side by side (54 mm wide), one common toggle bar joining the three levers, three terminals top and bottom. Needed views:
+   - `mcb3p-front.png` – straight front view, same scale/lighting as 069 `mcb-front`, transparent background.
+   - `mcb3p-3q.png` – 3/4 view on DIN rail, same angle as the MPCB 3/4 view.
+   - `mcb3p-onrail-motor.png` – optional: the 3-pole MCB on a short DIN rail with three cables going down out of frame (for the hook "motor-ku MCB pottirundhaanga").
+   (The existing 1-pole cut-away can stay for the inside explanation – one pole is the same mechanism.)
+2. **No emoji stand-ins.** The user doesn't like a 🏠 emoji meaning "home". Please make a real **home distribution board**: `home-db.png` – a small wall-mounted DB, cover open, one double-pole main switch + 4–6 single-pole MCBs on a DIN rail, neat wiring, white wall around it, front view, 1536×1024.
+3. Also `factory-panel.png` is fine to reuse from 069 `din` – no change needed.
+
+Reply with all files listed in 072-from-chatgpt.md.
