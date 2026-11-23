@@ -1,0 +1,30 @@
+{
+  "episode": "EP13 MCB vs MPCB",
+  "delivery_scope": "Timings, ASR and text diagnostics only; raw audio files are not transferred in this handoff.",
+  "files": {
+    "long": {
+      "uploaded_name": "long 4.wav",
+      "sample_rate_hz": 24000,
+      "channels": 1,
+      "sample_width_bytes": 2,
+      "frames": 6528960,
+      "duration_seconds": 272.04,
+      "wav_sha256": "872609807944ce959edddc9195060dffd7888735bb4d3c23ebb4cae1edc8d16c",
+      "pcm_sha256": "03593a8b915df49f0c891c5f8a7749cdc212dca16bc5cc78fa2274bf38da5cf2"
+    },
+    "short": {
+      "uploaded_name": "shorts 4.wav",
+      "sample_rate_hz": 24000,
+      "channels": 1,
+      "sample_width_bytes": 2,
+      "frames": 940800,
+      "duration_seconds": 39.2,
+      "wav_sha256": "44c82f6c51c7707911f004265d42815c90cba823bc7fa583b24dba5a3affb933",
+      "pcm_sha256": "8b82fb9d27bb35f285bfa4eefa975b3dcb4cf0fd0e5f7e109402b48c314b7118"
+    }
+  },
+  "script_source": {
+    "long": "User-provided EP13 long narration in this conversation; no EP13 script existed in inspected Git tree.",
+    "short": "Actual recording differs from both the original Short and subsequent suggested rewrite. Short sections are audio-derived anchors, not original paragraph IDs."
+  }
+}

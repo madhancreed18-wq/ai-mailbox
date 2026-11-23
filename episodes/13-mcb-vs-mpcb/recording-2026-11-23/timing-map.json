@@ -1,0 +1,211 @@
+{
+  "units": "seconds",
+  "range_semantics": "Contiguous scene windows; next start is previous end, including pauses; final end is exact WAV duration.",
+  "status": "machine-aligned draft, not listening-certified or frame-accurate",
+  "long_reference_source": "User-provided EP13 long narration in the conversation; no Git script was present when inspected.",
+  "short_reference_source": "Audio-derived sections; does not match either prior written Short version. These are not original paragraph IDs.",
+  "sections": {
+    "long": [
+      {
+        "index": 0,
+        "start": 0,
+        "end": 14.28,
+        "reference_text": "Motor-ku MCB pottirundhaanga. Oru naal motor burn aagi pochu. Aana MCB trip aagave illa. Yen? Paarkka rendum orey maadhiri dhaan irukku, MCB-um MPCB-um. Ulla enna vidhyaasam nu indha video-la paarpom."
+      },
+      {
+        "index": 1,
+        "start": 14.28,
+        "end": 26.3,
+        "reference_text": "Veetu DB-la MCB irukku. Factory panel-la motor-ku munnaadi MPCB irukku. Rendume circuit breaker dhaan. Rendume DIN rail-la dhaan fix aagudhu. Aana rendum protect panradhu vera vera vishayam."
+      },
+      {
+        "index": 2,
+        "start": 26.3,
+        "end": 39.96,
+        "reference_text": "MCB-naa Miniature Circuit Breaker. Adhu cable-ai protect pannudhu. MPCB-naa Motor Protection Circuit Breaker. Adhu motor-ai protect pannudhu. Indha oru vidhyaasam dhaan, motor burn aanadhukku kaaranam."
+      },
+      {
+        "index": 3,
+        "start": 39.96,
+        "end": 54.08,
+        "reference_text": "Mudhalla MCB-ai thirandhu paarpom. Mela ON OFF toggle. Keezha latch mechanism. Oru bimetal strip. Oru magnetic coil, adhukkulla plunger. Fixed contact, moving contact. Pakkathula arc chute."
+      },
+      {
+        "index": 4,
+        "start": 54.08,
+        "end": 63.2,
+        "reference_text": "Overload-la, adhigamaana current romba neram pogum. Bimetal sooduaagi mella valaiyum. Latch-ai thalli, contact-ai thirakkum. Idhu thermal trip."
+      },
+      {
+        "index": 5,
+        "start": 63.2,
+        "end": 75.64,
+        "reference_text": "Short circuit-la, aayiram ampere current paayum. Coil magnet aagi, plunger udane adikkum. Sila millisecond-la trip. Idhu magnetic trip. Arc chute, spark-ai pirichu anaikkum."
+      },
+      {
+        "index": 6,
+        "start": 75.64,
+        "end": 83.6,
+        "reference_text": "MCB-la rating fixed. C sixteen-naa, sixteen ampere. Adhu cable-ku yetha maadhiri. Motor current enna nu adhukku theriyaadhu."
+      },
+      {
+        "index": 7,
+        "start": 83.6,
+        "end": 96.82,
+        "reference_text": "Ippo MPCB-ai thirandhu paarpom. Moonu phase-kkum moonu pole. Ovvoru pole-layum bimetal, adhukku mela heater winding. Magnetic coil, plunger, contacts, arc chamber. Mela oru rotary knob."
+      },
+      {
+        "index": 8,
+        "start": 96.82,
+        "end": 112.74,
+        "reference_text": "Mukkiyamaana vishayam, indha current setting dial. Six-lendhu ten ampere maadhiri oru range irukkum. Motor nameplate-la irukkura full load current-ku, indha dial-ai set pannuvom. Dial thirumbumbodhu, ulla oru cam, bimetal evlo valaiyanum nu maathudhu."
+      },
+      {
+        "index": 9,
+        "start": 112.74,
+        "end": 123.76,
+        "reference_text": "Overload-la, motor current setting-ai thaandinaa, moonu bimetal-um valaiyum. MPCB trip aagum. Motor start aagumbodhu varra starting current-ku trip aagaadhu. Adhukku yetha maadhiri design."
+      },
+      {
+        "index": 10,
+        "start": 123.76,
+        "end": 130.08,
+        "reference_text": "Short circuit-ku, MPCB-layum magnetic trip irukku. Setting-oda kitta thatta padhimoonu madangu current-la udane trip."
+      },
+      {
+        "index": 11,
+        "start": 130.08,
+        "end": 142.12,
+        "reference_text": "Ippo MPCB-oda special feature. Phase loss protection. Oru phase fuse pochu, illa wire loose. Motor rendu phase-la odum. Hmm nu saththam. Current adhigamaagi, winding burn aagum."
+      },
+      {
+        "index": 12,
+        "start": 142.12,
+        "end": 158.24,
+        "reference_text": "MPCB-kkulla, moonu bimetal-kkum mela oru slider irukku. Moonu-um orey alavu valanjaa, slider orey maadhiri nagarum. Oru phase pochunaa, andha bimetal valaiyaadhu. Matha rendu valaiyum. Indha vidhyaasatha slider pudichu, seekiram trip pannum."
+      },
+      {
+        "index": 13,
+        "start": 158.24,
+        "end": 172.4,
+        "reference_text": "Ippo first question-ku answer. Motor-ku MCB pottaa, rating cable-ku yetha maadhiri, motor current-ai vida romba adhigam. Phase loss-ai MCB-ku kandupudikka theriyaadhu. Motor overheat aagi burn aagum. MCB-ku idhu overload illa."
+      },
+      {
+        "index": 14,
+        "start": 172.4,
+        "end": 182.18,
+        "reference_text": "Ippo oru quiz. Motor nameplate-la full load current eight ampere. MPCB range six-lendhu ten ampere. Dial-ai evlo-la set pannanum?"
+      },
+      {
+        "index": 15,
+        "start": 182.18,
+        "end": 185.76,
+        "reference_text": "Option A. Ten ampere. Maximum-la vechaa trip aagaadhu."
+      },
+      {
+        "index": 16,
+        "start": 185.76,
+        "end": 189.22,
+        "reference_text": "Option B. Eight ampere. Motor full load current."
+      },
+      {
+        "index": 17,
+        "start": 189.22,
+        "end": 192.4,
+        "reference_text": "Option C. Six ampere. Kammiyaa vechaa safe."
+      },
+      {
+        "index": 18,
+        "start": 192.4,
+        "end": 195.44,
+        "reference_text": "Unga answer-ai comment pannunga. Answer video kadaisila."
+      },
+      {
+        "index": 19,
+        "start": 195.44,
+        "end": 208.54,
+        "reference_text": "MPCB-ai epdi choose pannuvadhu? Motor full load current, MPCB range-oda naduvula varanum. Eight ampere motor-ku, six-lendhu ten range correct. Breaking capacity kA-um check pannanum."
+      },
+      {
+        "index": 20,
+        "start": 208.54,
+        "end": 217.62,
+        "reference_text": "MPCB-la TEST button irukku. Press pannaa, trip mechanism vela seyyudhaa nu check pannalaam. Aux contact add panni, trip aanadhai PLC-ku signal-aa anuppalaam."
+      },
+      {
+        "index": 21,
+        "start": 217.62,
+        "end": 224.9,
+        "reference_text": "Rendukkum common-aa, earth leakage shock-ku MCB-um trip aagaadhu, MPCB-um trip aagaadhu. Adhukku RCCB dhaan."
+      },
+      {
+        "index": 22,
+        "start": 224.9,
+        "end": 236.54,
+        "reference_text": "Common mistakes. Onnu, motor-ku MCB poduradhu. Rendu, MPCB dial-ai maximum-la vekkuradhu. Moonu, motor current range-kku veliya irukkura MPCB vaanguradhu."
+      },
+      {
+        "index": 23,
+        "start": 236.54,
+        "end": 252.2,
+        "reference_text": "Quick summary. MCB, cable protection, fixed rating. MPCB, motor protection, adjustable dial. Rendulayum thermal-um magnetic-um. MPCB-la phase loss protection extra. Dial-ai motor full load current-ku set pannunga."
+      },
+      {
+        "index": 24,
+        "start": 252.2,
+        "end": 266.58,
+        "reference_text": "Quiz answer. Dial-ai motor nameplate full load current-ku dhaan set pannanum. Ten-la vechaa, overload-la late-aa trip aagum, motor sooduaagum. Six-la vechaa, normal running-laye trip aagum. Answer B, eight ampere."
+      },
+      {
+        "index": 25,
+        "start": 266.58,
+        "end": 272.04,
+        "reference_text": "Video useful-aa irundhaa like pannunga. Electrician friend-kku share pannunga. Factory Decode Tamil-ai subscribe pannunga."
+      }
+    ],
+    "short": [
+      {
+        "index": 0,
+        "start": 0,
+        "end": 4.52,
+        "anchor": "Burned motor but MCB did not trip"
+      },
+      {
+        "index": 1,
+        "start": 4.52,
+        "end": 11.48,
+        "anchor": "Electrician checks MCB and wiring; where is the mistake?"
+      },
+      {
+        "index": 2,
+        "start": 11.48,
+        "end": 18.52,
+        "anchor": "Compare the two breakers: similar look/size/DIN rail"
+      },
+      {
+        "index": 3,
+        "start": 18.52,
+        "end": 24.82,
+        "anchor": "Contrasting motor-protection outcomes"
+      },
+      {
+        "index": 4,
+        "start": 24.82,
+        "end": 31.76,
+        "anchor": "Which breaker is in your factory panel? MCB or MPCB; comment"
+      },
+      {
+        "index": 5,
+        "start": 31.76,
+        "end": 37.1,
+        "anchor": "Invitation to watch the linked full video"
+      },
+      {
+        "index": 6,
+        "start": 37.1,
+        "end": 39.2,
+        "anchor": "Factory Decode Tamil subscribe ending"
+      }
+    ]
+  }
+}
