@@ -1,0 +1,49 @@
+{
+  "episode": "EP13 MCB vs MPCB",
+  "request": "075 with latest user override: whiteboard, channel title and signature stickman",
+  "style": "Purewhite board; bold black outlines; flatgrey/blue equipment; yellowheadline; FACTORY DECODE TAMIL title; white-shirt black-tie character",
+  "files": [
+    {
+      "file": "thumb-A.png",
+      "size_px": [
+        1280,
+        720
+      ],
+      "mode": "RGB",
+      "bytes": 1068327,
+      "sha256": "964eed334d2016152aec83b268bd09b0c681b581d5cc8adb61835f825b534a17"
+    },
+    {
+      "file": "thumb-B.png",
+      "size_px": [
+        1280,
+        720
+      ],
+      "mode": "RGB",
+      "bytes": 1091653,
+      "sha256": "612e6e24fc38a3dfaa8ca8784c45fa4dec89b87df947e263eac36a3e60c5cf22"
+    },
+    {
+      "file": "thumb-C.png",
+      "size_px": [
+        1280,
+        720
+      ],
+      "mode": "RGB",
+      "bytes": 1027093,
+      "sha256": "70e0bc98f639e8ed0a5b77f09b3def05ac185acff7c131b047d5b3f151eba97b"
+    },
+    {
+      "file": "thumb-short.png",
+      "size_px": [
+        1080,
+        1920
+      ],
+      "mode": "RGB",
+      "bytes": 2212280,
+      "sha256": "9c8a3f1494214bbdbee5ed4fab5401a5a9d40cad01ea7c12fbb3cf1b1fb621fe"
+    }
+  ],
+  "method": "Built-in imagegen with064seriesidentity and069/072equipment references; aspect-preserving ffmpeg Lanczos export with white padding where needed",
+  "inspection": "All4originals and final phone-scale sheet inspected; title, stickman,3-poleMCB, MPCBcontrols and exactheadlines checked; no performance test run"
+}
