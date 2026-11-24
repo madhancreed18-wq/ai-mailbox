@@ -1,0 +1,49 @@
+Packing line-la conveyor romba fast-aa odudhu. Box-ellaam keezha vizhudhu. Speed-ai konjam kammi pannalaam-nu, motor-ku pora voltage-ai kammi pannaanga. Motor konjam slow aachu. Aana irupadhu nimishathula, motor-la irundhu pugai varudhu. Thappu enga?
+
+Veetla fan regulator-ai kammi pannaa fan slow aagudhu. Adhu voltage-ai dhaan kammi pannudhu. Appo factory motor-ku mattum yen adhey vela seiyala?
+
+Fan-ku load romba kammi. Kaathu mattum dhaan thallanum. Aana conveyor motor box-ellaam thookkitu odanum. Voltage-ai kammi pannaa, motor-oda torque kammi aagudhu. Load adhey dhaan. Adhanaala motor slip adhigamaagi, current mela poguthu. Current adhigam aanaa, winding soodaagudhu. Adhu dhaan andha pugai.
+
+Appo motor speed-ai edhu decide pannudhu? Voltage illa. Frequency.
+
+Motor speed formula romba simple. Speed sama, nooru-irubadhu into frequency, divided by poles. Namma supply fifty hertz. Naalu pole motor-na, nooru-irubadhu into fifty, divided by naalu, sama aayirathu-ainnooru RPM. Load-oda konjam slip irukkum, adhanaala nameplate-la aayirathu-naanooru-naarpadhu RPM-nu irukkum.
+
+Quick question. Idhey naalu pole motor-ku, irupathi-anju hertz kudutha, speed evlo? A, aayirathu-ainnooru. B, ezhunooru-aimbadhu. C, moovaayiram. Yosichu vechukonga, konja neram kazhichu answer paakkalaam.
+
+Supply frequency-ai namma maatha mudiyaadhu. EB fifty hertz dhaan kudukkum. Adhanaala, motor-ku munnaadi oru device venum. Fifty hertz-ai eduthu, namakku venumgira frequency-la pudhu supply ready pannanum. Adhu dhaan VFD. Variable Frequency Drive.
+
+VFD-ai open panni paarthaa, ulla moonu main stage irukku.
+
+Mudhal stage, rectifier. Moonu phase AC-ai diodes vechu DC-aa maathudhu. Ippo frequency-ye illa. Fifty hertz-um poiduchu.
+
+Rendavadhu stage, DC bus. Periya capacitors. Rectifier kudukkura DC-la ripple irukkum. Capacitor adha smooth pannudhu. Four-fifteen volt supply-ku, DC bus kitta thatta ainnooru-arubadhu volt irukkum.
+
+Moonaavadhu stage, inverter. IGBT-nu solra fast switches. Ivanga oru second-ku aayira kanakkula ON, OFF aagudhu. Ovvoru pulse-oda width-ai maathi maathi kudutha, motor-ku adhu sine wave maadhiri theriyum. Idhu dhaan PWM.
+
+Switching vegatha maathinaa, sine wave-oda frequency maarudhu. Irupathi-anju hertz venumna, slow-aa maathum. Fifty hertz venumna, fast-aa maathum. Adhanaala dhaan VFD-la speed eppadi venumnaalum set pannalaam.
+
+Quiz answer. Naalu pole motor, irupathi-anju hertz. Nooru-irubadhu into irupathi-anju, divided by naalu, sama ezhunooru-aimbadhu RPM. Answer B.
+
+Aana oru vishayam. Frequency-ai mattum kammi pannaa podhaadhu.
+
+Motor winding oru coil. Frequency kammi aanaa, coil-oda resistance maadhiri irukkura reactance-um kammi aagudhu. Adhey voltage kuduthaa, current romba adhigam aagum. Core saturate aagi, motor soodaagum.
+
+Adhanaala VFD, frequency-oda sendhu voltage-aiyum kammi pannum. Four-fifteen volt, fifty hertz-na, oru hertz-ku kitta thatta ettu-punnu-moonu volt. Irupathi-anju hertz-ku, paadhi voltage, kitta thatta irunooru-ezhu volt. Indha ratio constant-aa irundhaa, motor torque-um constant-aa irukkum. Idhu dhaan V by F control.
+
+Ippo andha conveyor-ku varalaam. Voltage mattum kammi pannaa, torque poi motor burn aachu. VFD-la frequency-um voltage-um sendhu kammi aagudhu. Speed kammi, aana torque full-aa irukkum. Box-um vizhaadhu, motor-um soodaagaadhu.
+
+VFD-la innoru periya advantage, soft start.
+
+Direct-aa start pannaa, motor full load current-ai vida aaru-ezhu madangu current edukkum. Panel-la light dim aagum. Belt slip aagum. Conveyor-la box thadumaarum.
+
+VFD-la ramp time set pannalaam. Udhaaranama, pathu second ramp-na, zero-la irundhu fifty hertz-ku mella mella pathu second-la poogum. Current rated value pakkathula dhaan irukkum. Jerk-um illa, light dip-um illa.
+
+Fan, pump-la innoru magic irukku. Fan-oda power, speed-oda cube-ku proportional. Speed-ai ennbadhu percentage-ku kammi pannaa, power evlo varum? Comment-la sollunga. Answer, kitta thatta aimbathi-onnu percentage. Speed konjam dhaan kammi, aana current bill kitta thatta paadhi.
+
+Ippo quick summary. Motor speed-ai frequency dhaan decide pannudhu, voltage illa. VFD-la rectifier AC-ai DC-aa maathudhu. DC bus capacitor adha smooth pannudhu. IGBT inverter PWM vechu pudhu frequency-la AC ready pannudhu. Frequency-oda voltage-um sendhu maarum, adhu V by F. Ramp vechu soft start. Fan, pump-la energy saving.
+
+Last question. Conveyor speed-ai kammi panna, voltage mattum kammi pannaa enna aagum? A, speed kammi, ellaam safe. B, torque kammi, current adhigam, motor soodaagum. C, motor fast-aa odum. Unga answer comment-la sollunga.
+
+Answer B. Adhanaala dhaan factory-la motor speed control-ku VFD use pannuraanga.
+
+Video useful-aa irundhaa like pannunga, unga factory friends-ku share pannunga, innum indha maadhiri videos-ku subscribe pannunga.
