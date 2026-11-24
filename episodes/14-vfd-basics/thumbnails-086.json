@@ -1,0 +1,34 @@
+{
+  "files": [
+    {
+      "file": "thumb-A.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 975175,
+      "sha256": "b0efc0c0fa861ba288465b527c001ed21e9ccf294780bb1c10c93389a35c1fda"
+    },
+    {
+      "file": "thumb-B.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 934099,
+      "sha256": "d07a2fb7b6320f6eb3ef107146bb6a2c9bc56f97551260d85a84a42db17fca74"
+    },
+    {
+      "file": "thumb-C.png",
+      "width": 1280,
+      "height": 720,
+      "bytes": 1155144,
+      "sha256": "133d005da97596000b1c58c4ced57f3136eade6d24b975a276dc9e0d03caf425"
+    },
+    {
+      "file": "thumb-short.png",
+      "width": 1080,
+      "height": 1920,
+      "bytes": 1871154,
+      "sha256": "226ad194a3eff2920d986bededc9c5f2043c2b7d8befe36bc0f8f37a4ce9bbcb"
+    }
+  ],
+  "recommended": "thumb-A.png",
+  "inspection": "Originals and final phone-scale sheet inspected for headline spelling, channel title, signature character, voltage-only control versus VFD, smoke/no flames, equipment coupling and image margins. No CTR test performed."
+}
