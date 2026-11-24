@@ -1885,7 +1885,8 @@ function drawScene(c,s,lt,scale,opt={}){
     let m=motionX(e,l);const le=e.entrance&&e.entrance!=='draw'&&e.type!=='stick'?1e6:l;
     if(e.bind&&e.bind.role==='crate'){const cs_=CS[e.bind.ctrl],pk=lt-cs_.cratePop;m={x:cs_.crateX-e.x,y:0,r:0,s:pk>=0&&pk<.4?Math.max(.01,backOut(pk/.4)):1,a:1}}
     if(e.bind&&e.bind.role==='pump'&&l>e.dur){const b=CS[e.bind.ctrl];m=b&&b.pump?{x:Math.sin(lt*47)*1.6,y:Math.cos(lt*39)*1.2,r:0,s:1,a:1}:null}
-    if(e.mv){const kx=e.mv.map(k=>[k[0],k[1]]),ky=e.mv.map(k=>[k[0],k[2]]),px=kv(kx,lt),py=kv(ky,lt),vx=kv(kx,lt+.06)-px,walk=Math.min(1,Math.abs(vx)/2);m={x:(m?m.x:0)+px-e.x,y:(m?m.y:0)+py-e.y-Math.abs(Math.sin(lt*11))*14*walk,r:Math.sin(lt*11)*.04*walk,s:m?m.s:1,a:m?m.a:1};if(e.mvFace){let f=e.mvFace[0][1];e.mvFace.forEach(k=>{if(lt>=k[0])f=k[1]});e.facing=f}}
+    if(e.mv){const kx=e.mv.map(k=>[k[0],k[1]]),ky=e.mv.map(k=>[k[0],k[2]]),px=kv(kx,lt),py=kv(ky,lt),vx=kv(kx,lt+.06)-px,walk=Math.min(1,Math.abs(vx)/2);let ha=1,hs=1;(e.hideW||[]).forEach(([a,b])=>{if(lt>a&&lt<b){const u=Math.min(lt-a,b-lt);ha=Math.min(ha,Math.max(0,1-Math.min(1,u/.18)));}});(e.hideW||[]).forEach(([a,b])=>{const d=lt-b;if(d>=0&&d<.3)hs=Math.min(hs,.6+.4*(d/.3)+Math.sin(d/.3*Math.PI)*.15)});
+      m={x:(m?m.x:0)+px-e.x,y:(m?m.y:0)+py-e.y,r:0,s:(m?m.s:1)*hs,a:(m?m.a:1)*ha};if(e.mvFace){let f=e.mvFace[0][1];e.mvFace.forEach(k=>{if(lt>=k[0])f=k[1]});e.facing=f}}
     if(m){const cx=e.x+e.w/2,cy=e.y+e.h/2;c.save();c.translate(cx+m.x,cy+m.y);c.rotate(m.r);c.scale(m.s,m.s);c.translate(-cx,-cy);c.globalAlpha*=m.a}
     const h=drawEl(e,le,st,lt);if(m)c.restore();if(h&&!m){nTips++;const s0=e.win?e.win[0]:e.start;if(!hand||s0>=handSt){hand=h;handSt=s0}}
     if(e.bind&&e.type==='svg'&&l>=e.draw)drawBound(e,st,lt)}
@@ -5425,9 +5426,10 @@ G3_BUILD.vfd=g3Vfd;
 
 const EP14_A=[[0.0, 2.25, 0], [2.8, 3.75, 0], [4.3, 8.7, 0], [9.15, 9.74, 0], [9.74, 11.4, 0], [12.15, 13.72, 0], [13.72, 15.25, 1], [15.75, 18.75, 1], [19.25, 21.0, 1], [21.45, 23.73, 1], [25.06, 26.88, 2], [27.53, 30.08, 2], [30.68, 34.55, 2], [35.24, 37.47, 3], [37.92, 39.37, 3], [39.92, 42.22, 3], [42.82, 44.62, 3], [45.12, 46.97, 3], [47.27, 50.41, 3], [51.0, 53.01, 4], [53.46, 57.05, 4], [57.64, 59.95, 5], [60.55, 63.95, 5], [64.5, 66.2, 5], [66.75, 70.01, 5], [70.01, 72.2, 6], [72.8, 76.6, 6], [76.75, 80.35, 6], [80.85, 85.7, 6], [85.89, 86.49, 7], [87.09, 89.64, 7], [90.19, 91.44, 7], [91.64, 92.74, 7], [92.94, 93.69, 7], [94.24, 97.8, 7], [98.09, 100.23, 8], [100.48, 101.33, 8], [101.98, 106.28, 8], [106.43, 110.18, 8], [110.58, 112.87, 8], [113.4, 115.96, 9], [115.96, 116.71, 10], [117.06, 122.56, 10], [123.31, 124.51, 10], [125.01, 126.86, 10], [126.86, 128.06, 11], [128.41, 131.86, 11], [132.51, 134.76, 11], [135.46, 139.86, 11], [139.86, 141.11, 12], [141.61, 147.66, 12], [148.46, 153.66, 12], [153.86, 155.44, 12], [155.44, 160.71, 13], [160.96, 161.66, 13], [162.51, 165.36, 13], [166.09, 168.09, 14], [168.54, 169.54, 14], [169.84, 174.29, 14], [174.84, 176.2, 14], [177.35, 181.14, 15], [181.84, 182.99, 15], [183.64, 186.44, 15], [186.99, 191.44, 15], [191.99, 193.71, 15], [194.44, 197.87, 16], [198.57, 202.87, 16], [203.42, 205.67, 16], [206.22, 210.57, 16], [210.72, 212.7, 16], [213.21, 214.68, 17], [215.38, 219.73, 17], [220.48, 227.03, 17], [227.48, 229.59, 17], [230.32, 233.44, 18], [234.43, 236.5, 19], [237.1, 246.1, 19], [246.35, 252.15, 19], [253.14, 260.44, 20], [260.69, 263.43, 20], [264.08, 265.69, 21], [266.29, 269.54, 21], [269.99, 274.49, 21], [274.94, 278.17, 21], [279.54, 280.41, 22], [280.76, 283.51, 22], [283.96, 292.61, 22], [293.11, 296.06, 22], [296.46, 299.04, 22], [299.85, 301.02, 23], [301.37, 305.97, 23], [306.27, 308.87, 23], [309.17, 310.97, 23], [311.27, 312.47, 23], [312.82, 314.98, 23], [315.75, 321.38, 24]];
 const EP14_ON={"1": 13.76, "2": 25.23, "3": 35.26, "4": 51.03, "5": 57.68, "6": 70.08, "7": 85.93, "8": 98.26, "9": 113.43, "10": 115.99, "11": 127.31, "12": 140.41, "13": 155.47, "14": 166.14, "15": 177.37, "16": 194.5, "17": 213.25, "18": 230.8, "19": 234.95, "20": 253.42, "21": 264.05, "22": 279.64, "23": 299.83, "24": 315.72};
-const EP14_SA=[[0.0, 2.0, 0], [2.55, 6.41, 0], [6.41, 7.4, 1], [7.55, 8.6, 1], [9.1, 12.54, 1], [12.54, 14.4, 2], [15.0, 18.05, 2], [18.6, 20.65, 2], [21.05, 23.64, 2], [23.64, 26.2, 3], [26.75, 28.85, 3], [28.85, 30.89, 4], [30.89, 35.66, 5], [35.66, 38.84, 6]];
+const EP14_SA=[[0.0, 2.0, 0], [2.55, 6.41, 0], [6.41, 7.4, 1], [7.55, 8.6, 1], [9.1, 12.54, 1], [12.9, 14.76, 2], [15.36, 18.41, 2], [18.96, 21.01, 2], [21.41, 24.0, 2], [24.42, 26.98, 3], [27.53, 29.63, 3], [29.63, 31.67, 4], [32.31, 37.08, 5], [37.08, 40.26, 6]];
+const EP14_SON={"2": 13.28, "3": 24.66, "5": 32.58};
 const EP14_POSE=[[0.0, "talk_a"], [2.8, "worry2"], [4.3, "talk_b"], [9.15, "talk_c"], [9.74, "worry2"], [12.15, "point_level"], [13.72, "talk_d"], [15.75, "explain_a"], [19.25, "talk_a"], [21.45, "talk_b"], [25.06, "talk_c"], [27.53, "talk_d"], [30.68, "explain_a"], [35.24, "talk_a"], [37.92, "talk_b"], [39.92, "worry2"], [42.82, "worry2"], [45.12, "talk_c"], [47.27, "worry2"], [51.0, "talk_d"], [53.46, "explain_a"], [57.64, "talk_a"], [60.55, "talk_b"], [64.5, "talk_c"], [66.75, "talk_d"], [70.01, "explain_a"], [72.8, "point_3"], [76.75, "talk_a"], [80.85, "worry2"], [85.89, "point_level"], [87.09, "point_level"], [90.19, "point_3"], [91.64, "point_3"], [92.94, "point_3"], [94.24, "point_level"], [98.09, "talk_b"], [100.48, "talk_c"], [101.98, "talk_d"], [106.43, "explain_a"], [110.58, "talk_a"], [113.4, "talk_b"], [115.96, "talk_c"], [117.06, "talk_d"], [123.31, "explain_a"], [125.01, "talk_a"], [126.86, "talk_b"], [128.41, "talk_c"], [132.51, "talk_d"], [135.46, "explain_a"], [139.86, "talk_a"], [141.61, "talk_b"], [148.46, "talk_c"], [153.86, "talk_d"], [155.44, "explain_a"], [160.96, "talk_a"], [162.51, "talk_b"], [166.09, "talk_c"], [168.54, "talk_d"], [169.84, "point_3"], [174.84, "point_level"], [177.35, "explain_a"], [181.84, "talk_a"], [183.64, "talk_b"], [186.99, "worry2"], [191.99, "talk_c"], [194.44, "talk_d"], [198.57, "explain_a"], [203.42, "talk_a"], [206.22, "talk_b"], [210.72, "talk_c"], [213.21, "talk_d"], [215.38, "worry2"], [220.48, "explain_a"], [227.48, "talk_a"], [230.32, "talk_b"], [234.43, "talk_c"], [237.1, "talk_d"], [246.35, "worry2"], [253.14, "explain_a"], [260.69, "talk_a"], [264.08, "talk_b"], [266.29, "talk_c"], [269.99, "talk_d"], [274.94, "explain_a"], [279.54, "talk_a"], [280.76, "talk_b"], [283.96, "talk_c"], [293.11, "talk_d"], [296.46, "explain_a"], [299.85, "point_level"], [301.37, "talk_a"], [306.27, "talk_b"], [309.17, "point_level"], [311.27, "point_level"], [312.82, "point_level"], [315.75, "nod"]];
-const EP14_SPOSE=[[0.0, "talk_a"], [2.55, "talk_b"], [6.41, "talk_c"], [7.55, "talk_d"], [9.1, "worry2"], [12.54, "explain_a"], [15.0, "talk_a"], [18.6, "talk_b"], [21.05, "worry2"], [23.64, "point_level"], [26.75, "point_level"], [28.85, "point_level"], [30.89, "point_level"], [35.66, "nod"]];
+const EP14_SPOSE=[[0.0, "talk_a"], [2.55, "talk_b"], [6.41, "talk_c"], [7.55, "talk_d"], [9.1, "worry2"], [12.9, "explain_a"], [15.36, "talk_a"], [18.96, "talk_b"], [21.41, "worry2"], [24.42, "point_level"], [27.53, "point_level"], [29.63, "point_level"], [32.31, "point_level"], [37.08, "nod"]];
 function drawSD(e,c,tl){const cx=e.x+e.w/2,cy=e.y+e.h/2,R=Math.min(e.w,e.h)*.36,ink=O2,live=o2t(tl,e.live);
   const coil=(x1,y1,x2,y2,lab)=>{const L=Math.hypot(x2-x1,y2-y1),ux=(x2-x1)/L,uy=(y2-y1)/L,nx=-uy,ny=ux,a=L*.25,b=L*.75,n=8;
     c.beginPath();c.moveTo(x1,y1);c.lineTo(x1+ux*a,y1+uy*a);for(let i=1;i<=n;i++){const t=a+(b-a)*i/n,s=(i%2?1:-1)*12;c.lineTo(x1+ux*t+nx*s,y1+uy*t+ny*s)}c.lineTo(x2,y2);c.lineWidth=5;c.strokeStyle=e.col||'#b45309';c.stroke();
@@ -6310,22 +6312,23 @@ async function buildEp14(){
   /* presenter walks to the part being explained (one continuous character) */
   const SPOT={1:[1000,250,-1],2:[540,H-262,1],3:[600,H-266,1],4:[520,H-286,1],5:[300,H-300,1],6:[560,H-270,1],7:[40,H-286,1],8:[960,H-270,-1],9:[520,H-240,-1],14:[560,H-270,1],15:[500,H-240,1],16:[1060,H-240,-1],17:[40,H-286,1],18:[300,H-286,1],19:[620,H-250,1],20:[820,H-240,1],21:[560,H-230,1],22:[60,H-286,1],23:[40,H-286,1],24:[40,H-286,1]};
   const EXTRA=[[T(3,4),760,H-266,1],[T(5,2),860,H-300,-1],[T(21,1),1080,H-260,-1]];
-  const mv=[],mf=[];Object.entries(SPOT).forEach(([k,[x,y,f]])=>{k=+k;const t=PS(k)-.9;mv.push([t,x,y],[t+.01,x,y]);mf.push([t+.4,f])});
-  EXTRA.forEach(([t,x,y,f])=>{mv.push([t-.8,x,y]);mf.push([t-.8,f])});
-  const MV=[];mv.sort((a,b)=>a[0]-b[0]).forEach((k,i,arr)=>{if(i===0){MV.push(k);return}const p=MV[MV.length-1];MV.push([k[0]-.9>p[0]?k[0]-.9:p[0]+.01,p[1],p[2]]);MV.push(k)});
+  const MV=[],MF=[],HW=[];let prev=null;const jump=(t,x,y,f,dur)=>{const mid=t;if(prev){MV.push([mid-.001,prev[0],prev[1]])}MV.push([mid,x,y]);MF.push([mid,f]);HW.push([mid-dur/2,mid+dur/2]);prev=[x,y]};
+  const EV=Object.entries(SPOT).map(([k,[x,y,f]])=>[PS(+k)-.5,x,y,f,1.0]).concat(EXTRA.map(([t,x,y,f])=>[t-.3,x,y,f,.5])).sort((a,b)=>a[0]-b[0]);
+  EV.forEach(([t,x,y,f,d],i)=>{if(i===0){MV.push([t,x,y]);MF.push([t,f]);prev=[x,y];return}jump(t,x,y,f,d)});
   const pid=presenter([PS(1)+.6,NARR+.3],{poses:EP14_POSE,size:260,x:1000,y:250,entrance:'draw',draw:.8});
-  const pe=s.els[s.els.length-1];pe.mv=MV;pe.mvFace=mf.sort((a,b)=>a[0]-b[0]);
+  const pe=s.els[s.els.length-1];pe.mv=MV;pe.mvFace=MF;pe.hideW=HW;
   S.captions=false;S.showHand=true;S.penSprite=true;S.cardsDraw=true;S.cur=0;S.pin=false;S.t=1;refresh();
 }
 async function buildEp14Short(){
   stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('9:16');S.narrOff=0;S.art='sketch';
   try{await document.fonts.load('700 30px InkHand')}catch(_){}try{await window.E14_MOTOR_READY}catch(_){}
-  const A=EP14_SA,END=38.84;
+  const A=EP14_SA,END=40.26;
   const s=newScene({name:'EP14 Short',style:'white',transition:'cut',trans:0,hold:0});s.minDur=END;S.scenes.push(s);
-  const K=ep10Kit(s,A,END),{ng,T,PS,card,presenter}=K,RED=NG.red,GRN=NG.grn,BLU=NG.blue;
+  const K=ep10Kit(s,A,END),{ng,T,PS:PS0,card,presenter}=K,RED=NG.red,GRN=NG.grn,BLU=NG.blue;
+  const PS=k=>EP14_SON[k]!=null?EP14_SON[k]-.1:PS0(k);
   const PE=k=>k>=6?END:PS(k+1),P=(a,b=a)=>[PS(a),PE(b)];
   const bg=(win,col='#eef1f5')=>ng('fill',{x:0,y:0,w:W,h:H,col,noPop:true},win);
-  const ers=(t,col='#eef1f5')=>ng('erase',{ts:t-.7,ed:.65,pop:.01,x:0,y:0,w:W,h:H,col,noPop:true},[t-.7,t+.06]);
+  const ers=(t,col='#eef1f5')=>ng('erase',{ts:t-1.0,ed:.95,pop:.01,x:0,y:0,w:W,h:H,col,noPop:true},[t-1.0,t+.06]);
   bg([0,END],'#e3e8ee');
   const lineCam=[[0,1.6,1.8,7.6,1.8,.3,.6],[T(0,1)+2,5.6,1.4,5.6,4.2,.2,1.3],[T(1,2)+.5,5.4,1.1,4.0,4.5,.4,1.5],[PE(1),5.4,1.1,4.0,4.5,.4,1.5]];
   ng('g3',{shot:'line',x:0,y:0,w:W,h:H,noPop:true,spd:[[0,1.7],[T(0,1)+.8,1.7],[PS(1),1.05]],fall:[[0,1],[PS(1)-.5,1],[PS(1),0]],heat:[[T(1,2),0],[T(1,2)+1.5,1]],cam:lineCam},P(0,1));
@@ -6337,9 +6340,11 @@ async function buildEp14Short(){
   ers(PS(5));bg(P(5));card(110,300,500,130,'FULL ANSWER',[PS(5),PE(5)],{size:56,bg:GRN});ng('arrowdn',{x:260,y:560,w:200,h:560},[PS(5)+.8,PE(5)+.1]);card(150,450,420,100,'⬇ keezha LINK',[PS(5)+.8,PE(5)],{bg:RED,size:40});
   ng('g3',{shot:'line',x:0,y:0,w:W,h:H,noPop:true,spd:[[0,1.7]],fall:[[0,1]],heat:[[0,0]],cam:[[0,1.6,1.8,7.6,1.8,.3,.6]]},P(6));
   ng('eqv',{key:'hand-thumbs-up',x:400,y:320,w:300,h:340,noPop:true},[PS(6),END-.25]);card(110,180,500,110,'SUBSCRIBE',[PS(6),END-.25],{bg:RED,size:48});card(110,700,240,80,'LIKE',[PS(6)+.4,END-.25],{bg:BLU,size:34});card(370,700,240,80,'SHARE',[PS(6)+.8,END-.25],{bg:NG.teal,size:34});
-  ng('caps',{x:W/2+90,y:H-150,maxw:500,size:72,noPop:true,list:[[.2,T(0,1),'TOO FAST!','#fca5a5'],[T(0,1)+.2,PS(1),'VOLTAGE ↓'],[PS(1)+.2,T(1,1),'SLOW ✓','#86efac'],[T(1,1),T(1,2),'ELLAARUM HAPPY','#86efac'],[T(1,2)+.4,PE(1),'PUGAI !!','#fca5a5'],
+  ng('caps',{x:W/2,y:H-420,maxw:640,size:72,noPop:true,list:[[.2,T(0,1),'TOO FAST!','#fca5a5'],[T(0,1)+.2,PS(1),'VOLTAGE ↓'],[PS(1)+.2,T(1,1),'SLOW ✓','#86efac'],[T(1,1),T(1,2),'ELLAARUM HAPPY','#86efac'],[T(1,2)+.4,PE(1),'PUGAI !!','#fca5a5'],
     [PS(2)+.2,T(2,1),'VEETU IDEA'],[T(2,1),T(2,2),'FAN = OK','#86efac'],[T(2,2),T(2,3),'MOTOR = ?'],[T(2,3),PE(2),'YEN PUGAI?!','#fca5a5'],[PS(3),PE(3),'EDHU DECIDE PANNUDHU?'],[PS(5),PE(5),'ANSWER ⬇']]},[0,END]);
   presenter([0,END],{poses:EP14_SPOSE,x:-20,y:H-356,size:340,entrance:'draw',draw:.6});
+  {const pe=s.els[s.els.length-1],Y=H-356;const S2=[[0,-20,Y,1],[T(1,2)-.2,360,Y,-1],[PS(2)-.9,380,Y,-1],[PS(3)-.9,400,Y,-1],[PS(4)-.2,-20,Y,1],[PS(5)-.9,-20,Y,1],[PS(6)-.3,200,Y,1]];
+   const MV=[],HW=[];S2.forEach((k,i)=>{const t=i?k[0]-.4:k[0];if(i){MV.push([t-.001,S2[i-1][1],S2[i-1][2]]);HW.push([t-.45,t+.45])}MV.push([t,k[1],k[2]])});pe.mv=MV;pe.mvFace=S2.map((k,i)=>[i?k[0]-.4:k[0],k[3]]);pe.hideW=HW}
   S.captions=false;S.showHand=true;S.penSprite=true;S.cardsDraw=true;S.cur=0;S.pin=false;S.t=1;refresh();
 }
 
