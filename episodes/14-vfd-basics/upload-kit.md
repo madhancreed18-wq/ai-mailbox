@@ -1,6 +1,6 @@
 # EP14 – upload kit (VFD basics: motor speed eppadi maarudhu)
 
-## Long – EP14-vfd-basics-long.mp4 (5:29)
+## Long – EP14-vfd-basics-long.mp4 (5:43)
 **Title** (Test & Compare-la moonu-um)
 1. VFD Working in Tamil | Motor Speed Eppadi Maarudhu?
 2. Voltage Kammi Pannaa Motor Speed Kammi Aagumaa? | VFD Tamil
@@ -19,25 +19,25 @@ Indha video-la:
 
 0:00 Conveyor motor-la pugai – thappu enga?
 0:19 Idea veetla irundhu – fan regulator
-0:29 Fan vs conveyor load
-0:39 Torque, slip, current – yen pugai
-0:54 Speed-ai decide pannradhu frequency
-1:00 Motor ulla 3D X-ray – rotating field
-1:12 Motor speed formula
-1:28 Question
-1:40 VFD enna?
-1:57 Rectifier
-2:08 DC bus
-2:21 IGBT inverter, PWM
-2:37 Frequency eppadi maarudhu
-2:47 25 Hz – answer
-2:57 Frequency mattum kammi pannaa enna aagum
-3:13 V/f control
-3:31 Conveyor with VFD
-3:51 Bonus 1: soft start
-4:19 Bonus 2: energy saving
-4:33 Summary
-4:53 Challenge
+0:31 Fan vs conveyor load
+0:41 Torque, slip, current – yen pugai
+0:57 Speed-ai decide pannradhu frequency
+1:03 Motor ulla 3D X-ray – rotating field
+1:16 Motor speed formula
+1:31 Question
+1:44 VFD enna?
+2:02 Rectifier
+2:13 DC bus
+2:26 IGBT inverter, PWM
+2:41 Frequency eppadi maarudhu
+2:52 25 Hz – answer
+3:03 Frequency mattum kammi pannaa enna aagum
+3:20 V/f control
+3:39 Conveyor with VFD
+4:00 Bonus 1: soft start
+4:30 Bonus 2: energy saving
+4:45 Summary
+5:05 Challenge
 
 #VFD #VariableFrequencyDrive #ElectricalTamil #FactoryDecodeTamil #MotorSpeedControl
 
