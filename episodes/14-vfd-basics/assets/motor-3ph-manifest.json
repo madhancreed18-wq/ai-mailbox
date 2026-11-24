@@ -1,0 +1,105 @@
+{
+  "triangle_count": 94856,
+  "units": "metres",
+  "gltf_up": "+Y",
+  "shaft_axis": "+X",
+  "DE_direction": "+X",
+  "shaft_centre_gltf": [
+    0,
+    0,
+    0
+  ],
+  "floor_gltf_y": -0.09,
+  "required_nodes": [
+    "Housing",
+    "EndShield_DE",
+    "EndShield_NDE",
+    "FanCowl",
+    "TerminalBox",
+    "TerminalBoxCover",
+    "TerminalBlock",
+    "StatorCore",
+    "Winding_U",
+    "Winding_V",
+    "Winding_W",
+    "Rotor",
+    "Shaft",
+    "Key",
+    "Bearing_DE",
+    "Bearing_NDE",
+    "Fan",
+    "Feet"
+  ],
+  "mesh_nodes": [
+    "Housing",
+    "EndShield_DE",
+    "EndShield_NDE",
+    "Shaft",
+    "Key",
+    "Feet",
+    "TerminalBox",
+    "TerminalBoxCover",
+    "TerminalBlock",
+    "StatorCore",
+    "Winding_U",
+    "Winding_V",
+    "Winding_W",
+    "Rotor",
+    "Bearing_DE_OuterRace",
+    "Bearing_DE_InnerRace",
+    "Bearing_DE_Balls",
+    "Bearing_NDE_OuterRace",
+    "Bearing_NDE_InnerRace",
+    "Bearing_NDE_Balls",
+    "Fan",
+    "FanCowl"
+  ],
+  "rotating_nodes": [
+    "Rotor",
+    "Shaft",
+    "Key",
+    "Fan",
+    "Bearing_DE_InnerRace",
+    "Bearing_NDE_InnerRace"
+  ],
+  "dimensions_mm": {
+    "shaft_height": 90,
+    "foot_holes_A_B": [
+      140,
+      125
+    ],
+    "drive_shaft_D_E": [
+      24,
+      50
+    ],
+    "fin_diameter": 175,
+    "overall_length": 335.6
+  },
+  "winding_geometry": {
+    "slots": 36,
+    "poles": 4,
+    "coils": 36,
+    "coils_per_group": 3,
+    "coil_pitch_slots": 9,
+    "phase_groups_each": 4,
+    "group_spacing_deg": 90,
+    "phase_colour_group_offset_deg": 30
+  },
+  "limits": [
+    "Generic educational internal assembly; no electromagnetic or thermal rating validation.",
+    "Requested 2.2kW/415V is a narrative rating, not verified against this exact90L casting.",
+    "Phase-colour group positions follow083, not a complete validated winding connection schedule.",
+    "Lamination lines are sampled visual grooves, not every physical sheet.",
+    "Bearings have visible simplified races/balls, no cage or seals.",
+    "No hidden exposed rear shaft; NDE shaft terminates within fan cowl."
+  ],
+  "exported_triangle_count": 94856,
+  "glb_bytes": 2354488,
+  "glb_validation": {
+    "header_length_valid": true,
+    "required_names_present": true,
+    "rotating_origins_zero": true,
+    "no_external_resources": true,
+    "no_images_or_textures": true
+  }
+}
