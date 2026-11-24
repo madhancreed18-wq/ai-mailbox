@@ -1,0 +1,270 @@
+{
+  "schema_version": 1,
+  "units": "seconds",
+  "indexing": "zero-based nonempty blank-line-separated source paragraphs",
+  "status": "audio-derived machine-aligned production draft; not full-listening-certified or frame-accurate",
+  "method": "Full-file multilingual faster-whisper large-v3-turbo word timestamps, targeted independent clips, semantic paragraph anchors and measured pause edges. No proportional text-length or reused/scaled timings.",
+  "range_semantics": "Contiguous scene windows; ends are next section starts, retaining intervening pauses. First starts at0, final end is exact source WAVduration.",
+  "paragraphs": {
+    "long": [
+      {
+        "index": 0,
+        "start": 0,
+        "end": 14.45,
+        "script_text": "Packing line-la conveyor romba fast-aa odudhu. Box-ellaam keezha vizhudhu. Speed-ai konjam kammi pannalaam-nu, motor-ku pora voltage-ai kammi pannaanga. Motor konjam slow aachu. Aana irupadhu nimishathula, motor-la irundhu pugai varudhu. Thappu enga?",
+        "boundary_evidence": "matched spoken topic/word anchors and measured audio pause; starts are draft scene cues, not word-level forced alignment",
+        "review_priority": false
+      },
+      {
+        "index": 1,
+        "start": 14.45,
+        "end": 22.49,
+        "script_text": "Veetla fan regulator-ai kammi pannaa fan slow aagudhu. Adhu voltage-ai dhaan kammi pannudhu. Appo factory motor-ku mattum yen adhey vela seiyala?",
+        "boundary_evidence": "matched spoken topic/word anchors and measured audio pause; starts are draft scene cues, not word-level forced alignment",
+        "review_priority": true
+      },
+      {
+        "index": 2,
+        "start": 22.49,
+        "end": 39.11,
+        "script_text": "Fan-ku load romba kammi. Kaathu mattum dhaan thallanum. Aana conveyor motor box-ellaam thookkitu odanum. Voltage-ai kammi pannaa, motor-oda torque kammi aagudhu. Load adhey dhaan. Adhanaala motor slip adhigamaagi, current mela poguthu. Current adhigam aanaa, winding soodaagudhu. Adhu dhaan andha pugai.",
+        "boundary_evidence": "matched spoken topic/word anchors and measured audio pause; starts are draft scene cues, not word-level forced alignment",
+        "review_priority": true
+      },
+      {
+        "index": 3,
+        "start": 39.11,
+        "end": 44.17,
+        "script_text": "Appo motor speed-ai edhu decide pannudhu? Voltage illa. Frequency.",
+        "boundary_evidence": "matched spoken topic/word anchors and measured audio pause; starts are draft scene cues, not word-level forced alignment",
+        "review_priority": false
+      },
+      {
+        "index": 4,
+        "start": 44.17,
+        "end": 63.01,
+        "script_text": "Motor speed formula romba simple. Speed sama, nooru-irubadhu into frequency, divided by poles. Namma supply fifty hertz. Naalu pole motor-na, nooru-irubadhu into fifty, divided by naalu, sama aayirathu-ainnooru RPM. Load-oda konjam slip irukkum, adhanaala nameplate-la aayirathu-naanooru-naarpadhu RPM-nu irukkum.",
+        "boundary_evidence": "matched spoken topic/word anchors and measured audio pause; starts are draft scene cues, not word-level forced alignment",
+        "review_priority": false
+      },
+      {
+        "index": 5,
+        "start": 63.01,
+        "end": 75.64,
+        "script_text": "Quick question. Idhey naalu pole motor-ku, irupathi-anju hertz kudutha, speed evlo? A, aayirathu-ainnooru. B, ezhunooru-aimbadhu. C, moovaayiram. Yosichu vechukonga, konja neram kazhichu answer paakkalaam.",
+        "boundary_evidence": "matched spoken topic/word anchors and measured audio pause; starts are draft scene cues, not word-level forced alignment",
+        "review_priority": false
+      },
+      {
+        "index": 6,
+        "start": 75.64,
+        "end": 90.93,
+        "script_text": "Supply frequency-ai namma maatha mudiyaadhu. EB fifty hertz dhaan kudukkum. Adhanaala, motor-ku munnaadi oru device venum. Fifty hertz-ai eduthu, namakku venumgira frequency-la pudhu supply ready pannanum. Adhu dhaan VFD. Variable Frequency Drive.",
+        "boundary_evidence": "matched spoken topic/word anchors and measured audio pause; starts are draft scene cues, not word-level forced alignment",
+        "review_priority": true
+      },
+      {
+        "index": 7,
+        "start": 90.93,
+        "end": 94.98,
+        "script_text": "VFD-ai open panni paarthaa, ulla moonu main stage irukku.",
+        "boundary_evidence": "matched spoken topic/word anchors and measured audio pause; starts are draft scene cues, not word-level forced alignment",
+        "review_priority": false
+      },
+      {
+        "index": 8,
+        "start": 94.98,
+        "end": 102.89,
+        "script_text": "Mudhal stage, rectifier. Moonu phase AC-ai diodes vechu DC-aa maathudhu. Ippo frequency-ye illa. Fifty hertz-um poiduchu.",
+        "boundary_evidence": "matched spoken topic/word anchors and measured audio pause; starts are draft scene cues, not word-level forced alignment",
+        "review_priority": false
+      },
+      {
+        "index": 9,
+        "start": 102.89,
+        "end": 115.59,
+        "script_text": "Rendavadhu stage, DC bus. Periya capacitors. Rectifier kudukkura DC-la ripple irukkum. Capacitor adha smooth pannudhu. Four-fifteen volt supply-ku, DC bus kitta thatta ainnooru-arubadhu volt irukkum.",
+        "boundary_evidence": "matched spoken topic/word anchors and measured audio pause; starts are draft scene cues, not word-level forced alignment",
+        "review_priority": false
+      },
+      {
+        "index": 10,
+        "start": 115.59,
+        "end": 129.43,
+        "script_text": "Moonaavadhu stage, inverter. IGBT-nu solra fast switches. Ivanga oru second-ku aayira kanakkula ON, OFF aagudhu. Ovvoru pulse-oda width-ai maathi maathi kudutha, motor-ku adhu sine wave maadhiri theriyum. Idhu dhaan PWM.",
+        "boundary_evidence": "matched spoken topic/word anchors and measured audio pause; starts are draft scene cues, not word-level forced alignment",
+        "review_priority": false
+      },
+      {
+        "index": 11,
+        "start": 129.43,
+        "end": 142.18,
+        "script_text": "Switching vegatha maathinaa, sine wave-oda frequency maarudhu. Irupathi-anju hertz venumna, slow-aa maathum. Fifty hertz venumna, fast-aa maathum. Adhanaala dhaan VFD-la speed eppadi venumnaalum set pannalaam.",
+        "boundary_evidence": "matched spoken topic/word anchors and measured audio pause; starts are draft scene cues, not word-level forced alignment",
+        "review_priority": false
+      },
+      {
+        "index": 12,
+        "start": 142.18,
+        "end": 151.91,
+        "script_text": "Quiz answer. Naalu pole motor, irupathi-anju hertz. Nooru-irubadhu into irupathi-anju, divided by naalu, sama ezhunooru-aimbadhu RPM. Answer B.",
+        "boundary_evidence": "matched spoken topic/word anchors and measured audio pause; starts are draft scene cues, not word-level forced alignment",
+        "review_priority": true
+      },
+      {
+        "index": 13,
+        "start": 151.91,
+        "end": 156.22,
+        "script_text": "Aana oru vishayam. Frequency-ai mattum kammi pannaa podhaadhu.",
+        "boundary_evidence": "matched spoken topic/word anchors and measured audio pause; starts are draft scene cues, not word-level forced alignment",
+        "review_priority": true
+      },
+      {
+        "index": 14,
+        "start": 156.22,
+        "end": 168.24,
+        "script_text": "Motor winding oru coil. Frequency kammi aanaa, coil-oda resistance maadhiri irukkura reactance-um kammi aagudhu. Adhey voltage kuduthaa, current romba adhigam aagum. Core saturate aagi, motor soodaagum.",
+        "boundary_evidence": "matched spoken topic/word anchors and measured audio pause; starts are draft scene cues, not word-level forced alignment",
+        "review_priority": true
+      },
+      {
+        "index": 15,
+        "start": 168.24,
+        "end": 187.95,
+        "script_text": "Adhanaala VFD, frequency-oda sendhu voltage-aiyum kammi pannum. Four-fifteen volt, fifty hertz-na, oru hertz-ku kitta thatta ettu-punnu-moonu volt. Irupathi-anju hertz-ku, paadhi voltage, kitta thatta irunooru-ezhu volt. Indha ratio constant-aa irundhaa, motor torque-um constant-aa irukkum. Idhu dhaan V by F control.",
+        "boundary_evidence": "matched spoken topic/word anchors and measured audio pause; starts are draft scene cues, not word-level forced alignment",
+        "review_priority": false
+      },
+      {
+        "index": 16,
+        "start": 187.95,
+        "end": 201.25,
+        "script_text": "Ippo andha conveyor-ku varalaam. Voltage mattum kammi pannaa, torque poi motor burn aachu. VFD-la frequency-um voltage-um sendhu kammi aagudhu. Speed kammi, aana torque full-aa irukkum. Box-um vizhaadhu, motor-um soodaagaadhu.",
+        "boundary_evidence": "matched spoken topic/word anchors and measured audio pause; starts are draft scene cues, not word-level forced alignment",
+        "review_priority": false
+      },
+      {
+        "index": 17,
+        "start": 201.25,
+        "end": 205.47,
+        "script_text": "VFD-la innoru periya advantage, soft start.",
+        "boundary_evidence": "matched spoken topic/word anchors and measured audio pause; starts are draft scene cues, not word-level forced alignment",
+        "review_priority": false
+      },
+      {
+        "index": 18,
+        "start": 205.47,
+        "end": 214.64,
+        "script_text": "Direct-aa start pannaa, motor full load current-ai vida aaru-ezhu madangu current edukkum. Panel-la light dim aagum. Belt slip aagum. Conveyor-la box thadumaarum.",
+        "boundary_evidence": "matched spoken topic/word anchors and measured audio pause; starts are draft scene cues, not word-level forced alignment",
+        "review_priority": false
+      },
+      {
+        "index": 19,
+        "start": 214.64,
+        "end": 227.97,
+        "script_text": "VFD-la ramp time set pannalaam. Udhaaranama, pathu second ramp-na, zero-la irundhu fifty hertz-ku mella mella pathu second-la poogum. Current rated value pakkathula dhaan irukkum. Jerk-um illa, light dip-um illa.",
+        "boundary_evidence": "matched spoken topic/word anchors and measured audio pause; starts are draft scene cues, not word-level forced alignment",
+        "review_priority": false
+      },
+      {
+        "index": 20,
+        "start": 227.97,
+        "end": 245.25,
+        "script_text": "Fan, pump-la innoru magic irukku. Fan-oda power, speed-oda cube-ku proportional. Speed-ai ennbadhu percentage-ku kammi pannaa, power evlo varum? Comment-la sollunga. Answer, kitta thatta aimbathi-onnu percentage. Speed konjam dhaan kammi, aana current bill kitta thatta paadhi.",
+        "boundary_evidence": "matched spoken topic/word anchors and measured audio pause; starts are draft scene cues, not word-level forced alignment",
+        "review_priority": false
+      },
+      {
+        "index": 21,
+        "start": 245.25,
+        "end": 269.8,
+        "script_text": "Ippo quick summary. Motor speed-ai frequency dhaan decide pannudhu, voltage illa. VFD-la rectifier AC-ai DC-aa maathudhu. DC bus capacitor adha smooth pannudhu. IGBT inverter PWM vechu pudhu frequency-la AC ready pannudhu. Frequency-oda voltage-um sendhu maarum, adhu V by F. Ramp vechu soft start. Fan, pump-la energy saving.",
+        "boundary_evidence": "matched spoken topic/word anchors and measured audio pause; starts are draft scene cues, not word-level forced alignment",
+        "review_priority": false
+      },
+      {
+        "index": 22,
+        "start": 269.8,
+        "end": 287.1,
+        "script_text": "Last question. Conveyor speed-ai kammi panna, voltage mattum kammi pannaa enna aagum? A, speed kammi, ellaam safe. B, torque kammi, current adhigam, motor soodaagum. C, motor fast-aa odum. Unga answer comment-la sollunga.",
+        "boundary_evidence": "matched spoken topic/word anchors and measured audio pause; starts are draft scene cues, not word-level forced alignment",
+        "review_priority": true
+      },
+      {
+        "index": 23,
+        "start": 287.1,
+        "end": 292.7,
+        "script_text": "Answer B. Adhanaala dhaan factory-la motor speed control-ku VFD use pannuraanga.",
+        "boundary_evidence": "matched spoken topic/word anchors and measured audio pause; starts are draft scene cues, not word-level forced alignment",
+        "review_priority": true
+      },
+      {
+        "index": 24,
+        "start": 292.7,
+        "end": 298.48,
+        "script_text": "Video useful-aa irundhaa like pannunga, unga factory friends-ku share pannunga, innum indha maadhiri videos-ku subscribe pannunga.",
+        "boundary_evidence": "matched spoken topic/word anchors and measured audio pause; starts are draft scene cues, not word-level forced alignment",
+        "review_priority": true
+      }
+    ],
+    "short": [
+      {
+        "index": 0,
+        "start": 0,
+        "end": 4.64,
+        "script_text": "Conveyor speed-ai kammi pannanum-nu, motor-ku pora voltage-ai kammi pannaanga.",
+        "boundary_evidence": "matched spoken topic/word anchors and measured audio pause; starts are draft scene cues, not word-level forced alignment",
+        "review_priority": false
+      },
+      {
+        "index": 1,
+        "start": 4.64,
+        "end": 11.37,
+        "script_text": "Motor slow aachu. Ellaarum happy. Aana irupadhu nimishathula, motor-la irundhu pugai.",
+        "boundary_evidence": "matched spoken topic/word anchors and measured audio pause; starts are draft scene cues, not word-level forced alignment",
+        "review_priority": false
+      },
+      {
+        "index": 2,
+        "start": 11.37,
+        "end": 20.43,
+        "script_text": "Veetla fan regulator kammi pannaa fan slow aagudhu, onnum aagala. Fan-um motor dhaan, conveyor-um motor dhaan. Adhey vela factory motor-la yen nadakkala?",
+        "boundary_evidence": "matched spoken topic/word anchors and measured audio pause; starts are draft scene cues, not word-level forced alignment",
+        "review_priority": true
+      },
+      {
+        "index": 3,
+        "start": 20.43,
+        "end": 25.71,
+        "script_text": "Motor speed-ai unmaiyaa edhu decide pannudhu? Voltage-aa, illa vera edhaavadhu-aa?",
+        "boundary_evidence": "matched spoken topic/word anchors and measured audio pause; starts are draft scene cues, not word-level forced alignment",
+        "review_priority": true
+      },
+      {
+        "index": 4,
+        "start": 25.71,
+        "end": 27.31,
+        "script_text": "Unga answer comment-la sollunga.",
+        "boundary_evidence": "matched spoken topic/word anchors and measured audio pause; starts are draft scene cues, not word-level forced alignment",
+        "review_priority": true
+      },
+      {
+        "index": 5,
+        "start": 27.31,
+        "end": 32.36,
+        "script_text": "Full answer, motor ulla enna nadakkudhu-nu, keezha irukkura link-la full video paarunga.",
+        "boundary_evidence": "matched spoken topic/word anchors and measured audio pause; starts are draft scene cues, not word-level forced alignment",
+        "review_priority": true
+      },
+      {
+        "index": 6,
+        "start": 32.36,
+        "end": 35.56,
+        "script_text": "Video pidichirundhaa like pannunga, share pannunga, subscribe pannunga.",
+        "boundary_evidence": "matched spoken topic/word anchors and measured audio pause; starts are draft scene cues, not word-level forced alignment",
+        "review_priority": true
+      }
+    ]
+  }
+}

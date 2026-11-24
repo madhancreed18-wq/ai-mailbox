@@ -1,0 +1,30 @@
+{
+  "long": {
+    "source_filename": "long 5-1.wav",
+    "duration_seconds": 298.48,
+    "sample_rate_hz": 24000,
+    "channels": 1,
+    "sample_width_bytes": 2,
+    "frame_count": 7163520,
+    "file_bytes": 14327084,
+    "source_sha256": "04b4af0e281ef4543d6eb4c3cc773bf6488d1da1f2161cdb8004484b80189bc7",
+    "pcm_sha256": "026afbc1ea1b7ceb6eec35c361a8ebfd5a9f1debb8db982b4f911f6248f68899",
+    "audio_transferred": false,
+    "script_snapshot_sha256": "eaacf282657e1d9315564904945185c8daccfa2ca4a6fef5f8842bd450a3c360",
+    "script_source": "https://github.com/madhancreed18-wq/ai-mailbox/blob/main/episodes/14-vfd-basics/paragraphs-long.txt"
+  },
+  "short": {
+    "source_filename": "short 5-1.wav",
+    "duration_seconds": 35.56,
+    "sample_rate_hz": 24000,
+    "channels": 1,
+    "sample_width_bytes": 2,
+    "frame_count": 853440,
+    "file_bytes": 1706924,
+    "source_sha256": "3c6180a8e421b6dd01b0455394115148a8e755d49d159fdb28c8c56f9112e975",
+    "pcm_sha256": "c819d3c048131a20f6f9c2e4c625456fb5d1612ee54ef91ae675bf5645a9a345",
+    "audio_transferred": false,
+    "script_snapshot_sha256": "51b1513d1ad62ab73dc74e6d2d97782b83d7beb0ff3e76e954983b6da7124a79",
+    "script_source": "https://github.com/madhancreed18-wq/ai-mailbox/blob/main/episodes/14-vfd-basics/paragraphs-short.txt"
+  }
+}
