@@ -1509,6 +1509,7 @@ function buildText(e){
 
 /* ---------- Hand, eraser ---------- */
 function drawHand(c,x,y,color,s){
+  if(S.penSprite&&typeof E13_IMG!=='undefined'){const k='hand-pen-draw',im=E13_IMG[k];if(im&&im.complete){const a=E13_META.anchors[k],hs=230;c.drawImage(im,x-a[0]*hs,y-a[1]*hs,hs,hs);return}}
   c.save();c.translate(x,y);c.scale(s,s);c.rotate(.85);c.lineJoin='round';c.lineWidth=3;c.shadowBlur=0;
   const out='#5a3d2b',skin='#f4cba3';
   c.fillStyle=color;c.strokeStyle='#2a2a2a';c.beginPath();c.moveTo(0,0);c.lineTo(15,-5);c.lineTo(15,5);c.closePath();c.fill();c.stroke();
@@ -4627,7 +4628,7 @@ const O2DRAW=new Set(['card2','phone2','panel2','bit2','lamp2','rung']);
 function o2drawDur(e){if(e.kind==='rung')return .95;if(e.kind==='lamp2')return 1.1;const per=2*(e.w+e.h);return Math.min(.85,.3+per/3200)+.5}
 function o2schedule(s){let free=-1;s.els.filter(e=>e.type==='ngd'&&e.win&&O2DRAW.has(e.kind)&&(e.kind!=='rung'||e.drawOn)&&!e.instant).sort((a,b)=>a.win[0]-b.win[0]).forEach(e=>{const d=o2drawDur(e),st=Math.max(e.win[0],free);if(st+d>e.win[1]-.6){e.instant=true;return}e.win=[st,e.win[1]];free=st+d})}
 function o2perim(x,y,w,h,p){let s=p*2*(w+h);if(s<w)return{x:x+s,y};s-=w;if(s<h)return{x:x+w,y:y+s};s-=h;if(s<w)return{x:x+w-s,y:y+h};s-=w;return{x,y:y+h-s}}
-function o2wrap(e,c,tl,fn){if(e.instant||!e.win){fn(e,c,tl);return null}const a=tl-e.win[0];
+function o2wrap(e,c,tl,fn){if((e.instant&&!(S.cardsDraw&&e.kind==='card2'&&e.text))||!e.win){fn(e,c,tl);return null}const a=tl-e.win[0];
   if(e.kind==='rung'){const p=clamp(a/.9);if(p>=1){fn(e,c,tl);return null}c.save();c.beginPath();c.rect(e.x-70,e.y-90,(e.w+140)*o2ease(p),e.h+220);c.clip();fn(e,c,tl);c.restore();return{x:e.x-70+(e.w+140)*o2ease(p),y:e.y+e.h/2,color:'#1f2430'}}
   const circ=e.kind==='lamp2',r=e.w/2,per=circ?2*Math.PI*r:2*(e.w+e.h),d1=e.d1||(circ?.55:Math.min(.85,.3+per/3200)),d2=e.d2||.5,p=clamp(a/d1),q=clamp((a-d1)/d2);
   if(p<1){c.save();c.lineWidth=5;c.strokeStyle=O2;c.lineCap='round';c.beginPath();let tip;
@@ -5968,7 +5969,7 @@ async function buildEp13(){
   /* ===== k25 CTA ===== */
   erase(PS(25));bg(P(25));pres(P(25));eq('hand-thumbs-up',P(25),{x:330,y:120,w:420,h:480});
   card(800,130,420,90,'LIKE',[PS(25),END],{bg:BLU,emoji:'👍',size:40});card(800,240,420,90,'SHARE',[T(25,1),END],{bg:NG.teal,emoji:'↗️',size:40});card(800,350,420,100,'SUBSCRIBE',[T(25,2),END],{bg:RED,emoji:'🔔',size:44});
-  S.captions=false;S.showHand=false;S.cur=0;S.pin=false;S.t=1;refresh();
+  S.captions=false;S.showHand=true;S.penSprite=true;S.cardsDraw=true;S.cur=0;S.pin=false;S.t=1;refresh();
 }
 /* range bar + simple phase-wire diagram helpers */
 function drawRangeBar(e,c,tl){const x=e.x,y=e.y,w=e.w,h=e.h,lo=e.lo,hi=e.hi,sh=e13step(e.show,tl,0);o2box(c,x,y,w,h,20,'#ffffff',4,true);c.save();c.font='700 30px InkHand, "Comic Sans MS"';c.textAlign='center';

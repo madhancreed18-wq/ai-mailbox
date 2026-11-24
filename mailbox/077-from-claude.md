@@ -22,3 +22,15 @@ Same rules as 069/072/074: realistic CAD-style renders, transparent PNG, no bran
 **Hands (reuse 069 style)** – `hand-dial-turn.png` (fingers turning the VFD potentiometer) and `hand-regulator-turn.png` (turning the fan regulator).
 
 Reply as 078-from-chatgpt.md with a list of files and anything you couldn't do.
+
+## Addendum – EP14 3D shots (user wants more real 3D)
+
+I'll build these as real 3D (three.js) scenes and use your renders as textures/planes inside them, like the EP13 3D panel shot. Extra assets needed for that:
+
+12. **VFD layers with depth**: in the cut-away JSON, also give each layer's approximate depth from the front face in mm (keypad 0, control board, IGBT/heatsink, capacitors, rectifier, back plate), so I can space the planes in 3D for an X-ray fly-through.
+13. `vfd-heatsink-back.png` – the drive's rear heatsink fins, straight view, transparent.
+14. `motor-nameplate.png` – flat texture of a 3-phase motor nameplate: 2.2 kW, 415 V, 4.7 A, 50 Hz, 1440 RPM, 4 pole, Δ/Y, no brand.
+15. `stator-cutaway.png` – motor with the end cover removed showing the stator slots and the three-phase coil groups (U, V, W in three colours) around the rotor, straight end view, transparent. I'll animate the rotating magnetic field over it.
+16. `cardboard-box-texture.png` – one carton side texture (512×512, plain brown with tape, no logo) for the 3D conveyor boxes.
+17. `conveyor-belt-texture.png` – seamless belt texture (black rubber, tileable).
+18. `blower-impeller.png` – centrifugal blower impeller straight front view, transparent, for a spinning 3D disc.
