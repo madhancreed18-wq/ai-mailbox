@@ -62,7 +62,7 @@ for side,x in [('DE',101),('NDE',-101)]:
  g='EndShield_'+side;ring('End shield skirt',88 if x>0 else -88,77,70,20,g,blue);ring('Cast end shield',x,77,24,14,g,blue);ring('Bearing boss',x+(4 if x>0 else -4),30,17,15,g,blue)
  for a in [math.pi/4+i*math.pi/2 for i in range(4)]:cyl('End shield bolt',(x+(9 if x>0 else -9),65*math.cos(a),65*math.sin(a)),4,4,g,steel,verts=12)
 # Through shaft: drive extension24x50 from +110 to+160; rear extension enclosed.
-cyl('Internal rotor shaft',(0,0,0),12,210,'Shaft',steel)
+cyl('Internal rotor shaft',(2.5,0,0),12,215,'Shaft',steel)
 shaft=cyl('DE shaft extension',(135,0,0),12,50,'Shaft',steel,verts=64)
 cut=box('Keyway cutter',(134,0,11.6),(42,8,5),'CUT',dark)
 mod=shaft.modifiers.new('Milled keyway','BOOLEAN');mod.object=cut;bpy.context.view_layer.objects.active=shaft;bpy.ops.object.modifier_apply(modifier=mod.name);bpy.data.objects.remove(cut,do_unlink=True);G.pop('CUT')

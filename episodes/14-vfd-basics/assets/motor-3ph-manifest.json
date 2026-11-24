@@ -100,6 +100,8 @@
     "required_names_present": true,
     "rotating_origins_zero": true,
     "no_external_resources": true,
-    "no_images_or_textures": true
-  }
+    "no_images_or_textures": true,
+    "internal_shaft_continuity": "main shaft -105..+110mm; DE extension +110..+160mm; enclosed NDE step -147..-103mm"
+  },
+  "glb_sha256": "6fc71d8bd55daaf7a59dbc7adcfc1cc845ec7b18b30fbb6fc09cda90b2bda6df"
 }

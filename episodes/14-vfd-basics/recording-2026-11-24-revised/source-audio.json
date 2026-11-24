@@ -1,0 +1,30 @@
+{
+  "long": {
+    "source_filename": "long 5-1(1).wav",
+    "duration_seconds": 360.84,
+    "sample_rate_hz": 24000,
+    "channels": 1,
+    "sample_width_bytes": 2,
+    "frame_count": 8660160,
+    "file_bytes": 17320364,
+    "source_sha256": "b8f44ecee459cf1e1a790ce6d122edb2879b8f2eade0cdf06807e965b6ebb736",
+    "pcm_sha256": "7def942c43562e3f437590ddb9f8f3b35595401aa91f81d21d6089bb169ea832",
+    "audio_transferred": false,
+    "script_reference_sha256": "598795fc5393dd2b312af1c0794eec10c08734a516adc8a0de18e4d7a23ff2b7",
+    "script_reference_is_verbatim_recording": false
+  },
+  "short": {
+    "source_filename": "short 5-1(1).wav",
+    "duration_seconds": 38.84,
+    "sample_rate_hz": 24000,
+    "channels": 1,
+    "sample_width_bytes": 2,
+    "frame_count": 932160,
+    "file_bytes": 1864364,
+    "source_sha256": "e85e23f411e4e7ccb597ecada0ca2f04ea20a28307c5134974ba48fafee2b8f4",
+    "pcm_sha256": "fcd67f0974b821eb8f866b7a79839df0008e27c60f90e2acd3530ba15b9db66c",
+    "audio_transferred": false,
+    "script_reference_sha256": "51b1513d1ad62ab73dc74e6d2d97782b83d7beb0ff3e76e954983b6da7124a79",
+    "script_reference_is_verbatim_recording": false
+  }
+}
