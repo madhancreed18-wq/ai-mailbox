@@ -1,0 +1,422 @@
+{
+  "files": [
+    {
+      "file": "blower-impeller.png",
+      "width": 1536,
+      "height": 1536,
+      "sha256": "3db5158a27e39e7ead0c7d5b0fe7e07c0df468ab9b5375fb11920cf6618cfbee",
+      "alpha_bbox": [
+        108,
+        109,
+        1427,
+        1427
+      ],
+      "transparent": true
+    },
+    {
+      "file": "cardboard-box-texture.png",
+      "width": 512,
+      "height": 512,
+      "sha256": "ce83d522790eee0fe5e4025f8196c028b863e4f20d4bc8a42475a51f907bb7ac",
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "transparent": false
+    },
+    {
+      "file": "ceiling-fan-regulator.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "a5188d859cb6624b0778924093090116153f923466099727923dc2b57832dd93",
+      "alpha_bbox": [
+        69,
+        134,
+        1465,
+        917
+      ],
+      "transparent": true
+    },
+    {
+      "file": "ceiling-fan.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "a3261dde230f0020fbda969cd49837a05d21493aeaa3461d45d510915bc3908e",
+      "alpha_bbox": [
+        91,
+        70,
+        1446,
+        949
+      ],
+      "transparent": true
+    },
+    {
+      "file": "centrifugal-fan-motor.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "4cd3d30efec93a5ebea3980cd52d6f7e2416710b6f71380630c2cea35be090b5",
+      "alpha_bbox": [
+        173,
+        20,
+        1409,
+        1018
+      ],
+      "transparent": true
+    },
+    {
+      "file": "conveyor-belt-texture.png",
+      "width": 1024,
+      "height": 1024,
+      "sha256": "7898eb0ae7bd76ab35b42fd9e27af2c807e62eee57cb4fd8f0fca8d49ee4d593",
+      "alpha_bbox": [
+        0,
+        0,
+        1024,
+        1024
+      ],
+      "transparent": false
+    },
+    {
+      "file": "hand-dial-turn.png",
+      "width": 1024,
+      "height": 1024,
+      "sha256": "15f8b7e53d92699a9fbc86f372feac04c156c7b7f378f07dbc0a1395cc1aac3d",
+      "alpha_bbox": [
+        102,
+        89,
+        954,
+        980
+      ],
+      "transparent": true
+    },
+    {
+      "file": "hand-regulator-turn.png",
+      "width": 1024,
+      "height": 1024,
+      "sha256": "77b059a5fe7b1ba6e0d127f176588c80f5bab34fb3935e388192b2095babe1e1",
+      "alpha_bbox": [
+        114,
+        71,
+        960,
+        980
+      ],
+      "transparent": true
+    },
+    {
+      "file": "motor-conveyor-boxes-falling.png",
+      "width": 1920,
+      "height": 1080,
+      "sha256": "165199c4f3a014f1fffbc62e9ef5998098910dc776d4f1fb3a34dd96053582a8",
+      "alpha_bbox": [
+        282,
+        224,
+        1734,
+        895
+      ],
+      "transparent": true
+    },
+    {
+      "file": "motor-conveyor.png",
+      "width": 1920,
+      "height": 1080,
+      "sha256": "d8c2560cbbc9e5832a2c62ac93a7866b8aa0b9c4c1572dd7cf2e2bc136ac78e9",
+      "alpha_bbox": [
+        282,
+        224,
+        1464,
+        895
+      ],
+      "transparent": true
+    },
+    {
+      "file": "motor-nameplate.png",
+      "width": 1024,
+      "height": 640,
+      "sha256": "0cdff804d06de896ec7327fa4771ef28ccc3cf750ee6d2f92a0ea6a5e733d8a7",
+      "alpha_bbox": [
+        0,
+        0,
+        1024,
+        640
+      ],
+      "transparent": false
+    },
+    {
+      "file": "motor-smoke.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "0cfe201d930cb9af4623cf5b1e5b01ef34c65d68df2064d79cf2471be6d5d94e",
+      "alpha_bbox": [
+        286,
+        39,
+        1382,
+        966
+      ],
+      "transparent": true
+    },
+    {
+      "file": "panel-dim.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "ffc2cddd936de9ee5104be5713c61aedac01a78e5d9a17d72577725aafc05782",
+      "alpha_bbox": [
+        175,
+        32,
+        1336,
+        1011
+      ],
+      "transparent": true
+    },
+    {
+      "file": "pump-motor.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "603076763f6ecdbce5d9e77bdff011c53e8bcf85d76ea62707a3119d882d04d5",
+      "alpha_bbox": [
+        167,
+        66,
+        1361,
+        991
+      ],
+      "transparent": true
+    },
+    {
+      "file": "pwm-pulses.png",
+      "width": 1536,
+      "height": 600,
+      "sha256": "72c330a24dc155d90adaedcdbc0f2ef0028ceba7913704f57afa08c071ef401b",
+      "alpha_bbox": [
+        83,
+        20,
+        1450,
+        563
+      ],
+      "transparent": true
+    },
+    {
+      "file": "rectifier-dc.png",
+      "width": 1536,
+      "height": 600,
+      "sha256": "1bbc99f5e9439e037b5c9b3cf09660d0cd4785fc778208c812ad611d0ede2eb7",
+      "alpha_bbox": [
+        44,
+        25,
+        1491,
+        573
+      ],
+      "transparent": true
+    },
+    {
+      "file": "sine-25hz.png",
+      "width": 1536,
+      "height": 480,
+      "sha256": "92c48c97e094d32dfa158a39fef8c6c771562ae63def86374ec2e9fe8b63c77b",
+      "alpha_bbox": [
+        73,
+        22,
+        1499,
+        458
+      ],
+      "transparent": true
+    },
+    {
+      "file": "sine-50hz.png",
+      "width": 1536,
+      "height": 480,
+      "sha256": "f5196c2cdce4b3cd6fe1e2d654d12245e496c5754865cf1a4a35a681e80f438e",
+      "alpha_bbox": [
+        73,
+        22,
+        1499,
+        458
+      ],
+      "transparent": true
+    },
+    {
+      "file": "stator-cutaway.png",
+      "width": 1536,
+      "height": 1536,
+      "sha256": "1ce0391a051cc45147400a91b0eef87d215bb9d940050429112ce5e23facfb1a",
+      "alpha_bbox": [
+        159,
+        90,
+        1377,
+        1377
+      ],
+      "transparent": true
+    },
+    {
+      "file": "vfd-3q.png",
+      "width": 1536,
+      "height": 1536,
+      "sha256": "01d26eb4e349a9e391f48f15fabfe51f392969fe4b9007450b7e3b05b5035651",
+      "alpha_bbox": [
+        279,
+        61,
+        1157,
+        1357
+      ],
+      "transparent": true
+    },
+    {
+      "file": "vfd-cut-control.png",
+      "width": 1536,
+      "height": 1536,
+      "sha256": "7eb7ffb9df015136180f56844792b93d4e8496269c112d81a1641e1d18e8b3dc",
+      "alpha_bbox": [
+        538,
+        208,
+        998,
+        870
+      ],
+      "transparent": true
+    },
+    {
+      "file": "vfd-cut-dcbus.png",
+      "width": 1536,
+      "height": 1536,
+      "sha256": "b2ce5c6cb9da5f49eb7d401c406840eaed7f4886b50b84c56d5bb0f18bca5dc9",
+      "alpha_bbox": [
+        561,
+        796,
+        1007,
+        1252
+      ],
+      "transparent": true
+    },
+    {
+      "file": "vfd-cut-fan.png",
+      "width": 1536,
+      "height": 1536,
+      "sha256": "f6727e346723bc5c7010bd0c746c5f3737e7f5258d1983c979af31e92d7a9b07",
+      "alpha_bbox": [
+        649,
+        1101,
+        887,
+        1340
+      ],
+      "transparent": true
+    },
+    {
+      "file": "vfd-cut-housing.png",
+      "width": 1536,
+      "height": 1536,
+      "sha256": "e85751bff685ee10dba41b2fc74461eb7b366a3c40af853feaa8363c9e8f5c70",
+      "alpha_bbox": [
+        500,
+        124,
+        1036,
+        1442
+      ],
+      "transparent": true
+    },
+    {
+      "file": "vfd-cut-igbt.png",
+      "width": 1536,
+      "height": 1536,
+      "sha256": "62bed88114f3f29aa0b22cd54b4a3e526f82a6ee441496fbade8f1110c5ccc8f",
+      "alpha_bbox": [
+        514,
+        154,
+        1022,
+        1328
+      ],
+      "transparent": true
+    },
+    {
+      "file": "vfd-cut-rectifier.png",
+      "width": 1536,
+      "height": 1536,
+      "sha256": "9266cf5cee703887d5ec4baa5bc40224c410651acf9fa03bc28266785cc0f7a8",
+      "alpha_bbox": [
+        542,
+        968,
+        735,
+        1138
+      ],
+      "transparent": true
+    },
+    {
+      "file": "vfd-cut-terminals.png",
+      "width": 1536,
+      "height": 1536,
+      "sha256": "f5a2390d95b8e2b59415344275cd78f37dc2900fc5f2bb6ff0fb05e2efb65591",
+      "alpha_bbox": [
+        550,
+        1251,
+        986,
+        1378
+      ],
+      "transparent": true
+    },
+    {
+      "file": "vfd-front.png",
+      "width": 1536,
+      "height": 1536,
+      "sha256": "2a20fa81f87334c2f09297711c47de44516140737bedd94b8b1e88dcf3d2a6fa",
+      "alpha_bbox": [
+        500,
+        124,
+        1036,
+        1442
+      ],
+      "transparent": true
+    },
+    {
+      "file": "vfd-heatsink-back.png",
+      "width": 1536,
+      "height": 1536,
+      "sha256": "17c84c879d2f2305b2862a238ff4ee74f370cbf40203e9ee1a6c24902d058de8",
+      "alpha_bbox": [
+        496,
+        144,
+        1040,
+        1392
+      ],
+      "transparent": true
+    }
+  ],
+  "anchors": {
+    "hand-dial-turn.png": {
+      "grip_px": [
+        205,
+        310
+      ],
+      "approximate": true
+    },
+    "hand-regulator-turn.png": {
+      "grip_px": [
+        220,
+        360
+      ],
+      "approximate": true
+    },
+    "blower-impeller.png": {
+      "rotation_pivot_px": [
+        768,
+        768
+      ]
+    },
+    "stator-cutaway.png": {
+      "rotation_pivot_px": [
+        768,
+        768
+      ]
+    },
+    "ceiling-fan-regulator.png": {
+      "knob_pivot_px": [
+        1097,
+        584
+      ],
+      "approximate": true
+    }
+  },
+  "waveform_window_ms": 80,
+  "qa": {
+    "png_count": 29,
+    "front_housing_alpha_mask_equal_at_128": true,
+    "belt_opposite_edges_equal": true
+  }
+}

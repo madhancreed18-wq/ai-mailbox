@@ -1,0 +1,12 @@
+{
+  "same_camera": true,
+  "same_machine_geometry": true,
+  "only_box_poses_change": true,
+  "drive": "Single motor drive shaft -> input coupling -> right-angle gearbox -> coaxial output/head-roller coupling",
+  "motor_input_axis": "X",
+  "head_roller_output_axis": "Y",
+  "canvas": [
+    1920,
+    1080
+  ]
+}

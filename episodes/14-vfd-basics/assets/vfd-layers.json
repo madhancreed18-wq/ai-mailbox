@@ -1,0 +1,381 @@
+{
+  "schema_version": 1,
+  "canvas": [
+    1536,
+    1536
+  ],
+  "coordinates": "full source pixels, top-left origin,+xright,+ydown",
+  "front_face_reference": "keypad face y=-78mm, depth grows toward rear",
+  "same_camera": "all front/cut canvases from one locked orthographic camera",
+  "layers": [
+    {
+      "file": "vfd-cut-housing.png",
+      "canvas": [
+        1536,
+        1536
+      ],
+      "position_px": [
+        0,
+        0
+      ],
+      "composite_order": 0,
+      "centre_px": [
+        768.0,
+        768.0
+      ],
+      "depth_from_front_mm": 147,
+      "depth_status": "approximate generic model, not OEM measurements",
+      "objects": [
+        "Back housing shell",
+        "Housing side wall",
+        "Housing side wall.001",
+        "Housing end wall",
+        "Housing end wall.001",
+        "DIN rear fixed hook",
+        "DIN rear lower clip",
+        "DIN bottom release pull tab",
+        "Mounting ear",
+        "Mounting ear.001"
+      ]
+    },
+    {
+      "file": "vfd-cut-igbt.png",
+      "canvas": [
+        1536,
+        1536
+      ],
+      "position_px": [
+        0,
+        0
+      ],
+      "composite_order": 1,
+      "centre_px": [
+        790.81,
+        543.68
+      ],
+      "depth_from_front_mm": 125,
+      "depth_status": "approximate generic model, not OEM measurements",
+      "objects": [
+        "Heatsink base",
+        "Heatsink vertical fin",
+        "Heatsink vertical fin.001",
+        "Heatsink vertical fin.002",
+        "Heatsink vertical fin.003",
+        "Heatsink vertical fin.004",
+        "Heatsink vertical fin.005",
+        "Heatsink vertical fin.006",
+        "Heatsink vertical fin.007",
+        "Heatsink vertical fin.008",
+        "Heatsink vertical fin.009",
+        "Heatsink vertical fin.010",
+        "Heatsink vertical fin.011",
+        "Heatsink vertical fin.012",
+        "IGBT module",
+        "IGBT power pin",
+        "IGBT power pin.001",
+        "IGBT power pin.002",
+        "IGBT power pin.003",
+        "IGBT power pin.004",
+        "IGBT power pin.005",
+        "Steel screw",
+        "Cross slot",
+        "Cross slot.001",
+        "Steel screw.001",
+        "Cross slot.002",
+        "Cross slot.003"
+      ]
+    },
+    {
+      "file": "vfd-cut-rectifier.png",
+      "canvas": [
+        1536,
+        1536
+      ],
+      "position_px": [
+        0,
+        0
+      ],
+      "composite_order": 2,
+      "centre_px": [
+        638.73,
+        1053.15
+      ],
+      "depth_from_front_mm": 97,
+      "depth_status": "approximate generic model, not OEM measurements",
+      "objects": [
+        "Rectifier bridge module",
+        "Rectifier tab",
+        "Rectifier tab.001",
+        "Rectifier tab.002",
+        "Rectifier tab.003",
+        "Rectifier tab.004",
+        "Rectifier tab.005"
+      ]
+    },
+    {
+      "file": "vfd-cut-dcbus.png",
+      "canvas": [
+        1536,
+        1536
+      ],
+      "position_px": [
+        0,
+        0
+      ],
+      "composite_order": 3,
+      "centre_px": [
+        768.0,
+        969.51
+      ],
+      "depth_from_front_mm": 69,
+      "depth_status": "approximate generic model, not OEM measurements",
+      "objects": [
+        "DC bus electrolytic can",
+        "Capacitor aluminium top",
+        "Capacitor sleeve stripe",
+        "Capacitor lead",
+        "Capacitor lead.001",
+        "DC bus electrolytic can.001",
+        "Capacitor aluminium top.001",
+        "Capacitor sleeve stripe.001",
+        "Capacitor lead.002",
+        "Capacitor lead.003",
+        "DC choke core",
+        "Choke copper turns",
+        "Choke copper turns.001",
+        "Choke copper turns.002",
+        "Choke copper turns.003",
+        "Choke copper turns.004",
+        "Choke copper turns.005",
+        "Choke copper turns.006",
+        "Choke copper turns.007",
+        "Choke copper turns.008",
+        "Choke copper turns.009",
+        "Choke copper turns.010",
+        "Choke copper turns.011",
+        "Choke copper turns.012",
+        "Choke copper turns.013",
+        "Choke copper turns.014",
+        "Choke copper turns.015",
+        "Choke copper turns.016",
+        "Choke copper turns.017"
+      ]
+    },
+    {
+      "file": "vfd-cut-fan.png",
+      "canvas": [
+        1536,
+        1536
+      ],
+      "position_px": [
+        0,
+        0
+      ],
+      "composite_order": 4,
+      "centre_px": [
+        768.0,
+        1220.44
+      ],
+      "depth_from_front_mm": 89,
+      "depth_status": "approximate generic model, not OEM measurements",
+      "objects": [
+        "Cooling fan square frame",
+        "Fan central hub",
+        "Fan blade",
+        "Fan blade.001",
+        "Fan blade.002",
+        "Fan blade.003",
+        "Fan blade.004",
+        "Fan blade.005",
+        "Fan blade.006"
+      ]
+    },
+    {
+      "file": "vfd-cut-terminals.png",
+      "canvas": [
+        1536,
+        1536
+      ],
+      "position_px": [
+        0,
+        0
+      ],
+      "composite_order": 5,
+      "centre_px": [
+        768.0,
+        1319.29
+      ],
+      "depth_from_front_mm": 41,
+      "depth_status": "approximate generic model, not OEM measurements",
+      "objects": [
+        "Power terminal cage",
+        "Brass cable well",
+        "Steel screw.002",
+        "Cross slot.004",
+        "Cross slot.005",
+        "R",
+        "Power terminal cage.001",
+        "Brass cable well.001",
+        "Steel screw.003",
+        "Cross slot.006",
+        "Cross slot.007",
+        "S",
+        "Power terminal cage.002",
+        "Brass cable well.002",
+        "Steel screw.004",
+        "Cross slot.008",
+        "Cross slot.009",
+        "T",
+        "Power terminal cage.003",
+        "Brass cable well.003",
+        "Steel screw.005",
+        "Cross slot.010",
+        "Cross slot.011",
+        "U",
+        "Power terminal cage.004",
+        "Brass cable well.004",
+        "Steel screw.006",
+        "Cross slot.012",
+        "Cross slot.013",
+        "V",
+        "Power terminal cage.005",
+        "Brass cable well.005",
+        "Steel screw.007",
+        "Cross slot.014",
+        "Cross slot.015",
+        "W",
+        "PE",
+        "Steel screw.008",
+        "Cross slot.016",
+        "Cross slot.017"
+      ]
+    },
+    {
+      "file": "vfd-cut-control.png",
+      "canvas": [
+        1536,
+        1536
+      ],
+      "position_px": [
+        0,
+        0
+      ],
+      "composite_order": 6,
+      "centre_px": [
+        768.0,
+        498.06
+      ],
+      "depth_from_front_mm": 25,
+      "depth_status": "approximate generic model, not OEM measurements",
+      "objects": [
+        "Control PCB",
+        "Control IC",
+        "SMD leg",
+        "SMD leg.001",
+        "SMD leg.002",
+        "SMD leg.003",
+        "SMD leg.004",
+        "SMD leg.005",
+        "SMD leg.006",
+        "SMD leg.007",
+        "SMD leg.008",
+        "SMD leg.009",
+        "Control IC.001",
+        "SMD leg.010",
+        "SMD leg.011",
+        "SMD leg.012",
+        "SMD leg.013",
+        "SMD leg.014",
+        "SMD leg.015",
+        "SMD leg.016",
+        "SMD leg.017",
+        "SMD leg.018",
+        "SMD leg.019",
+        "Control IC.002",
+        "SMD leg.020",
+        "SMD leg.021",
+        "SMD leg.022",
+        "SMD leg.023",
+        "SMD leg.024",
+        "SMD leg.025",
+        "SMD leg.026",
+        "SMD leg.027",
+        "SMD leg.028",
+        "SMD leg.029",
+        "Control IC.003",
+        "SMD leg.030",
+        "SMD leg.031",
+        "SMD leg.032",
+        "SMD leg.033",
+        "SMD leg.034",
+        "SMD leg.035",
+        "SMD leg.036",
+        "SMD leg.037",
+        "SMD leg.038",
+        "SMD leg.039",
+        "Keypad front moulding",
+        "Display dark lens",
+        "LED segment a",
+        "LED segment g",
+        "LED segment d",
+        "LED segment f",
+        "LED segment b",
+        "LED segment e",
+        "LED segment c",
+        "LED segment a.001",
+        "LED segment g.001",
+        "LED segment d.001",
+        "LED segment f.001",
+        "LED segment b.001",
+        "LED segment e.001",
+        "LED segment c.001",
+        "LED segment a.002",
+        "LED segment g.002",
+        "LED segment d.002",
+        "LED segment f.002",
+        "LED segment b.002",
+        "LED segment e.002",
+        "LED segment c.002",
+        "LED segment a.003",
+        "LED segment g.003",
+        "LED segment d.003",
+        "LED segment f.003",
+        "LED segment b.003",
+        "LED segment e.003",
+        "LED segment c.003",
+        "Display decimal",
+        "Key RUN",
+        "RUN",
+        "Key STOP",
+        "STOP",
+        "Key \u2191",
+        "\u2191",
+        "Key \u2193",
+        "\u2193",
+        "Key ENTER",
+        "ENTER",
+        "Potentiometer socket",
+        "Speed potentiometer",
+        "Pot white pointer",
+        "SPEED"
+      ]
+    }
+  ],
+  "potentiometer_pivot_px": [
+    768.0,
+    764.2
+  ],
+  "fan_pivot_px": [
+    768.0,
+    1220.44
+  ],
+  "component_depths_mm": {
+    "keypad": 0,
+    "control_board": 35,
+    "IGBT": 126,
+    "capacitors": 69,
+    "rectifier": 97,
+    "back_plate": 147
+  },
+  "limits": "Educational internal arrangement; integrated DC choke included per brief, not universal to compact VFDs."
+}

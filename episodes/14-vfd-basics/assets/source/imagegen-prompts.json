@@ -1,0 +1,42 @@
+[
+  {
+    "key": "ep14Regulator",
+    "prompt": "Use case: product-mockup. One realistic generic Indian-style home wall switchboard FACEPLATE, front orthographic view, isolated genuine transparent alpha,1536x1024. White rectangular modular faceplate, two ordinary white rocker light switches on the left, one prominent ROTARY CEILING-FAN SPEED REGULATOR on right. Round white ribbed knob, small black index line at12o'clock, simple printed speed scale0,1,2,3,4,5 around it. Realistic screws, moulded plastic frame and shallow bevels, neutral upper-left studio light. No wall/background, no brands/logos/watermark, no other appliances, no plug sticking out. Device alone, comfortably centred with generous transparent border. This is a wall fan regulator, not a VFD, dimmer slider or industrial rotary disconnect."
+  },
+  {
+    "key": "ep14CeilingFan",
+    "prompt": "Use case: product-mockup. One realistic generic three-blade residential CEILING FAN, complete assembly isolated on genuine transparent alpha,1536x1024landscape. Three slim white/light-grey metal blades spaced120degrees, each attached with realistic brackets to a compact central motor housing; short vertical downrod and ceiling canopy, whole assembly visible. Slight low three-quarter view from beneath so all THREE blades, hub, downrod and canopy are clear. Crisp CAD/product render, white enamel/steel materials, neutral upper-left studio lighting, no motion blur. No background, room, people, wires, branding or watermark. Do not crop blade tips or canopy."
+  },
+  {
+    "key": "ep14Blower",
+    "prompt": "Use case: product-mockup. Realistic generic industrial CENTRIFUGAL BLOWER with blue TEFC three-phase motor, full assembly on a small steel base frame, isolated transparent alpha,1536x1024. Reference motor gives the correct finned blue motor style and one drive-end shaft only. Large lightgrey scroll/volute blower casing on LEFT, circular axial air INLET facing front-left with inner impeller throat visibly recessed, rectangular tangential DISCHARGE at upper right of scroll. Blue motor sits to RIGHT/REAR, its drive end couples directly into the impeller shaft through blower housing; mechanically coaxial, no exposed shaft from motor rear fan cowl. Motor has lengthwise cooling fins, top terminalbox, side blank nameplate, mounting feet bolted to common base. Three-quarter product view that shows volute shape, inlet, discharge and motor together. Physically plausible direct-drive industrial blower, not a propeller/axial fan or pump. Neutral studio light upper-left, grey/blue/steel materials. No logos, brand, labels, watermark or ground shadow; whole assembly in frame with transparent margins."
+  },
+  {
+    "key": "ep14Pump",
+    "prompt": "Use case: product-mockup. Realistic generic industrial CLOSE-COUPLED MONOBLOCK CENTRIFUGAL PUMP and blue TEFC three-phase motor, transparent alpha,1536x1024. Reference is the episode motor shape/material only; use a smaller matched blue motor attached directly to pump bellhousing. Pump volute casing on LEFT: a clear horizontal AXIAL SUCTION circular flanged opening faces camera-left, one RADIAL DISCHARGE flange points vertically upward. Motor at RIGHT with its single drive-end shaft fully inside the connecting pump bellhousing, closed rear fan cowl at far right with NO rear shaft protruding. Blue motor axial cooling fins, top terminalbox, side blank nameplate, mounting feet. Pump casing grey cast iron, steel bolts and flanges, common compact mounting feet. Realistic three-quarter view showing both ports and correct motor-to-pump coaxial connection. No exposed disconnected shafts, random tubing, extra ports, brand names, logos, text, watermark or background. Upper-left neutral studio light, all equipment inside generous transparent border."
+  },
+  {
+    "key": "ep14MotorSmoke",
+    "prompt": "Use case: precise-object-edit. Edit ONLY overheating effects on this same blue motor. Preserve the exact CAD motor geometry, camera, position, single LEFT drive-end shaft, right closed fan cowl with NO rear shaft, axial fins, top terminalbox, feet, eye and blank side plate. Add soft semi-transparent GREY SMOKE emerging from the winding/endshield vent area around the main motor body, with a subtle RED HEAT GLOW visible near winding vent/seam regions. NO FIRE, no flame, no orange sparks, no melted/broken motor, no additional object or label. Do not relocate smoke solely to the terminalbox; this is winding overheating. Keep the same3/4 view and whole motor visible, extending transparent canvas upward if needed to fit smoke without clipping. Landscape1536x1024, genuinely transparent background, neutral upper-left studio light, preserve original CAD materials rather than redesigning the equipment."
+  },
+  {
+    "key": "ep14Panel",
+    "prompt": "Create a realistic generic industrial motor control panel interior, isolated transparent background landscape. Open steel backplate enclosure, DIN rails, three-pole breaker, contactor, tidy wiring ducts, terminal strip and compact VFD matching reference product. VFD display reads 50.00, grey housing, keypad, black speed pot. Correct believable equipment arrangement; no logos, no decorative extra shafts, no floating wires. Dim warm amber pilot light. Front three-quarter view, entire panel visible with margins. Clean realistic CAD product asset for educational animation."
+  },
+  {
+    "key": "ep14HandDial",
+    "prompt": "Create a standalone right hand overlay in EXACT clay peach hand / periwinkle sleeve / white cuff style of reference. Thumb and index form a small natural pinch around an invisible 18 mm VFD speed knob. Hand and wrist only, no actual device, no knob, no text, no background. All five fingers anatomically correct; other three fingers gently curled. Grip opening clearly visible near upper left of hand. Full sleeve end visible with generous margins, isolated alpha PNG. Soft 3D clay shading."
+  },
+  {
+    "key": "ep14HandRegulator",
+    "prompt": "Create a standalone right hand overlay in EXACT clay peach hand / periwinkle sleeve / white cuff style of reference. Thumb and index form a wider natural C grip around an invisible 40 mm wall fan regulator knob, fingers positioned as if turning it clockwise. Hand and wrist only, no actual device, no knob, no text, no background. Five anatomically correct fingers; other three gently curled. Grip opening near upper left. Full sleeve end with generous margins, isolated alpha PNG. Soft 3D clay shading."
+  },
+  {
+    "key": "ep14BoxTexture",
+    "prompt": "A flat orthographic cardboard carton material texture, full bleed square, plain warm brown kraft corrugated cardboard with subtle realistic paper fibres. One straight vertical strip of slightly lighter tan packing tape running full height through center. Perfectly flat lighting, no box edges, no perspective, no shadows, no labels, no logos, no text, no objects. Opaque texture map."
+  },
+  {
+    "key": "ep14BeltTexture",
+    "prompt": "Create a seamlessly tileable full bleed square material texture of black industrial conveyor belt rubber. Fine uniform matte woven rubber grain, subtle tiny roughness, dark charcoal black. Perfect even flat lighting. No large features, no seams, no belt edges, no perspective, no objects, no logos, no text, no glossy highlights. Opposite edges tile continuously."
+  }
+]
