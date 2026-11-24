@@ -165,7 +165,9 @@ textarea{resize:vertical;min-height:64px}
 <script src="vendor/three.iife.js"></script>
 <script src="hands.js"></script>
 <script src="ep13assets.js"></script>
+<script src="vendor/gltfloader.iife.js"></script>
 <script src="ep14assets.js"></script>
+<script src="ep14motor.js"></script>
 <script>
 (()=>{
 let W=1280,H=720;
@@ -2308,7 +2310,7 @@ const TPL={
  ep09s:{name:'EP09 Short – Lift button latching (9:16)',desc:'0:37 · 3D lift hook, decode, power-cut danger, CTA',style:'white',scenes:[]},
  sd3dtest:{name:'Star-Delta 3D stage test',desc:'real 3D panel, contactors, motor, ammeter, light',style:'white',scenes:[]},
  sdmgtest:{name:'Star-Delta motion graphic test',desc:'animated contactors, current, motor, ammeter, light, timer',style:'white',scenes:[]},
- ep14:{name:'EP14 – VFD basics (5:13)',desc:'3D conveyor, VFD X-ray, live meters, V/f',style:'white',scenes:[]},
+ ep14:{name:'EP14 – VFD basics (5:23)',desc:'3D conveyor, VFD X-ray, live meters, V/f',style:'white',scenes:[]},
  ep14s:{name:'EP14 Short (0:36)',desc:'voltage vs speed hook',style:'white',scenes:[]},
  ep13:{name:'EP13 – MCB vs MPCB (4:33)',desc:'CAD renders cut open, motor burn VFX, phase loss slider',style:'white',scenes:[]},
  ep13s:{name:'EP13 Short (0:40)',desc:'motor burn hook, MCB vs MPCB question',style:'white',scenes:[]},
@@ -5269,8 +5271,8 @@ function drawMeters(e,c,tl){const L=[['FREQUENCY','Hz',e.hz,0,60,null],['VOLTAGE
     if(red!=null){c.strokeStyle='rgba(220,38,38,.35)';c.beginPath();c.arc(cx,cy,r,a0+(a1-a0)*(red-lo)/(hi-lo),a1);c.stroke()}
     c.strokeStyle=over?E14C.red:E14C.blue;c.beginPath();c.arc(cx,cy,r,a0,a0+(a1-a0)*f);c.stroke();
     const an=a0+(a1-a0)*f;c.lineWidth=4;c.strokeStyle=E14C.ink;c.beginPath();c.moveTo(cx,cy);c.lineTo(cx+Math.cos(an)*r*.85,cy+Math.sin(an)*r*.85);c.stroke();c.fillStyle=E14C.ink;c.beginPath();c.arc(cx,cy,6,0,7);c.fill();
-    c.textAlign='center';c.font='700 '+Math.round(gh*.1)+'px "IBM Plex Sans",Arial';c.fillStyle='#64748b';c.fillText(nm,cx,y+gh*.18);
-    c.font='800 '+Math.round(gh*.17)+'px "IBM Plex Mono",monospace';c.fillStyle=over?E14C.red:E14C.ink;c.fillText((u==='RPM'||u==='V'?Math.round(v):v.toFixed(1))+' '+u,cx,y+gh*.93);c.restore()})}
+    const fz=Math.min(gh,gw*1.25);c.textAlign='center';c.font='700 '+Math.round(fz*.09)+'px "IBM Plex Sans",Arial';c.fillStyle='#64748b';c.fillText(nm,cx,y+gh*.18);
+    c.font='800 '+Math.round(fz*.13)+'px "IBM Plex Mono",monospace';c.fillStyle=over?E14C.red:E14C.ink;c.fillText((u==='RPM'||u==='V'?Math.round(v):v.toFixed(1))+' '+u,cx,y+gh*.93);c.restore()})}
 /* --- live waveforms --- */
 function drawWave(e,c,tl){const{x,y,w,h}=e;e14panel(c,x,y,w,h,e.title);const px=x+24,pw=w-48,py=y+(e.title?50:20),ph=h-(e.title?70:40),mid=py+ph/2,A=ph*.42;
   c.save();c.beginPath();c.rect(px,py,pw,ph);c.clip();c.strokeStyle=E14C.grid;c.lineWidth=2;c.beginPath();c.moveTo(px,mid);c.lineTo(px+pw,mid);c.stroke();
@@ -5333,12 +5335,13 @@ function g3Line(){const B=g3Base('#e3e8ee'),{T,S,cam,M,box,cyl,label}=B;
   const body=cyl(.45,.45,1.4,mb,0,0,0,MO,48);body.rotation.z=Math.PI/2;for(let i=0;i<16;i++){const a=i/16*Math.PI*2;const f=box(1.2,.05,.07,mb,0,Math.cos(a)*.47,Math.sin(a)*.47,MO);f.rotation.x=a}
   cyl(.43,.36,.35,M('#285481',{r:.5,m:.3}),.85,0,0,MO,36).rotation.z=Math.PI/2;box(.34,.24,.32,M('#2b5279',{r:.5}),-.1,.56,0,MO);[-.4,.4].forEach(x=>box(.22,.22,.85,M('#1f3b5c',{r:.6}),x,-.5,0,MO));
   const shaft=cyl(.05,.05,.6,M('#d1d5db',{m:.9,r:.2}),-.95,0,0,MO,12);shaft.rotation.z=Math.PI/2;const key=box(.12,.03,.03,M('#111827'),-1.0,.05,0,MO);
+  const RM=e14MotorClone();let rmShell=[],rmSpin=[];if(RM){MO.children.slice().forEach(c=>{if(c!==shaft&&c!==key)c.visible=false});shaft.visible=key.visible=false;RM.g.scale.setScalar(4.2);RM.g.rotation.y=Math.PI;RM.g.position.set(-.1,0,0);MO.add(RM.g);rmShell=E14_SHELL.flatMap(n=>e14meshes(RM.parts[n]));rmSpin=E14_SPIN.map(n=>RM.parts[n]).filter(Boolean)}
   // smoke sprites (EP13 VFX renders)
   const smk=[1,2,3,4,1,2,3,4].map((k,i)=>{const sp=new T.Sprite(new T.SpriteMaterial({map:g3TexImg(T,'smoke-'+k),transparent:true,depthWrite:false,opacity:0}));S.add(sp);return{sp,ph:i/8}});
   let ang=0,off=0,lastT=0;
   return{B,update(tl,e){const sp=kv(e.spd,tl,1),heat=kv(e.heat,tl,0),dt=Math.max(0,Math.min(.1,tl-lastT));lastT=tl;ang+=dt*sp*10;off+=dt*sp*.7;
-    head.rotation.z=-ang;tail.rotation.z=-ang;shaft.rotation.x=ang*6;key.position.set(-1.0,Math.cos(ang*6)*.05,Math.sin(ang*6)*.05);bTex.offset.x=-off;
-    mb.color.setRGB(.184+(.42-.184)*heat*.7,.373-(.373-.09)*heat*.7,.561-(.561-.08)*heat*.7);mb.emissiveIntensity=heat*.12*(.85+.15*Math.sin(tl*9));
+    head.rotation.y=-ang;tail.rotation.y=-ang;shaft.rotation.x=ang*6;key.position.set(-1.0,Math.cos(ang*6)*.05,Math.sin(ang*6)*.05);bTex.offset.x=-off;
+    mb.color.setRGB(.184+(.42-.184)*heat*.7,.373-(.373-.09)*heat*.7,.561-(.561-.08)*heat*.7);mb.emissiveIntensity=heat*.12*(.85+.15*Math.sin(tl*9));rmShell.forEach(m=>{m.material.emissive.set('#b91c1c');m.material.emissiveIntensity=heat*.45*(.85+.15*Math.sin(tl*9))});rmSpin.forEach(o=>o.rotation.x=ang*6);
     const fallOn=kv(e.fall,tl,0)>.5;boxes.forEach((o,i)=>{let x=((-4.6+i*1.9+off*8)%9.5+9.5)%9.5-5.2;const b=o.b;
       if(x>2.75&&fallOn){const u=(x-2.75)/(sp*.7*8+.01);b.position.set(x+.3,.6-4*u*u,0);b.rotation.z=-Math.min(1.4,u*3)}else{b.position.set(x,.6,0);b.rotation.z=0}b.visible=x<5.2&&!(x>2.9&&!fallOn)});
     smk.forEach(({sp:s,ph})=>{const u=((tl*.35+ph)%1);s.position.set(4.55+Math.sin(ph*9)*.2,.6+u*2.2,1.55+Math.cos(ph*7)*.2);const sc=.5+u*1.6;s.scale.set(sc,sc,1);s.material.opacity=Math.max(0,heat-.35)*1.4*(1-u)});
@@ -5346,6 +5349,58 @@ function g3Line(){const B=g3Base('#e3e8ee'),{T,S,cam,M,box,cyl,label}=B;
     const now=[1,2,3,4,5,6].map(j=>A[j]+(Bk[j]-A[j])*u);cam.position.set(now[0]+Math.sin(tl*.3)*.05,now[1]+Math.sin(tl*.23)*.03,now[2]);cam.lookAt(now[3],now[4],now[5])}}
 }
 G3_BUILD.line=g3Line;
+/* ---------------- 3D: room with ceiling fan + wall regulator (real rotation) ---------------- */
+function g3FanRoom(){const B=g3Base('#e8e3da'),{T,S,cam,M,box,cyl,label}=B;
+  [box(20,.1,14,M('#f4f1ec',{r:.95}),0,3.2,0),box(20,8,.1,M('#efe7da',{r:.95}),0,-.8,-3.2),box(20,.1,14,M('#cdbfa8',{r:.9}),0,-4.8,0)].forEach(m=>m.castShadow=false);
+  B.hemi.intensity=1.6;const room=new T.PointLight('#fff7ed',30,30);room.position.set(0,2.4,4);S.add(room);
+  // ceiling fan
+  const white=M('#f3f4f6',{r:.35,m:.1}),FAN=new T.Group();FAN.position.set(-1.6,0,-.6);S.add(FAN);
+  cyl(.28,.36,.22,white,0,3.03,0,FAN,40);cyl(.04,.04,1.4,M('#d1d5db',{m:.6,r:.3}),0,2.25,0,FAN,16);
+  const ROT=new T.Group();ROT.position.y=1.45;FAN.add(ROT);cyl(.42,.46,.3,white,0,0,0,ROT,48);cyl(.3,.42,.12,white,0,-.2,0,ROT,48);
+  const bladeM=M('#f9fafb',{r:.5});for(let i=0;i<3;i++){const g=new T.Group();g.rotation.y=i*Math.PI*2/3;ROT.add(g);box(.5,.05,.12,M('#9ca3af',{m:.7,r:.3}),.55,-.02,0,g);const b=box(2.1,.035,.42,bladeM,1.75,-.04,0,g);b.rotation.x=.12}
+  const blur=new T.Mesh(new T.RingGeometry(.6,2.85,64),new T.MeshBasicMaterial({color:'#ffffff',transparent:true,opacity:0,side:T.DoubleSide,depthWrite:false}));blur.rotation.x=-Math.PI/2;blur.position.set(-1.6,1.41,-.6);S.add(blur);
+  // wall switch plate with fan regulator
+  const PL=new T.Group();PL.position.set(2.6,-.6,-3.1);S.add(PL);box(1.9,1.1,.08,M('#fafafa',{r:.3}),0,0,.04,PL);
+  [-.6,-.25].forEach(x=>{box(.28,.55,.06,M('#e5e7eb',{r:.35}),x,0,.1,PL);box(.2,.22,.05,M('#ffffff',{r:.3}),x,.1,.14,PL)});
+  for(let i=0;i<=5;i++){const a=-2.3+i*.92;label(String(i),.14,.14,.5+Math.cos(a+Math.PI/2)*.34,Math.sin(a+Math.PI/2)*.34,.09,PL,{size:90,color:'#374151'})}
+  const KN=new T.Group();KN.position.set(.5,0,.1);PL.add(KN);const kb=cyl(.2,.22,.12,M('#f3f4f6',{r:.25}),0,0,0,KN,40);kb.rotation.x=Math.PI/2;
+  const ptr=box(.035,.16,.02,M('#ef4444',{r:.4}),0,.1,.07,KN);
+  const hTex=g3TexImg(T,'hand-regulator-turn'),hand=new T.Mesh(new T.PlaneGeometry(1.1,1.1),new T.MeshBasicMaterial({map:hTex,transparent:true,depthWrite:false}));hand.position.set(2.6+.5+.15,-.6-.2,-2.85);S.add(hand);
+  let ang=0,lastT=0;
+  return{B,update(tl,e){const sp=kv(e.spd,tl,1),dt=Math.max(0,Math.min(.1,tl-lastT));lastT=tl;ang+=dt*sp*11;ROT.rotation.y=-ang;blur.material.opacity=Math.max(0,sp-.45)*.28;
+    KN.rotation.z=-(-2.3+sp*5*.92)+0;const hv=kv(e.hand,tl,0);hand.material.opacity=hv;hand.visible=hv>.01;hand.rotation.z=-(sp-1)*.6;
+    const cp=e.cam||[[0,.4,.2,7.5,.4,.4,-1.5]];let i0=0;cp.forEach((k,i)=>{if(tl>=k[0])i0=i});const A=cp[i0],Bk=cp[Math.min(i0+1,cp.length-1)];const span=Bk[0]-A[0],tr=Math.min(1.6,span||1),u=span>0?g3ease(g3c((tl-(Bk[0]-tr))/tr)):0;
+    const now=[1,2,3,4,5,6].map(j=>A[j]+(Bk[j]-A[j])*u);cam.position.set(now[0]+Math.sin(tl*.3)*.04,now[1],now[2]);cam.lookAt(now[3],now[4],now[5])}}
+}
+G3_BUILD.fanroom=g3FanRoom;
+/* ---------------- 3D: real 3-phase induction motor (ChatGPT CAD GLB) – X-ray, rotating field, rotor, heat ---------------- */
+function e14MotorClone(){if(!window.E14_MOTOR)return null;const g=window.E14_MOTOR.clone(true);const parts={};g.traverse(o=>{if(o.isMesh){o.material=o.material.clone();o.castShadow=o.receiveShadow=true}if(o.name)parts[o.name]=o});return{g,parts}}
+const E14_SHELL=['Housing','EndShield_DE','EndShield_NDE','FanCowl','TerminalBox','TerminalBoxCover','TerminalBlock','Feet'],E14_SPIN=['Rotor','Shaft','Key','Fan','Bearing_DE_InnerRace','Bearing_NDE_InnerRace'];
+function e14meshes(o){const a=[];if(o)o.traverse(m=>{if(m.isMesh)a.push(m)});return a}
+function g3Motor(){const B=g3Base('#dfe5ec'),{T,S,cam,M,box}=B;box(12,.1,10,M('#c8cfd8',{r:.95}),0,-.14,0).castShadow=false;box(12,6,.1,M('#e8edf2',{r:.95}),0,2.5,-2).castShadow=false;
+  const R=e14MotorClone();const P=R?R.parts:{};if(R){S.add(R.g)}
+  const shell=E14_SHELL.flatMap(n=>e14meshes(P[n])),core=e14meshes(P.StatorCore),W=['Winding_U','Winding_V','Winding_W'].map(n=>e14meshes(P[n]));const spin=E14_SPIN.map(n=>P[n]).filter(Boolean);
+  shell.concat(core).forEach(m=>{m.material.transparent=true;m.userData.c0=m.material.color.clone()});const HOT=new T.Color('#6b1d14');
+  // field arrow inside the bore (N–S), rotates about X
+  const AR=new T.Group();S.add(AR);const am=new T.MeshBasicMaterial({color:'#111827',transparent:true,opacity:0,depthTest:false});
+  const rod=new T.Mesh(new T.CylinderGeometry(.004,.004,.07,12),am);AR.add(rod);const tip=new T.Mesh(new T.ConeGeometry(.011,.026,16),am);tip.position.y=.046;AR.add(tip);
+  const nm=new T.MeshBasicMaterial({color:'#dc2626',transparent:true,opacity:0,depthTest:false}),sm=new T.MeshBasicMaterial({color:'#2563eb',transparent:true,opacity:0,depthTest:false});
+  const nB=new T.Mesh(new T.SphereGeometry(.008,12,12),nm);nB.position.y=.03;AR.add(nB);const sB=new T.Mesh(new T.SphereGeometry(.008,12,12),sm);sB.position.y=-.038;AR.add(sB);AR.position.x=.0;rod.renderOrder=tip.renderOrder=nB.renderOrder=sB.renderOrder=10;
+  const smk=[1,2,3,4,1,2,3,4].map((k,i)=>{const sp=new T.Sprite(new T.SpriteMaterial({map:g3TexImg(T,'smoke-'+k),transparent:true,depthWrite:false,opacity:0}));S.add(sp);return{sp,ph:i/8}});
+  let fa=0,ra=0,lastT=null;const COLS=['#ff1f3d','#ffd400','#2f7bff'];
+  return{B,update(tl,e){if(lastT==null||tl<lastT)lastT=tl;const dt=Math.min(.1,tl-lastT);lastT=tl;const hz=kv(e.hz,tl,50),run=kv(e.run,tl,1);
+    fa+=dt*hz/50*2.4*run;ra+=dt*hz/50*2.4*run*(1-.04);spin.forEach(o=>o.rotation.x=-ra*1.0);
+    const xr=kv(e.xray,tl,0),cv=kv(e.core,tl,0);shell.forEach(m=>{m.material.opacity=1-.9*xr;m.material.depthWrite=xr<.5;m.visible=xr<.995});core.forEach(m=>{m.material.opacity=1-.7*cv;m.material.depthWrite=cv<.5});
+    const gl=kv(e.glow,tl,0),heat=kv(e.heat,tl,0);W.forEach((ms,i)=>{const ph=i*2.094,m=Math.max(0,Math.sin(fa*2+ph));ms.forEach(o=>{o.material.emissive=o.material.emissive||new T.Color();o.material.emissive.set(heat>.05?'#ff3300':COLS[i]);o.material.emissiveIntensity=heat>.05?heat*(1.2+.3*Math.sin(tl*8)):gl*m*1.6})});
+    shell.forEach(m=>{m.material.color.copy(m.userData.c0).lerp(HOT,heat*.75);m.material.emissive&&m.material.emissive.set('#ff4500');m.material.emissiveIntensity=heat*.08});
+    const fv=kv(e.field,tl,0);AR.rotation.x=-fa;[am,nm,sm].forEach(m=>m.opacity=fv);
+    smk.forEach(({sp,ph})=>{const u=((tl*.35+ph)%1);sp.position.set(-.02+Math.sin(ph*9)*.05,.12+u*.45,Math.cos(ph*7)*.05);const sc=.12+u*.35;sp.scale.set(sc,sc,1);sp.material.opacity=Math.max(0,heat-.4)*1.5*(1-u)});
+    const cp=e.cam||[[0,.45,.22,.55,0,.02,0]];let i0=0;cp.forEach((k,i)=>{if(tl>=k[0])i0=i});const A=cp[i0],Bk=cp[Math.min(i0+1,cp.length-1)];const span=Bk[0]-A[0],tr=Math.min(1.8,span||1),u=span>0?g3ease(g3c((tl-(Bk[0]-tr))/tr)):0;
+    const now=[1,2,3,4,5,6].map(j=>A[j]+(Bk[j]-A[j])*u);cam.near=.01;cam.position.set(now[0]+Math.sin(tl*.3)*.004,now[1]+Math.sin(tl*.23)*.003,now[2]);cam.lookAt(now[3],now[4],now[5]);cam.updateProjectionMatrix()}}
+}
+G3_BUILD.motor=g3Motor;
+
+
 /* ---------------- 3D: VFD X-ray / exploded view built from registered render layers ---------------- */
 function g3Vfd(){const B=g3Base('#dfe5ec'),{T,S,cam,M}=B;const W_=536,H_=1318,sc=3.2/H_,PW=W_*sc,PH=H_*sc;
   const D={'vfd-cut-housing':-.62,'vfd-cut-igbt':-.52,'vfd-cut-rectifier':-.4,'vfd-cut-fan':-.37,'vfd-cut-dcbus':-.29,'vfd-cut-terminals':-.17,'vfd-cut-control':-.1};
@@ -5367,10 +5422,10 @@ function g3Vfd(){const B=g3Base('#dfe5ec'),{T,S,cam,M}=B;const W_=536,H_=1318,sc
 }
 G3_BUILD.vfd=g3Vfd;
 
-const EP14_A=[[0.0, 2.55, 0], [2.8, 3.95, 0], [4.35, 9.15, 0], [9.4, 10.26, 0], [10.26, 12.05, 0], [12.6, 14.45, 0], [14.45, 17.1, 1], [17.5, 18.8, 1], [19.2, 22.49, 1], [22.49, 24.0, 2], [24.25, 25.2, 2], [25.6, 27.95, 2], [28.45, 30.85, 2], [31.25, 31.9, 2], [32.2, 34.85, 2], [35.35, 37.15, 2], [37.45, 39.11, 2], [39.11, 42.45, 3], [42.8, 43.38, 3], [43.38, 44.17, 3], [44.17, 45.65, 4], [45.95, 49.55, 4], [50.15, 51.25, 4], [51.55, 57.1, 4], [57.8, 63.01, 4], [63.01, 63.45, 5], [63.9, 67.5, 5], [68.4, 69.7, 5], [70.1, 71.3, 5], [71.65, 72.45, 5], [73.1, 75.64, 5], [75.64, 78.05, 6], [78.35, 79.65, 6], [80.1, 82.55, 6], [83.1, 88.55, 6], [89.1, 89.4, 6], [89.4, 90.93, 6], [90.93, 94.98, 7], [94.98, 96.5, 8], [97.0, 99.8, 8], [100.25, 101.25, 8], [101.55, 102.89, 8], [102.89, 104.15, 9], [104.35, 105.0, 9], [105.45, 108.8, 9], [109.15, 110.4, 9], [110.95, 115.59, 9], [115.59, 116.9, 10], [117.35, 119.25, 10], [119.6, 122.4, 10], [122.95, 127.5, 10], [127.95, 129.43, 10], [129.43, 133.05, 11], [133.7, 135.9, 11], [136.55, 138.3, 11], [138.95, 142.18, 11], [142.18, 142.75, 12], [142.75, 145.65, 12], [146.0, 150.5, 12], [150.9, 151.91, 12], [151.91, 153.15, 13], [153.6, 156.22, 13], [156.22, 157.5, 14], [158.15, 162.35, 14], [163.0, 165.45, 14], [165.85, 168.24, 14], [168.24, 172.1, 15], [172.85, 177.15, 15], [177.75, 181.35, 15], [181.85, 185.15, 15], [185.6, 187.95, 15], [187.95, 189.35, 16], [189.8, 192.75, 16], [193.2, 195.95, 16], [196.4, 198.5, 16], [198.8, 201.25, 16], [201.25, 205.47, 17], [205.47, 209.65, 18], [210.2, 211.45, 18], [211.6, 212.7, 18], [212.9, 214.64, 18], [214.64, 216.65, 19], [217.1, 222.45, 19], [223.05, 224.85, 19], [225.25, 227.97, 19], [227.97, 229.9, 20], [230.45, 233.1, 20], [233.6, 236.75, 20], [237.1, 237.8, 20], [238.45, 240.6, 20], [241.2, 245.25, 20], [245.25, 246.0, 21], [246.65, 249.75, 21], [250.4, 253.4, 21], [254.0, 257.8, 21], [257.95, 260.65, 21], [261.4, 265.05, 21], [265.6, 267.25, 21], [267.6, 269.8, 21], [269.8, 270.45, 22], [270.45, 276.5, 22], [276.65, 278.05, 22], [278.6, 282.75, 22], [283.0, 284.2, 22], [284.9, 287.1, 22], [287.1, 287.5, 23], [287.85, 292.7, 23], [292.7, 298.48, 24]];
-const EP14_SA=[[0.0, 4.64, 0], [4.64, 5.45, 1], [5.75, 6.7, 1], [7.25, 11.37, 1], [11.37, 14.9, 2], [15.5, 17.7, 2], [18.1, 20.43, 2], [20.43, 22.7, 3], [23.3, 25.71, 3], [25.71, 27.31, 4], [27.31, 32.36, 5], [32.36, 35.56, 6]];
-const EP14_POSE=[[0.0, "talk_a"], [2.8, "worry2"], [4.35, "talk_b"], [9.4, "talk_c"], [10.26, "worry2"], [12.6, "point_level"], [14.45, "talk_d"], [17.5, "explain_a"], [19.2, "point_level"], [22.49, "talk_a"], [24.25, "talk_b"], [25.6, "talk_c"], [28.45, "talk_d"], [31.25, "explain_a"], [32.2, "worry2"], [35.35, "talk_a"], [37.45, "worry2"], [39.11, "point_level"], [42.8, "talk_b"], [43.38, "talk_c"], [44.17, "point_3"], [45.95, "point_3"], [50.15, "talk_d"], [51.55, "point_3"], [57.8, "worry2"], [63.01, "point_level"], [63.9, "point_level"], [68.4, "point_3"], [70.1, "point_3"], [71.65, "point_3"], [73.1, "point_level"], [75.64, "explain_a"], [78.35, "talk_a"], [80.1, "talk_b"], [83.1, "talk_c"], [89.1, "talk_d"], [89.4, "explain_a"], [90.93, "talk_a"], [94.98, "talk_b"], [97.0, "talk_c"], [100.25, "talk_d"], [101.55, "explain_a"], [102.89, "talk_a"], [104.35, "talk_b"], [105.45, "talk_c"], [109.15, "talk_d"], [110.95, "explain_a"], [115.59, "talk_a"], [117.35, "talk_b"], [119.6, "talk_c"], [122.95, "talk_d"], [127.95, "explain_a"], [129.43, "talk_a"], [133.7, "talk_b"], [136.55, "talk_c"], [138.95, "talk_d"], [142.18, "point_level"], [142.75, "explain_a"], [146.0, "point_3"], [150.9, "point_level"], [151.91, "talk_a"], [153.6, "talk_b"], [156.22, "talk_c"], [158.15, "talk_d"], [163.0, "explain_a"], [165.85, "worry2"], [168.24, "talk_a"], [172.85, "talk_b"], [177.75, "talk_c"], [181.85, "talk_d"], [185.6, "explain_a"], [187.95, "talk_a"], [189.8, "worry2"], [193.2, "talk_b"], [196.4, "talk_c"], [198.8, "talk_d"], [201.25, "explain_a"], [205.47, "talk_a"], [210.2, "talk_b"], [211.6, "worry2"], [212.9, "talk_c"], [214.64, "talk_d"], [217.1, "explain_a"], [223.05, "talk_a"], [225.25, "talk_b"], [227.97, "talk_c"], [230.45, "talk_d"], [233.6, "point_level"], [237.1, "explain_a"], [238.45, "point_level"], [241.2, "talk_a"], [245.25, "talk_b"], [246.65, "talk_c"], [250.4, "talk_d"], [254.0, "explain_a"], [257.95, "talk_a"], [261.4, "talk_b"], [265.6, "talk_c"], [267.6, "talk_d"], [269.8, "point_level"], [270.45, "point_level"], [276.65, "point_3"], [278.6, "point_3"], [283.0, "point_3"], [284.9, "point_level"], [287.1, "point_level"], [287.85, "explain_a"], [292.7, "nod"]];
-const EP14_SPOSE=[[0.0, "talk_a"], [4.64, "talk_b"], [5.75, "talk_c"], [7.25, "worry2"], [11.37, "talk_d"], [15.5, "explain_a"], [18.1, "point_level"], [20.43, "point_level"], [23.3, "point_level"], [25.71, "point_level"], [27.31, "point_level"], [32.36, "nod"]];
+const EP14_A=[[0.0, 2.25, 0], [2.8, 3.75, 0], [4.3, 8.7, 0], [9.15, 9.74, 0], [9.74, 11.4, 0], [12.15, 13.72, 0], [13.72, 15.25, 1], [15.75, 18.75, 1], [19.25, 21.0, 1], [21.45, 23.73, 1], [23.73, 25.55, 2], [26.2, 28.75, 2], [29.35, 33.22, 2], [33.22, 35.45, 3], [35.9, 37.35, 3], [37.9, 40.2, 3], [40.8, 42.6, 3], [43.1, 44.95, 3], [45.25, 48.39, 3], [48.39, 50.4, 4], [50.85, 54.44, 4], [54.44, 56.75, 5], [57.35, 60.75, 5], [61.3, 63.0, 5], [63.55, 66.81, 5], [66.81, 69.0, 6], [69.6, 73.4, 6], [73.55, 77.15, 6], [77.65, 82.5, 6], [82.5, 83.1, 7], [83.7, 86.25, 7], [86.8, 88.05, 7], [88.25, 89.35, 7], [89.55, 90.3, 7], [90.85, 94.41, 7], [94.41, 96.55, 8], [96.8, 97.65, 8], [98.3, 102.6, 8], [102.75, 106.5, 8], [106.9, 109.19, 8], [109.19, 111.75, 9], [111.75, 112.5, 10], [112.85, 118.35, 10], [119.1, 120.3, 10], [120.8, 122.65, 10], [122.65, 123.85, 11], [124.2, 127.65, 11], [128.3, 130.55, 11], [131.25, 135.65, 11], [135.65, 136.9, 12], [137.4, 143.45, 12], [144.25, 149.45, 12], [149.65, 151.23, 12], [151.23, 156.5, 13], [156.75, 157.45, 13], [158.3, 161.15, 13], [161.15, 163.15, 14], [163.6, 164.6, 14], [164.9, 169.35, 14], [169.9, 171.26, 14], [171.26, 175.05, 15], [175.75, 176.9, 15], [177.55, 180.35, 15], [180.9, 185.35, 15], [185.9, 187.62, 15], [187.62, 191.05, 16], [191.75, 196.05, 16], [196.6, 198.85, 16], [199.4, 203.75, 16], [203.9, 205.88, 16], [205.88, 207.35, 17], [208.05, 212.4, 17], [213.15, 219.7, 17], [220.15, 222.26, 17], [222.26, 225.38, 18], [225.38, 227.45, 19], [228.05, 237.05, 19], [237.3, 243.1, 19], [243.1, 250.4, 20], [250.65, 253.39, 20], [253.39, 255.0, 21], [255.6, 258.85, 21], [259.3, 263.8, 21], [264.25, 267.48, 21], [267.48, 268.35, 22], [268.7, 271.45, 22], [271.9, 280.55, 22], [281.05, 284.0, 22], [284.4, 286.98, 22], [286.98, 288.15, 23], [288.5, 293.1, 23], [293.4, 296.0, 23], [296.3, 298.1, 23], [298.4, 299.6, 23], [299.95, 302.11, 23], [302.11, 307.74, 24]];
+const EP14_SA=[[0.0, 2.0, 0], [2.55, 6.41, 0], [6.41, 7.4, 1], [7.55, 8.6, 1], [9.1, 12.54, 1], [12.54, 14.4, 2], [15.0, 18.05, 2], [18.6, 20.65, 2], [21.05, 23.64, 2], [23.64, 26.2, 3], [26.75, 28.85, 3], [28.85, 30.89, 4], [30.89, 35.66, 5], [35.66, 38.84, 6]];
+const EP14_POSE=[[0.0, "talk_a"], [2.8, "worry2"], [4.3, "talk_b"], [9.15, "talk_c"], [9.74, "worry2"], [12.15, "point_level"], [13.72, "talk_d"], [15.75, "explain_a"], [19.25, "talk_a"], [21.45, "talk_b"], [23.73, "talk_c"], [26.2, "talk_d"], [29.35, "explain_a"], [33.22, "talk_a"], [35.9, "talk_b"], [37.9, "worry2"], [40.8, "worry2"], [43.1, "talk_c"], [45.25, "worry2"], [48.39, "talk_d"], [50.85, "explain_a"], [54.44, "talk_a"], [57.35, "talk_b"], [61.3, "talk_c"], [63.55, "talk_d"], [66.81, "explain_a"], [69.6, "point_3"], [73.55, "talk_a"], [77.65, "worry2"], [82.5, "point_level"], [83.7, "point_level"], [86.8, "point_3"], [88.25, "point_3"], [89.55, "point_3"], [90.85, "point_level"], [94.41, "talk_b"], [96.8, "talk_c"], [98.3, "talk_d"], [102.75, "explain_a"], [106.9, "talk_a"], [109.19, "talk_b"], [111.75, "talk_c"], [112.85, "talk_d"], [119.1, "explain_a"], [120.8, "talk_a"], [122.65, "talk_b"], [124.2, "talk_c"], [128.3, "talk_d"], [131.25, "explain_a"], [135.65, "talk_a"], [137.4, "talk_b"], [144.25, "talk_c"], [149.65, "talk_d"], [151.23, "explain_a"], [156.75, "talk_a"], [158.3, "talk_b"], [161.15, "talk_c"], [163.6, "talk_d"], [164.9, "point_3"], [169.9, "point_level"], [171.26, "explain_a"], [175.75, "talk_a"], [177.55, "talk_b"], [180.9, "worry2"], [185.9, "talk_c"], [187.62, "talk_d"], [191.75, "explain_a"], [196.6, "talk_a"], [199.4, "talk_b"], [203.9, "talk_c"], [205.88, "talk_d"], [208.05, "worry2"], [213.15, "explain_a"], [220.15, "talk_a"], [222.26, "talk_b"], [225.38, "talk_c"], [228.05, "talk_d"], [237.3, "worry2"], [243.1, "explain_a"], [250.65, "talk_a"], [253.39, "talk_b"], [255.6, "talk_c"], [259.3, "talk_d"], [264.25, "explain_a"], [267.48, "talk_a"], [268.7, "talk_b"], [271.9, "talk_c"], [281.05, "talk_d"], [284.4, "explain_a"], [286.98, "point_level"], [288.5, "talk_a"], [293.4, "talk_b"], [296.3, "point_level"], [298.4, "point_level"], [299.95, "point_level"], [302.11, "nod"]];
+const EP14_SPOSE=[[0.0, "talk_a"], [2.55, "talk_b"], [6.41, "talk_c"], [7.55, "talk_d"], [9.1, "worry2"], [12.54, "explain_a"], [15.0, "talk_a"], [18.6, "talk_b"], [21.05, "worry2"], [23.64, "point_level"], [26.75, "point_level"], [28.85, "point_level"], [30.89, "point_level"], [35.66, "nod"]];
 function drawSD(e,c,tl){const cx=e.x+e.w/2,cy=e.y+e.h/2,R=Math.min(e.w,e.h)*.36,ink=O2,live=o2t(tl,e.live);
   const coil=(x1,y1,x2,y2,lab)=>{const L=Math.hypot(x2-x1,y2-y1),ux=(x2-x1)/L,uy=(y2-y1)/L,nx=-uy,ny=ux,a=L*.25,b=L*.75,n=8;
     c.beginPath();c.moveTo(x1,y1);c.lineTo(x1+ux*a,y1+uy*a);for(let i=1;i<=n;i++){const t=a+(b-a)*i/n,s=(i%2?1:-1)*12;c.lineTo(x1+ux*t+nx*s,y1+uy*t+ny*s)}c.lineTo(x2,y2);c.lineWidth=5;c.strokeStyle=e.col||'#b45309';c.stroke();
@@ -6132,11 +6187,11 @@ async function buildEp13Short(){
 }
 function drawArrowDn(e,c,tl){const b=Math.sin(tl*7)*18,x=e.x+e.w/2,y=e.y+b;c.save();c.fillStyle='#dc2626';c.strokeStyle='#fff';c.lineWidth=8;c.beginPath();c.moveTo(x-40,y);c.lineTo(x+40,y);c.lineTo(x+40,y+e.h-160);c.lineTo(x+90,y+e.h-160);c.lineTo(x,y+e.h);c.lineTo(x-90,y+e.h-160);c.lineTo(x-40,y+e.h-160);c.closePath();c.stroke();c.fill();c.restore()}
 
-/* ---------- EP14 – VFD basics: motor speed eppadi maarudhu (Part 1) ---------- */
+/* ---------- EP14 – VFD basics (v2 script, recorded audio with the two extra parts cut) ---------- */
 async function buildEp14(){
   stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('16:9');S.narrOff=0;S.art='sketch';
-  try{await document.fonts.load('700 30px InkHand')}catch(_){}
-  const A=EP14_A,NARR=298.48,END=313.5;
+  try{await document.fonts.load('700 30px InkHand')}catch(_){}try{await window.E14_MOTOR_READY}catch(_){}
+  const A=EP14_A,NARR=307.68,END=322.8;
   const s=newScene({name:'EP14 – VFD basics',style:'white',transition:'cut',trans:0,hold:0});s.minDur=END;S.scenes.push(s);
   const K=ep10Kit(s,A,NARR),{ng,T,PS,card,presenter}=K,RED=NG.red,GRN=NG.grn,BLU=NG.blue,PUR='#7c3aed',ORG='#f59e0b',NAV=NG.navy;
   const PE=k=>k>=24?END:PS(k+1),P=(a,b=a)=>[PS(a),PE(b)];
@@ -6147,101 +6202,103 @@ async function buildEp14(){
   const erase=(t,col='#eef1f5')=>ng('erase',{ts:t-.85,ed:.8,pop:.01,x:0,y:0,w:W,h:H,col,noPop:true},[t-.85,t+.08]);
   const big=(t,win,o={})=>card(o.x??(W/2-(o.w||640)/2),o.y??260,o.w||640,o.h||130,t,win,{size:o.size||52,bg:o.bg||'#fff',...o});
   const meters=(win,o)=>ng('meters',{x:900,y:16,w:364,h:330,cols:2,aMax:5,noPop:true,...o},win);
-  /* ===== k0 HOOK: real 3D packing line ===== */
+  const motor=(win,o)=>ng('g3',{shot:'motor',x:0,y:0,w:W,h:H,noPop:true,...o},win);
+  /* k0 hook */
   bg([0,PS(1)],'#e3e8ee');
   ng('g3',{shot:'line',x:0,y:0,w:W,h:H,noPop:true,spd:[[0,1.7],[T(0,2)+.8,1.7],[T(0,3),1.05]],fall:[[0,1],[T(0,3)-.5,1],[T(0,3),0]],heat:[[T(0,4),0],[T(0,4)+1.8,1]],
     cam:[[0,-1.2,2.4,9.2,-.6,.2,0],[T(0,1)+.3,1.6,1.6,6.2,2.6,.3,0],[T(0,2)+1,6.6,1.5,6.2,4.2,.1,1.2],[T(0,4)+.6,6.2,1.1,4.4,4.5,.4,1.5]]},[0,PS(1)]);
   meters([T(0,2),PS(1)],{hz:[[0,50]],v:[[T(0,2),415],[T(0,2)+2,300]],a:[[T(0,2),4.7],[T(0,3),5.6],[T(0,4)+1.5,7.6]],rpm:[[T(0,2),1440],[T(0,3),1250]]});
   chip('Conveyor too fast → box vizhudhu',[T(0,1),T(0,2)],RED);chip('Voltage-ai KAMMI pannaanga',[T(0,2),T(0,3)],ORG);chip('Motor slow ✓',[T(0,3),T(0,4)],GRN);chip('20 nimisham… PUGAI!',[T(0,4),T(0,5)],RED);big('Thappu enga?',[T(0,5),PS(1)],{y:500,w:520,h:110,bg:'#fee2e2'});
-  /* ===== k1 home fan regulator ===== */
+  /* k1 idea from home */
   erase(PS(1));bg(P(1));
-  ng('homefan',{x:60,y:130,fw:560,rx:690,ry:250,rw:520,spd:[[0,1],[T(1,0)+.8,1],[T(1,0)+2.6,.35]],hand:[[T(1,0)+.4,0],[T(1,0)+.8,1],[T(1,0)+2.8,1],[T(1,0)+3.3,0]],noPop:true},P(1));
-  chip('Veetu fan regulator',[PS(1),T(1,1)],BLU);chip('Regulator = VOLTAGE ↓',[T(1,1),T(1,2)],ORG);chip('Factory motor-la yen work aagala?',[T(1,2),PE(1)],RED);
-  /* ===== k2 why the motor smoked ===== */
+  ng('g3',{shot:'fanroom',x:0,y:0,w:W,h:H,noPop:true,spd:[[0,1],[T(1,1)+.8,1],[T(1,1)+2.6,.35]],hand:[[T(1,1)+.4,0],[T(1,1)+.8,1],[T(1,1)+2.8,1],[T(1,1)+3.3,0]],cam:[[0,.4,-.6,9.5,.5,.6,-2],[T(1,1)+.4,.4,-.6,9.5,.5,.6,-2],[T(1,2),2.2,-.5,4.6,2.6,-.6,-3],[T(1,3)+.3,.4,-.6,9.5,.5,.6,-2]]},P(1));
+  chip('Idea veetla irundhu vandhadhu',[PS(1),T(1,1)],BLU);chip('Fan regulator → slow ✓',[T(1,1),T(1,2)],GRN);chip('Regulator = VOLTAGE ↓',[T(1,2),T(1,3)],ORG);chip('Adhey trick → conveyor motor',[T(1,3),PE(1)],RED);
+  /* k2 load difference */
   erase(PS(2));bg(P(2));
-  eq('ceiling-fan',[PS(2),T(2,3)],{x:40,y:150,w:540,h:380,pen:[PS(2)+.1,.8]});eq('motor-conveyor',[T(2,2),T(2,3)],{x:620,y:180,w:620,h:330,pen:[T(2,2),.9]});
-  card(110,560,400,70,'Load: kaathu mattum',[T(2,0),T(2,3)],{bg:'#dcfce7',size:30});card(720,560,440,70,'Load: box-ellaam',[T(2,2),T(2,3)],{bg:'#fee2e2',size:30});
-  meters([T(2,3),PS(3)],{x:40,y:110,w:800,h:250,cols:4,hz:[[0,50]],v:[[T(2,3),415],[T(2,3)+1.5,300]],a:[[T(2,5),4.7],[T(2,5)+2,7.8]],rpm:[[T(2,3),1440],[T(2,5)+1,1250]]});
-  card(60,400,370,80,'TORQUE ↓',[T(2,3),PS(3)],{bg:'#fef3c7',size:40});card(450,400,370,80,'LOAD = same',[T(2,4),PS(3)],{size:36});card(60,500,760,80,'SLIP ↑ → CURRENT ↑',[T(2,5),PS(3)],{bg:'#fee2e2',size:40});
-  eq('motor-smoke',[T(2,6),PS(3)],{x:860,y:250,w:400,h:340,pen:[T(2,6),.7]});card(60,600,760,80,'Winding SOODU → PUGAI',[T(2,6),PS(3)],{bg:RED,size:38});
-  /* ===== k3 voltage illa, frequency ===== */
-  erase(PS(3));bg(P(3));pres(P(3));big('Motor speed-ai edhu decide pannudhu?',[PS(3),PE(3)],{y:110,w:900,h:110,size:42});
-  big('VOLTAGE  ✗',[T(3,1),PE(3)],{x:330,y:300,w:420,bg:'#fee2e2'});big('FREQUENCY  ✓',[T(3,2),PE(3)],{x:780,y:300,w:460,bg:'#dcfce7'});
-  /* ===== k4 speed formula + rotating field ===== */
-  erase(PS(4));bg(P(4));
-  ng('statorfield',{x:40,y:60,w:500,hz:[[0,50]],noPop:true},P(4));
-  card(600,80,640,110,'N  =  120 × f ÷ P',[T(4,1),PE(4)],{size:52});card(600,210,640,80,'Supply  f = 50 Hz',[T(4,2),PE(4)],{size:36,bg:'#dbeafe'});
-  card(600,310,640,90,'120 × 50 ÷ 4 = 1500 RPM',[T(4,3),PE(4)],{size:40,bg:'#dcfce7'});eq('motor-nameplate',[T(4,4),PE(4)],{x:650,y:420,w:540,h:300,pen:[T(4,4),.8]});chip('Slip → nameplate 1440 RPM',[T(4,4),PE(4)],ORG);
-  /* ===== k5 quiz 1 ===== */
-  erase(PS(5));bg(P(5));pres(P(5));chip('QUICK QUESTION',[PS(5),PE(5)],ORG);
-  card(300,90,680,90,'4 pole motor + 25 Hz = ? RPM',[T(5,1),PE(5)],{size:40});
-  [['A','1500',BLU],['B','750',GRN],['C','3000',ORG]].forEach(([l,t,cl],i)=>{card(380,220+i*115,90,90,l,[T(5,2+i),PE(5)],{bg:cl,size:44});card(490,220+i*115,300,90,t+' RPM',[T(5,2+i)+.2,PE(5)],{size:40})});
-  ng('statorfield',{x:900,y:250,w:330,hz:[[0,25]],lab:false,noPop:true},[T(5,1),PE(5)]);card(930,600,270,70,'Yosinga…',[T(5,5),PE(5)],{bg:'#fef3c7',size:32});
-  /* ===== k6 supply is fixed → VFD ===== */
-  erase(PS(6));bg(P(6));
-  card(40,300,280,110,'EB SUPPLY 50 Hz',[PS(6),PE(6)],{bg:'#fef3c7',size:32});chip('Supply frequency FIXED',[PS(6),T(6,2)],RED);
-  card(400,280,320,150,'?  DEVICE  ?',[T(6,2),T(6,4)],{size:40,bg:'#ede9fe'});eq('motor',[T(6,2),PE(6)],{x:880,y:200,w:360,h:320,pen:[T(6,2),.8]});
-  card(330,470,520,80,'50 Hz → venum-gira Hz',[T(6,3),PE(6)],{size:34});eq('vfd-3q',[T(6,4),PE(6)],{x:440,y:40,w:300,h:420,pen:[T(6,4),.9]});chip('VFD = Variable Frequency Drive',[T(6,4),PE(6)],PUR);
-  /* ===== k7–k11 inside the VFD (3D X-ray) ===== */
-  erase(PS(7),'#dfe5ec');bg([PS(7),PE(11)],'#dfe5ec');
-  const vfdCam=[[0,0,0,6.2,0,0,-.3],[PS(7)+.1,0,0,6.2,0,0,-.3],[PS(8)+.2,3.4,.8,5.8,0,-.3,-1.2],[PS(9)+.2,3.0,-.5,5.2,0,-.5,-1],[PS(10)+.2,2.8,1.2,5.0,.2,.6,-1.6],[PS(11),2.2,.4,6.4,0,0,-1.2]];
-  ng('g3',{shot:'vfd',x:0,y:0,w:640,h:H,noPop:true,scan:[PS(7)+.4,2.4],explode:[[PS(8)-.2,0],[PS(8)+1.6,1]],flow:[PS(8)+1,PE(11)],cam:vfdCam,
-    hl:{'vfd-cut-rectifier':[[PS(8),0],[PS(8)+.5,1],[PS(9),1],[PS(9)+.4,0]],'vfd-cut-dcbus':[[PS(9),0],[PS(9)+.5,1],[PS(10),1],[PS(10)+.4,0]],'vfd-cut-igbt':[[PS(10),0],[PS(10)+.5,1],[PE(11),1]]}},[PS(7),PE(11)]);
-  [['1 · RECTIFIER',PS(7)+1.2],['2 · DC BUS',PS(7)+2.0],['3 · INVERTER',PS(7)+2.8]].forEach(([t,t0],i)=>card(700,140+i*130,500,100,t,[t0,PS(8)],{size:40,bg:['#fee2e2','#fef3c7','#dbeafe'][i]}));
-  ng('wave',{x:680,y:120,w:570,h:300,mode:'rect',title:'3-phase AC → DC',ghost:[[PS(8),1],[T(8,1)+1.5,.25]],noPop:true},P(8));chip('STAGE 1 · RECTIFIER (diodes)',[PS(8),PE(8)],RED,{x:680});
-  card(700,460,520,80,'AC → DC',[T(8,1),PE(8)],{size:40});card(700,560,520,80,'Frequency-ye illa!',[T(8,2),PE(8)],{size:36,bg:'#fee2e2'});
-  ng('wave',{x:680,y:120,w:570,h:300,mode:'dc',title:'DC bus: ripple → smooth',smooth:[[T(9,3),0],[T(9,3)+1.5,1]],noPop:true},P(9));chip('STAGE 2 · DC BUS (capacitors)',[PS(9),PE(9)],ORG,{x:680});
-  card(700,460,520,80,'Ripple irukku',[T(9,2),PE(9)],{size:36});card(700,560,520,90,'DC bus ≈ 560 V',[T(9,4),PE(9)],{size:44,bg:'#fef3c7'});
-  ng('wave',{x:680,y:120,w:570,h:300,mode:'pwm',title:'IGBT switching → PWM',reveal:[T(10,2),2.5],sine:[[T(10,3)+.5,0],[T(10,3)+1.8,1]],win_ms:40,scroll:6,noPop:true},P(10));chip('STAGE 3 · INVERTER (IGBT)',[PS(10),PE(10)],BLU,{x:680});
-  card(700,460,520,80,'1000s ON / OFF per second',[T(10,2),PE(10)],{size:32});card(700,560,520,80,'Pulse width → SINE = PWM',[T(10,3),PE(10)],{size:32,bg:'#dbeafe'});
-  ng('wave',{x:680,y:60,w:570,h:300,mode:'sine',f:[[0,50],[T(11,1),50],[T(11,1)+1.2,25],[T(11,2),25],[T(11,2)+1.2,50]],win_ms:80,scroll:8,tag:tl=>Math.round(kv([[0,50],[T(11,1),50],[T(11,1)+1.2,25],[T(11,2),25],[T(11,2)+1.2,50]],tl,50))+' Hz',noPop:true},P(11));
-  ng('statorfield',{x:820,y:380,w:300,lab:false,hz:[[0,50],[T(11,1),50],[T(11,1)+1.2,25],[T(11,2),25],[T(11,2)+1.2,50]],noPop:true},P(11));chip('Switching speed = output Hz',[PS(11),PE(11)],PUR,{x:680});
-  /* ===== k12 quiz answer ===== */
-  erase(PS(12));bg(P(12));chip('QUIZ ANSWER',[PS(12),PE(12)],ORG);ng('statorfield',{x:60,y:90,w:460,hz:[[0,25]],noPop:true},P(12));
-  card(600,180,620,100,'120 × 25 ÷ 4',[T(12,1),PE(12)],{size:48});card(600,300,620,110,'= 750 RPM',[T(12,2),PE(12)],{size:56,bg:'#dcfce7'});card(700,450,420,100,'Answer: B ✓',[T(12,3),PE(12)],{size:48,bg:GRN});
-  /* ===== k13 ===== */
-  erase(PS(13));bg(P(13));pres(P(13));big('Frequency mattum kammi pannaa…',[PS(13),PE(13)],{y:180,w:860,size:44});big('PODHAADHU ⚠',[T(13,1),PE(13)],{y:350,w:520,bg:'#fee2e2'});
-  /* ===== k14 coil reactance ===== */
-  erase(PS(14));bg(P(14));ng('statorfield',{x:40,y:70,w:460,lab:false,hz:[[T(14,1),50],[T(14,1)+1.5,25]],noPop:true},P(14));
-  meters(P(14),{x:540,y:60,w:700,h:230,cols:4,hz:[[T(14,1),50],[T(14,1)+1.5,25]],v:[[0,415]],a:[[T(14,2),4.7],[T(14,2)+1.5,9.5]],rpm:[[T(14,1),1440],[T(14,1)+1.5,720]]});
-  card(560,320,680,80,'Winding = COIL',[PS(14),PE(14)],{size:36});card(560,410,680,80,'f ↓ → reactance ↓',[T(14,1),PE(14)],{size:36,bg:'#fef3c7'});
-  card(560,500,680,80,'Same V → CURRENT ↑↑',[T(14,2),PE(14)],{size:36,bg:'#fee2e2'});card(560,590,680,80,'Core saturate → SOODU',[T(14,3),PE(14)],{size:36,bg:RED});
-  /* ===== k15 V/f ===== */
-  erase(PS(15));bg(P(15));ng('vf',{x:40,y:60,w:680,h:600,t0:PS(15)+.3,f:[[0,50],[T(15,2),50],[T(15,2)+1.5,25]],noPop:true},P(15));
-  chip('VFD: f ↓ + V ↓ together',[PS(15),T(15,1)],BLU,{x:740});card(760,170,480,90,'415 ÷ 50 ≈ 8.3 V/Hz',[T(15,1),PE(15)],{size:36});card(760,280,480,90,'25 Hz → ≈ 207 V',[T(15,2),PE(15)],{size:38,bg:'#fef3c7'});
-  card(760,390,480,90,'Ratio same → TORQUE same',[T(15,3),PE(15)],{size:30,bg:'#dcfce7'});card(760,500,480,100,'V / f CONTROL',[T(15,4),PE(15)],{size:46,bg:PUR});
-  /* ===== k16 back to the conveyor with a VFD ===== */
-  erase(PS(16),'#e3e8ee');bg(P(16),'#e3e8ee');
-  ng('g3',{shot:'line',x:0,y:0,w:W,h:H,noPop:true,spd:[[PS(16),1.7],[T(16,2)+.5,1.7],[T(16,3),1.05]],fall:[[0,1],[T(16,3)-.6,1],[T(16,3),0]],heat:[[0,0]],
-    cam:[[0,-1.2,2.4,9.2,-.6,.2,0],[PS(16)+.1,-1.2,2.4,9.2,-.6,.2,0],[T(16,2)+1,1.6,1.6,6.6,2.4,.2,.4],[T(16,4)+.5,6.4,1.4,6.0,3.6,.2,1.0]]},P(16));
-  meters([T(16,2),PE(16)],{hz:[[T(16,2),50],[T(16,3),31]],v:[[T(16,2),415],[T(16,3),257]],a:[[0,4.6]],rpm:[[T(16,2),1440],[T(16,3),890]]});
-  chip('Voltage mattum ↓ → BURN ✗',[T(16,1),T(16,2)],RED);chip('VFD: f ↓ + V ↓',[T(16,2),T(16,3)],BLU);chip('Speed ↓ · Torque FULL ✓',[T(16,3),T(16,4)],GRN);chip('Box safe ✓  Motor cool ✓',[T(16,4),PE(16)],GRN);
-  /* ===== k17 soft start ===== */
-  erase(PS(17));bg(P(17));pres(P(17));big('SOFT START',[PS(17)+.3,PE(17)],{y:250,w:560,bg:'#dbeafe',size:60});
-  /* ===== k18 DOL inrush ===== */
-  erase(PS(18));bg(P(18));
-  ng('rampg',{x:40,y:60,w:680,h:600,t0:PS(18)+.2,dur:1.6,T:12,title:'Starting current',ylab:'Current (× FLC)',yt:[[1/7,'1×'],[6.5/7,'6.5×']],lines:[{col:RED,fn:t=>t<1.2?6.5/7:t<2.2?(6.5-(t-1.2)*5.5)/7:1/7,lab:'DOL: 6–7× !',lx:.15,ly:.97}],noPop:true},P(18));
-  eq('panel-dim',[T(18,1),PE(18)],{x:760,y:120,w:480,h:400,pen:[T(18,1),.6],alpha:[[T(18,1)+.7,1],[T(18,1)+.9,.55],[T(18,1)+1.1,1],[T(18,1)+1.3,.6],[T(18,1)+1.6,1]]});
-  chip('Panel light DIM',[T(18,1),PE(18)],ORG,{x:760});card(760,540,480,70,'Belt SLIP',[T(18,2),PE(18)],{size:32,bg:'#fee2e2'});card(760,620,480,70,'Box thadumaarum',[T(18,3),PE(18)],{size:32,bg:'#fee2e2'});
-  /* ===== k19 ramp ===== */
-  erase(PS(19));bg(P(19));
-  ng('rampg',{x:40,y:60,w:760,h:600,t0:T(19,1),dur:4,T:12,title:'VFD ramp',ylab:'',yt:[[1,'50 Hz / 7×']],lines:[{col:BLU,fn:t=>Math.min(1,t/10),lab:'Hz: 0 → 50 in 10 s',lx:.45,ly:.95},{col:GRN,at:T(19,2),fn:t=>t<.3?t/.3/7:1.1/7,lab:'Current ≈ rated',lx:.3,ly:.25}],noPop:true},P(19));
-  chip('RAMP TIME = 10 s',[PS(19),PE(19)],BLU,{x:830});card(830,200,420,90,'Mella mella 0 → 50 Hz',[T(19,1),PE(19)],{size:30});card(830,310,420,90,'Current ≈ rated ✓',[T(19,2),PE(19)],{size:34,bg:'#dcfce7'});card(830,420,420,90,'No jerk, no dip ✓',[T(19,3),PE(19)],{size:34,bg:'#dcfce7'});
-  eq('vfd-front',[T(19,1),PE(19)],{x:930,y:520,w:180,h:200});
-  /* ===== k20 fans & pumps: cube law ===== */
-  erase(PS(20));bg(P(20));eq('centrifugal-fan-motor',P(20),{x:30,y:110,w:520,h:420,pen:[PS(20)+.1,.9]});eq('pump-motor',[PS(20)+.6,PE(20)],{x:110,y:500,w:300,h:220,pen:[PS(20)+.8,.7]});
-  ng('cube',{x:580,y:60,w:670,h:560,t0:T(20,1),mark:[[T(20,4),0],[T(20,4)+1.2,1]],noPop:true},[T(20,1),PE(20)]);
-  chip('Fan / Pump: P ∝ N³',[T(20,1),T(20,2)],PUR);chip('Speed 80% → power ?',[T(20,2),T(20,4)],ORG);card(600,630,500,70,'Comment pannunga',[T(20,3),T(20,4)],{size:30,bg:'#dbeafe'});chip('≈ 51% power ✓',[T(20,4),T(20,5)],GRN);chip('Current bill ≈ PAADHI',[T(20,5),PE(20)],GRN);
-  /* ===== k21 summary ===== */
-  erase(PS(21));bg(P(21));pres(P(21));chip('SUMMARY',[PS(21),PE(21)],NAV);
-  ['Speed = FREQUENCY, not voltage','Rectifier: AC → DC','DC bus capacitor: smooth','IGBT inverter: PWM → new Hz','V/f: f-oda V-um maarum','Ramp → soft start','Fan / pump → energy saving'].forEach((t,i)=>card(340,90+i*84,860,70,(i+1)+'.  '+t,[T(21,1+i),PE(21)],{size:30}));
-  /* ===== k22 last question ===== */
-  erase(PS(22));bg(P(22));pres(P(22));chip('LAST QUESTION',[PS(22),PE(22)],ORG);card(300,100,900,100,'Voltage mattum ↓ pannaa?',[T(22,1),PE(22)],{size:44});
-  [['A','Speed ↓, ellaam safe',BLU],['B','Torque ↓, current ↑, SOODU',GRN],['C','Motor FAST-aa odum',ORG]].forEach(([l,t,cl],i)=>{card(360,240+i*115,90,90,l,[T(22,2+i),PE(23)],{bg:cl,size:44});card(470,240+i*115,620,90,t,[T(22,2+i)+.2,PE(23)],{size:34})});
-  card(470,600,400,70,'Comment pannunga',[T(22,5),PE(22)],{size:30,bg:'#dbeafe'});
-  /* ===== k23 answer ===== */
-  card(1110,355,130,90,'✓',[PS(23),PE(23)],{bg:GRN,size:56});chip('ANSWER: B',[PS(23),PE(23)],GRN,{x:900,y:22});
-  /* ===== k24 CTA + end screen ===== */
+  eq('ceiling-fan',P(2),{x:40,y:150,w:540,h:380,pen:[T(2,1),.8]});eq('motor-conveyor',[T(2,2),PE(2)],{x:620,y:180,w:620,h:330,pen:[T(2,2),.9]});
+  chip('Periya vidhyaasam',[PS(2),PE(2)],PUR);card(110,560,400,70,'Load: kaathu → KAMMI',[T(2,1),PE(2)],{bg:'#dcfce7',size:30});card(700,560,480,70,'Load: box → ADHIGAM',[T(2,2),PE(2)],{bg:'#fee2e2',size:30});
+  /* k3 torque → slip → current → heat (real motor heating up) */
+  erase(PS(3));bg(P(3));
+  motor(P(3),{x:640,w:640,hz:[[0,50]],run:[[0,1],[T(3,2),.85]],heat:[[T(3,4),0],[T(3,5)+.8,1]],cam:[[0,.5,.25,.55,0,.02,0],[T(3,5),.36,.18,.4,0,.03,0]]});
+  meters(P(3),{x:30,y:100,w:600,h:240,cols:4,hz:[[0,50]],v:[[0,300]],a:[[T(3,3),4.7],[T(3,3)+1.5,7.8]],rpm:[[T(3,2),1440],[T(3,2)+1.5,1250]]});
+  card(40,360,580,70,'Voltage ↓ → TORQUE ↓',[PS(3),PE(3)],{bg:'#fef3c7',size:32});card(40,440,580,70,'Load same → SLIP ↑',[T(3,2),PE(3)],{size:32});card(40,520,580,70,'Slip ↑ → CURRENT ↑',[T(3,3),PE(3)],{bg:'#fee2e2',size:32});card(40,600,580,80,'Winding SOODU → PUGAI',[T(3,4),PE(3)],{bg:RED,size:34});
+  /* k4 voltage illa – frequency */
+  erase(PS(4));bg(P(4));pres(P(4));big('VOLTAGE  ✗',[PS(4)+.3,PE(4)],{x:330,y:220,w:420,bg:'#fee2e2'});big('FREQUENCY  ✓',[T(4,1),PE(4)],{x:780,y:220,w:460,bg:'#dcfce7'});
+  /* k5 inside the motor: X-ray, 3-phase glow, rotating field, rotor */
+  erase(PS(5),'#dfe5ec');bg(P(5,6),'#dfe5ec');
+  motor(P(5),{hz:[[0,50]],xray:[[PS(5)+.4,0],[PS(5)+2.4,1]],core:[[T(5,1),0],[T(5,1)+1,1]],glow:[[T(5,1),0],[T(5,1)+.8,1]],field:[[T(5,1)+.6,0],[T(5,1)+1.2,1]],
+    cam:[[0,.48,.2,.52,0,.02,0],[T(5,0)+.3,.48,.2,.52,0,.02,0],[T(5,1)+1,.42,.08,.16,0,0,0],[T(5,3),.36,.16,.36,0,.0,0]]});
+  chip('Stator: 3-phase winding  U · V · W',[PS(5),T(5,1)],NAV);chip('3 phase maari maari → field SUTTHUDHU',[T(5,1),T(5,2)],PUR);chip('Rotor field-ai follow pannudhu',[T(5,2),T(5,3)],BLU);chip('Field vegam = rotor vegam',[T(5,3),PE(5)],GRN);
+  /* k6 formula */
+  motor(P(6),{x:0,w:640,hz:[[0,50]],xray:[[0,1]],core:[[0,1]],glow:[[0,1]],field:[[0,1]],cam:[[0,.42,.08,.18,0,0,0]]});
+  card(680,80,560,100,'N = 120 × f ÷ P',[T(6,1),PE(6)],{size:46});card(680,200,560,80,'f = 50 Hz,  P = 4',[T(6,2),PE(6)],{size:36,bg:'#dbeafe'});card(680,300,560,90,'= 1500 RPM',[T(6,2)+1.5,PE(6)],{size:44,bg:'#dcfce7'});
+  eq('motor-nameplate',[T(6,3),PE(6)],{x:700,y:410,w:520,h:290,pen:[T(6,3),.8]});chip('Field vegam → FREQUENCY decide pannudhu',[PS(6),T(6,1)],PUR);
+  /* k7 question (answered later at k14) */
+  erase(PS(7));bg(P(7));pres(P(7));chip('UNGALUKKU ORU QUESTION',[PS(7),PE(7)],ORG);card(300,90,680,90,'4 pole + 25 Hz = ? RPM',[T(7,1),PE(7)],{size:40});
+  [['A','1500',BLU],['B','750',GRN],['C','3000',ORG]].forEach(([l,t,cl],i)=>{card(380,220+i*115,90,90,l,[T(7,2+i),PE(7)],{bg:cl,size:44});card(490,220+i*115,300,90,t+' RPM',[T(7,2+i)+.2,PE(7)],{size:40})});
+  card(860,320,380,120,'Manasula vechukonga…',[T(7,5),PE(7)],{bg:'#fef3c7',size:30});
+  /* k8 supply fixed → VFD */
+  erase(PS(8));bg(P(8));
+  card(40,300,280,110,'EB SUPPLY 50 Hz',[PS(8),PE(8)],{bg:'#fef3c7',size:32});chip('EB = eppovume 50 Hz',[PS(8),T(8,2)],RED);
+  card(400,280,320,150,'?  DEVICE  ?',[T(8,2),T(8,4)],{size:40,bg:'#ede9fe'});eq('motor',[T(8,2),PE(8)],{x:880,y:200,w:360,h:320,pen:[T(8,2),.8]});
+  card(330,470,520,80,'50 Hz → venum-gira Hz',[T(8,3),PE(8)],{size:34});eq('vfd-3q',[T(8,4),PE(8)],{x:440,y:40,w:300,h:420,pen:[T(8,4),.9]});chip('VFD = Variable Frequency Drive',[T(8,4),PE(8)],PUR);
+  /* k9–k13 inside the VFD */
+  erase(PS(9),'#dfe5ec');bg([PS(9),PE(13)],'#dfe5ec');
+  const vfdCam=[[0,0,0,6.2,0,0,-.3],[PS(9)+.1,0,0,6.2,0,0,-.3],[PS(10)+.2,3.4,.8,5.8,0,-.3,-1.2],[PS(11)+.2,3.0,-.5,5.2,0,-.5,-1],[PS(12)+.2,2.8,1.2,5.0,.2,.6,-1.6],[PS(13),2.2,.4,6.4,0,0,-1.2]];
+  ng('g3',{shot:'vfd',x:0,y:0,w:640,h:H,noPop:true,scan:[PS(9)+.3,1.8],explode:[[PS(10)-.2,0],[PS(10)+1.6,1]],flow:[PS(10)+1,PE(13)],cam:vfdCam,
+    hl:{'vfd-cut-rectifier':[[PS(10),0],[PS(10)+.5,1],[PS(11),1],[PS(11)+.4,0]],'vfd-cut-dcbus':[[PS(11),0],[PS(11)+.5,1],[PS(12),1],[PS(12)+.4,0]],'vfd-cut-igbt':[[PS(12),0],[PS(12)+.5,1],[PE(13),1]]}},[PS(9),PE(13)]);
+  [['1 · RECTIFIER',PS(9)+.6],['2 · DC BUS',PS(9)+1.2],['3 · INVERTER',PS(9)+1.8]].forEach(([t,t0],i)=>card(700,140+i*130,500,100,t,[t0,PS(10)],{size:40,bg:['#fee2e2','#fef3c7','#dbeafe'][i]}));
+  ng('wave',{x:680,y:120,w:570,h:300,mode:'rect',title:'3-phase AC → DC',ghost:[[PS(10),1],[T(10,1)+1.5,.25]],noPop:true},P(10));chip('STAGE 1 · RECTIFIER (diodes)',[PS(10),PE(10)],RED,{x:680});
+  card(700,460,520,80,'AC → DC',[T(10,1),PE(10)],{size:40});card(700,560,520,80,'DC-la frequency illa!',[T(10,2),PE(10)],{size:34,bg:'#fee2e2'});
+  ng('wave',{x:680,y:120,w:570,h:300,mode:'dc',title:'DC bus: ripple → smooth',smooth:[[T(11,2),0],[T(11,2)+1.5,1]],noPop:true},P(11));chip('STAGE 2 · DC BUS (capacitors)',[PS(11),PE(11)],ORG,{x:680});
+  card(700,460,520,80,'Ripple → capacitor smooth',[T(11,1),PE(11)],{size:32});card(700,560,520,90,'DC bus ≈ 560 V',[T(11,3),PE(11)],{size:44,bg:'#fef3c7'});
+  ng('wave',{x:680,y:120,w:570,h:300,mode:'pwm',title:'IGBT switching → PWM',reveal:[T(12,1),2.5],sine:[[T(12,2)+.5,0],[T(12,2)+1.8,1]],win_ms:40,scroll:6,noPop:true},P(12));chip('STAGE 3 · INVERTER (IGBT)',[PS(12),PE(12)],BLU,{x:680});
+  card(700,460,520,80,'1000s ON / OFF per second',[T(12,1),PE(12)],{size:32});card(700,560,520,80,'Pulse width → SINE = PWM',[T(12,2),PE(12)],{size:32,bg:'#dbeafe'});
+  const fk=[[0,50],[PS(13)+.6,50],[PS(13)+1.8,25],[T(13,1),25],[T(13,1)+.8,50],[T(13,2),50],[T(13,2)+1,25]];
+  ng('wave',{x:680,y:60,w:570,h:300,mode:'sine',f:fk,win_ms:80,scroll:8,tag:tl=>Math.round(kv(fk,tl,50))+' Hz',noPop:true},P(13));chip('Switching speed = output Hz',[PS(13),PE(13)],PUR,{x:680});
+  card(700,400,520,80,'Slow → Hz KAMMI',[PS(13)+.8,PE(13)],{size:34});card(700,490,520,80,'Fast → Hz ADHIGAM',[T(13,1),PE(13)],{size:34});card(700,580,520,90,'VFD → 25 Hz',[T(13,2),PE(13)],{size:44,bg:'#fef3c7'});
+  /* k14 25 Hz into the motor → quiz answer */
+  erase(PS(14),'#dfe5ec');bg(P(14),'#dfe5ec');
+  motor(P(14),{x:0,w:640,hz:[[0,25]],xray:[[0,1]],core:[[0,1]],glow:[[0,1]],field:[[0,1]],cam:[[0,.42,.08,.18,0,0,0]]});
+  chip('25 Hz → field PAADHI vegam',[PS(14),T(14,2)],PUR,{x:680});card(680,140,560,100,'120 × 25 ÷ 4',[T(14,2),PE(14)],{size:46});card(680,260,560,110,'= 750 RPM',[T(14,2)+1.8,PE(14)],{size:54,bg:'#dcfce7'});card(760,400,420,100,'Answer: B ✓',[T(14,3),PE(14)],{size:46,bg:GRN});
+  /* k15 frequency only → current ↑ → heat */
+  erase(PS(15),'#dfe5ec');bg(P(15),'#dfe5ec');
+  motor(P(15),{x:0,w:640,hz:[[0,25]],xray:[[0,1]],core:[[0,1]],glow:[[0,1]],field:[[0,1]],heat:[[T(15,3),0],[T(15,4)+.6,1]],cam:[[0,.42,.08,.18,0,0,0],[T(15,4),.34,.12,.3,0,0,0]]});
+  meters(P(15),{x:660,y:40,w:600,h:230,cols:4,hz:[[0,25]],v:[[0,415]],a:[[T(15,3),4.7],[T(15,3)+1.5,9.5]],rpm:[[0,720]]});
+  card(680,300,560,70,'Frequency mattum ↓ = problem',[PS(15),PE(15)],{size:30,bg:'#fef3c7'});card(680,380,560,70,'Winding = COIL',[T(15,1),PE(15)],{size:32});card(680,460,560,70,'f ↓ → reactance ↓',[T(15,2),PE(15)],{size:32});
+  card(680,540,560,70,'Same 415 V → CURRENT ↑↑',[T(15,3),PE(15)],{size:32,bg:'#fee2e2'});card(680,620,560,70,'Saturate → SOODU',[T(15,4),PE(15)],{size:32,bg:RED});
+  /* k16 V/f */
+  erase(PS(16));bg(P(16));ng('vf',{x:40,y:60,w:680,h:600,t0:PS(16)+.3,f:[[0,50],[T(16,2),50],[T(16,2)+1.5,25]],noPop:true},P(16));
+  chip('VFD: f ↓ + V ↓ together',[PS(16),T(16,1)],BLU,{x:740});card(760,170,480,90,'415 ÷ 50 ≈ 8.3 V/Hz',[T(16,1),PE(16)],{size:36});card(760,280,480,90,'25 Hz → ≈ 207 V',[T(16,2),PE(16)],{size:38,bg:'#fef3c7'});
+  card(760,390,480,90,'Orey ratio → TORQUE full',[T(16,3),PE(16)],{size:32,bg:'#dcfce7'});card(760,500,480,100,'V / f CONTROL',[T(16,4),PE(16)],{size:46,bg:PUR});
+  /* k17 back to the conveyor with a VFD */
+  erase(PS(17),'#e3e8ee');bg(P(17),'#e3e8ee');
+  ng('g3',{shot:'line',x:0,y:0,w:W,h:H,noPop:true,spd:[[PS(17),1.7],[T(17,2)+.5,1.7],[T(17,2)+3,1.05]],fall:[[0,1],[T(17,2)+2.4,1],[T(17,2)+3,0]],heat:[[0,0]],
+    cam:[[0,-1.2,2.4,9.2,-.6,.2,0],[PS(17)+.1,-1.2,2.4,9.2,-.6,.2,0],[T(17,2)+1,1.6,1.6,6.6,2.4,.2,.4],[T(17,3)+.5,6.4,1.4,6.0,3.6,.2,1.0]]},P(17));
+  meters([T(17,2),PE(17)],{hz:[[T(17,2),50],[T(17,2)+3,31]],v:[[T(17,2),415],[T(17,2)+3,257]],a:[[0,4.6]],rpm:[[T(17,2),1440],[T(17,2)+3,890]]});
+  chip('Voltage mattum ↓ → PUGAI ✗',[T(17,1),T(17,2)],RED);chip('VFD: f ↓ + V ↓ → torque FULL ✓',[T(17,2),T(17,3)],BLU);chip('Box safe ✓  Motor cool ✓',[T(17,3),PE(17)],GRN);
+  /* k18 two bonuses */
+  erase(PS(18));bg(P(18));pres(P(18));big('BONUS  ×  2',[PS(18)+.3,PE(18)],{y:250,w:520,bg:'#fef3c7',size:58});
+  /* k19 soft start: DOL inrush */
+  erase(PS(19));bg(P(19));chip('BONUS 1 · SOFT START',[PS(19),PE(19)],BLU);
+  ng('rampg',{x:40,y:90,w:680,h:590,t0:T(19,1),dur:1.6,T:12,title:'Direct start current',ylab:'Current (× FLC)',yt:[[1/7,'1×'],[6.5/7,'6.5×']],lines:[{col:RED,fn:t=>t<1.2?6.5/7:t<2.2?(6.5-(t-1.2)*5.5)/7:1/7,lab:'DOL: 6–7× !',lx:.15,ly:.97}],noPop:true},P(19));
+  eq('panel-dim',[T(19,2),PE(19)],{x:760,y:120,w:480,h:400,pen:[T(19,2),.6],alpha:[[T(19,2)+.7,1],[T(19,2)+.9,.55],[T(19,2)+1.1,1],[T(19,2)+1.3,.6],[T(19,2)+1.6,1]]});
+  card(760,540,480,70,'Light DIM',[T(19,2),PE(19)],{size:32,bg:'#fee2e2'});card(760,620,480,70,'Belt SLIP',[T(19,2)+1,PE(19)],{size:32,bg:'#fee2e2'});
+  /* k20 ramp */
+  erase(PS(20));bg(P(20));
+  ng('rampg',{x:40,y:60,w:760,h:600,t0:PS(20)+.2,dur:4,T:12,title:'VFD ramp',ylab:'',yt:[[1,'50 Hz']],lines:[{col:BLU,fn:t=>Math.min(1,t/10),lab:'Hz: 0 → 50 in 10 s',lx:.45,ly:.95},{col:GRN,at:T(20,1),fn:t=>t<.3?t/.3/7:1.1/7,lab:'Current ≈ rated',lx:.3,ly:.25}],noPop:true},P(20));
+  chip('RAMP TIME = 10 s',[PS(20),PE(20)],BLU,{x:830});card(830,200,420,90,'Mella mella 0 → 50 Hz',[PS(20)+1,PE(20)],{size:30});card(830,310,420,90,'Current ≈ rated ✓',[T(20,1),PE(20)],{size:34,bg:'#dcfce7'});eq('vfd-front',[PS(20),PE(20)],{x:930,y:440,w:220,h:260,pen:[PS(20)+.3,.7]});
+  /* k21 energy saving */
+  erase(PS(21));bg(P(21));chip('BONUS 2 · ENERGY SAVING',[PS(21),T(21,1)],GRN);eq('centrifugal-fan-motor',P(21),{x:30,y:110,w:520,h:420,pen:[PS(21)+.1,.9]});eq('pump-motor',[PS(21)+.6,PE(21)],{x:110,y:500,w:300,h:220,pen:[PS(21)+.8,.7]});
+  ng('cube',{x:580,y:60,w:670,h:560,t0:T(21,1),mark:[[T(21,2)+.6,0],[T(21,2)+1.8,1]],noPop:true},[T(21,1),PE(21)]);chip('Fan / Pump: P ∝ N³',[T(21,1),T(21,2)],PUR);chip('80% speed → ≈ 51% power',[T(21,2),T(21,3)],GRN);chip('Current bill ≈ PAADHI',[T(21,3),PE(21)],GRN);
+  /* k22 summary */
+  erase(PS(22));bg(P(22));pres(P(22));chip('SUMMARY',[PS(22),PE(22)],NAV);
+  ['Speed = FREQUENCY, not voltage','Rectifier → DC bus → IGBT PWM','Frequency-oda voltage-um: V / f','Bonus: soft start + energy saving'].forEach((t,i)=>card(340,130+i*110,880,90,(i+1)+'.  '+t,[T(22,1+i),PE(22)],{size:34}));
+  /* k23 challenge (answer only in the pinned comment) */
+  erase(PS(23));bg(P(23));pres(P(23));chip('CHALLENGE',[PS(23),PE(23)],ORG);
+  card(320,110,900,90,'4 pole · 50 Hz · 1440 RPM',[T(23,1),PE(23)],{size:40});card(320,220,900,90,'Target ≈ 1000 RPM',[T(23,2),PE(23)],{size:40,bg:'#fef3c7'});card(320,330,900,110,'VFD-la evlo Hz?',[T(23,3),PE(23)],{size:52,bg:'#ede9fe'});
+  card(420,470,700,80,'Comment pannunga',[T(23,4),PE(23)],{size:36,bg:'#dbeafe'});card(420,570,700,80,'Answer → pinned comment',[T(23,5),PE(23)],{size:34});
+  /* k24 CTA + end screen */
   erase(PS(24));bg([PS(24),END]);pres([PS(24),NARR+.3]);eq('hand-thumbs-up',[PS(24),NARR+.3],{x:330,y:120,w:420,h:480});
   card(800,130,420,90,'LIKE',[PS(24),NARR+.3],{bg:BLU,size:40});card(800,240,420,90,'SHARE',[T(24,0)+1.2,NARR+.3],{bg:NG.teal,size:40});card(800,350,420,100,'SUBSCRIBE',[T(24,0)+2.4,END],{bg:RED,size:44});
   card(140,120,560,320,'',[NARR+.4,END],{bg:'#ffffff'});card(180,460,480,70,'Adutha video ▶',[NARR+.6,END],{size:34,bg:'#dbeafe'});
@@ -6249,28 +6306,27 @@ async function buildEp14(){
 }
 async function buildEp14Short(){
   stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('9:16');S.narrOff=0;S.art='sketch';
-  try{await document.fonts.load('700 30px InkHand')}catch(_){}
-  const A=EP14_SA,END=35.56;
+  try{await document.fonts.load('700 30px InkHand')}catch(_){}try{await window.E14_MOTOR_READY}catch(_){}
+  const A=EP14_SA,END=38.84;
   const s=newScene({name:'EP14 Short',style:'white',transition:'cut',trans:0,hold:0});s.minDur=END;S.scenes.push(s);
-  const K=ep10Kit(s,A,END),{ng,T,PS,card,presenter}=K,RED=NG.red,GRN=NG.grn,BLU=NG.blue,ORG='#f59e0b',PUR='#7c3aed';
+  const K=ep10Kit(s,A,END),{ng,T,PS,card,presenter}=K,RED=NG.red,GRN=NG.grn,BLU=NG.blue;
   const PE=k=>k>=6?END:PS(k+1),P=(a,b=a)=>[PS(a),PE(b)];
   const bg=(win,col='#eef1f5')=>ng('fill',{x:0,y:0,w:W,h:H,col,noPop:true},win);
   const ers=(t,col='#eef1f5')=>ng('erase',{ts:t-.7,ed:.65,pop:.01,x:0,y:0,w:W,h:H,col,noPop:true},[t-.7,t+.06]);
-  const cap=list=>ng('caps',{x:W/2,y:H-240,list,size:72,noPop:true},[0,END]);
   bg([0,END],'#e3e8ee');
-  const lineCam=[[0,1.6,1.8,7.6,1.8,.3,.6],[T(0,0)+3.2,5.6,1.4,5.6,4.2,.2,1.3],[T(1,2)+.5,5.4,1.1,4.0,4.5,.4,1.5],[PE(1),5.4,1.1,4.0,4.5,.4,1.5]];
-  ng('g3',{shot:'line',x:0,y:0,w:W,h:H,noPop:true,spd:[[0,1.7],[2.2,1.7],[PS(1),1.05]],fall:[[0,1],[PS(1)-.5,1],[PS(1),0]],heat:[[T(1,2),0],[T(1,2)+1.5,1]],cam:lineCam},P(0,1));
-  ng('meters',{x:30,y:150,w:660,h:260,cols:2,aMax:5,hz:[[0,50]],v:[[1.2,415],[3.5,300]],a:[[PS(1),4.7],[T(1,2)+1.2,7.6]],rpm:[[1.2,1440],[PS(1),1250]],noPop:true},[1.0,PE(1)]);
-  ers(PS(2));bg(P(2));ng('homefan',{x:60,y:220,fw:600,rx:110,ry:760,rw:500,spd:[[0,1],[PS(2)+.6,1],[PS(2)+2.4,.35]],hand:[[PS(2)+.3,0],[PS(2)+.6,1],[PS(2)+2.6,1],[PS(2)+3,0]],noPop:true},P(2));
-  card(170,1110,380,90,'Fan: OK ✓',[PS(2)+1.6,T(2,1)],{bg:'#dcfce7',size:40});card(120,1110,480,90,'Motor: PUGAI ?!',[T(2,1),PE(2)],{bg:'#fee2e2',size:40});
-  ers(PS(3));bg(P(3,4));card(80,330,560,150,'VOLTAGE ?',[PS(3)+.2,PE(4)],{size:64,bg:'#fef3c7'});card(80,530,560,150,'VERA EDHO ?',[T(3,1),PE(4)],{size:60,bg:'#ede9fe'});
-  presenter(P(3,4),{poses:EP14_SPOSE,x:-10,y:H-470,size:440,entrance:'draw',draw:.8});card(200,760,420,100,'Comment pannunga',[PS(4),PE(4)],{bg:'#dbeafe',size:36});
+  const lineCam=[[0,1.6,1.8,7.6,1.8,.3,.6],[T(0,1)+2,5.6,1.4,5.6,4.2,.2,1.3],[T(1,2)+.5,5.4,1.1,4.0,4.5,.4,1.5],[PE(1),5.4,1.1,4.0,4.5,.4,1.5]];
+  ng('g3',{shot:'line',x:0,y:0,w:W,h:H,noPop:true,spd:[[0,1.7],[T(0,1)+.8,1.7],[PS(1),1.05]],fall:[[0,1],[PS(1)-.5,1],[PS(1),0]],heat:[[T(1,2),0],[T(1,2)+1.5,1]],cam:lineCam},P(0,1));
+  ng('meters',{x:30,y:150,w:660,h:260,cols:2,aMax:5,hz:[[0,50]],v:[[T(0,1),415],[T(0,1)+2,300]],a:[[PS(1),4.7],[T(1,2)+1.2,7.6]],rpm:[[T(0,1),1440],[PS(1),1250]],noPop:true},[T(0,1),PE(1)]);
+  ers(PS(2));bg(P(2));ng('g3',{shot:'fanroom',x:0,y:0,w:W,h:H,noPop:true,spd:[[0,1],[T(2,1)+.4,1],[T(2,1)+2.2,.35]],hand:[[T(2,1),0],[T(2,1)+.3,1],[T(2,1)+2.4,1],[T(2,1)+2.8,0]],
+    cam:[[0,1.2,-1.4,12,1.0,.4,-2],[T(2,1)+.4,2.6,-.6,4.2,2.6,-.6,-3],[T(2,1)+2.8,2.6,-.6,4.2,2.6,-.6,-3],[T(2,2)+.6,1.0,-1.4,12,.9,.6,-2]]},P(2));
+  card(170,240,380,90,'Fan: OK ✓',[T(2,1)+1.6,T(2,3)],{bg:'#dcfce7',size:40});card(120,240,480,90,'Motor: PUGAI ?!',[T(2,3),PE(2)],{bg:'#fee2e2',size:40});
+  ers(PS(3));bg(P(3,4));card(80,330,560,150,'VOLTAGE ?',[PS(3)+.2,PE(4)],{size:64,bg:'#fef3c7'});card(80,530,560,150,'VERA EDHO ?',[T(3,1),PE(4)],{size:60,bg:'#ede9fe'});card(200,760,420,100,'Comment pannunga',[PS(4),PE(4)],{bg:'#dbeafe',size:36});
   ers(PS(5));bg(P(5));card(110,300,500,130,'FULL ANSWER',[PS(5),PE(5)],{size:56,bg:GRN});ng('arrowdn',{x:260,y:560,w:200,h:560},[PS(5)+.8,PE(5)+.1]);card(150,450,420,100,'⬇ keezha LINK',[PS(5)+.8,PE(5)],{bg:RED,size:40});
-  /* CTA over the opening conveyor so the loop back to frame 1 is seamless */
   ng('g3',{shot:'line',x:0,y:0,w:W,h:H,noPop:true,spd:[[0,1.7]],fall:[[0,1]],heat:[[0,0]],cam:[[0,1.6,1.8,7.6,1.8,.3,.6]]},P(6));
-  ng('hand-thumbs-up'?'eqv':'eqv',{key:'hand-thumbs-up',x:400,y:320,w:300,h:340,noPop:true},[PS(6),END-.25]);card(110,180,500,110,'SUBSCRIBE',[PS(6),END-.25],{bg:RED,size:48});card(110,700,240,80,'LIKE',[PS(6)+.4,END-.25],{bg:BLU,size:34});card(370,700,240,80,'SHARE',[PS(6)+.8,END-.25],{bg:NG.teal,size:34});
-  cap([[.2,2.0,'TOO FAST!','#fca5a5'],[2.4,4.6,'VOLTAGE ↓'],[PS(1)+.2,T(1,1),'SLOW ✓','#86efac'],[T(1,1),T(1,2),'ELLAARUM HAPPY','#86efac'],[T(1,2)+.4,PE(1),'PUGAI !!','#fca5a5'],
-       [PS(2)+.2,T(2,1),'FAN = OK'],[T(2,1),T(2,2),'MOTOR = ?'],[T(2,2),PE(2),'YEN ?!','#fca5a5'],[PS(3),PE(3),'EDHU DECIDE PANNUDHU?'],[PS(5),PE(5),'ANSWER ⬇'] ]);
+  ng('eqv',{key:'hand-thumbs-up',x:400,y:320,w:300,h:340,noPop:true},[PS(6),END-.25]);card(110,180,500,110,'SUBSCRIBE',[PS(6),END-.25],{bg:RED,size:48});card(110,700,240,80,'LIKE',[PS(6)+.4,END-.25],{bg:BLU,size:34});card(370,700,240,80,'SHARE',[PS(6)+.8,END-.25],{bg:NG.teal,size:34});
+  ng('caps',{x:W/2+90,y:H-150,maxw:500,size:72,noPop:true,list:[[.2,T(0,1),'TOO FAST!','#fca5a5'],[T(0,1)+.2,PS(1),'VOLTAGE ↓'],[PS(1)+.2,T(1,1),'SLOW ✓','#86efac'],[T(1,1),T(1,2),'ELLAARUM HAPPY','#86efac'],[T(1,2)+.4,PE(1),'PUGAI !!','#fca5a5'],
+    [PS(2)+.2,T(2,1),'VEETU IDEA'],[T(2,1),T(2,2),'FAN = OK','#86efac'],[T(2,2),T(2,3),'MOTOR = ?'],[T(2,3),PE(2),'YEN PUGAI?!','#fca5a5'],[PS(3),PE(3),'EDHU DECIDE PANNUDHU?'],[PS(5),PE(5),'ANSWER ⬇']]},[0,END]);
+  presenter([0,END],{poses:EP14_SPOSE,x:-20,y:H-356,size:340,entrance:'draw',draw:.6});
   S.captions=false;S.showHand=true;S.penSprite=true;S.cardsDraw=true;S.cur=0;S.pin=false;S.t=1;refresh();
 }
 
