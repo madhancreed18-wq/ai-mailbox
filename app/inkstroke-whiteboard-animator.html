@@ -5414,6 +5414,18 @@ G3_BUILD.motor=g3Motor;
 /* ================= EP15 – VFD wiring & terminals: real VFD CAD (GLB) with animated cables ================= */
 function e15Clone(src){if(!src)return null;const g=src.clone(true),parts={};g.traverse(o=>{if(o.isMesh){o.material=o.material.clone();o.castShadow=o.receiveShadow=true}if(o.name)parts[o.name]=o});return{g,parts}}
 const E15_GRP={T_R:'#16a34a',T_S:'#16a34a',T_T:'#16a34a',T_U:'#2563eb',T_V:'#2563eb',T_W:'#2563eb',T_PE:'#eab308',T_P:'#dc2626',T_N:'#dc2626',T_B1:'#dc2626',T_B2:'#dc2626'};
+const E15_DY=-.04,E15_VX=-.13,E15_RX=.27;
+/* orthogonal routing: terminal → straight down → back into the bottom duct → along the duct → out at the device (riser for devices above) */
+function e15fillet(P){const out=[P[0]];for(let i=1;i<P.length-1;i++){const a=P[i-1],b=P[i],c=P[i+1];const d1=Math.hypot(b[0]-a[0],b[1]-a[1],b[2]-a[2]),d2=Math.hypot(c[0]-b[0],c[1]-b[1],c[2]-b[2]);const r=Math.min(.004,d1*.4,d2*.4);
+  const p=(q,d,t)=>[b[0]+(q[0]-b[0])*t/d,b[1]+(q[1]-b[1])*t/d,b[2]+(q[2]-b[2])*t/d];if(d1>1e-6)out.push(p(a,d1,r));out.push(b);if(d2>1e-6)out.push(p(c,d2,r))}out.push(P[P.length-1]);
+  const D=[out[0]];for(let i=1;i<out.length;i++){const a=D[D.length-1],b=out[i],d=Math.hypot(b[0]-a[0],b[1]-a[1],b[2]-a[2]);const n=Math.max(1,Math.ceil(d/.01));for(let j=1;j<=n;j++)D.push([a[0]+(b[0]-a[0])*j/n,a[1]+(b[1]-a[1])*j/n,a[2]+(b[2]-a[2])*j/n])}return D}
+function e15route(a,b,w){const L=w.lane||0,zl=-.03+L*.0035,zd=-.05+(L%8)*.0025,yt=E15_DY+.017,dy=E15_DY;let P;
+  if(w.from==='dev'){P=[a,[a[0],a[1]-.012,zl],[a[0],yt+.002,zl],[a[0],yt-.004,zd],[a[0],dy,zd]]}
+  else{P=[a,[a[0],a[1]-.006,a[2]+.004],[a[0],-.006,a[2]+.004],[a[0],-.01,zl],[a[0],yt+.002,zl],[a[0],yt-.004,zd],[a[0],dy,zd]]}
+  const k=w.k||'D';
+  if(k==='L'||k==='R'){const X=k==='L'?E15_VX:E15_RX,ye=w.ye;const xo=X+(b[0]<X?-.017:.017);P.push([X,dy,zd],[X,ye,zd],[xo,ye,zd],[xo-(b[0]<X?.004:-.004),ye,zl],[b[0],ye,zl],b)}
+  else{const xe=w.xe??b[0];P.push([xe,dy,zd],[xe,dy-.012,zd],[xe,dy-.02,zl]);if(w.mid)P.push(...w.mid);P.push(b)}
+  const Q=[P[0]];P.forEach(p=>{const q=Q[Q.length-1];if(Math.hypot(p[0]-q[0],p[1]-q[1],p[2]-q[2])>1e-5)Q.push(p)});return Q}
 function e15step(list,tl,d){let v=d;(list||[]).forEach(k=>{if(tl>=k[0])v=k[1]});return v}
 function g3VfdWire(){const B=g3Base('#dfe3e8'),{T,S,cam,M,box,cyl}=B;['left','bottom'].forEach(k=>B.key.shadow.camera[k]=-.6);['right','top'].forEach(k=>B.key.shadow.camera[k]=.6);B.key.position.set(.6,1,1.2);B.key.shadow.camera.near=.1;B.key.shadow.camera.far=4;
   // panel back plate + floor
@@ -5432,20 +5444,24 @@ function g3VfdWire(){const B=g3Base('#dfe3e8'),{T,S,cam,M,box,cyl}=B;['left','bo
   // props built to real proportions
   const PR={};const grp=(x,y,z)=>{const g=new T.Group();g.position.set(x,y,z);S.add(g);return g};
   PR.iso=grp(-.2,.24,-.05);box(.09,.11,.07,M('#f3f4f6',{r:.5}),0,0,0,PR.iso);const isoH=new T.Group();isoH.position.set(0,0,.04);PR.iso.add(isoH);box(.016,.06,.016,M('#dc2626',{r:.4}),0,0,.008,isoH);cyl(.022,.022,.012,M('#facc15',{r:.5}),0,0,0,PR.iso).rotation.x=Math.PI/2;PR.iso.children[2].position.z=.036;
-  PR.btn=grp(-.2,.02,-.04);box(.05,.05,.04,M('#e5e7eb',{r:.5}),0,0,0,PR.btn);const btnCap=cyl(.013,.013,.016,M('#16a34a',{r:.35}),0,0,.026,PR.btn,24);btnCap.rotation.x=Math.PI/2;
-  PR.pot=grp(-.2,-.07,-.04);box(.05,.05,.03,M('#e5e7eb',{r:.5}),0,0,0,PR.pot);const potK=new T.Group();potK.position.z=.022;PR.pot.add(potK);const pk=cyl(.014,.016,.02,M('#1f2937',{r:.5}),0,0,0,potK,24);pk.rotation.x=Math.PI/2;box(.003,.011,.003,M('#f9fafb'),0,.007,.011,potK);
-  PR.lamp=grp(.2,.2,-.04);box(.05,.05,.03,M('#e5e7eb',{r:.5}),0,0,0,PR.lamp);const lampM=new T.MeshStandardMaterial({color:'#7f1d1d',roughness:.3,emissive:'#ff2a1a',emissiveIntensity:0});const ld=new T.Mesh(new T.SphereGeometry(.016,24,16,0,Math.PI*2,0,Math.PI/2),lampM);ld.rotation.x=Math.PI/2;ld.position.z=.016;PR.lamp.add(ld);
-  PR.ct=grp(.2,-.02,-.04);box(.045,.075,.07,M('#e5e7eb',{r:.5}),0,0,0,PR.ct);const ctB=box(.03,.02,.01,M('#374151'),0,0,.04,PR.ct);
-  PR.cap=grp(.18,-.13,-.03);const capM=M('#9ca3af',{m:.6,r:.35});const capB=cyl(.03,.03,.1,capM,0,0,0,PR.cap,32);
+  PR.btn=grp(-.2,.07,-.04);box(.05,.05,.04,M('#e5e7eb',{r:.5}),0,0,0,PR.btn);const btnCap=cyl(.013,.013,.016,M('#16a34a',{r:.35}),0,0,.026,PR.btn,24);btnCap.rotation.x=Math.PI/2;
+  PR.pot=grp(-.2,.0,-.04);box(.05,.05,.03,M('#e5e7eb',{r:.5}),0,0,0,PR.pot);const potK=new T.Group();potK.position.z=.022;PR.pot.add(potK);const pk=cyl(.014,.016,.02,M('#1f2937',{r:.5}),0,0,0,potK,24);pk.rotation.x=Math.PI/2;box(.003,.011,.003,M('#f9fafb'),0,.007,.011,potK);
+  PR.lamp=grp(.19,.2,-.04);box(.05,.05,.03,M('#e5e7eb',{r:.5}),0,0,0,PR.lamp);const lampM=new T.MeshStandardMaterial({color:'#7f1d1d',roughness:.3,emissive:'#ff2a1a',emissiveIntensity:0});const ld=new T.Mesh(new T.SphereGeometry(.016,24,16,0,Math.PI*2,0,Math.PI/2),lampM);ld.rotation.x=Math.PI/2;ld.position.z=.016;PR.lamp.add(ld);
+  PR.ct=grp(.19,.09,-.04);box(.045,.075,.07,M('#e5e7eb',{r:.5}),0,0,0,PR.ct);const ctB=box(.03,.02,.01,M('#374151'),0,0,.04,PR.ct);
+  PR.cap=grp(.19,-.12,-.04);const capM=M('#9ca3af',{m:.6,r:.35});const capB=cyl(.03,.03,.1,capM,0,0,0,PR.cap,32);
   Object.values(PR).forEach(g=>g.visible=false);
+  // slotted cable trunking: bottom run + left and right risers, earth bar
+  const dM=M('#9aa1aa',{r:.7});const duct=(w,h,x,y)=>{const g=new T.Group();g.position.set(x,y,-.045);S.add(g);box(w,h,.05,dM,0,0,0,g);const n=Math.round(Math.max(w,h)/.012);for(let i=0;i<n;i++){const u=-.5+(i+.5)/n;if(w>h){box(.0025,h+.0004,.0504,M('#6b7280'),u*w,0,0,g)}else{box(w+.0004,.0025,.0504,M('#6b7280'),0,u*h,0,g)}}box(w*1.02,h*1.02,.002,M('#b4bac2',{r:.6}),0,0,.026,g)};
+  duct(.44,.03,.07,E15_DY);duct(.03,.29,E15_VX,.09);duct(.03,.29,E15_RX,.09);
+  box(.05,.008,.008,M('#c08a3e',{m:.8,r:.3}),-.07,-.075,-.05);
   // cables
-  const wires=[];const mkWire=(pts,col,r)=>{const cv=new T.CatmullRomCurve3(pts.map(p=>new T.Vector3(...p)));const g=new T.TubeGeometry(cv,120,r||.0015,10,false);const m=new T.MeshStandardMaterial({color:col,roughness:.55,emissive:col,emissiveIntensity:0});const me=new T.Mesh(g,m);me.castShadow=true;S.add(me);return{me,g,m,n:g.index.count}};
+  const wires=[];const mkWire=(pts,col,r)=>{const cv=new T.CatmullRomCurve3(e15fillet(pts).map(p=>new T.Vector3(...p)),false,'centripetal');const g=new T.TubeGeometry(cv,260,r||.0015,8,false);const m=new T.MeshStandardMaterial({color:col,roughness:.55,emissive:col,emissiveIntensity:0});const me=new T.Mesh(g,m);me.castShadow=true;S.add(me);return{me,g,m,n:g.index.count}};
   const tp=n=>W[n]?[W[n].x,W[n].y,W[n].z]:[0,0,0];
   // sparks / smoke sprites (EP13 VFX)
   const fx=[...Array(10)].map((_,i)=>{const s=new T.Sprite(new T.SpriteMaterial({map:g3TexImg(T,i<4?'spark-burst':'smoke-'+(1+i%4)),transparent:true,depthWrite:false,opacity:0}));S.add(s);return s});
   const flash=new T.PointLight('#ffb347',0,1.5);S.add(flash);
   let mAng=0,lastT=null,built=false;
-  return{B,update(tl,e){if(!built){built=true;(e.wires||[]).forEach(w=>{const a=typeof w.a==='string'?tp(w.a):w.a,b=typeof w.b==='string'?tp(w.b):w.b;const pts=[a,[a[0],a[1]-.004,a[2]+.007],[a[0],a[1]-.012,a[2]+.012]].concat(w.via||[[a[0],-.012,a[2]+.03],[(a[0]+b[0])/2,-.05,(a[2]+b[2])/2+.03]]).concat([[b[0],b[1],b[2]+.018],b]);wires.push(Object.assign(mkWire(pts,w.col,w.r),{w}))});}
+  return{B,update(tl,e){if(!built){built=true;(e.wires||[]).forEach(w=>{const a=typeof w.a==='string'?tp(w.a):w.a,b=typeof w.b==='string'?tp(w.b):w.b;const pts=w.via?[a].concat(w.via).concat([b]):e15route(a,b,w);wires.push(Object.assign(mkWire(pts,w.col,w.r),{w}))});}
     if(lastT==null||tl<lastT)lastT=tl;const dt=Math.min(.1,tl-lastT);lastT=tl;
     wires.forEach(o=>{const w=o.w,p=Math.max(0,Math.min(1,(tl-w.t0)/(w.dur||1))),gone=w.t1!=null&&tl>w.t1;o.me.visible=p>0&&!gone;o.g.setDrawRange(0,Math.floor(o.n*p/6)*6);o.m.emissiveIntensity=kv(w.glow,tl,0)*.8});
     Object.entries(hlMats).forEach(([n,ms])=>{const v=kv(e.hl&&e.hl[n],tl,0);ms.forEach(m=>{if(!m.emissive)return;m.emissive.set(E15_GRP[n]||'#06b6d4');m.emissiveIntensity=v*.9})});
@@ -6667,10 +6683,12 @@ const EP15_SPOSE=[[0.0, "talk_a"], [3.0, "explain_a"], [6.11, "talk_b"], [8.45, 
 const E15_TP={T_R:[-.023,.029,.056],T_S:[-.012,.029,.056],T_T:[-.001,.029,.056],T_P:[.012,.029,.056],T_N:[.023,.029,.056],T_U:[-.023,.012,.056],T_V:[-.012,.012,.056],T_W:[-.001,.012,.056],T_B1:[.012,.012,.056],T_B2:[.023,.012,.056],T_PE:[-.027,.041,.056]};
 ['FWD','REV','X1','COM','10V','AI','GND','AO','RA','RB','RC'].forEach((n,i)=>E15_TP['C_'+n]=[-.0275+i*.0055,.053,.0561]);
 const E15_EB=['#dc2626','#eab308','#2563eb'],E15_MC='#374151',E15_PEC='#65a30d';
-/* supply wires: terminal → down into trunking → left → up to the isolator */
-function e15sup(terms,t0,o={}){return terms.map((n,i)=>{const a=E15_TP[n];return{a:n,b:[-.212+i*.012,.19,-.01],col:o.cols?o.cols[i]:E15_EB[i],t0:t0+i*.25,dur:o.dur||1.1,t1:o.t1,glow:o.glow,
-  via:[[a[0],-.012-i*.004,a[2]+.03],[-.11-i*.006,-.012-i*.004,.05],[-.11-i*.006,.15,.02],[-.212+i*.012,.17,0]]}})}
-function e15mot(terms,t0,o={}){return terms.map((n,i)=>({a:n,b:o.to?o.to(i):[.36,-.065+i*.006,.09],col:o.col||E15_MC,t0:t0+i*.25,dur:o.dur||1.1,t1:o.t1,glow:o.glow}))}
+/* every cable runs in the trunking: supply up the left riser to the isolator, motor cable out of the bottom duct to the motor */
+function e15sup(terms,t0,o={}){return terms.map((n,i)=>({a:n,b:[-.212+i*.012,.185,-.03],col:o.cols?o.cols[i]:E15_EB[i],t0:t0+i*.25,dur:o.dur||1.3,t1:o.t1,glow:o.glow,k:'L',ye:.165-i*.004,lane:i}))}
+function e15mot(terms,t0,o={}){return terms.map((n,i)=>{const xe=.245+i*.006,zl=-.03+(3+i)*.0035;return{a:n,b:o.to?o.to(i):[.355,-.072+i*.005,.085],col:o.col||E15_MC,t0:t0+i*.25,dur:o.dur||1.3,t1:o.t1,glow:o.glow,lane:3+i,xe,mid:[[xe,-.09+i*.003,zl],[.33,-.09+i*.003,.06]],...(o.w||{})}})}
+const e15pe=(t0,dur=.9)=>({a:'T_PE',b:[-.085,-.071,-.047],col:E15_PEC,t0,dur,lane:6,xe:-.085});
+const e15pem=(t0)=>({a:'T_PE',b:[.355,-.088,.085],col:E15_PEC,t0,dur:1.3,lane:6,xe:.263,mid:[[.263,-.1,-.009],[.33,-.1,.06]]});
+const e15ctl=(n,b,ye,lane,col,t0,k='L')=>({a:n,b,col,r:.0011,t0,dur:1.1,k,ye,lane});
 function e15disp(list,t0,dur,f0,f1,step=.25){const n=Math.max(1,Math.round(dur/step));for(let i=0;i<=n;i++){const f=f0+(f1-f0)*i/n;list.push([t0+i*dur/n,[f.toFixed(1),'#ff3b2f']])}return list}
 const E15_WIDE=[.1,.055,.95,.1,.045,0],E15_VFD=[0,.085,.5,0,.08,0],E15_TERM=[0,.034,.19,0,.032,.05],E15_PWR=[0,.026,.2,0,.024,.05],E15_CTL=[0,.05,.17,0,.048,.05];
 const e15cam=(t,v)=>[t,...v];
@@ -6698,7 +6716,7 @@ async function buildEp15(){
   const bl=T(0,3)+1.6;
   vfd([0,PS(2)],{cover:[[T(0,1)-.6,0],[T(0,1)+.4,1]],props:ALL,sw:[[T(0,2)+.3,0],[T(0,2)+.6,1]],led:[[T(0,2)+.6,0],[T(0,2)+.7,1],[bl,1],[bl+.1,0]],
     disp:[[0,['','']],[T(0,2)+.7,['0.0','#ff3b2f']],[bl,['','']]],burnt:[[bl,0],[bl+.6,1]],blast:bl,blastAt:'T_V',
-    wires:[...e15sup(['T_U','T_V','T_W'],T(0,1)+.3,{dur:1}),...e15mot(['T_R','T_S','T_T'],T(0,1)+1.2,{dur:1}),{a:'T_PE',b:[-.15,-.06,.06],col:E15_PEC,t0:T(0,1)+1.8,dur:.8}],
+    wires:[...e15sup(['T_U','T_V','T_W'],T(0,1)+.3,{dur:1}),...e15mot(['T_R','T_S','T_T'],T(0,1)+1.2,{dur:1}),e15pe(T(0,1)+1.8)],
     hl:hlm(hl(['T_U','T_V','T_W'],T(1,0)+.6),hl(['T_R','T_S','T_T'],T(1,1)+.3)),
     cam:[e15cam(0,E15_WIDE),e15cam(T(0,1)+.2,[0,.065,.42,0,.055,.02]),e15cam(T(0,2),E15_WIDE),e15cam(T(0,3),[0,.07,.42,0,.06,0]),e15cam(T(0,4)+.4,[0,.07,.42,0,.06,0]),e15cam(PS(1)+.2,E15_TERM),e15cam(T(1,2)+.6,E15_TERM),e15cam(PE(1),[0,.04,.26,0,.035,.04])]});
   chip('Pudhu VFD fit pannaanga',[.2,T(0,1)]);chip('Wiring neat ✓',[T(0,1),T(0,2)],GRN);chip('Main switch ON',[T(0,2),T(0,3)],ORG);chip('2 second… BLAST!',[T(0,3)+1.4,T(0,4)],RED);chip('Pudhu VFD – DEAD',[T(0,4),T(0,5)],RED);
@@ -6726,10 +6744,10 @@ async function buildEp15(){
     mhz:[[fw,0],[fw+2.4,50],[pz-.6,50],[pz,0],[pz+3,50],[ft,50],[ft+1.5,0]],
     hl:hlm(hl(['T_R','T_S','T_T'],T(4,1),T(4,3)),hl(['T_U','T_V','T_W'],T(4,3),T(4,5)),hl(['T_PE'],T(4,5),PS(5)),hl(['T_R','T_S'],T(5,1),T(5,2)),hl(['T_U','T_V','T_W'],T(5,2),PS(6)),
       hl(['T_P','T_N'],PS(6)+.2,T(6,2)),hl(['T_B1','T_B2'],T(6,2),T(6,3)+2),hl(['C_FWD','C_REV','C_X1'],T(8,1),T(8,2)),hl(['C_COM'],T(8,2),T(8,3)),hl(['C_10V','C_AI','C_GND'],T(9,2),T(9,4)),hl(['C_AI'],T(9,4),PS(10)),hl(['C_RA','C_RB','C_RC'],PS(10)+.2,T(10,2))),
-    wires:[...e15sup(['T_R','T_S','T_T'],T(4,2)),...e15mot(['T_U','T_V','T_W'],T(4,4)),{a:'T_PE',b:[-.15,-.06,.06],col:E15_PEC,t0:T(4,6),dur:.9},{a:'T_PE',b:[.37,-.1,.1],col:E15_PEC,t0:T(4,6)+.4,dur:1.2},
-      {a:'C_FWD',b:[-.2,-.005,-.015],col:'#1d4ed8',r:.0011,t0:T(8,2)-.1,dur:.9},{a:'C_COM',b:[-.195,-.005,-.015],col:'#111827',r:.0011,t0:T(8,2)+.2,dur:.9},
-      {a:'C_10V',b:[-.21,-.095,-.02],col:'#dc2626',r:.0011,t0:T(9,2)+.1,dur:.9},{a:'C_AI',b:[-.2,-.095,-.02],col:'#f97316',r:.0011,t0:T(9,2)+.7,dur:.9},{a:'C_GND',b:[-.19,-.095,-.02],col:'#111827',r:.0011,t0:T(9,2)+1.3,dur:.9},
-      {a:'C_RA',b:[.195,.175,-.02],col:'#7c3aed',r:.0011,t0:T(10,2)-.4,dur:.9},{a:'C_RC',b:[.205,.175,-.02],col:'#7c3aed',r:.0011,t0:T(10,2)-.1,dur:.9}],
+    wires:[...e15sup(['T_R','T_S','T_T'],T(4,2)),...e15mot(['T_U','T_V','T_W'],T(4,4)),e15pe(T(4,6)),e15pem(T(4,6)+.4),
+      e15ctl('C_FWD',[-.175,.075,-.035],.075,7,'#1d4ed8',T(8,2)-.1),e15ctl('C_COM',[-.175,.065,-.035],.065,8,'#111827',T(8,2)+.2),
+      e15ctl('C_10V',[-.175,.008,-.035],.008,9,'#dc2626',T(9,2)+.1),e15ctl('C_AI',[-.175,0,-.035],0,10,'#f97316',T(9,2)+.7),e15ctl('C_GND',[-.175,-.008,-.035],-.008,11,'#111827',T(9,2)+1.3),
+      e15ctl('C_RA',[.215,.205,-.035],.205,7,'#7c3aed',T(10,2)-.4,'R'),e15ctl('C_RC',[.215,.195,-.035],.195,8,'#7c3aed',T(10,2)-.1,'R')],
     cam:[e15cam(0,E15_PWR),e15cam(PS(4)+.1,E15_PWR),e15cam(T(4,2)+.3,[-.05,.04,.5,-.05,.04,0]),e15cam(T(4,3)+.2,E15_PWR),e15cam(T(4,4)+.3,[.12,.0,.6,.12,.0,0]),e15cam(T(4,5),E15_PWR),e15cam(T(4,6)+.2,[.12,.02,.75,.12,.0,0]),
       e15cam(PS(5),E15_PWR),e15cam(PS(6),[.004,.026,.2,.004,.024,.05]),e15cam(PS(7),E15_CTL),e15cam(T(8,2)-.4,[-.1,.04,.5,-.1,.03,0]),e15cam(fw+.5,[.1,.02,1.1,.1,.01,0]),
       e15cam(PS(9),E15_CTL),e15cam(T(9,2)-.2,[-.1,-.01,.5,-.1,-.02,0]),e15cam(pz+.3,[.1,.0,1.1,.1,-.01,0]),e15cam(PS(10),E15_CTL),e15cam(T(10,2)-.6,[.1,.11,.62,.1,.1,0])]});
@@ -6750,23 +6768,23 @@ async function buildEp15(){
   /* k13 mistake 1: output contactor opened while running */
   erase(PS(13),'#e3e8ee');bg(P(13),'#e3e8ee');
   const op=T(13,1)+1.4,d13=[[0,['50.0','#ff3b2f']],[op+.2,['OC','#ff3b2f']]];
-  vfd(P(13),{x:0,w:820,cover:[[0,1]],props:{iso:[[0,1]],ct:[[0,1]]},led:[[0,1]],sw:[[0,1]],disp:d13,mhz:[[0,50],[op,50],[op+1.6,0]],ctopen:[[op-.1,0],[op+.1,1]],blast:op,blastAt:[.2,-.03,.0],smk:.25,
-    wires:[...e15sup(['T_R','T_S','T_T'],-5),...e15mot(['T_U','T_V','T_W'],-5,{to:i=>[.19+i*.008,.015,-.005]}),...[0,1,2].map(i=>({a:[.19+i*.008,-.055,-.005],b:[.36,-.065+i*.006,.09],col:E15_MC,t0:-5,dur:1}))],
+  vfd(P(13),{x:0,w:820,cover:[[0,1]],props:{iso:[[0,1]],ct:[[0,1]]},led:[[0,1]],sw:[[0,1]],disp:d13,mhz:[[0,50],[op,50],[op+1.6,0]],ctopen:[[op-.1,0],[op+.1,1]],blast:op,blastAt:[.19,.09,.0],smk:.25,
+    wires:[...e15sup(['T_R','T_S','T_T'],-5),...['T_U','T_V','T_W'].map((n,i)=>({a:n,b:[.178+i*.012,.1275,-.04],col:E15_MC,t0:-5,dur:1,k:'R',ye:.145+i*.004,lane:3+i})),...e15mot([0,1,2].map(i=>[.178+i*.012,.0525,-.04]),-5,{w:{from:'dev'}})],
     hl:hl(['T_U','T_V','T_W'],op,op+3),cam:[e15cam(0,[.1,.04,.7,.1,.02,0]),e15cam(T(13,1),[.12,.01,.45,.12,.0,0]),e15cam(T(13,3),[.1,.04,.7,.1,.02,0])]});
   chip('MISTAKE 1 · Output-la CONTACTOR',[PS(13),PE(13)],RED);rc(0,'Running-la OPEN pannaa…',[T(13,1),PE(13)]);rc(1,'IGBT current → sudden CUT',[T(13,1)+1.4,PE(13)],{bg:'#fee2e2'});rc(2,'OC trip → IGBT damage',[T(13,2),PE(13)],{bg:'#fee2e2'});
   rc(3,'VFD STOP aana appuram dhaan',[T(13,3),PE(13)],{bg:'#dcfce7',size:28});big('Answer: B ✓',[T(13,4),PE(13)],{x:830,y:520,w:420,h:110,size:52,bg:GRN});
   /* k14 mistake 2: PF capacitor on the output */
   erase(PS(14),'#e3e8ee');bg(P(14),'#e3e8ee');
   const cb=T(14,1)+1.2;
-  vfd(P(14),{x:0,w:820,cover:[[0,1]],props:{iso:[[0,1]],cap:[[0,1]]},led:[[0,1]],sw:[[0,1]],disp:[[0,['50.0','#ff3b2f']],[cb+.3,['OC','#ff3b2f']]],mhz:[[0,50],[cb,50],[cb+1.6,0]],capboom:[[cb,0],[cb+.25,1]],blast:cb,blastAt:[.18,-.08,-.0],smk:.8,
-    wires:[...e15sup(['T_R','T_S','T_T'],-5),...e15mot(['T_U','T_V','T_W'],-5),...[0,1,2].map(i=>({a:[.17+i*.01,-.08,-.03],b:[.25,-.06+i*.006,.06],col:'#6b7280',t0:PS(14)+.4+i*.2,dur:.8}))],
+  vfd(P(14),{x:0,w:820,cover:[[0,1]],props:{iso:[[0,1]],cap:[[0,1]]},led:[[0,1]],sw:[[0,1]],disp:[[0,['50.0','#ff3b2f']],[cb+.3,['OC','#ff3b2f']]],mhz:[[0,50],[cb,50],[cb+1.6,0]],capboom:[[cb,0],[cb+.25,1]],blast:cb,blastAt:[.19,-.08,.0],smk:.8,
+    wires:[...e15sup(['T_R','T_S','T_T'],-5),...e15mot(['T_U','T_V','T_W'],-5),...['T_U','T_V','T_W'].map((n,i)=>({a:n,b:[.178+i*.012,-.07,-.04],col:'#6b7280',t0:PS(14)+.4+i*.25,dur:1.1,lane:7+i,xe:.178+i*.012}))],
     cam:[e15cam(0,[.12,-.02,.6,.12,-.04,0]),e15cam(cb-.3,[.16,-.06,.35,.16,-.07,0]),e15cam(T(14,3),[.12,-.02,.6,.12,-.04,0])]});
   chip('MISTAKE 2 · Output-la PF CAPACITOR',[PS(14),PE(14)],RED);rc(0,'PWM pulse → CURRENT SPIKE',[T(14,1),PE(14)],{bg:'#fee2e2',size:28});rc(1,'Capacitor BURST + VFD trip',[T(14,2),PE(14)],{bg:'#fee2e2',size:28});rc(2,'Output-la MOTOR mattum ✓',[T(14,3),PE(14)],{bg:'#dcfce7'});
   /* k15 mistake 3: main switch used to start/stop */
   erase(PS(15),'#e3e8ee');bg(P(15),'#e3e8ee');
   const sw=[[0,0]],led=[[0,0]];for(let i=0;i<4;i++){const a=PS(15)+.8+i*1.4;sw.push([a,0],[a+.2,1],[a+.8,1],[a+1,0]);led.push([a+.2,0],[a+.3,1],[a+1.1,1],[a+1.3,0])}sw.push([T(15,2),0]);
   vfd(P(15),{x:0,w:820,cover:[[0,1]],props:{iso:[[0,1]],btn:[[T(15,2),1]]},led,sw,disp:[[0,['','']]],dcv:1,
-    wires:[...e15sup(['T_R','T_S','T_T'],-5),...e15mot(['T_U','T_V','T_W'],-5),{a:'C_FWD',b:[-.2,-.005,-.015],col:'#1d4ed8',r:.0011,t0:T(15,2)+.2,dur:.9},{a:'C_COM',b:[-.195,-.005,-.015],col:'#111827',r:.0011,t0:T(15,2)+.5,dur:.9}],
+    wires:[...e15sup(['T_R','T_S','T_T'],-5),...e15mot(['T_U','T_V','T_W'],-5),e15ctl('C_FWD',[-.175,.075,-.035],.075,7,'#1d4ed8',T(15,2)+.2),e15ctl('C_COM',[-.175,.065,-.035],.065,8,'#111827',T(15,2)+.5)],
     cam:[e15cam(0,[-.09,.11,.55,-.09,.1,0]),e15cam(T(15,1),[-.04,.08,.5,-.04,.07,0]),e15cam(T(15,2),[-.09,.03,.5,-.09,.02,0])]});
   chip('MISTAKE 3 · Main switch-la START / STOP',[PS(15),PE(15)],RED);rc(0,'Ovvoru ON → DC bus charge',[T(15,1),PE(15)],{size:28});rc(1,'VFD-ku STRESS ✗',[T(15,1)+1.5,PE(15)],{bg:'#fee2e2'});rc(2,'Run / Stop → CONTROL terminal ✓',[T(15,2),PE(15)],{bg:'#dcfce7',size:26});
   /* k16 mistake 4: control wire with the power cable */
@@ -6777,7 +6795,7 @@ async function buildEp15(){
   erase(PS(17),'#e3e8ee');bg(P(17),'#e3e8ee');
   const off=T(17,1)+.3,dk=T(17,3)+2.6;
   vfd(P(17),{x:0,w:820,cover:[[0,1]],props:{iso:[[0,1]]},sw:[[0,1],[off,1],[off+.3,0]],led:[[0,1],[dk-.2,1],[dk,0]],disp:[[0,['50.0','#ff3b2f']],[off+.3,['','']]],
-    wires:[...e15sup(['T_R','T_S','T_T'],-5),...e15mot(['T_U','T_V','T_W'],-5),{a:'T_P',b:[.11,-.04,.12],col:'#dc2626',t0:T(17,4)-.2,dur:.7},{a:'T_N',b:[.12,-.04,.12],col:'#111827',t0:T(17,4),dur:.7}],
+    wires:[...e15sup(['T_R','T_S','T_T'],-5),...e15mot(['T_U','T_V','T_W'],-5),{a:'T_P',b:[.11,-.04,.12],via:[[.012,.022,.075],[.06,-.01,.11]],col:'#dc2626',t0:T(17,4)-.2,dur:.7},{a:'T_N',b:[.12,-.04,.12],via:[[.023,.022,.078],[.07,-.01,.11]],col:'#111827',t0:T(17,4),dur:.7}],
     hl:{...hl(['T_P','T_N'],T(17,2),T(17,4)+3)},cam:[e15cam(0,[-.05,.1,.5,-.05,.09,0]),e15cam(T(17,1),[.012,.036,.16,.012,.034,.05]),e15cam(T(17,3),[.02,.04,.14,.02,.038,.05]),e15cam(T(17,4),[.03,.02,.24,.03,.015,.05])]});
   ng('dcmeter',{x:860,y:440,w:380,h:220,title:'MULTIMETER · P+ / N−',v:[[0,0],[T(17,4)+.6,0],[T(17,4)+.7,24],[T(17,4)+1.6,6]],noPop:true},[T(17,4),PE(17)]);
   chip('KADAISI · ROMBA MUKKIYAM',[PS(17),PE(17)],RED);rc(0,'OFF pannina udane thodaadheenga',[T(17,1),PE(17)],{size:26,bg:'#fee2e2'});rc(1,'DC bus: 500 V+ irukkum!',[T(17,2),PE(17)],{bg:RED,size:32});rc(2,'CHARGE LED OFF + label time',[T(17,3),PE(17)],{size:28,bg:'#fef3c7'});
@@ -6811,7 +6829,7 @@ async function buildEp15Short(){
   /* the wrong wiring is drawn but never called out – the answer stays in the long video */
   ng('g3',{shot:'vfdwire',x:0,y:0,w:W,h:H,noPop:true,cover:[[T(0,1)-.4,0],[T(0,1)+.6,1]],props:{iso:[[0,1]]},sw:[[PS(1)+.6,0],[PS(1)+.9,1]],led:[[PS(1)+.9,0],[PS(1)+1,1],[bl,1],[bl+.1,0]],
     disp:[[0,['','']],[PS(1)+1,['0.0','#ff3b2f']],[bl,['','']]],burnt:[[bl,0],[bl+.6,1]],blast:bl,blastAt:'T_V',
-    wires:[...e15sup(['T_U','T_V','T_W'],T(0,1)+.3,{dur:1}),...e15mot(['T_R','T_S','T_T'],T(0,1)+1.3,{dur:1}),{a:'T_PE',b:[-.15,-.06,.06],col:E15_PEC,t0:T(0,1)+2,dur:.8}],
+    wires:[...e15sup(['T_U','T_V','T_W'],T(0,1)+.3,{dur:1}),...e15mot(['T_R','T_S','T_T'],T(0,1)+1.3,{dur:1}),e15pe(T(0,1)+2)],
     cam:[e15cam(0,[0,.09,.55,0,.08,0]),e15cam(T(0,1)+.2,[-.03,.04,.42,-.03,.04,0]),e15cam(PS(1),[-.1,.12,.55,-.07,.1,0]),e15cam(T(1,1)+.6,V),e15cam(T(2,1),[0,.03,.2,0,.03,.05]),e15cam(PS(3),[0,.06,.5,0,.05,0])]},[0,PE(4)]);
   const top=(t,win,bg='#ffffff',sz=44)=>card(60,90,600,110,t,win,{bg,size:sz});
   top('Pudhu VFD',[.2,T(0,1)]);top('Wiring NEAT ✓',[T(0,1),PS(1)],'#dcfce7');top('Main switch ON',[PS(1),T(1,1)],'#fef3c7');top('2 sec… BLAST!',[bl-.1,PS(2)],RED,52);
