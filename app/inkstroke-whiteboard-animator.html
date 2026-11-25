@@ -6677,7 +6677,7 @@ const e15cam=(t,v)=>[t,...v];
 async function buildEp15(){
   stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('16:9');S.narrOff=0;S.art='sketch';
   try{await document.fonts.load('700 30px InkHand')}catch(_){}try{await window.E14_MOTOR_READY;await window.E15_VFD_READY}catch(_){}
-  const A=EP15_A,NARR=286.21,END=301.4;
+  const A=EP15_A,NARR=286.21,END=301.4;S.g3q=.72;
   const s=newScene({name:'EP15 – VFD wiring',style:'white',transition:'cut',trans:0,hold:0});s.minDur=END;S.scenes.push(s);
   const K=ep10Kit(s,A,NARR),{ng,T,PS:PS0,card,presenter}=K,RED=NG.red,GRN=NG.grn,BLU=NG.blue,PUR='#7c3aed',ORG='#f59e0b',NAV=NG.navy;
   const ERS=new Set([2,3,4,11,12,13,14,15,16,17,18,19,20]);
@@ -6799,7 +6799,7 @@ async function buildEp15(){
 async function buildEp15Short(){
   stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('9:16');S.narrOff=0;S.art='sketch';
   try{await document.fonts.load('700 30px InkHand')}catch(_){}try{await window.E14_MOTOR_READY;await window.E15_VFD_READY}catch(_){}
-  const A=EP15_SA,END=40.1;
+  const A=EP15_SA,END=40.1;S.g3q=.72;
   const s=newScene({name:'EP15 Short',style:'white',transition:'cut',trans:0,hold:0});s.minDur=END;S.scenes.push(s);
   const K=ep10Kit(s,A,END),{ng,T,PS:PS0,card,presenter}=K,RED=NG.red,GRN=NG.grn,BLU=NG.blue;
   const PS=k=>EP15_SON[k]!=null?EP15_SON[k]-.1:PS0(k);
