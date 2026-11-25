@@ -1,0 +1,30 @@
+{
+  "long": {
+    "source_filename": "long 5-2.wav",
+    "duration_seconds": 280.24,
+    "sample_rate_hz": 24000,
+    "channels": 1,
+    "sample_width_bytes": 2,
+    "frame_count": 6725760,
+    "file_bytes": 13451564,
+    "source_sha256": "966d9d0e3d2a1b30a57b12ff8c5c8427e31560dcfc4bad484a5640cd9bd728c9",
+    "pcm_sha256": "7cb8d4cddf2d81862594ef9655dc3cc2699b518d6132e6025619a613a516b601",
+    "audio_transferred": false,
+    "script_snapshot_sha256": "c7f379f7e8ac48503a193df3424c3cc7d695867de9ec291bf21c55be3903728d",
+    "script_source": "https://github.com/madhancreed18-wq/ai-mailbox/blob/main/episodes/15-vfd-wiring/paragraphs-long.txt"
+  },
+  "short": {
+    "source_filename": "shorts 5-2.wav",
+    "duration_seconds": 39.16,
+    "sample_rate_hz": 24000,
+    "channels": 1,
+    "sample_width_bytes": 2,
+    "frame_count": 939840,
+    "file_bytes": 1879724,
+    "source_sha256": "f96244c909fa55314e65e60e89dc06b45d86b6193997cdd55fb7c93f96f47a0a",
+    "pcm_sha256": "83fb8be8536c10fd4b6091c0a7fb65cb8751c3306638c88b4c11324e59eee464",
+    "audio_transferred": false,
+    "script_snapshot_sha256": "c2571149dc9bba86308c53e68d320abea327f903647cc6d37b89f2343f930ddc",
+    "script_source": "https://github.com/madhancreed18-wq/ai-mailbox/blob/main/episodes/15-vfd-wiring/paragraphs-short.txt"
+  }
+}

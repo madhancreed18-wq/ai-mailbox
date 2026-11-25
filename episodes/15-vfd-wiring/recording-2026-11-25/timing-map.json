@@ -1,0 +1,239 @@
+{
+  "schema_version": 1,
+  "episode": "15-vfd-wiring",
+  "units": "seconds",
+  "status": "audio-derived machine-aligned production draft, not full-listening-certified or frame-accurate",
+  "indexing": "zero-based nonempty blank-line-separated included EP15 script paragraphs",
+  "method": "Fresh faster-whisper large-v3-turbo Tamil full-file word timestamps, independently decoded targeted clips and -40dB/0.20s measured pause edges. No previous recording scaling or text-length timing.",
+  "range_semantics": "Contiguous scene windows including pauses; first starts0; final ends are exact source WAV durations.",
+  "paragraphs": {
+    "long": [
+      {
+        "index": 0,
+        "start": 0,
+        "end": 14.64,
+        "script_text": "Pudhu VFD panel-la fit pannaanga. Wiring ellaam neat-aa mudinjuchu. Main switch ON pannaanga. Rendu second-la, VFD ulla irundhu oru periya sattham, appuram pugai. Pudhu VFD, onnum odaama poiduchu. Thappu enga?",
+        "boundary_evidence": "fresh recognised semantic/word anchors and measured source pauses; scene cue, not verified phoneme onset",
+        "review_priority": false
+      },
+      {
+        "index": 1,
+        "start": 14.64,
+        "end": 23.82,
+        "script_text": "Electrician EB supply-ai VFD-oda U, V, W terminal-la connect pannirundhaaru. Motor-ai R, S, T-la. Input-um output-um maari pochu.",
+        "boundary_evidence": "fresh recognised semantic/word anchors and measured source pauses; scene cue, not verified phoneme onset",
+        "review_priority": true
+      },
+      {
+        "index": 2,
+        "start": 23.82,
+        "end": 37.81,
+        "script_text": "Veetla irukkura inverter-ai yosinga. Battery oru pakkam, veetu load innoru pakkam. EB supply-ai inverter output-la kuduthaa, inverter erinjidum. VFD-um adhey maadhiri dhaan. Endha pakkam supply varanum, endha pakkam motor pogumnu fix-aa irukku.",
+        "boundary_evidence": "fresh recognised semantic/word anchors and measured source pauses; scene cue, not verified phoneme onset",
+        "review_priority": false
+      },
+      {
+        "index": 3,
+        "start": 37.81,
+        "end": 58.77,
+        "script_text": "R, S, T pakkam ulla irukkuradhu rectifier diodes. Adhu AC-ai vaangi DC-aa maathum. U, V, W pakkam irukkuradhu IGBT switches. Avanga velai, supply kudukkuradhu, vaangaradhu illa. EB-oda four-fifteen volt-ai direct-aa IGBT mela kuduthaa, IGBT switch aagura moment-la supply short aagudhu. IGBT blast.",
+        "boundary_evidence": "fresh recognised semantic/word anchors and measured source pauses; scene cue, not verified phoneme onset",
+        "review_priority": true
+      },
+      {
+        "index": 4,
+        "start": 58.77,
+        "end": 80.88,
+        "script_text": "Adhanaala VFD power terminals-ai olunga theriyanum. R, S, T, idhula L1, L2, L3-nu-um irukkum. Idhu input, EB supply inga mattum dhaan. U, V, W, idhula T1, T2, T3-nu-um irukkum. Idhu output, motor inga mattum dhaan. PE, earth terminal. VFD-kkum motor-kkum earth kandippaa venum.",
+        "boundary_evidence": "fresh recognised semantic/word anchors and measured source pauses; scene cue, not verified phoneme onset",
+        "review_priority": true
+      },
+      {
+        "index": 5,
+        "start": 80.88,
+        "end": 88.48,
+        "script_text": "Chinna VFD-la single phase input-um irukkum. Appo L, N rendu terminal dhaan irukkum. Output mattum moonu phase, U, V, W.",
+        "boundary_evidence": "fresh recognised semantic/word anchors and measured source pauses; scene cue, not verified phoneme onset",
+        "review_priority": false
+      },
+      {
+        "index": 6,
+        "start": 88.48,
+        "end": 101.15,
+        "script_text": "Innum rendu terminal irukkum, P plus, N minus. Idhu ulla irukkura DC bus. Sila VFD-la B1, B2-nu brake resistor terminal irukkum. Ivanga-la supply-o motor-o kandippaa poda koodaadhu.",
+        "boundary_evidence": "fresh recognised semantic/word anchors and measured source pauses; scene cue, not verified phoneme onset",
+        "review_priority": true
+      },
+      {
+        "index": 7,
+        "start": 101.15,
+        "end": 105.58,
+        "script_text": "Ippo control terminals. Ivanga dhaan VFD-ku order kudukkuradhu.",
+        "boundary_evidence": "fresh recognised semantic/word anchors and measured source pauses; scene cue, not verified phoneme onset",
+        "review_priority": false
+      },
+      {
+        "index": 8,
+        "start": 105.58,
+        "end": 117.46,
+        "script_text": "Digital inputs. FWD, REV, multi speed. Idha common terminal-oda short pannaa, VFD run aagum. Oru push button-o, PLC output-o, inga connect pannalaam.",
+        "boundary_evidence": "fresh recognised semantic/word anchors and measured source pauses; scene cue, not verified phoneme onset",
+        "review_priority": false
+      },
+      {
+        "index": 9,
+        "start": 117.46,
+        "end": 135.13,
+        "script_text": "Analog input. Speed-ai potentiometer vechu maatha, moonu wire. Oru pakkam plus ten volt, innoru pakkam GND, naduvula irukkura wiper AI terminal-ku. Zero-la irundhu ten volt varaikkum maathinaa, speed zero-la irundhu full varaikkum maarum. PLC-la irundhu four-to-twenty milliamp-um kudukkalaam.",
+        "boundary_evidence": "fresh recognised semantic/word anchors and measured source pauses; scene cue, not verified phoneme onset",
+        "review_priority": true
+      },
+      {
+        "index": 10,
+        "start": 135.13,
+        "end": 142.36,
+        "script_text": "Relay output. VFD fault aanaa indha contact maarum. Adha panel-la alarm light-ku-o, PLC-ku-o kudukkalaam.",
+        "boundary_evidence": "fresh recognised semantic/word anchors and measured source pauses; scene cue, not verified phoneme onset",
+        "review_priority": false
+      },
+      {
+        "index": 11,
+        "start": 142.36,
+        "end": 158.76,
+        "script_text": "Ungalukku oru question. VFD-kkum motor-kkum naduvula oru contactor podalaamaa? A, eppo venumnaalum ON, OFF pannalaam. B, motor nikkumbodhu mattum switch pannalaam. C, contactor podave koodaadhu. Yosichu vechukonga, mistakes paakkumbodhu answer varum.",
+        "boundary_evidence": "fresh recognised semantic/word anchors and measured source pauses; scene cue, not verified phoneme onset",
+        "review_priority": true
+      },
+      {
+        "index": 12,
+        "start": 158.76,
+        "end": 162.42,
+        "script_text": "Ippo factory-la adhigama nadakkura wiring mistakes.",
+        "boundary_evidence": "fresh recognised semantic/word anchors and measured source pauses; scene cue, not verified phoneme onset",
+        "review_priority": false
+      },
+      {
+        "index": 13,
+        "start": 162.42,
+        "end": 183.26,
+        "script_text": "Mudhal mistake, VFD-kkum motor-kkum naduvula contactor-ai, motor odumbodhe OFF pannradhu. IGBT current kudukkitte irukkumbodhu, sudden-aa circuit open aagi, voltage spike varum. VFD overcurrent trip aagum, adikkadi nadandhaa IGBT damage aagum. Adhanaala contactor irundhaa, VFD stop aana appuram dhaan switch pannanum. Question answer, B.",
+        "boundary_evidence": "fresh recognised semantic/word anchors and measured source pauses; scene cue, not verified phoneme onset",
+        "review_priority": true
+      },
+      {
+        "index": 14,
+        "start": 183.26,
+        "end": 196.24,
+        "script_text": "Rendaavadhu mistake, output-la power factor capacitor podradhu. VFD PWM pulses capacitor-la periya current spike-aa maarum. Capacitor-um burst aagum, VFD-um trip aagum. Output-la motor mattum dhaan.",
+        "boundary_evidence": "fresh recognised semantic/word anchors and measured source pauses; scene cue, not verified phoneme onset",
+        "review_priority": false
+      },
+      {
+        "index": 15,
+        "start": 196.24,
+        "end": 208.23,
+        "script_text": "Moonaavadhu mistake, motor-ai start, stop panna input main switch-ai adikkadi ON, OFF pannradhu. Ovvoru vaatiyum DC bus capacitor charge aagum, adhu VFD-ku stress. Run, stop-ai control terminal vazhiya dhaan pannanum.",
+        "boundary_evidence": "fresh recognised semantic/word anchors and measured source pauses; scene cue, not verified phoneme onset",
+        "review_priority": false
+      },
+      {
+        "index": 16,
+        "start": 208.23,
+        "end": 221.44,
+        "script_text": "Naangaavadhu mistake, control wire-ai power cable-oda orey tray-la kondu poradhu. Motor cable-la irundhu noise vandhu, speed signal aadum, sila neram VFD thappaa run, stop aagum. Control-ku shielded cable, power cable-la irundhu thalli.",
+        "boundary_evidence": "fresh recognised semantic/word anchors and measured source pauses; scene cue, not verified phoneme onset",
+        "review_priority": false
+      },
+      {
+        "index": 17,
+        "start": 221.44,
+        "end": 236.95,
+        "script_text": "Kadaisi, romba mukkiyam. VFD-ai OFF pannina udane terminal-ai thodaadheenga. DC bus capacitor-la charge innum irukkum, ainnooru volt-ku mela. CHARGE LED anaiyura varaikkum, label-la sonna nimisham varaikkum wait pannunga. Meter vechu check pannitu dhaan thodanum.",
+        "boundary_evidence": "fresh recognised semantic/word anchors and measured source pauses; scene cue, not verified phoneme onset",
+        "review_priority": true
+      },
+      {
+        "index": 18,
+        "start": 236.95,
+        "end": 262.67,
+        "script_text": "Summary paakkalaam. R, S, T input, U, V, W output, PE earth. Rendaiyum maathina, IGBT blast. P plus, N minus, brake terminals-la supply illa. Control-la digital input run command, analog input speed, relay output fault. Mistakes: running-la output contactor, output capacitor, main switch-la start stop, control wire noise. Power off pannaalum capacitor charge irukkum.",
+        "boundary_evidence": "fresh recognised semantic/word anchors and measured source pauses; scene cue, not verified phoneme onset",
+        "review_priority": false
+      },
+      {
+        "index": 19,
+        "start": 262.67,
+        "end": 274.08,
+        "script_text": "Last-aa oru challenge. Potentiometer-oda moonu wire-la, naduvula irukkura wire endha terminal-ku pogum? Unga answer comment-la sollunga. Correct answer pinned comment-la podrom.",
+        "boundary_evidence": "fresh recognised semantic/word anchors and measured source pauses; scene cue, not verified phoneme onset",
+        "review_priority": true
+      },
+      {
+        "index": 20,
+        "start": 274.08,
+        "end": 280.24,
+        "script_text": "Video useful-aa irundhaa like pannunga, unga factory friends-ku share pannunga, innum indha maadhiri videos-ku subscribe pannunga.",
+        "boundary_evidence": "fresh recognised semantic/word anchors and measured source pauses; scene cue, not verified phoneme onset",
+        "review_priority": true
+      }
+    ],
+    "short": [
+      {
+        "index": 0,
+        "start": 0,
+        "end": 6.11,
+        "script_text": "Pudhu VFD panel-la fit pannaanga. Wiring ellaam neat-aa, colour code-padi mudinjuchu.",
+        "boundary_evidence": "fresh recognised semantic/word anchors and measured source pauses; scene cue, not verified phoneme onset",
+        "review_priority": false
+      },
+      {
+        "index": 1,
+        "start": 6.11,
+        "end": 14.07,
+        "script_text": "Main switch ON pannaanga. Rendu second-la, VFD ulla irundhu periya sattham, appuram pugai.",
+        "boundary_evidence": "fresh recognised semantic/word anchors and measured source pauses; scene cue, not verified phoneme onset",
+        "review_priority": false
+      },
+      {
+        "index": 2,
+        "start": 14.07,
+        "end": 21.4,
+        "script_text": "Pudhu VFD, onnum odaama poiduchu. Cable size correct, earth correct, tight-aa irukku.",
+        "boundary_evidence": "fresh recognised semantic/word anchors and measured source pauses; scene cue, not verified phoneme onset",
+        "review_priority": false
+      },
+      {
+        "index": 3,
+        "start": 21.4,
+        "end": 25.74,
+        "script_text": "Appo thappu enga? Unga guess comment-la sollunga.",
+        "boundary_evidence": "fresh recognised semantic/word anchors and measured source pauses; scene cue, not verified phoneme onset",
+        "review_priority": false
+      },
+      {
+        "index": 4,
+        "start": 25.74,
+        "end": 29.68,
+        "script_text": "Neenga indha mistake pannirukkeengalaa? Ungal factory-la yaaraavadhu pannirukkaangalaa?",
+        "boundary_evidence": "fresh recognised semantic/word anchors and measured source pauses; scene cue, not verified phoneme onset",
+        "review_priority": false
+      },
+      {
+        "index": 5,
+        "start": 29.68,
+        "end": 35.64,
+        "script_text": "Full answer, VFD wiring eppadi pannanum-nu, keezha irukkura link-la full video paarunga.",
+        "boundary_evidence": "fresh recognised semantic/word anchors and measured source pauses; scene cue, not verified phoneme onset",
+        "review_priority": false
+      },
+      {
+        "index": 6,
+        "start": 35.64,
+        "end": 39.16,
+        "script_text": "Video pidichirundhaa like pannunga, share pannunga, subscribe pannunga.",
+        "boundary_evidence": "fresh recognised semantic/word anchors and measured source pauses; scene cue, not verified phoneme onset",
+        "review_priority": false
+      }
+    ]
+  }
+}

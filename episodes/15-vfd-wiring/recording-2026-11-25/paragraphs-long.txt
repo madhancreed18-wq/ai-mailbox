@@ -1,0 +1,41 @@
+Pudhu VFD panel-la fit pannaanga. Wiring ellaam neat-aa mudinjuchu. Main switch ON pannaanga. Rendu second-la, VFD ulla irundhu oru periya sattham, appuram pugai. Pudhu VFD, onnum odaama poiduchu. Thappu enga?
+
+Electrician EB supply-ai VFD-oda U, V, W terminal-la connect pannirundhaaru. Motor-ai R, S, T-la. Input-um output-um maari pochu.
+
+Veetla irukkura inverter-ai yosinga. Battery oru pakkam, veetu load innoru pakkam. EB supply-ai inverter output-la kuduthaa, inverter erinjidum. VFD-um adhey maadhiri dhaan. Endha pakkam supply varanum, endha pakkam motor pogumnu fix-aa irukku.
+
+R, S, T pakkam ulla irukkuradhu rectifier diodes. Adhu AC-ai vaangi DC-aa maathum. U, V, W pakkam irukkuradhu IGBT switches. Avanga velai, supply kudukkuradhu, vaangaradhu illa. EB-oda four-fifteen volt-ai direct-aa IGBT mela kuduthaa, IGBT switch aagura moment-la supply short aagudhu. IGBT blast.
+
+Adhanaala VFD power terminals-ai olunga theriyanum. R, S, T, idhula L1, L2, L3-nu-um irukkum. Idhu input, EB supply inga mattum dhaan. U, V, W, idhula T1, T2, T3-nu-um irukkum. Idhu output, motor inga mattum dhaan. PE, earth terminal. VFD-kkum motor-kkum earth kandippaa venum.
+
+Chinna VFD-la single phase input-um irukkum. Appo L, N rendu terminal dhaan irukkum. Output mattum moonu phase, U, V, W.
+
+Innum rendu terminal irukkum, P plus, N minus. Idhu ulla irukkura DC bus. Sila VFD-la B1, B2-nu brake resistor terminal irukkum. Ivanga-la supply-o motor-o kandippaa poda koodaadhu.
+
+Ippo control terminals. Ivanga dhaan VFD-ku order kudukkuradhu.
+
+Digital inputs. FWD, REV, multi speed. Idha common terminal-oda short pannaa, VFD run aagum. Oru push button-o, PLC output-o, inga connect pannalaam.
+
+Analog input. Speed-ai potentiometer vechu maatha, moonu wire. Oru pakkam plus ten volt, innoru pakkam GND, naduvula irukkura wiper AI terminal-ku. Zero-la irundhu ten volt varaikkum maathinaa, speed zero-la irundhu full varaikkum maarum. PLC-la irundhu four-to-twenty milliamp-um kudukkalaam.
+
+Relay output. VFD fault aanaa indha contact maarum. Adha panel-la alarm light-ku-o, PLC-ku-o kudukkalaam.
+
+Ungalukku oru question. VFD-kkum motor-kkum naduvula oru contactor podalaamaa? A, eppo venumnaalum ON, OFF pannalaam. B, motor nikkumbodhu mattum switch pannalaam. C, contactor podave koodaadhu. Yosichu vechukonga, mistakes paakkumbodhu answer varum.
+
+Ippo factory-la adhigama nadakkura wiring mistakes.
+
+Mudhal mistake, VFD-kkum motor-kkum naduvula contactor-ai, motor odumbodhe OFF pannradhu. IGBT current kudukkitte irukkumbodhu, sudden-aa circuit open aagi, voltage spike varum. VFD overcurrent trip aagum, adikkadi nadandhaa IGBT damage aagum. Adhanaala contactor irundhaa, VFD stop aana appuram dhaan switch pannanum. Question answer, B.
+
+Rendaavadhu mistake, output-la power factor capacitor podradhu. VFD PWM pulses capacitor-la periya current spike-aa maarum. Capacitor-um burst aagum, VFD-um trip aagum. Output-la motor mattum dhaan.
+
+Moonaavadhu mistake, motor-ai start, stop panna input main switch-ai adikkadi ON, OFF pannradhu. Ovvoru vaatiyum DC bus capacitor charge aagum, adhu VFD-ku stress. Run, stop-ai control terminal vazhiya dhaan pannanum.
+
+Naangaavadhu mistake, control wire-ai power cable-oda orey tray-la kondu poradhu. Motor cable-la irundhu noise vandhu, speed signal aadum, sila neram VFD thappaa run, stop aagum. Control-ku shielded cable, power cable-la irundhu thalli.
+
+Kadaisi, romba mukkiyam. VFD-ai OFF pannina udane terminal-ai thodaadheenga. DC bus capacitor-la charge innum irukkum, ainnooru volt-ku mela. CHARGE LED anaiyura varaikkum, label-la sonna nimisham varaikkum wait pannunga. Meter vechu check pannitu dhaan thodanum.
+
+Summary paakkalaam. R, S, T input, U, V, W output, PE earth. Rendaiyum maathina, IGBT blast. P plus, N minus, brake terminals-la supply illa. Control-la digital input run command, analog input speed, relay output fault. Mistakes: running-la output contactor, output capacitor, main switch-la start stop, control wire noise. Power off pannaalum capacitor charge irukkum.
+
+Last-aa oru challenge. Potentiometer-oda moonu wire-la, naduvula irukkura wire endha terminal-ku pogum? Unga answer comment-la sollunga. Correct answer pinned comment-la podrom.
+
+Video useful-aa irundhaa like pannunga, unga factory friends-ku share pannunga, innum indha maadhiri videos-ku subscribe pannunga.
