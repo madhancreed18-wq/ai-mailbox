@@ -5337,7 +5337,9 @@ function g3Line(){const B=g3Base('#e3e8ee'),{T,S,cam,M,box,cyl,label}=B;
   const body=cyl(.45,.45,1.4,mb,0,0,0,MO,48);body.rotation.z=Math.PI/2;for(let i=0;i<16;i++){const a=i/16*Math.PI*2;const f=box(1.2,.05,.07,mb,0,Math.cos(a)*.47,Math.sin(a)*.47,MO);f.rotation.x=a}
   cyl(.43,.36,.35,M('#285481',{r:.5,m:.3}),.85,0,0,MO,36).rotation.z=Math.PI/2;box(.34,.24,.32,M('#2b5279',{r:.5}),-.1,.56,0,MO);[-.4,.4].forEach(x=>box(.22,.22,.85,M('#1f3b5c',{r:.6}),x,-.5,0,MO));
   const shaft=cyl(.05,.05,.6,M('#d1d5db',{m:.9,r:.2}),-.95,0,0,MO,12);shaft.rotation.z=Math.PI/2;const key=box(.12,.03,.03,M('#111827'),-1.0,.05,0,MO);
-  const RM=e14MotorClone();let rmShell=[],rmSpin=[];if(RM){MO.children.slice().forEach(c=>{if(c!==shaft&&c!==key)c.visible=false});shaft.visible=key.visible=false;RM.g.scale.setScalar(4.2);RM.g.rotation.y=Math.PI;RM.g.position.set(-.1,0,0);MO.add(RM.g);rmShell=E14_SHELL.flatMap(n=>e14meshes(RM.parts[n]));rmSpin=E14_SPIN.map(n=>RM.parts[n]).filter(Boolean)}
+  const RM=e14MotorClone();let rmShell=[],rmSpin=[];if(RM){MO.children.slice().forEach(c=>{if(c!==shaft&&c!==key)c.visible=false});shaft.visible=key.visible=false;RM.g.scale.setScalar(4.2);RM.g.rotation.y=Math.PI;RM.g.position.set(-.475,0,0);MO.add(RM.g);if(RM.parts.Feet)RM.parts.Feet.visible=false;
+    /* motor flange-mounted on the gear unit: adapter flange + drum shaft into the gearbox */
+    const ad=cyl(.34,.34,.16,M('#5b6472',{m:.5,r:.4}),3.53,0,1.55,S,40);ad.rotation.z=Math.PI/2;const ds=cyl(.07,.07,.62,M('#9ca3af',{m:.85,r:.25}),3.0,0,.9,S,16);ds.rotation.x=Math.PI/2;rmShell=E14_SHELL.flatMap(n=>e14meshes(RM.parts[n]));rmSpin=E14_SPIN.map(n=>RM.parts[n]).filter(Boolean)}
   // smoke sprites (EP13 VFX renders)
   const smk=[1,2,3,4,1,2,3,4].map((k,i)=>{const sp=new T.Sprite(new T.SpriteMaterial({map:g3TexImg(T,'smoke-'+k),transparent:true,depthWrite:false,opacity:0}));S.add(sp);return{sp,ph:i/8}});
   let ang=0,off=0,lastT=0;
@@ -5383,11 +5385,13 @@ function g3Motor(){const B=g3Base('#dfe5ec'),{T,S,cam,M,box}=B;box(12,.1,10,M('#
   const R=e14MotorClone();const P=R?R.parts:{};if(R){S.add(R.g)}
   const shell=E14_SHELL.flatMap(n=>e14meshes(P[n])),core=e14meshes(P.StatorCore),W=['Winding_U','Winding_V','Winding_W'].map(n=>e14meshes(P[n]));const spin=E14_SPIN.map(n=>P[n]).filter(Boolean);
   shell.concat(core).forEach(m=>{m.material.transparent=true;m.userData.c0=m.material.color.clone()});const HOT=new T.Color('#6b1d14');
-  // field arrow inside the bore (N–S), rotates about X
-  const AR=new T.Group();S.add(AR);const am=new T.MeshBasicMaterial({color:'#111827',transparent:true,opacity:0,depthTest:false});
-  const rod=new T.Mesh(new T.CylinderGeometry(.004,.004,.07,12),am);AR.add(rod);const tip=new T.Mesh(new T.ConeGeometry(.011,.026,16),am);tip.position.y=.046;AR.add(tip);
-  const nm=new T.MeshBasicMaterial({color:'#dc2626',transparent:true,opacity:0,depthTest:false}),sm=new T.MeshBasicMaterial({color:'#2563eb',transparent:true,opacity:0,depthTest:false});
-  const nB=new T.Mesh(new T.SphereGeometry(.008,12,12),nm);nB.position.y=.03;AR.add(nB);const sB=new T.Mesh(new T.SphereGeometry(.008,12,12),sm);sB.position.y=-.038;AR.add(sB);AR.position.x=.0;rod.renderOrder=tip.renderOrder=nB.renderOrder=sB.renderOrder=10;
+  // rotating magnetic field of the 4-pole stator: two N (red) and two S (blue) glowing pole bands around the core, turning with the field
+  const AR=new T.Group();S.add(AR);const FM=[];
+  const lab=(t,col)=>{const cv=document.createElement('canvas');cv.width=cv.height=128;const g=cv.getContext('2d');g.fillStyle=col;g.beginPath();g.arc(64,64,58,0,7);g.fill();g.fillStyle='#fff';g.font='900 84px Arial';g.textAlign='center';g.textBaseline='middle';g.fillText(t,64,70);const tx=new T.CanvasTexture(cv);const sp=new T.Sprite(new T.SpriteMaterial({map:tx,transparent:true,depthTest:false,opacity:0}));sp.scale.set(.028,.028,1);sp.renderOrder=12;return sp};
+  for(let p=0;p<4;p++){const N=p%2===0,col=N?'#ef4444':'#3b82f6',th=p*Math.PI/2;
+    const m=new T.MeshBasicMaterial({color:col,transparent:true,opacity:0,side:T.DoubleSide,depthWrite:false,blending:T.AdditiveBlending});
+    const sh=new T.Mesh(new T.CylinderGeometry(.071,.071,.124,32,1,true,th-.42,.84),m);sh.rotation.z=Math.PI/2;AR.add(sh);FM.push(m);
+    const l=lab(N?'N':'S',col);const a=th;l.position.set(0,Math.cos(a)*.088,Math.sin(a)*.088);AR.add(l);FM.push(l.material)}
   const smk=[1,2,3,4,1,2,3,4].map((k,i)=>{const sp=new T.Sprite(new T.SpriteMaterial({map:g3TexImg(T,'smoke-'+k),transparent:true,depthWrite:false,opacity:0}));S.add(sp);return{sp,ph:i/8}});
   let fa=0,ra=0,lastT=null;const COLS=['#ff1f3d','#ffd400','#2f7bff'];
   return{B,update(tl,e){if(lastT==null||tl<lastT)lastT=tl;const dt=Math.min(.1,tl-lastT);lastT=tl;const hz=kv(e.hz,tl,50),run=kv(e.run,tl,1);
@@ -5395,7 +5399,7 @@ function g3Motor(){const B=g3Base('#dfe5ec'),{T,S,cam,M,box}=B;box(12,.1,10,M('#
     const xr=kv(e.xray,tl,0),cv=kv(e.core,tl,0);shell.forEach(m=>{m.material.opacity=1-.9*xr;m.material.depthWrite=xr<.5;m.visible=xr<.995});core.forEach(m=>{m.material.opacity=1-.7*cv;m.material.depthWrite=cv<.5});
     const gl=kv(e.glow,tl,0),heat=kv(e.heat,tl,0);W.forEach((ms,i)=>{const ph=i*2.094,m=Math.max(0,Math.sin(fa*2+ph));ms.forEach(o=>{o.material.emissive=o.material.emissive||new T.Color();o.material.emissive.set(heat>.05?'#ff3300':COLS[i]);o.material.emissiveIntensity=heat>.05?heat*(1.2+.3*Math.sin(tl*8)):gl*m*1.6})});
     shell.forEach(m=>{m.material.color.copy(m.userData.c0).lerp(HOT,heat*.75);m.material.emissive&&m.material.emissive.set('#ff4500');m.material.emissiveIntensity=heat*.08});
-    const fv=kv(e.field,tl,0);AR.rotation.x=-fa;[am,nm,sm].forEach(m=>m.opacity=fv);
+    const fv=kv(e.field,tl,0);AR.rotation.x=-fa;FM.forEach(m=>m.opacity=m.isSpriteMaterial?fv:fv*.5);
     smk.forEach(({sp,ph})=>{const u=((tl*.35+ph)%1);sp.position.set(-.02+Math.sin(ph*9)*.05,.12+u*.45,Math.cos(ph*7)*.05);const sc=.12+u*.35;sp.scale.set(sc,sc,1);sp.material.opacity=Math.max(0,heat-.4)*1.5*(1-u)});
     const cp=e.cam||[[0,.45,.22,.55,0,.02,0]];let i0=0;cp.forEach((k,i)=>{if(tl>=k[0])i0=i});const A=cp[i0],Bk=cp[Math.min(i0+1,cp.length-1)];const span=Bk[0]-A[0],tr=Math.min(1.8,span||1),u=span>0?g3ease(g3c((tl-(Bk[0]-tr))/tr)):0;
     const now=[1,2,3,4,5,6].map(j=>A[j]+(Bk[j]-A[j])*u);cam.near=.01;cam.position.set(now[0]+Math.sin(tl*.3)*.004,now[1]+Math.sin(tl*.23)*.003,now[2]);cam.lookAt(now[3],now[4],now[5]);cam.updateProjectionMatrix()}}
@@ -6308,15 +6312,10 @@ async function buildEp14(){
   /* k24 CTA + end screen */
   erase(PS(24));bg([PS(24),END]);pres([PS(24),NARR+.3]);eq('hand-thumbs-up',[PS(24),NARR+.3],{x:330,y:120,w:420,h:480});
   card(800,130,420,90,'LIKE',[PS(24),NARR+.3],{bg:BLU,size:40});card(800,240,420,90,'SHARE',[T(24,0)+1.2,NARR+.3],{bg:NG.teal,size:40});card(800,350,420,100,'SUBSCRIBE',[T(24,0)+2.4,END],{bg:RED,size:44});
-  card(140,120,560,320,'',[NARR+.4,END],{bg:'#ffffff'});card(180,460,480,70,'Adutha video ▶',[NARR+.6,END],{size:34,bg:'#dbeafe'});
-  /* presenter walks to the part being explained (one continuous character) */
-  const SPOT={1:[1000,250,-1],2:[540,H-262,1],3:[600,H-266,1],4:[520,H-286,1],5:[300,H-300,1],6:[560,H-270,1],7:[40,H-286,1],8:[960,H-270,-1],9:[520,H-240,-1],14:[560,H-270,1],15:[500,H-240,1],16:[1060,H-240,-1],17:[40,H-286,1],18:[300,H-286,1],19:[620,H-250,1],20:[820,H-240,1],21:[560,H-230,1],22:[60,H-286,1],23:[40,H-286,1],24:[40,H-286,1]};
-  const EXTRA=[[T(3,4),760,H-266,1],[T(5,2),860,H-300,-1],[T(21,1),1080,H-260,-1]];
-  const MV=[],MF=[],HW=[];let prev=null;const jump=(t,x,y,f,dur)=>{const mid=t;if(prev){MV.push([mid-.001,prev[0],prev[1]])}MV.push([mid,x,y]);MF.push([mid,f]);HW.push([mid-dur/2,mid+dur/2]);prev=[x,y]};
-  const EV=Object.entries(SPOT).map(([k,[x,y,f]])=>[PS(+k)-.5,x,y,f,1.0]).concat(EXTRA.map(([t,x,y,f])=>[t-.3,x,y,f,.5])).sort((a,b)=>a[0]-b[0]);
-  EV.forEach(([t,x,y,f,d],i)=>{if(i===0){MV.push([t,x,y]);MF.push([t,f]);prev=[x,y];return}jump(t,x,y,f,d)});
-  const pid=presenter([PS(1)+.6,NARR+.3],{poses:EP14_POSE,size:260,x:1000,y:250,entrance:'draw',draw:.8});
-  const pe=s.els[s.els.length-1];pe.mv=MV;pe.mvFace=MF;pe.hideW=HW;
+  card(140,280,560,110,'Thanks for watching!',[NARR+.5,END],{size:44,bg:'#ffffff'});
+  /* presenter only at the key moments, standing where nothing is covered */
+  const KEY=[[4,40,H-286,1],[7,40,H-286,1],[14,560,H-270,1],[18,300,H-286,1],[22,60,H-286,1],[23,40,H-286,1],[24,40,H-286,1]];
+  KEY.forEach(([k,x,y,f])=>presenter([PS(k)+.1,k===24?NARR+.3:PE(k)-.05],{poses:EP14_POSE,size:k===14?250:280,x,y,facing:f,entrance:'draw',draw:.7}));
   S.captions=false;S.showHand=true;S.penSprite=true;S.cardsDraw=true;S.cur=0;S.pin=false;S.t=1;refresh();
 }
 async function buildEp14Short(){
@@ -6342,9 +6341,7 @@ async function buildEp14Short(){
   ng('eqv',{key:'hand-thumbs-up',x:400,y:320,w:300,h:340,noPop:true},[PS(6),END-.25]);card(110,180,500,110,'SUBSCRIBE',[PS(6),END-.25],{bg:RED,size:48});card(110,700,240,80,'LIKE',[PS(6)+.4,END-.25],{bg:BLU,size:34});card(370,700,240,80,'SHARE',[PS(6)+.8,END-.25],{bg:NG.teal,size:34});
   ng('caps',{x:W/2,y:H-420,maxw:640,size:72,noPop:true,list:[[.2,T(0,1),'TOO FAST!','#fca5a5'],[T(0,1)+.2,PS(1),'VOLTAGE ↓'],[PS(1)+.2,T(1,1),'SLOW ✓','#86efac'],[T(1,1),T(1,2),'ELLAARUM HAPPY','#86efac'],[T(1,2)+.4,PE(1),'PUGAI !!','#fca5a5'],
     [PS(2)+.2,T(2,1),'VEETU IDEA'],[T(2,1),T(2,2),'FAN = OK','#86efac'],[T(2,2),T(2,3),'MOTOR = ?'],[T(2,3),PE(2),'YEN PUGAI?!','#fca5a5'],[PS(3),PE(3),'EDHU DECIDE PANNUDHU?'],[PS(5),PE(5),'ANSWER ⬇']]},[0,END]);
-  presenter([0,END],{poses:EP14_SPOSE,x:-20,y:H-356,size:340,entrance:'draw',draw:.6});
-  {const pe=s.els[s.els.length-1],Y=H-356;const S2=[[0,-20,Y,1],[T(1,2)-.2,360,Y,-1],[PS(2)-.9,380,Y,-1],[PS(3)-.9,400,Y,-1],[PS(4)-.2,-20,Y,1],[PS(5)-.9,-20,Y,1],[PS(6)-.3,200,Y,1]];
-   const MV=[],HW=[];S2.forEach((k,i)=>{const t=i?k[0]-.4:k[0];if(i){MV.push([t-.001,S2[i-1][1],S2[i-1][2]]);HW.push([t-.45,t+.45])}MV.push([t,k[1],k[2]])});pe.mv=MV;pe.mvFace=S2.map((k,i)=>[i?k[0]-.4:k[0],k[3]]);pe.hideW=HW}
+  presenter([PS(3)+.1,END],{poses:EP14_SPOSE,x:-20,y:H-356,size:340,entrance:'draw',draw:.6});
   S.captions=false;S.showHand=true;S.penSprite=true;S.cardsDraw=true;S.cur=0;S.pin=false;S.t=1;refresh();
 }
 
