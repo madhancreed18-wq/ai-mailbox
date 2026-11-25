@@ -1,0 +1,187 @@
+{
+  "model": "vfd-3d.glb",
+  "units": "metres",
+  "up": "Y",
+  "front": "+Z",
+  "triangles": 92856,
+  "objects": [
+    "Body",
+    "C_10V",
+    "C_AI",
+    "C_AO",
+    "C_COM",
+    "C_FWD",
+    "C_GND",
+    "C_RA",
+    "C_RB",
+    "C_RC",
+    "C_REV",
+    "C_X1",
+    "ChargeLED",
+    "ChargeLegend",
+    "Display",
+    "Fan",
+    "Heatsink",
+    "Keypad",
+    "Pot",
+    "PowerElectronics",
+    "T_B1",
+    "T_B2",
+    "T_N",
+    "T_P",
+    "T_PE",
+    "T_R",
+    "T_S",
+    "T_T",
+    "T_U",
+    "T_V",
+    "T_W",
+    "TerminalBackplate",
+    "TerminalCover",
+    "TerminalLegends"
+  ],
+  "terminal_centres_gltf_m": {
+    "T_R": [
+      -0.023,
+      0.029,
+      0.05608
+    ],
+    "T_S": [
+      -0.012,
+      0.029,
+      0.05608
+    ],
+    "T_T": [
+      -0.001,
+      0.029,
+      0.05608
+    ],
+    "T_P": [
+      0.012,
+      0.029,
+      0.05608
+    ],
+    "T_N": [
+      0.023,
+      0.029,
+      0.05608
+    ],
+    "T_U": [
+      -0.023,
+      0.012,
+      0.05608
+    ],
+    "T_V": [
+      -0.012,
+      0.012,
+      0.05608
+    ],
+    "T_W": [
+      -0.001,
+      0.012,
+      0.05608
+    ],
+    "T_B1": [
+      0.012,
+      0.012,
+      0.05608
+    ],
+    "T_B2": [
+      0.023,
+      0.012,
+      0.05608
+    ],
+    "T_PE": [
+      -0.027,
+      0.041,
+      0.05608
+    ],
+    "C_FWD": [
+      -0.0275,
+      0.053,
+      0.056100000000000004
+    ],
+    "C_REV": [
+      -0.022,
+      0.053,
+      0.056100000000000004
+    ],
+    "C_X1": [
+      -0.0165,
+      0.053,
+      0.056100000000000004
+    ],
+    "C_COM": [
+      -0.011,
+      0.053,
+      0.056100000000000004
+    ],
+    "C_10V": [
+      -0.0055,
+      0.053,
+      0.056100000000000004
+    ],
+    "C_AI": [
+      0.0,
+      0.053,
+      0.056100000000000004
+    ],
+    "C_GND": [
+      0.0055,
+      0.053,
+      0.056100000000000004
+    ],
+    "C_AO": [
+      0.011,
+      0.053,
+      0.056100000000000004
+    ],
+    "C_RA": [
+      0.0165,
+      0.053,
+      0.056100000000000004
+    ],
+    "C_RB": [
+      0.022,
+      0.053,
+      0.056100000000000004
+    ],
+    "C_RC": [
+      0.0275,
+      0.053,
+      0.056100000000000004
+    ]
+  },
+  "pivots_gltf_m": {
+    "Pot": [
+      0,
+      0.085,
+      0.076
+    ],
+    "TerminalCover": [
+      0,
+      0.0615,
+      0.063
+    ],
+    "Fan": [
+      0,
+      0.025,
+      -0.007
+    ]
+  },
+  "axes_gltf": {
+    "Pot": "+Z",
+    "TerminalCover": "+X",
+    "Fan": "+Z"
+  },
+  "limits": [
+    "Generic educational layout; all terminals requested in 087 are shown but not an ACS150 wiring diagram.",
+    "Nominal 70 x 169 x 155 mm educational geometry, not a certified mechanical drawing.",
+    "No functional electronics or thermal simulation; no baked animation.",
+    "Separate display lens is intentionally blank for collaborator-generated digits.",
+    "Power and control strips are arranged as a generic teaching composite."
+  ],
+  "exported_triangles": 92856,
+  "glb_bytes": 4733124,
+  "validation": "GLB header, required names, triangle limit, embedded buffers, terminal origins and moving pivots passed."
+}
