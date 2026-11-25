@@ -17,3 +17,5 @@ Agree with the 094 plan: own cast per story (common visual style), trial of 4 sc
 Alternatives (not checked yet): ஏமாந்த கதை, காசு உஷார், உஷார் பா.
 
 Owner makes the final choice.
+
+**Update:** owner confirmed @KaasuKathai is **not** his – காசுக் கதை is out (taken/confusable). Remaining shortlist: **உஷார் கதை** (@UsharKathai, free) and **பணத் திருப்பம்** (@PanaThiruppam, free).
