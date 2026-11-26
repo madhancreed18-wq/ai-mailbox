@@ -5426,6 +5426,7 @@ function e15route(a,b,w){const L=w.lane||0,zl=-.03+L*.0035,zd=-.05+(L%8)*.0025,y
   if(k==='L'||k==='R'){const X=k==='L'?E15_VX:E15_RX,ye=w.ye;const xo=X+(b[0]<X?-.017:.017);P.push([X,dy,zd],[X,ye,zd],[xo,ye,zd],[xo-(b[0]<X?.004:-.004),ye,zl],[b[0],ye,zl],b)}
   else{const xe=w.xe??b[0];P.push([xe,dy,zd],[xe,dy-.012,zd],[xe,dy-.02,zl]);if(w.mid)P.push(...w.mid);P.push(b)}
   const Q=[P[0]];P.forEach(p=>{const q=Q[Q.length-1];if(Math.hypot(p[0]-q[0],p[1]-q[1],p[2]-q[2])>1e-5)Q.push(p)});return Q}
+const E15_MROT=-.9;
 function e15step(list,tl,d){let v=d;(list||[]).forEach(k=>{if(tl>=k[0])v=k[1]});return v}
 function g3VfdWire(){const B=g3Base('#dfe3e8'),{T,S,cam,M,box,cyl}=B;['left','bottom'].forEach(k=>B.key.shadow.camera[k]=-.6);['right','top'].forEach(k=>B.key.shadow.camera[k]=.6);B.key.position.set(.6,1,1.2);B.key.shadow.camera.near=.1;B.key.shadow.camera.far=4;
   // panel back plate + floor
@@ -5440,10 +5441,18 @@ function g3VfdWire(){const B=g3Base('#dfe3e8'),{T,S,cam,M,box,cyl}=B;['left','bo
   const potQ=P.Pot?P.Pot.quaternion.clone():null,qa=new T.Quaternion(),Yax=new T.Vector3(0,1,0);
   const body=[];if(P.Body)P.Body.traverse(o=>{if(o.isMesh){o.material.userData.c0=o.material.color.clone();body.push(o.material)}});
   // motor (EP14 CAD) to the right, on a plinth
-  const MR=e14MotorClone();let mSpin=[];if(MR){MR.g.position.set(.42,-.11,.1);MR.g.rotation.y=-Math.PI/2+.4;S.add(MR.g);mSpin=E14_SPIN.map(n=>MR.parts[n]).filter(Boolean);box(.3,.01,.22,M('#9aa3ad',{r:.6}),.42,-.2,.1)}
+  const MR=e14MotorClone();let mSpin=[];if(MR){MR.g.position.set(.3,-.15,.08);MR.g.scale.setScalar(.75);MR.g.rotation.y=E15_MROT;S.add(MR.g);mSpin=E14_SPIN.map(n=>MR.parts[n]).filter(Boolean);box(.3,.01,.24,M('#9aa3ad',{r:.6}),.3,-.21,.08);
+    const sh=MR.parts.Shaft,hs=MR.parts.Housing;if(sh&&hs){sh.geometry.computeBoundingBox();const bb=sh.geometry.boundingBox;MR.g.updateMatrixWorld(true);const hb=new T.Box3().setFromObject(hs);
+      const ends=[bb.min.x,bb.max.x].map(x=>{const v=new T.Vector3(x,(bb.min.y+bb.max.y)/2,(bb.min.z+bb.max.z)/2);return[x,hb.distanceToPoint(v.clone().applyMatrix4(sh.matrixWorld))]});const ex=ends[0][1]>ends[1][1]?ends[0][0]:ends[1][0];
+      const rr=Math.max(bb.max.y-bb.min.y,bb.max.z-bb.min.z)/2;const cp=new T.Group();cp.position.set(ex-Math.sign(ex)*rr*.4,(bb.min.y+bb.max.y)/2,(bb.min.z+bb.max.z)/2);sh.add(cp);
+      const dk=new T.Mesh(new T.CylinderGeometry(rr*3.2,rr*3.2,rr*1.2,40),new T.MeshStandardMaterial({color:'#f59e0b',roughness:.4,metalness:.3}));dk.rotation.z=Math.PI/2;cp.add(dk);
+      const st=new T.Mesh(new T.BoxGeometry(rr*.3,rr*3.1,rr*1.1),new T.MeshStandardMaterial({color:'#ffffff',roughness:.5}));st.position.set(Math.sign(ex)*rr*.72,rr*1.5,0);cp.add(st)}
+    const tb=MR.parts.TerminalBox;if(tb){const b3=new T.Box3().setFromObject(tb),c=b3.getCenter(new T.Vector3());[0,1,2,3].forEach(i=>W['MTB'+i]=new T.Vector3(c.x-.012+i*.008,b3.min.y+.004,b3.max.z))}}
   // props built to real proportions
   const PR={};const grp=(x,y,z)=>{const g=new T.Group();g.position.set(x,y,z);S.add(g);return g};
-  PR.iso=grp(-.2,.24,-.05);box(.09,.11,.07,M('#f3f4f6',{r:.5}),0,0,0,PR.iso);const isoH=new T.Group();isoH.position.set(0,0,.04);PR.iso.add(isoH);box(.016,.06,.016,M('#dc2626',{r:.4}),0,0,.008,isoH);cyl(.022,.022,.012,M('#facc15',{r:.5}),0,0,0,PR.iso).rotation.x=Math.PI/2;PR.iso.children[2].position.z=.036;
+  PR.iso=grp(-.2,.24,-.05);box(.054,.09,.06,M('#f3f4f6',{r:.5}),0,0,0,PR.iso);box(.054,.03,.012,M('#e5e7eb',{r:.5}),0,0,.034,PR.iso);[-1,0,1].forEach(i=>{box(.012,.008,.004,M('#9ca3af',{m:.6}),i*.018,.041,.031,PR.iso);box(.012,.008,.004,M('#9ca3af',{m:.6}),i*.018,-.041,.031,PR.iso)});
+  const isoH=new T.Group();isoH.position.set(0,0,.04);PR.iso.add(isoH);box(.046,.007,.026,M('#1f2937',{r:.4}),0,0,.013,isoH);
+  const winM=new T.MeshStandardMaterial({color:'#dc2626',emissive:'#dc2626',emissiveIntensity:.35,roughness:.4});const win=new T.Mesh(new T.PlaneGeometry(.012,.007),winM);win.position.set(.016,-.024,.0302);PR.iso.add(win);
   PR.btn=grp(-.2,.07,-.04);box(.05,.05,.04,M('#e5e7eb',{r:.5}),0,0,0,PR.btn);const btnCap=cyl(.013,.013,.016,M('#16a34a',{r:.35}),0,0,.026,PR.btn,24);btnCap.rotation.x=Math.PI/2;
   PR.pot=grp(-.2,.0,-.04);box(.05,.05,.03,M('#e5e7eb',{r:.5}),0,0,0,PR.pot);const potK=new T.Group();potK.position.z=.022;PR.pot.add(potK);const pk=cyl(.014,.016,.02,M('#1f2937',{r:.5}),0,0,0,potK,24);pk.rotation.x=Math.PI/2;box(.003,.011,.003,M('#f9fafb'),0,.007,.011,potK);
   PR.lamp=grp(.19,.2,-.04);box(.05,.05,.03,M('#e5e7eb',{r:.5}),0,0,0,PR.lamp);const lampM=new T.MeshStandardMaterial({color:'#7f1d1d',roughness:.3,emissive:'#ff2a1a',emissiveIntensity:0});const ld=new T.Mesh(new T.SphereGeometry(.016,24,16,0,Math.PI*2,0,Math.PI/2),lampM);ld.rotation.x=Math.PI/2;ld.position.z=.016;PR.lamp.add(ld);
@@ -5472,7 +5481,7 @@ function g3VfdWire(){const B=g3Base('#dfe3e8'),{T,S,cam,M,box,cyl}=B;['left','bo
     const burnt=kv(e.burnt,tl,0);body.forEach(m=>m.color.copy(m.userData.c0).lerp(new T.Color('#3b302a'),burnt*.25));
     const hz=kv(e.mhz,tl,0);mAng+=dt*hz/50*14;mSpin.forEach(o=>o.rotation.x=-mAng);
     Object.entries(PR).forEach(([k,g])=>g.visible=e15step(e.props&&e.props[k],tl,0)>0);
-    isoH.rotation.z=kv(e.sw,tl,0)*-Math.PI/2;btnCap.position.z=.026-kv(e.btn,tl,0)*.007;potK.rotation.z=-kv(e.extpot,tl,0)*4.2;lampM.emissiveIntensity=kv(e.lamp,tl,0)*(2.2+.6*Math.sin(tl*10));ctB.position.y=kv(e.ctopen,tl,0)*.014;
+    {const sv=kv(e.sw,tl,0);isoH.rotation.x=.75-sv*1.5;winM.color.set(sv>.5?'#16a34a':'#dc2626');winM.emissive.set(sv>.5?'#16a34a':'#dc2626')}btnCap.position.z=.026-kv(e.btn,tl,0)*.007;potK.rotation.z=-kv(e.extpot,tl,0)*4.2;lampM.emissiveIntensity=kv(e.lamp,tl,0)*(2.2+.6*Math.sin(tl*10));ctB.position.y=kv(e.ctopen,tl,0)*.014;
     const cb=kv(e.capboom,tl,0);capB.scale.set(1+cb*.12,1+cb*.18,1+cb*.12);capM.color.set(cb>.5?'#6b6b6b':'#9ca3af');
     // blast FX at e.blastAt (a terminal name or xyz)
     const bt=e.blast,bp=e.blastAt?(typeof e.blastAt==='string'?tp(e.blastAt):e.blastAt):[0,.012,.06];
@@ -5486,7 +5495,7 @@ G3_BUILD.vfdwire=g3VfdWire;
 /* home inverter analogy – clean 2D schematic */
 function drawInverter(e,c,tl){const{x,y,w,h}=e;const bad=kv(e.bad,tl,0),smk=kv(e.smoke,tl,0);c.save();c.lineWidth=5;c.strokeStyle='#1f2430';c.font='800 30px "IBM Plex Sans",Arial';c.textAlign='center';
   const blk=(bx,by,bw,bh,t,fill)=>{c.fillStyle=fill;ngRR(c,bx,by,bw,bh,18);c.fill();c.stroke();c.fillStyle='#1f2430';c.fillText(t,bx+bw/2,by+bh/2+10)};
-  blk(x,y+h*.35,w*.22,h*.3,'BATTERY','#e0f2fe');blk(x+w*.39,y+h*.3,w*.22,h*.4,'INVERTER',smk>.3?'#78716c':'#fef3c7');blk(x+w*.78,y+h*.35,w*.22,h*.3,'VEETU LOAD','#dcfce7');
+  blk(x,y+h*.35,w*.22,h*.3,'BATTERY','#e0f2fe');blk(x+w*.39,y+h*.3,w*.22,h*.4,'INVERTER',smk>.3?'#78716c':'#fef3c7');blk(x+w*.78,y+h*.35,w*.22,h*.3,'HOME LOAD','#dcfce7');
   const arr=(x1,y1,x2,y2,col)=>{c.strokeStyle=col;c.fillStyle=col;c.lineWidth=7;c.beginPath();c.moveTo(x1,y1);c.lineTo(x2,y2);c.stroke();const a=Math.atan2(y2-y1,x2-x1);c.beginPath();c.moveTo(x2,y2);c.lineTo(x2-18*Math.cos(a-.4),y2-18*Math.sin(a-.4));c.lineTo(x2-18*Math.cos(a+.4),y2-18*Math.sin(a+.4));c.closePath();c.fill()};
   arr(x+w*.22,y+h*.5,x+w*.39,y+h*.5,'#2563eb');arr(x+w*.61,y+h*.5,x+w*.78,y+h*.5,'#16a34a');
   c.fillStyle='#1f2430';c.font='700 24px "IBM Plex Sans",Arial';c.fillText('INPUT',x+w*.305,y+h*.44);c.fillText('OUTPUT',x+w*.695,y+h*.44);
@@ -6685,9 +6694,9 @@ const E15_TP={T_R:[-.023,.029,.056],T_S:[-.012,.029,.056],T_T:[-.001,.029,.056],
 const E15_EB=['#dc2626','#eab308','#2563eb'],E15_MC='#374151',E15_PEC='#65a30d';
 /* every cable runs in the trunking: supply up the left riser to the isolator, motor cable out of the bottom duct to the motor */
 function e15sup(terms,t0,o={}){return terms.map((n,i)=>({a:n,b:[-.212+i*.012,.185,-.03],col:o.cols?o.cols[i]:E15_EB[i],t0:t0+i*.25,dur:o.dur||1.3,t1:o.t1,glow:o.glow,k:'L',ye:.165-i*.004,lane:i}))}
-function e15mot(terms,t0,o={}){return terms.map((n,i)=>{const xe=.245+i*.006,zl=-.03+(3+i)*.0035;return{a:n,b:o.to?o.to(i):[.355,-.072+i*.005,.085],col:o.col||E15_MC,t0:t0+i*.25,dur:o.dur||1.3,t1:o.t1,glow:o.glow,lane:3+i,xe,mid:[[xe,-.09+i*.003,zl],[.33,-.09+i*.003,.06]],...(o.w||{})}})}
+function e15mot(terms,t0,o={}){return terms.map((n,i)=>{const xe=.245+i*.006,zl=-.03+(3+i)*.0035;return{a:n,b:o.to?o.to(i):'MTB'+i,col:o.col||E15_MC,t0:t0+i*.25,dur:o.dur||1.3,t1:o.t1,glow:o.glow,lane:3+i,xe,mid:[[xe,-.09+i*.003,zl],[.33,-.09+i*.003,.06]],...(o.w||{})}})}
 const e15pe=(t0,dur=.9)=>({a:'T_PE',b:[-.085,-.071,-.047],col:E15_PEC,t0,dur,lane:6,xe:-.085});
-const e15pem=(t0)=>({a:'T_PE',b:[.355,-.088,.085],col:E15_PEC,t0,dur:1.3,lane:6,xe:.263,mid:[[.263,-.1,-.009],[.33,-.1,.06]]});
+const e15pem=(t0)=>({a:'T_PE',b:'MTB3',col:E15_PEC,t0,dur:1.3,lane:6,xe:.263,mid:[[.263,-.1,-.009],[.33,-.1,.06]]});
 const e15ctl=(n,b,ye,lane,col,t0,k='L')=>({a:n,b,col,r:.0011,t0,dur:1.1,k,ye,lane});
 function e15disp(list,t0,dur,f0,f1,step=.25){const n=Math.max(1,Math.round(dur/step));for(let i=0;i<=n;i++){const f=f0+(f1-f0)*i/n;list.push([t0+i*dur/n,[f.toFixed(1),'#ff3b2f']])}return list}
 const E15_WIDE=[.1,.055,.95,.1,.045,0],E15_VFD=[0,.085,.5,0,.08,0],E15_TERM=[0,.034,.19,0,.032,.05],E15_PWR=[0,.026,.2,0,.024,.05],E15_CTL=[0,.05,.17,0,.048,.05];
@@ -6714,26 +6723,26 @@ async function buildEp15(){
   /* k0–k1 HOOK: new VFD, neat wiring – but supply on U V W, motor on R S T → blast */
   bg([0,PS(2)],'#e3e8ee');
   const bl=T(0,3)+1.6;
-  vfd([0,PS(2)],{cover:[[T(0,1)-.6,0],[T(0,1)+.4,1]],props:ALL,sw:[[T(0,2)+.3,0],[T(0,2)+.6,1]],led:[[T(0,2)+.6,0],[T(0,2)+.7,1],[bl,1],[bl+.1,0]],
-    disp:[[0,['','']],[T(0,2)+.7,['0.0','#ff3b2f']],[bl,['','']]],burnt:[[bl,0],[bl+.6,1]],blast:bl,blastAt:'T_V',
+  vfd([0,PS(2)],{cover:[[T(0,1)-.6,0],[T(0,1)+.4,1]],props:ALL,sw:[[T(0,2)+.5,0],[T(0,2)+.95,1]],led:[[T(0,2)+1.0,0],[T(0,2)+1.1,1],[bl,1],[bl+.1,0]],
+    disp:[[0,['','']],[T(0,2)+1.1,['0.0','#ff3b2f']],[bl,['','']]],burnt:[[bl,0],[bl+.6,1]],blast:bl,blastAt:'T_V',
     wires:[...e15sup(['T_U','T_V','T_W'],T(0,1)+.3,{dur:1}),...e15mot(['T_R','T_S','T_T'],T(0,1)+1.2,{dur:1}),e15pe(T(0,1)+1.8)],
     hl:hlm(hl(['T_U','T_V','T_W'],T(1,0)+.6),hl(['T_R','T_S','T_T'],T(1,1)+.3)),
-    cam:[e15cam(0,E15_WIDE),e15cam(T(0,1)+.2,[0,.065,.42,0,.055,.02]),e15cam(T(0,2),E15_WIDE),e15cam(T(0,3),[0,.07,.42,0,.06,0]),e15cam(T(0,4)+.4,[0,.07,.42,0,.06,0]),e15cam(PS(1)+.2,E15_TERM),e15cam(T(1,2)+.6,E15_TERM),e15cam(PE(1),[0,.04,.26,0,.035,.04])]});
-  chip('Pudhu VFD fit pannaanga',[.2,T(0,1)]);chip('Wiring neat ✓',[T(0,1),T(0,2)],GRN);chip('Main switch ON',[T(0,2),T(0,3)],ORG);chip('2 second… BLAST!',[T(0,3)+1.4,T(0,4)],RED);chip('Pudhu VFD – DEAD',[T(0,4),T(0,5)],RED);
-  big('Thappu enga?',[T(0,5),PS(1)],{y:520,w:520,bg:'#fef3c7'});
-  chip('EB supply → U · V · W  ✗',[PS(1)+.4,T(1,1)],RED);chip('Motor → R · S · T  ✗',[T(1,1),T(1,2)],RED);big('INPUT ⇄ OUTPUT maari pochu!',[T(1,2),PE(1)],{y:560,w:820,h:100,size:44,bg:RED});
+    cam:[e15cam(0,E15_WIDE),e15cam(T(0,1)+.2,[0,.065,.42,0,.055,.02]),e15cam(T(0,2),[-.2,.236,.2,-.2,.236,-.04]),e15cam(T(0,2)+1.5,[-.2,.236,.2,-.2,.236,-.04]),e15cam(T(0,3)+.9,[0,.07,.42,0,.06,0]),e15cam(T(0,4)+.4,[0,.07,.42,0,.06,0]),e15cam(PS(1)+.2,E15_TERM),e15cam(T(1,2)+.6,E15_TERM),e15cam(PE(1),[0,.04,.26,0,.035,.04])]});
+  chip('New VFD fitted',[.2,T(0,1)]);chip('Wiring neat ✓',[T(0,1),T(0,2)],GRN);chip('Main breaker ON',[T(0,2),T(0,3)],ORG);chip('2 second… BLAST!',[T(0,3)+1.4,T(0,4)],RED);chip('New VFD – DEAD',[T(0,4),T(0,5)],RED);
+  big('What went wrong?',[T(0,5),PS(1)],{y:520,w:520,bg:'#fef3c7'});
+  chip('EB supply → U · V · W  ✗',[PS(1)+.4,T(1,1)],RED);chip('Motor → R · S · T  ✗',[T(1,1),T(1,2)],RED);big('INPUT ⇄ OUTPUT SWAPPED!',[T(1,2),PE(1)],{y:560,w:820,h:100,size:44,bg:RED});
   /* k2 home inverter analogy */
   erase(PS(2));bg(P(2));
   ng('inverter',{x:80,y:110,w:1120,h:420,bad:[[T(2,2),0],[T(2,2)+.5,1]],smoke:[[T(2,2)+1.4,0],[T(2,2)+2.4,1]],noPop:true},P(2));
-  chip('Veetu INVERTER yosinga',[PS(2),T(2,1)],BLU);chip('Battery ← → Veetu load',[T(2,1),T(2,2)],NAV);chip('EB-ai OUTPUT-la kuduthaa → ERIYUM',[T(2,2),T(2,3)],RED);
-  chip('VFD-um adhey maadhiri',[T(2,3),PE(2)],PUR);card(260,600,760,80,'Supply pakkam · Motor pakkam = FIXED',[T(2,4),PE(2)],{size:34,bg:'#fef3c7'});
+  chip('Think of a HOME INVERTER',[PS(2),T(2,1)],BLU);chip('Battery → Inverter → Home load',[T(2,1),T(2,2)],NAV);chip('EB into the OUTPUT → it BURNS',[T(2,2),T(2,3)],RED);
+  chip('A VFD is the same',[T(2,3),PE(2)],PUR);card(260,600,760,80,'Supply side · Motor side = FIXED',[T(2,4),PE(2)],{size:34,bg:'#fef3c7'});
   /* k3 why it blasts: rectifier diodes vs IGBT */
   erase(PS(3),'#dfe5ec');bg(P(3),'#dfe5ec');
   ng('g3',{shot:'vfd',x:0,y:0,w:640,h:H,noPop:true,scan:[PS(3)+.2,1.2],explode:[[PS(3)+.6,0],[PS(3)+2,1]],flow:[PS(3)+1.5,PE(3)],
     cam:[[0,0,0,6.2,0,0,-.3],[PS(3)+.6,3.4,.8,5.8,0,-.3,-1.2],[T(3,2),2.8,1.2,5.0,.2,.6,-1.6]],
     hl:{'vfd-cut-rectifier':[[PS(3)+.3,0],[PS(3)+.8,1],[T(3,2),1],[T(3,2)+.4,0]],'vfd-cut-igbt':[[T(3,2),0],[T(3,2)+.5,1],[PE(3),1]]}},P(3));
   rc(0,'R S T → RECTIFIER (diodes)',[PS(3)+.3,PE(3)],{bg:'#dcfce7'});rc(1,'AC → DC',[T(3,1),PE(3)]);rc(2,'U V W → IGBT switches',[T(3,2),PE(3)],{bg:'#dbeafe'});
-  rc(3,'IGBT = supply KUDUKKUM, vaangaadhu',[T(3,3),PE(3)],{size:26});rc(4,'415 V AC → IGBT mela ✗',[T(3,4),PE(3)],{bg:'#fee2e2'});
+  rc(3,'IGBT only GIVES power, never takes it',[T(3,3),PE(3)],{size:26});rc(4,'415 V AC into the IGBTs ✗',[T(3,4),PE(3)],{bg:'#fee2e2'});
   eq('spark-burst',[T(3,5),PE(3)],{x:180,y:200,w:300,h:300});big('IGBT BLAST',[T(3,5),PE(3)],{x:830,y:580,w:420,h:100,size:48,bg:RED});
   /* k4–k10 one VFD on the bench: power terminals, then control terminals with real devices */
   erase(PS(4),'#e3e8ee');bg(P(4,10),'#e3e8ee');
@@ -6749,20 +6758,20 @@ async function buildEp15(){
       e15ctl('C_10V',[-.175,.008,-.035],.008,9,'#dc2626',T(9,2)+.1),e15ctl('C_AI',[-.175,0,-.035],0,10,'#f97316',T(9,2)+.7),e15ctl('C_GND',[-.175,-.008,-.035],-.008,11,'#111827',T(9,2)+1.3),
       e15ctl('C_RA',[.215,.205,-.035],.205,7,'#7c3aed',T(10,2)-.4,'R'),e15ctl('C_RC',[.215,.195,-.035],.195,8,'#7c3aed',T(10,2)-.1,'R')],
     cam:[e15cam(0,E15_PWR),e15cam(PS(4)+.1,E15_PWR),e15cam(T(4,2)+.3,[-.05,.04,.5,-.05,.04,0]),e15cam(T(4,3)+.2,E15_PWR),e15cam(T(4,4)+.3,[.12,.0,.6,.12,.0,0]),e15cam(T(4,5),E15_PWR),e15cam(T(4,6)+.2,[.12,.02,.75,.12,.0,0]),
-      e15cam(PS(5),E15_PWR),e15cam(PS(6),[.004,.026,.2,.004,.024,.05]),e15cam(PS(7),E15_CTL),e15cam(T(8,2)-.4,[-.1,.04,.5,-.1,.03,0]),e15cam(fw+.5,[.1,.02,1.1,.1,.01,0]),
-      e15cam(PS(9),E15_CTL),e15cam(T(9,2)-.2,[-.1,-.01,.5,-.1,-.02,0]),e15cam(pz+.3,[.1,.0,1.1,.1,-.01,0]),e15cam(PS(10),E15_CTL),e15cam(T(10,2)-.6,[.1,.11,.62,.1,.1,0])]});
-  chip('POWER TERMINALS',[PS(4),T(4,1)],NAV);rc(0,'R S T  =  L1 L2 L3',[T(4,1),PS(5)],{bg:'#dcfce7'});rc(1,'INPUT → EB supply mattum',[T(4,2),PS(5)],{bg:'#dcfce7'});
-  rc(2,'U V W  =  T1 T2 T3',[T(4,3),PS(5)],{bg:'#dbeafe'});rc(3,'OUTPUT → Motor mattum',[T(4,4),PS(5)],{bg:'#dbeafe'});rc(4,'PE = EARTH',[T(4,5),PS(5)],{bg:'#fef3c7'});rc(5,'VFD + Motor → earth KANDIPPA',[T(4,6),PS(5)],{size:26,bg:'#fef3c7'});
-  chip('Chinna VFD: SINGLE PHASE input',[PS(5),PE(5)],BLU);rc(0,'Input: L · N (2 terminal)',[T(5,1),PE(5)]);rc(1,'Output: U · V · W (3 phase)',[T(5,2),PE(5)],{bg:'#dbeafe'});
-  chip('P+  N−  =  DC BUS',[PS(6),T(6,2)],RED);rc(0,'P+ / N− → ulla DC bus',[T(6,1),PE(6)],{bg:'#fee2e2'});rc(1,'B1 / B2 → BRAKE RESISTOR',[T(6,2),PE(6)]);rc(2,'Supply / motor inga ✗',[T(6,3),PE(6)],{bg:RED,size:32});
-  chip('CONTROL TERMINALS',[PS(7),PE(7)],PUR);rc(0,'VFD-ku ORDER kudukkuradhu',[T(7,1),PE(7)],{bg:'#ede9fe'});
+      e15cam(PS(5),E15_PWR),e15cam(PS(6),[.004,.026,.2,.004,.024,.05]),e15cam(PS(7),E15_CTL),e15cam(T(8,2)-.4,[-.1,.04,.5,-.1,.03,0]),e15cam(fw+.5,[.16,.0,1.2,.16,-.03,0]),
+      e15cam(PS(9),E15_CTL),e15cam(T(9,2)-.2,[-.1,-.01,.5,-.1,-.02,0]),e15cam(pz+.3,[.16,.0,1.2,.16,-.03,0]),e15cam(PS(10),E15_CTL),e15cam(T(10,2)-.6,[.1,.11,.62,.1,.1,0])]});
+  chip('POWER TERMINALS',[PS(4),T(4,1)],NAV);rc(0,'R S T  =  L1 L2 L3',[T(4,1),PS(5)],{bg:'#dcfce7'});rc(1,'INPUT → EB supply only',[T(4,2),PS(5)],{bg:'#dcfce7'});
+  rc(2,'U V W  =  T1 T2 T3',[T(4,3),PS(5)],{bg:'#dbeafe'});rc(3,'OUTPUT → Motor only',[T(4,4),PS(5)],{bg:'#dbeafe'});rc(4,'PE = EARTH',[T(4,5),PS(5)],{bg:'#fef3c7'});rc(5,'Earth BOTH VFD and motor',[T(4,6),PS(5)],{size:26,bg:'#fef3c7'});
+  chip('Small VFD: SINGLE-PHASE input',[PS(5),PE(5)],BLU);rc(0,'Input: L · N (2 terminal)',[T(5,1),PE(5)]);rc(1,'Output: U · V · W (3 phase)',[T(5,2),PE(5)],{bg:'#dbeafe'});
+  chip('P+  N−  =  DC BUS',[PS(6),T(6,2)],RED);rc(0,'P+ / N− → internal DC bus',[T(6,1),PE(6)],{bg:'#fee2e2'});rc(1,'B1 / B2 → BRAKE RESISTOR',[T(6,2),PE(6)]);rc(2,'No supply / motor here ✗',[T(6,3),PE(6)],{bg:RED,size:32});
+  chip('CONTROL TERMINALS',[PS(7),PE(7)],PUR);rc(0,'They give the VFD its ORDERS',[T(7,1),PE(7)],{bg:'#ede9fe'});
   chip('DIGITAL INPUTS',[PS(8),PE(8)],BLU);rc(0,'FWD · REV · X1 (multi speed)',[T(8,1),PE(8)]);rc(1,'FWD + COM short → RUN',[T(8,2),PE(8)],{bg:'#dcfce7'});rc(2,'Push button / PLC output',[T(8,3),PE(8)]);
-  chip('ANALOG INPUT = SPEED',[PS(9),PE(9)],ORG);rc(0,'Potentiometer → 3 wire',[T(9,1),PE(9)]);rc(1,'+10V · AI · GND',[T(9,2),PE(9)],{bg:'#fef3c7'});rc(2,'0 → 10 V  =  0 → 50 Hz',[T(9,3),PE(9)],{bg:'#dcfce7'});rc(3,'PLC: 4–20 mA ✓',[T(9,4),PE(9)]);
-  chip('RELAY OUTPUT',[PS(10),PE(10)],PUR);rc(0,'VFD FAULT → contact maarum',[T(10,1),PE(10)],{bg:'#fee2e2',size:28});rc(1,'Alarm light / PLC input',[T(10,2),PE(10)]);
+  chip('ANALOG INPUT = SPEED',[PS(9),PE(9)],ORG);rc(0,'Potentiometer → 3 wires',[T(9,1),PE(9)]);rc(1,'+10V · AI · GND',[T(9,2),PE(9)],{bg:'#fef3c7'});rc(2,'0 → 10 V  =  0 → 50 Hz',[T(9,3),PE(9)],{bg:'#dcfce7'});rc(3,'PLC: 4–20 mA ✓',[T(9,4),PE(9)]);
+  chip('RELAY OUTPUT',[PS(10),PE(10)],PUR);rc(0,'VFD FAULT → contact changes',[T(10,1),PE(10)],{bg:'#fee2e2',size:28});rc(1,'Alarm lamp / PLC input',[T(10,2),PE(10)]);
   /* k11 question (answered at 13.4) */
-  erase(PS(11));bg(P(11));chip('UNGALUKKU ORU QUESTION',[PS(11),PE(11)],ORG);card(300,90,800,100,'VFD ↔ Motor naduvula CONTACTOR?',[T(11,1),PE(11)],{size:38});
-  [['A','Eppo venumnaalum ON / OFF',BLU],['B','Motor nikkumbodhu mattum',GRN],['C','Contactor podave koodaadhu',ORG]].forEach(([l,t,cl],i)=>{card(330,230+i*110,90,90,l,[T(11,2+i),PE(11)],{bg:cl,size:44});card(440,230+i*110,600,90,t,[T(11,2+i)+.2,PE(11)],{size:32})});
-  card(760,580,440,90,'Yosichu vechukonga…',[T(11,5),PE(11)],{bg:'#fef3c7',size:30});
+  erase(PS(11));bg(P(11));chip('QUESTION FOR YOU',[PS(11),PE(11)],ORG);card(300,90,800,100,'CONTACTOR between VFD and motor?',[T(11,1),PE(11)],{size:38});
+  [['A','Switch ON / OFF any time',BLU],['B','Only when the motor is stopped',GRN],['C','Never use a contactor',ORG]].forEach(([l,t,cl],i)=>{card(330,230+i*110,90,90,l,[T(11,2+i),PE(11)],{bg:cl,size:44});card(440,230+i*110,600,90,t,[T(11,2+i)+.2,PE(11)],{size:32})});
+  card(760,580,440,90,'Think about it…',[T(11,5),PE(11)],{bg:'#fef3c7',size:30});
   /* k12 mistakes title */
   erase(PS(12));bg(P(12));big('FACTORY WIRING MISTAKES',[PS(12)+.2,PE(12)],{y:250,w:760,bg:'#fee2e2',size:50});
   /* k13 mistake 1: output contactor opened while running */
@@ -6771,26 +6780,26 @@ async function buildEp15(){
   vfd(P(13),{x:0,w:820,cover:[[0,1]],props:{iso:[[0,1]],ct:[[0,1]]},led:[[0,1]],sw:[[0,1]],disp:d13,mhz:[[0,50],[op,50],[op+1.6,0]],ctopen:[[op-.1,0],[op+.1,1]],blast:op,blastAt:[.19,.09,.0],smk:.25,
     wires:[...e15sup(['T_R','T_S','T_T'],-5),...['T_U','T_V','T_W'].map((n,i)=>({a:n,b:[.178+i*.012,.1275,-.04],col:E15_MC,t0:-5,dur:1,k:'R',ye:.145+i*.004,lane:3+i})),...e15mot([0,1,2].map(i=>[.178+i*.012,.0525,-.04]),-5,{w:{from:'dev'}})],
     hl:hl(['T_U','T_V','T_W'],op,op+3),cam:[e15cam(0,[.1,.04,.7,.1,.02,0]),e15cam(T(13,1),[.12,.01,.45,.12,.0,0]),e15cam(T(13,3),[.1,.04,.7,.1,.02,0])]});
-  chip('MISTAKE 1 · Output-la CONTACTOR',[PS(13),PE(13)],RED);rc(0,'Running-la OPEN pannaa…',[T(13,1),PE(13)]);rc(1,'IGBT current → sudden CUT',[T(13,1)+1.4,PE(13)],{bg:'#fee2e2'});rc(2,'OC trip → IGBT damage',[T(13,2),PE(13)],{bg:'#fee2e2'});
-  rc(3,'VFD STOP aana appuram dhaan',[T(13,3),PE(13)],{bg:'#dcfce7',size:28});big('Answer: B ✓',[T(13,4),PE(13)],{x:830,y:520,w:420,h:110,size:52,bg:GRN});
+  chip('MISTAKE 1 · CONTACTOR on the output',[PS(13),PE(13)],RED);rc(0,'Opened while running…',[T(13,1),PE(13)]);rc(1,'IGBT current → sudden CUT',[T(13,1)+1.4,PE(13)],{bg:'#fee2e2'});rc(2,'OC trip → IGBT damage',[T(13,2),PE(13)],{bg:'#fee2e2'});
+  rc(3,'Switch only after the VFD stops',[T(13,3),PE(13)],{bg:'#dcfce7',size:28});big('Answer: B ✓',[T(13,4),PE(13)],{x:830,y:520,w:420,h:110,size:52,bg:GRN});
   /* k14 mistake 2: PF capacitor on the output */
   erase(PS(14),'#e3e8ee');bg(P(14),'#e3e8ee');
   const cb=T(14,1)+1.2;
   vfd(P(14),{x:0,w:820,cover:[[0,1]],props:{iso:[[0,1]],cap:[[0,1]]},led:[[0,1]],sw:[[0,1]],disp:[[0,['50.0','#ff3b2f']],[cb+.3,['OC','#ff3b2f']]],mhz:[[0,50],[cb,50],[cb+1.6,0]],capboom:[[cb,0],[cb+.25,1]],blast:cb,blastAt:[.19,-.08,.0],smk:.8,
     wires:[...e15sup(['T_R','T_S','T_T'],-5),...e15mot(['T_U','T_V','T_W'],-5),...['T_U','T_V','T_W'].map((n,i)=>({a:n,b:[.178+i*.012,-.07,-.04],col:'#6b7280',t0:PS(14)+.4+i*.25,dur:1.1,lane:7+i,xe:.178+i*.012}))],
     cam:[e15cam(0,[.12,-.02,.6,.12,-.04,0]),e15cam(cb-.3,[.16,-.06,.35,.16,-.07,0]),e15cam(T(14,3),[.12,-.02,.6,.12,-.04,0])]});
-  chip('MISTAKE 2 · Output-la PF CAPACITOR',[PS(14),PE(14)],RED);rc(0,'PWM pulse → CURRENT SPIKE',[T(14,1),PE(14)],{bg:'#fee2e2',size:28});rc(1,'Capacitor BURST + VFD trip',[T(14,2),PE(14)],{bg:'#fee2e2',size:28});rc(2,'Output-la MOTOR mattum ✓',[T(14,3),PE(14)],{bg:'#dcfce7'});
+  chip('MISTAKE 2 · PF CAPACITOR on the output',[PS(14),PE(14)],RED);rc(0,'PWM pulse → CURRENT SPIKE',[T(14,1),PE(14)],{bg:'#fee2e2',size:28});rc(1,'Capacitor BURST + VFD trip',[T(14,2),PE(14)],{bg:'#fee2e2',size:28});rc(2,'Only the MOTOR on the output ✓',[T(14,3),PE(14)],{bg:'#dcfce7'});
   /* k15 mistake 3: main switch used to start/stop */
   erase(PS(15),'#e3e8ee');bg(P(15),'#e3e8ee');
   const sw=[[0,0]],led=[[0,0]];for(let i=0;i<4;i++){const a=PS(15)+.8+i*1.4;sw.push([a,0],[a+.2,1],[a+.8,1],[a+1,0]);led.push([a+.2,0],[a+.3,1],[a+1.1,1],[a+1.3,0])}sw.push([T(15,2),0]);
   vfd(P(15),{x:0,w:820,cover:[[0,1]],props:{iso:[[0,1]],btn:[[T(15,2),1]]},led,sw,disp:[[0,['','']]],dcv:1,
     wires:[...e15sup(['T_R','T_S','T_T'],-5),...e15mot(['T_U','T_V','T_W'],-5),e15ctl('C_FWD',[-.175,.075,-.035],.075,7,'#1d4ed8',T(15,2)+.2),e15ctl('C_COM',[-.175,.065,-.035],.065,8,'#111827',T(15,2)+.5)],
     cam:[e15cam(0,[-.09,.11,.55,-.09,.1,0]),e15cam(T(15,1),[-.04,.08,.5,-.04,.07,0]),e15cam(T(15,2),[-.09,.03,.5,-.09,.02,0])]});
-  chip('MISTAKE 3 · Main switch-la START / STOP',[PS(15),PE(15)],RED);rc(0,'Ovvoru ON → DC bus charge',[T(15,1),PE(15)],{size:28});rc(1,'VFD-ku STRESS ✗',[T(15,1)+1.5,PE(15)],{bg:'#fee2e2'});rc(2,'Run / Stop → CONTROL terminal ✓',[T(15,2),PE(15)],{bg:'#dcfce7',size:26});
+  chip('MISTAKE 3 · START / STOP with the main switch',[PS(15),PE(15)],RED);rc(0,'Every ON → DC bus charges',[T(15,1),PE(15)],{size:28});rc(1,'STRESS on the VFD ✗',[T(15,1)+1.5,PE(15)],{bg:'#fee2e2'});rc(2,'Run / Stop → CONTROL terminal ✓',[T(15,2),PE(15)],{bg:'#dcfce7',size:26});
   /* k16 mistake 4: control wire with the power cable */
   erase(PS(16));bg(P(16));
   ng('tray',{x:60,y:110,w:1160,h:560,shield:[[T(16,2),0],[T(16,2)+.4,1]],sep:[[T(16,2)+1,0],[T(16,2)+2.4,1]],noPop:true},P(16));
-  chip('MISTAKE 4 · Control wire + power cable ONNA',[PS(16),PE(16)],RED);card(780,130,420,70,'Speed signal AADUM',[T(16,1),T(16,2)],{bg:'#fee2e2',size:30});card(780,130,420,70,'Shielded + THALLI ✓',[T(16,2),PE(16)],{bg:'#dcfce7',size:30});
+  chip('MISTAKE 4 · Control wire next to power cable',[PS(16),PE(16)],RED);card(780,130,420,70,'Speed signal FLUCTUATES',[T(16,1),T(16,2)],{bg:'#fee2e2',size:30});card(780,130,420,70,'Shielded + SEPARATED ✓',[T(16,2),PE(16)],{bg:'#dcfce7',size:30});
   /* k17 last: CHARGE LED + meter */
   erase(PS(17),'#e3e8ee');bg(P(17),'#e3e8ee');
   const off=T(17,1)+.3,dk=T(17,3)+2.6;
@@ -6798,14 +6807,14 @@ async function buildEp15(){
     wires:[...e15sup(['T_R','T_S','T_T'],-5),...e15mot(['T_U','T_V','T_W'],-5),{a:'T_P',b:[.11,-.04,.12],via:[[.012,.022,.075],[.06,-.01,.11]],col:'#dc2626',t0:T(17,4)-.2,dur:.7},{a:'T_N',b:[.12,-.04,.12],via:[[.023,.022,.078],[.07,-.01,.11]],col:'#111827',t0:T(17,4),dur:.7}],
     hl:{...hl(['T_P','T_N'],T(17,2),T(17,4)+3)},cam:[e15cam(0,[-.05,.1,.5,-.05,.09,0]),e15cam(T(17,1),[.012,.036,.16,.012,.034,.05]),e15cam(T(17,3),[.02,.04,.14,.02,.038,.05]),e15cam(T(17,4),[.03,.02,.24,.03,.015,.05])]});
   ng('dcmeter',{x:860,y:440,w:380,h:220,title:'MULTIMETER · P+ / N−',v:[[0,0],[T(17,4)+.6,0],[T(17,4)+.7,24],[T(17,4)+1.6,6]],noPop:true},[T(17,4),PE(17)]);
-  chip('KADAISI · ROMBA MUKKIYAM',[PS(17),PE(17)],RED);rc(0,'OFF pannina udane thodaadheenga',[T(17,1),PE(17)],{size:26,bg:'#fee2e2'});rc(1,'DC bus: 500 V+ irukkum!',[T(17,2),PE(17)],{bg:RED,size:32});rc(2,'CHARGE LED OFF + label time',[T(17,3),PE(17)],{size:28,bg:'#fef3c7'});
+  chip('LAST · MOST IMPORTANT',[PS(17),PE(17)],RED);rc(0,'Don’t touch right after OFF',[T(17,1),PE(17)],{size:26,bg:'#fee2e2'});rc(1,'DC bus still 500 V+ !',[T(17,2),PE(17)],{bg:RED,size:32});rc(2,'Wait: CHARGE LED OFF + label time',[T(17,3),PE(17)],{size:28,bg:'#fef3c7'});
   /* k18 summary */
   erase(PS(18));bg(P(18));chip('SUMMARY',[PS(18),PE(18)],NAV);
-  ['R S T = input · U V W = output · PE = earth','Maathina → IGBT BLAST','P+ N− B1 B2 → supply ✗','Digital = RUN · Analog = SPEED','Output contactor / capacitor / main switch / noise ✗','OFF pannaalum CHARGE irukkum'].forEach((t,i)=>card(330,95+i*95,900,80,(i+1)+'.  '+t,[T(18,1+i),PE(18)],{size:30}));
+  ['R S T = input · U V W = output · PE = earth','Swap them → IGBT BLAST','P+ N− B1 B2 → supply ✗','Digital = RUN · Analog = SPEED','Output contactor · capacitor · main switch · noise ✗','Still CHARGED after switching OFF'].forEach((t,i)=>card(330,95+i*95,900,80,(i+1)+'.  '+t,[T(18,1+i),PE(18)],{size:30}));
   /* k19 challenge (answer only in the pinned comment) */
   erase(PS(19));bg(P(19));chip('CHALLENGE',[PS(19),PE(19)],ORG);
-  card(330,110,880,90,'Potentiometer · 3 wire',[T(19,1),PE(19)],{size:40});card(330,220,280,90,'+10V',[T(19,1)+1.2,PE(19)],{size:38,bg:'#fee2e2'});card(630,220,280,90,'?',[T(19,1)+1.6,PE(19)],{size:52,bg:'#fef3c7'});card(930,220,280,90,'GND',[T(19,1)+2,PE(19)],{size:38,bg:'#e5e7eb'});
-  card(330,340,880,110,'Naduvula wire → endha terminal?',[T(19,1)+2.6,PE(19)],{size:44,bg:'#ede9fe'});card(420,480,700,80,'Comment pannunga',[T(19,2),PE(19)],{size:36,bg:'#dbeafe'});card(420,580,700,80,'Answer → pinned comment',[T(19,3),PE(19)],{size:34});
+  card(330,110,880,90,'Potentiometer · 3 wires',[T(19,1),PE(19)],{size:40});card(330,220,280,90,'+10V',[T(19,1)+1.2,PE(19)],{size:38,bg:'#fee2e2'});card(630,220,280,90,'?',[T(19,1)+1.6,PE(19)],{size:52,bg:'#fef3c7'});card(930,220,280,90,'GND',[T(19,1)+2,PE(19)],{size:38,bg:'#e5e7eb'});
+  card(330,340,880,110,'Middle wire → which terminal?',[T(19,1)+2.6,PE(19)],{size:44,bg:'#ede9fe'});card(420,480,700,80,'Comment your answer',[T(19,2),PE(19)],{size:36,bg:'#dbeafe'});card(420,580,700,80,'Answer → pinned comment',[T(19,3),PE(19)],{size:34});
   /* k20 CTA + end screen */
   erase(PS(20));bg([PS(20),END]);eq('hand-thumbs-up',[PS(20),NARR+.3],{x:330,y:120,w:420,h:480});
   card(800,130,420,90,'LIKE',[PS(20),NARR+.3],{bg:BLU,size:40});card(800,240,420,90,'SHARE',[PS(20)+1.4,NARR+.3],{bg:NG.teal,size:40});card(800,350,420,100,'SUBSCRIBE',[PS(20)+2.8,END],{bg:RED,size:44});
@@ -6827,18 +6836,18 @@ async function buildEp15Short(){
   bg([0,PE(4)]);
   const bl=T(1,1)+1.7,V=[0,.07,.62,0,.06,0];
   /* the wrong wiring is drawn but never called out – the answer stays in the long video */
-  ng('g3',{shot:'vfdwire',x:0,y:0,w:W,h:H,noPop:true,cover:[[T(0,1)-.4,0],[T(0,1)+.6,1]],props:{iso:[[0,1]]},sw:[[PS(1)+.6,0],[PS(1)+.9,1]],led:[[PS(1)+.9,0],[PS(1)+1,1],[bl,1],[bl+.1,0]],
+  ng('g3',{shot:'vfdwire',x:0,y:0,w:W,h:H,noPop:true,cover:[[T(0,1)-.4,0],[T(0,1)+.6,1]],props:{iso:[[0,1]]},sw:[[PS(1)+.6,0],[PS(1)+1.05,1]],led:[[PS(1)+1.1,0],[PS(1)+1.2,1],[bl,1],[bl+.1,0]],
     disp:[[0,['','']],[PS(1)+1,['0.0','#ff3b2f']],[bl,['','']]],burnt:[[bl,0],[bl+.6,1]],blast:bl,blastAt:'T_V',
     wires:[...e15sup(['T_U','T_V','T_W'],T(0,1)+.3,{dur:1}),...e15mot(['T_R','T_S','T_T'],T(0,1)+1.3,{dur:1}),e15pe(T(0,1)+2)],
-    cam:[e15cam(0,[0,.09,.55,0,.08,0]),e15cam(T(0,1)+.2,[-.03,.04,.42,-.03,.04,0]),e15cam(PS(1),[-.1,.12,.55,-.07,.1,0]),e15cam(T(1,1)+.6,V),e15cam(T(2,1),[0,.03,.2,0,.03,.05]),e15cam(PS(3),[0,.06,.5,0,.05,0])]},[0,PE(4)]);
+    cam:[e15cam(0,[0,.09,.55,0,.08,0]),e15cam(T(0,1)+.2,[-.03,.04,.42,-.03,.04,0]),e15cam(PS(1),[-.2,.236,.2,-.2,.236,-.04]),e15cam(PS(1)+1.6,[-.2,.236,.2,-.2,.236,-.04]),e15cam(T(1,1)+1.5,V),e15cam(T(2,1),[0,.03,.2,0,.03,.05]),e15cam(PS(3),[0,.06,.5,0,.05,0])]},[0,PE(4)]);
   const top=(t,win,bg='#ffffff',sz=44)=>card(60,90,600,110,t,win,{bg,size:sz});
-  top('Pudhu VFD',[.2,T(0,1)]);top('Wiring NEAT ✓',[T(0,1),PS(1)],'#dcfce7');top('Main switch ON',[PS(1),T(1,1)],'#fef3c7');top('2 sec… BLAST!',[bl-.1,PS(2)],RED,52);
-  top('Pudhu VFD – DEAD',[PS(2),T(2,1)],'#fee2e2');
+  top('New VFD',[.2,T(0,1)]);top('Wiring NEAT ✓',[T(0,1),PS(1)],'#dcfce7');top('Main breaker ON',[PS(1),T(1,1)],'#fef3c7');top('2 sec… BLAST!',[bl-.1,PS(2)],RED,52);
+  top('New VFD – DEAD',[PS(2),T(2,1)],'#fee2e2');
   card(60,90,600,80,'Cable size ✓',[T(2,1),PS(3)],{bg:'#dcfce7',size:36});card(60,180,600,80,'Earth ✓',[T(2,1)+1,PS(3)],{bg:'#dcfce7',size:36});card(60,270,600,80,'Tight ✓',[T(2,1)+2,PS(3)],{bg:'#dcfce7',size:36});
-  card(90,120,540,150,'Appo THAPPU ENGA?',[PS(3),PE(4)],{size:52,bg:'#fef3c7'});card(90,300,540,100,'Guess → COMMENT',[T(3,1),PE(4)],{size:40,bg:'#dbeafe'});
-  card(60,440,600,90,'Indha mistake pannirukkeengalaa?',[PS(4),PE(4)],{size:30});card(60,550,600,90,'Unga factory-la?',[T(4,1),PE(4)],{size:34});
+  card(90,120,540,150,'So WHAT went wrong?',[PS(3),PE(4)],{size:52,bg:'#fef3c7'});card(90,300,540,100,'Your guess → COMMENT',[T(3,1),PE(4)],{size:40,bg:'#dbeafe'});
+  card(60,440,600,90,'Have you seen this mistake?',[PS(4),PE(4)],{size:30});card(60,550,600,90,'In your factory?',[T(4,1),PE(4)],{size:34});
   ers(PS(5));bg(P(5,6),'#eef1f5');
-  card(110,300,500,130,'FULL ANSWER',[PS(5),PE(5)],{size:56,bg:GRN});ng('arrowdn',{x:260,y:560,w:200,h:560},[PS(5)+.8,PE(5)+.1]);card(150,450,420,100,'⬇ keezha LINK',[PS(5)+.8,PE(5)],{bg:RED,size:40});
+  card(110,300,500,130,'FULL ANSWER',[PS(5),PE(5)],{size:56,bg:GRN});ng('arrowdn',{x:260,y:560,w:200,h:560},[PS(5)+.8,PE(5)+.1]);card(150,450,420,100,'⬇ LINK BELOW',[PS(5)+.8,PE(5)],{bg:RED,size:40});
   ng('eqv',{key:'hand-thumbs-up',x:400,y:320,w:300,h:340,noPop:true},[PS(6),END-.25]);card(110,180,500,110,'SUBSCRIBE',[PS(6),END-.25],{bg:RED,size:48});card(110,700,240,80,'LIKE',[PS(6)+.4,END-.25],{bg:BLU,size:34});card(370,700,240,80,'SHARE',[PS(6)+.8,END-.25],{bg:NG.teal,size:34});
   presenter([PS(3)+.1,END],{poses:EP15_SPOSE,x:-20,y:H-356,size:340,entrance:'draw',draw:.6});
   S.captions=false;S.showHand=true;S.penSprite=true;S.cardsDraw=true;S.cur=0;S.pin=false;S.t=1;refresh();
