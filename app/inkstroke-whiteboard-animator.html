@@ -2316,6 +2316,8 @@ const TPL={
  ep09s:{name:'EP09 Short – Lift button latching (9:16)',desc:'0:37 · 3D lift hook, decode, power-cut danger, CTA',style:'white',scenes:[]},
  sd3dtest:{name:'Star-Delta 3D stage test',desc:'real 3D panel, contactors, motor, ammeter, light',style:'white',scenes:[]},
  sdmgtest:{name:'Star-Delta motion graphic test',desc:'animated contactors, current, motor, ammeter, light, timer',style:'white',scenes:[]},
+ ep16:{name:'EP16 – VFD parameters',desc:'Parameter setting',style:'white',scenes:[]},
+ ep16s:{name:'EP16 Short',desc:'Motor not running hook',style:'white',scenes:[]},
  ep15:{name:'EP15 – VFD wiring (4:46)',desc:'3D VFD terminals, wiring mistakes',style:'white',scenes:[]},
  ep15s:{name:'EP15 Short (0:40)',desc:'VFD blast hook',style:'white',scenes:[]},
  ep14:{name:'EP14 – VFD basics (5:23)',desc:'3D conveyor, VFD X-ray, live meters, V/f',style:'white',scenes:[]},
@@ -5576,7 +5578,7 @@ function g3Plate(){const B=g3Base('#dfe5ec'),{T,S,cam,M,box}=B;box(6,.04,4,M('#c
   let ang=0,lastT=null;
   return{B,update(tl,e){if(lastT==null||tl<lastT)lastT=tl;const dt=Math.min(.1,tl-lastT);lastT=tl;ang+=dt*kv(e.mhz,tl,0)/50*14;mSpin.forEach(o=>o.rotation.x=-ang);
     pl.set(e15step(e.hl,tl,-1),e15step(e.hl,tl,-1));const h=kv(e.heat,tl,0);hm.forEach(m=>{m.color.copy(m.userData.c0).lerp(new T.Color('#4a1d14'),h*.55);if(m.emissive){m.emissive.set('#ff5a1a');m.emissiveIntensity=h*.12}});
-    g3camKeys(cam,e.cam||[[0,c.x+.35,c.y+.12,bb.max.z+.75,c.x,c.y,c.z]],tl)}}}
+    const pp=plate.position;g3camKeys(cam,e.camRel?e.camRel.map(k=>[k[0],pp.x+k[1],pp.y+k[2],pp.z+k[3],pp.x+k[4],pp.y+k[5],pp.z+k[6]]):(e.cam||[[0,c.x+.35,c.y+.12,bb.max.z+.75,c.x,c.y,c.z]]),tl)}}}
 G3_BUILD.plate=g3Plate;
 /* home inverter analogy – clean 2D schematic */
 function drawInverter(e,c,tl){const{x,y,w,h}=e;const bad=kv(e.bad,tl,0),smk=kv(e.smoke,tl,0);c.save();c.lineWidth=5;c.strokeStyle='#1f2430';c.font='800 30px "IBM Plex Sans",Arial';c.textAlign='center';
@@ -5589,7 +5591,7 @@ function drawInverter(e,c,tl){const{x,y,w,h}=e;const bad=kv(e.bad,tl,0),smk=kv(e
   if(smk>0){for(let i=0;i<4;i++){const u=((tl*.4+i*.25)%1);c.globalAlpha=smk*(1-u)*.8;e13img(c,'smoke-'+(1+i),x+w*.44+Math.sin(i*2)*20,y+h*.12-u*h*.3,140,140)}c.globalAlpha=1}
   c.restore()}
 /* DC-bus charge / multimeter readout */
-function drawDCMeter(e,c,tl){const{x,y,w,h}=e;const v=kv(e.v,tl,0);e14panel(c,x,y,w,h,e.title||'DC BUS');c.save();c.fillStyle='#111827';ngRR(c,x+30,y+60,w-60,h-90,12);c.fill();c.font='800 '+Math.round(h*.3)+'px "IBM Plex Mono",monospace';c.fillStyle=v>50?'#ff3b2f':'#4ade80';c.textAlign='center';c.fillText(Math.round(v)+' V DC',x+w/2,y+h*.68);c.restore()}
+function drawDCMeter(e,c,tl){const{x,y,w,h}=e;const v=kv(e.v,tl,0);e14panel(c,x,y,w,h,e.title||'DC BUS');c.save();c.fillStyle='#111827';ngRR(c,x+30,y+60,w-60,h-90,12);c.fill();c.font='800 '+Math.round(h*.3)+'px "IBM Plex Mono",monospace';c.fillStyle=(e.unit?(e.warn!=null&&v>e.warn):v>50)?'#ff3b2f':'#4ade80';c.textAlign='center';c.fillText((e.unit==='mA'||e.unit==='A'?v.toFixed(e.unit==='mA'?2:1):Math.round(v))+' '+(e.unit||'V DC'),x+w/2,y+h*.68);c.restore()}
 /* cable tray noise demo */
 function drawTray(e,c,tl){const{x,y,w,h}=e;const sh=kv(e.shield,tl,0),sep=kv(e.sep,tl,0);e14panel(c,x,y,w,h,'Cable tray');c.save();const py=y+h*.4,cy=y+h*(.55+.25*sep);
   for(let i=0;i<3;i++){c.strokeStyle=['#7c2d12','#111827','#6b7280'][i];c.lineWidth=16;c.beginPath();c.moveTo(x+30,py+i*20);c.lineTo(x+w-30,py+i*20);c.stroke()}
@@ -6946,6 +6948,176 @@ async function buildEp15Test(){stopAudio();S.playing=false;S.scenes=[];S.sel=nul
     wires:[{a:'T_U',b:[-.2,.2,.0],col:'#111827',t0:4,dur:1.5},{a:'C_FWD',b:[-.2,.02,.0],col:'#2563eb',t0:5,dur:1.5,r:.0012}],
     cam:[[0,0,.09,.55,0,.085,0],[4,0,.05,.22,0,.04,.05],[12,.15,.05,.7,.15,.05,0]]});
   S.captions=false;S.showHand=false;S.cur=0;S.pin=false;S.t=1;refresh()}
+const EP16_A=[[-0.05, 1.05, 0], [1.4, 3.0, 0], [3.25, 4.75, 0], [5.0, 5.9, 0], [6.2, 8.55, 0], [9.15, 10.3, 0], [10.6, 11.75, 0], [12.2, 13.35, 0], [13.55, 14.2, 0], [14.55, 16.6, 0], [17.27, 18.15, 1], [18.6, 18.85, 1], [19.25, 20.35, 1], [20.7, 21.48, 1], [22.88, 26.71, 2], [27.31, 29.31, 2], [29.96, 30.71, 2], [30.91, 31.61, 2], [32.26, 34.51, 2], [34.96, 38.09, 2], [39.59, 41.35, 3], [41.9, 45.8, 3], [46.2, 48.35, 3], [48.75, 51.15, 3], [51.45, 52.6, 3], [53.43, 55.85, 4], [56.3, 58.8, 4], [59.2, 62.4, 4], [62.6, 64.35, 4], [64.55, 66.08, 4], [66.91, 69.2, 5], [69.7, 70.9, 5], [71.3, 73.5, 5], [74.05, 78.0, 5], [78.65, 79.4, 5], [79.55, 84.28, 5], [84.97, 86.6, 6], [87.1, 90.15, 6], [90.7, 92.2, 6], [92.5, 94.25, 6], [94.55, 100.05, 6], [100.6, 103.45, 6], [103.95, 105.15, 6], [105.75, 106.6, 6], [107.05, 111.45, 6], [111.75, 112.75, 6], [113.05, 117.66, 6], [119.06, 120.77, 7], [121.17, 125.47, 7], [125.72, 127.27, 7], [128.02, 128.62, 7], [129.27, 131.97, 7], [132.67, 137.72, 7], [138.32, 143.99, 7], [145.39, 146.31, 8], [146.31, 150.9, 8], [151.15, 152.75, 8], [153.45, 155.35, 8], [155.65, 158.65, 8], [159.2, 161.65, 8], [162.15, 164.55, 8], [165.45, 166.15, 8], [167.1, 168.84, 8], [170.24, 171.31, 9], [171.71, 174.86, 9], [175.41, 177.55, 9], [177.55, 181.76, 9], [182.06, 188.31, 9], [189.71, 192.16, 10], [192.16, 194.18, 10], [194.78, 199.86, 10], [200.43, 202.83, 11], [203.03, 204.53, 11], [205.03, 206.23, 11], [206.83, 207.68, 11], [207.98, 208.83, 11], [209.38, 213.13, 11], [213.68, 213.98, 11], [213.98, 216.11, 11], [216.11, 216.82, 11], [218.22, 223.55, 12], [223.75, 224.7, 12], [225.25, 232.6, 12], [232.85, 233.65, 12], [233.9, 236.93, 12], [238.33, 239.57, 13], [239.57, 241.74, 13], [242.29, 245.04, 13], [245.44, 246.79, 13], [247.44, 249.54, 13], [250.34, 252.62, 13], [254.02, 255.66, 14], [255.96, 259.31, 14], [259.86, 261.26, 14], [261.76, 264.61, 14], [265.01, 267.51, 14], [268.01, 270.31, 14], [270.91, 274.61, 14], [276.01, 276.61, 15], [277.11, 279.26, 15], [279.71, 281.51, 15], [281.91, 283.51, 15], [283.91, 285.41, 15], [285.86, 288.46, 15], [288.81, 290.21, 15], [290.61, 292.54, 15], [293.94, 294.65, 16], [295.2, 298.5, 16], [298.9, 300.3, 16], [300.65, 303.6, 16], [304.05, 307.3, 16], [307.6, 308.93, 16], [310.33, 314.54, 17]];
+const EP16_ON={"2": 22.93, "3": 39.92, "7": 119.11, "8": 145.44, "9": 170.29, "10": 189.76, "12": 218.27, "13": 238.38, "14": 254.07, "15": 276.06, "16": 293.99, "17": 310.38};
+const EP16_POSE=[[-0.05, "talk_a"], [1.4, "explain_a"], [3.25, "talk_b"], [5.0, "point_level"], [6.2, "talk_c"], [9.15, "worry2"], [10.6, "talk_d"], [12.2, "talk_a"], [13.55, "explain_a"], [14.55, "talk_b"], [17.27, "point_level"], [18.6, "talk_c"], [19.25, "worry2"], [20.7, "talk_d"], [22.88, "talk_a"], [27.31, "explain_a"], [29.96, "talk_b"], [30.91, "point_level"], [32.26, "talk_c"], [34.96, "worry2"], [39.59, "talk_d"], [41.9, "talk_a"], [46.2, "explain_a"], [48.75, "talk_b"], [51.45, "point_level"], [53.43, "talk_c"], [56.3, "worry2"], [59.2, "talk_d"], [62.6, "talk_a"], [64.55, "explain_a"], [66.91, "talk_b"], [69.7, "point_level"], [71.3, "talk_c"], [74.05, "worry2"], [78.65, "talk_d"], [79.55, "talk_a"], [84.97, "explain_a"], [87.1, "talk_b"], [90.7, "point_level"], [92.5, "talk_c"], [94.55, "worry2"], [100.6, "talk_d"], [103.95, "talk_a"], [105.75, "explain_a"], [107.05, "talk_b"], [111.75, "point_level"], [113.05, "talk_c"], [119.06, "worry2"], [121.17, "talk_d"], [125.72, "talk_a"], [128.02, "explain_a"], [129.27, "talk_b"], [132.67, "point_level"], [138.32, "talk_c"], [145.39, "worry2"], [146.31, "talk_d"], [151.15, "talk_a"], [153.45, "explain_a"], [155.65, "talk_b"], [159.2, "point_level"], [162.15, "talk_c"], [165.45, "worry2"], [167.1, "talk_d"], [170.24, "talk_a"], [171.71, "explain_a"], [175.41, "talk_b"], [177.55, "point_level"], [182.06, "talk_c"], [189.71, "worry2"], [192.16, "talk_d"], [194.78, "talk_a"], [200.43, "explain_a"], [203.03, "talk_b"], [205.03, "point_level"], [206.83, "talk_c"], [207.98, "worry2"], [209.38, "talk_d"], [213.68, "talk_a"], [213.98, "explain_a"], [216.11, "talk_b"], [218.22, "point_level"], [223.75, "talk_c"], [225.25, "worry2"], [232.85, "talk_d"], [233.9, "talk_a"], [238.33, "explain_a"], [239.57, "talk_b"], [242.29, "point_level"], [245.44, "talk_c"], [247.44, "worry2"], [250.34, "talk_d"], [254.02, "talk_a"], [255.96, "explain_a"], [259.86, "talk_b"], [261.76, "point_level"], [265.01, "talk_c"], [268.01, "worry2"], [270.91, "talk_d"], [276.01, "talk_a"], [277.11, "explain_a"], [279.71, "talk_b"], [281.91, "point_level"], [283.91, "talk_c"], [285.86, "worry2"], [288.81, "talk_d"], [290.61, "talk_a"], [293.94, "explain_a"], [295.2, "talk_b"], [298.9, "point_level"], [300.65, "talk_c"], [304.05, "worry2"], [307.6, "talk_d"], [310.33, "talk_a"]];
+const EP16_NARR=314.83;
+const EP16_SA=[[-0.05, 0.85, 0], [1.05, 2.35, 0], [2.7, 3.95, 0], [4.05, 5.2, 0], [5.45, 6.32, 0], [6.89, 9.4, 1], [9.8, 10.68, 1], [10.68, 11.9, 1], [12.33, 13.5, 2], [13.75, 14.65, 2], [14.85, 16.78, 2], [17.35, 18.45, 3], [18.7, 20.2, 3], [20.4, 21.25, 3], [21.7, 23.02, 3], [24.17, 27.1, 4], [27.45, 29.42, 5]];
+const EP16_SON={"4": 24.22};
+const EP16_SPOSE=[[-0.05, "talk_a"], [1.05, "explain_a"], [2.7, "talk_b"], [4.05, "point_level"], [5.45, "talk_c"], [6.89, "worry2"], [9.8, "talk_d"], [10.68, "talk_a"], [12.33, "explain_a"], [13.75, "talk_b"], [14.85, "point_level"], [17.35, "talk_c"], [18.7, "worry2"], [20.4, "talk_d"], [21.7, "talk_a"], [24.17, "explain_a"], [27.45, "talk_b"]];
+const EP16_SNARR=29.65;
+/* ================= EP16 builders – VFD parameter setting ================= */
+async function buildEp16(){
+  stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('16:9');S.narrOff=0;S.art='sketch';
+  try{await document.fonts.load('700 30px InkHand')}catch(_){}try{await window.E14_MOTOR_READY;await window.E15_VFD_READY}catch(_){}
+  const A=EP16_A,NARR=EP16_NARR,END=NARR+15;S.g3q=.72;
+  const s=newScene({name:'EP16 – VFD parameters',style:'white',transition:'cut',trans:0,hold:0});s.minDur=END;S.scenes.push(s);
+  const K=ep10Kit(s,A,NARR),{ng,T,PS:PS0,card,presenter}=K,RED=NG.red,GRN=NG.grn,BLU=NG.blue,PUR='#7c3aed',ORG='#f59e0b',NAV=NG.navy;
+  const PS=k=>EP16_ON[k]!=null?EP16_ON[k]-.12:PS0(k);
+  const PE=k=>k>=17?END:PS(k+1),P=(a,b=a)=>[PS(a),PE(b)];
+  const chip=(t,win,bg=NAV,o={})=>card(o.x??28,o.y??22,Math.min(760,64+t.length*17),62,t,win,{bg,size:28,...o});
+  const bg=(win,col='#e3e8ee')=>ng('fill',{x:0,y:0,w:W,h:H,col,noPop:true},win);
+  const erase=(t,col='#eef1f5')=>ng('erase',{ts:t-1.12,ed:1.0,pop:.01,x:0,y:0,w:W,h:H,col,noPop:true},[t-1.12,t+.08]);
+  const g3=(shot,win,o)=>ng('g3',{shot,x:0,y:0,w:W,h:H,noPop:true,...o},win);
+  const rc=(i,t,win,o={})=>card(o.x??860,o.y??(120+i*92),o.w??390,o.h||78,t,win,{size:o.size||30,...o});
+  const big=(t,win,o={})=>card(o.x??(W/2-(o.w||640)/2),o.y??260,o.w||640,o.h||130,t,win,{size:o.size||52,bg:o.bg||'#fff',...o});
+  const hl=(names,t0,t1)=>Object.fromEntries(names.map(n=>[n,[[t0,0],[t0+.4,1],...(t1!=null?[[t1,1],[t1+.4,0]]:[])]]));
+  const hlm=(...os)=>{const r={};os.forEach(o=>Object.entries(o).forEach(([k,v])=>{r[k]=(r[k]||[]).concat(v)}));Object.values(r).forEach(v=>v.sort((a,b)=>a[0]-b[0]));return r};
+  const D=(t,txt)=>[t,[txt,'#ff3b2f']];
+  const BRK=[-.2,.236,.2,-.2,.236,-.04],BTN=[-.2,.07,.2,-.2,.07,-.04],KEY=[0,.12,.25,0,.115,.06],DSP=[0,.14,.22,0,.135,.06],TERM=[0,.034,.19,0,.032,.05],
+    BENCH=[.07,.06,.82,.07,.04,0],MOT=[.26,0,.62,.3,-.1,.06],PLCV=[-.14,.1,.42,-.12,.09,0];
+  const SUP=e15sup(['T_R','T_S','T_T'],-9),MOTW=e15mot(['T_U','T_V','T_W'],-9),PE1=e15pe(-9),PE2=e15pem(-9);
+  const BTNW=[e15ctl('C_FWD',[-.175,.075,-.035],.075,7,'#1d4ed8',-9),e15ctl('C_COM',[-.175,.065,-.035],.065,8,'#111827',-9)];
+  /* ---- P0–P1 hook: correct wiring, breaker ON, RUN pressed… 0.00 ---- */
+  bg([0,PS(2)]);
+  const pr0=T(0,7)+.5;
+  g3('vfdwire',[0,PS(2)],{cover:[[0,1]],props:{iso:[[0,1]],btn:[[0,1]]},sw:[[T(0,5)+.5,0],[T(0,5)+.95,1]],led:[[T(0,5)+1,0],[T(0,5)+1.1,1]],
+    disp:[[0,['','']],D(T(0,6)-.2,'0.00')],btn:[[pr0,0],[pr0+.15,1],[pr0+.7,1],[pr0+.85,0]],mhz:[[0,0]],
+    wires:[...e15sup(['T_R','T_S','T_T'],T(0,1)),...e15mot(['T_U','T_V','T_W'],T(0,2)),e15pe(T(0,3)),e15pem(T(0,3)+.3),...[e15ctl('C_FWD',[-.175,.075,-.035],.075,7,'#1d4ed8',T(0,4)),e15ctl('C_COM',[-.175,.065,-.035],.065,8,'#111827',T(0,4)+.3)]],
+    hl:hlm(hl(['T_R','T_S','T_T'],T(1,2),T(1,2)+.9),hl(['T_U','T_V','T_W'],T(1,2)+.6,T(1,2)+1.5),hl(['T_PE'],T(1,2)+1.2,T(1,3)),hl(['C_FWD','C_COM'],T(1,2)+1.5,T(1,3)+.6)),
+    cam:[[0,...BENCH],[T(0,1)-.3,...TERM],[T(0,4)-.4,...TERM],[T(0,4)+.4,-.1,.06,.42,-.1,.04,0],[T(0,5)-.1,...BRK],[T(0,5)+1.2,...BRK],[T(0,6)+1.1,...DSP],[T(0,7)+.4,...BTN],[pr0+1.1,...BTN],[T(0,8),...BENCH],[T(0,9),...DSP],[T(1,0)+.4,...BENCH],[T(1,2),...TERM],[T(1,3)+.6,...BENCH]]});
+  chip('Wiring correct',[.2,T(0,5)],GRN);chip('Main breaker ON',[T(0,5),T(0,7)],ORG);chip('RUN pressed…',[T(0,7),T(0,9)],BLU);chip('Motor not running · 0.00',[T(0,9),PS(1)],RED);
+  chip('VFD faulty?',[PS(1),T(1,1)],RED);chip('No.',[T(1,1),T(1,2)],GRN);chip('Every wire is correct',[T(1,2),T(1,3)],GRN);big('So what is wrong?',[T(1,3),PS(2)],{y:560,w:560,h:100,size:46,bg:'#fef3c7'});
+  /* ---- P2 TV example ---- */
+  erase(PS(2));bg(P(2),'#efe7dc');
+  const sel=T(2,5)+.9;
+  g3('tvroom',P(2),{cable:[[T(2,0)+1,0],[T(2,0)+3,1]],stb:[[T(2,3)-.2,0],[T(2,3),1]],tv:[[0,'off'],[T(2,1),'nosig'],[T(2,4)+.6,'menu'],[sel+1.1,'pic']],sel:[[0,0],[sel,1]],remote:[[T(2,4),1]],
+    press:[[T(2,4)+.4,0],[T(2,4)+.55,1],[T(2,4)+.8,0]],ok:[[sel+.8,0],[sel+.95,1],[sel+1.1,0]],
+    cam:[[0,0,1.2,2.8,0,1.0,-.9],[T(2,0)+.6,.3,.75,.6,.1,.75,-.95],[T(2,1),0,1.2,2.6,0,1.05,-.9],[T(2,2),-.15,.85,.55,-.3,.75,-1.0],[T(2,3),.55,.62,.5,.55,.52,-.75],[T(2,4),.2,1.0,1.8,0,1.05,-.9],[sel+1.4,0,1.2,2.3,0,1.05,-.9]]});
+  chip('HDMI connected',[T(2,0)+1,T(2,1)],NAV);chip('“No Signal”',[T(2,1),T(2,2)],RED);chip('Cable OK',[T(2,2),T(2,3)],GRN);chip('Box ON',[T(2,3),T(2,4)],GRN);chip('Input = Antenna',[T(2,4),T(2,5)],ORG);chip('Source → HDMI 1',[T(2,5),PE(2)],BLU);
+  /* ---- P3–P6: same VFD bench – keypad mode, parameters, run source, frequency source ---- */
+  erase(PS(3),'#e3e8ee');bg(P(3,6),'#e3e8ee');
+  const fix=T(5,5)+1.4,run5=fix+1.6,potT=T(6,3)+.3,pz=T(6,8)+.6;
+  const disp3=[D(0,'0.00'),D(T(3,1),'P0-01'),D(T(3,1)+1.1,'0'),D(T(3,2),'0.00'),D(T(4,0)+.3,'P0-01'),D(T(4,1),'P0-02'),D(T(4,1)+.8,'P0-03'),D(T(4,1)+1.6,'P1-01'),D(T(4,3),'P0-01'),D(T(4,3)+1,'F0.02'),D(T(4,4),'P0-01'),
+    D(T(5,2),'0'),D(T(5,3),'1'),D(T(5,4),'2'),D(T(5,5),'0'),D(fix,'1'),D(fix+.8,'0.00'),[run5,['50.0','#ff3b2f']],
+    D(T(6,0),'P0-03'),D(T(6,2),'50.0'),D(T(6,3)+.8,'35.0'),D(T(6,4),'AI'),D(T(6,5),'50.0'),D(T(6,8),'0.00')];
+  g3('vfdwire',P(3,6),{cover:[[0,1]],props:{iso:[[0,1]],btn:[[0,1]],plc:[[T(5,3)+.8,1]],pot:[[T(6,4),1],[T(6,5),0]]},sw:[[0,1]],led:[[0,1]],disp:disp3,plcrun:[[T(5,3)+.8,1]],
+    key:[[T(3,1),0],[T(3,1)+.3,1],[T(3,2),1],[T(3,2)+.3,0],[T(5,2),0],[T(5,2)+.3,1],[T(5,3),1],[T(5,3)+.3,0],[T(6,2),0],[T(6,2)+.3,1],[T(6,3),1],[T(6,3)+.3,0]],
+    btn:[[T(3,2)+.6,0],[T(3,2)+.75,1],[T(3,2)+1.2,0],[T(5,3)+.3,0],[T(5,3)+.45,1],[T(5,3)+.9,0],[run5-.2,0],[run5,1],[run5+.5,0],[pz-.3,0],[pz-.15,1],[pz+.3,0]],
+    mhz:[[0,0],[run5,0],[run5+2,50],[T(6,8)-.2,50],[T(6,8),0]],extpot:[[T(6,4),0],[T(6,4)+1.5,.7]],
+    wires:[...SUP,...MOTW,PE1,PE2,...BTNW,{...e15ctl('C_X1',[-.155,.1,-.035],.11,9,'#0f766e',T(5,3)+.6),flow:[[T(5,3)+1.5,1],[T(5,4),0]],fcol:'#22d3ee'},
+      {a:'C_AO',b:[-.17,.17,-.02],col:'#2563eb',r:.0018,t0:T(5,4)-.2,dur:1,k:'L',ye:.17,lane:10,t1:T(5,5)+.5,flow:[[T(5,4)+.6,1],[T(5,5),1],[T(5,5)+.3,0]],fcol:'#38bdf8'},
+      {...e15ctl('C_10V',[-.175,.008,-.035],.008,9,'#dc2626',T(6,4)),t1:T(6,5)},{...e15ctl('C_AI',[-.175,0,-.035],0,10,'#f97316',T(6,4)+.3),t1:T(6,5)},{...e15ctl('C_GND',[-.175,-.008,-.035],-.008,11,'#111827',T(6,4)+.6),t1:T(6,5)},
+      {...e15ctl('C_AI',[-.21,.1,-.03],.1,12,'#f97316',T(6,4)+1),t1:T(6,5)}],
+    hl:hlm(hl(['C_FWD','C_COM'],T(3,2),T(3,4)),hl(['C_FWD','C_COM'],T(5,3),T(5,4)),hl(['C_10V','C_AI','C_GND'],T(6,4),T(6,5)),hl(['C_AI'],T(6,4)+1,T(6,5))),
+    cam:[[0,...KEY],[T(3,2),...BTN],[T(3,3),-.08,.06,.3,-.06,.055,.03],[T(3,4),...BENCH],[T(4,0),...DSP],[T(4,2),...KEY],[T(4,4),...DSP],
+      [T(5,0),...KEY],[T(5,3),-.1,.06,.42,-.08,.06,0],[T(5,4),...PLCV],[T(5,5),...DSP],[fix+.5,...BENCH],[run5+.4,...MOT],
+      [T(6,0),...DSP],[T(6,2),...KEY],[T(6,3),0,.09,.12,0,.088,.06],[T(6,4),-.12,.05,.5,-.1,.03,0],[T(6,5),...KEY],[T(6,7),...BENCH],[T(6,9),...DSP],[T(6,10),...BENCH]]});
+  chip('Factory setting: RUN from KEYPAD',[T(3,1),T(3,2)],ORG);chip('Button wired to TERMINAL',[T(3,2),T(3,3)],BLU);chip('VFD ignores the terminal',[T(3,3),PS(4)],RED);
+  chip('PARAMETERS',[PS(4),T(4,2)],PUR);chip('Codes differ by brand · meaning same',[T(4,2),PE(4)],PUR);
+  chip('1 · RUN COMMAND SOURCE',[PS(5),PE(5)],NAV);rc(0,'0 · Keypad',[T(5,2),PE(5)],{w:300,x:950});rc(1,'1 · Terminal',[T(5,3),PE(5)],{w:300,x:950,bg:'#dbeafe'});rc(2,'2 · Communication',[T(5,4),PE(5)],{w:300,x:950});
+  chip('2 · FREQUENCY SOURCE',[PS(6),PE(6)],NAV);rc(0,'Keypad ▲ ▼',[T(6,2),T(6,7)],{w:300,x:950});rc(1,'VFD knob',[T(6,3),T(6,7)],{w:300,x:950});rc(2,'Ext. pot / PLC AI',[T(6,4),T(6,7)],{w:300,x:950});
+  chip('RUN ✓  ·  speed 0 Hz',[T(6,8),PE(6)],RED);
+  /* ---- P7 motor nameplate ---- */
+  erase(PS(7),'#dfe5ec');bg(P(7),'#dfe5ec');
+  g3('plate',P(7),{hl:[[0,-1],[T(7,1)+.3,0],[T(7,1)+1.1,1],[T(7,1)+1.9,2],[T(7,1)+2.7,3],[T(7,1)+3.5,4],[T(7,2),-1],[T(7,5),2]],heat:[[T(7,6)+1,0],[T(7,6)+4,1]],mhz:[[0,50]],
+    camRel:[[0,.35,.15,.7,0,-.03,-.1],[T(7,1),0,0,.2,0,0,0],[T(7,4),.35,.15,.7,0,-.03,-.1],[T(7,5),0,0,.2,0,0,0],[T(7,6),.4,.2,.8,0,-.03,-.1]]});
+  chip('3 · MOTOR DETAILS (nameplate)',[PS(7),PE(7)],NAV);ng('dcmeter',{x:860,y:430,w:380,h:220,title:'VFD SETTING · rated A',v:[[0,1.8],[T(7,6),1.8],[T(7,6)+.4,4]],unit:'A',noPop:true},[T(7,5),PE(7)]);
+  ng('dcmeter',{x:860,y:180,w:380,h:220,title:'MOTOR CURRENT',v:[[T(7,6),1.8],[T(7,6)+3,3.4]],unit:'A',noPop:true},[T(7,6),PE(7)]);
+  /* ---- P8 conveyor quiz (answer comes in P11) ---- */
+  erase(PS(8),'#e3e8ee');bg(P(8),'#e3e8ee');
+  g3('bottles',P(8),{hz:[[T(8,1)+.4,0],[T(8,1)+.9,50],[T(8,3),50],[T(8,3)+1.4,0],[T(8,3)+1.6,0],[T(8,3)+2.1,50]],fall:T(8,1)+.7,disp:[[0,'0.0'],[T(8,1)+.4,null]],cam:[[0,.2,1.25,2.2,0,.85,0],[T(8,2),.6,1.1,1.5,.3,.88,0],[T(8,4),.2,1.25,2.2,0,.85,0]]});
+  chip('QUIZ',[PS(8),PE(8)],ORG);
+  [['A','Max frequency 50 → 40 Hz'],['B','Increase acceleration time'],['C','Set motor rated current']].forEach(([l,t],i)=>{card(70,430+i*92,80,80,l,[T(8,5+i),PE(8)],{bg:[BLU,GRN,PUR][i],size:40});card(160,430+i*92,560,80,t,[T(8,5+i)+.15,PE(8)],{size:30})});
+  presenter([PS(8)+.1,PE(8)-.05],{poses:EP16_POSE,size:280,x:960,y:H-300,facing:-1,entrance:'draw',draw:.7});
+  /* ---- P9 max frequency ---- */
+  erase(PS(9),'#e3e8ee');bg(P(9),'#e3e8ee');
+  g3('vfdwire',P(9),{cover:[[0,1]],props:{iso:[[0,1]]},sw:[[0,1]],led:[[0,1]],disp:[D(0,'50.0'),D(T(9,2),'80.0'),D(T(9,2)+1.2,'100.0'),D(T(9,4),'50.0')],mhz:[[0,50],[T(9,2),50],[T(9,2)+1,80],[T(9,2)+2,100],[T(9,4),100],[T(9,4)+1.5,50]],
+    wires:[...SUP,...MOTW,PE1,PE2],cam:[[0,...DSP],[T(9,1)+.6,...BENCH],[T(9,3),...MOT],[T(9,4),...BENCH]]});
+  chip('4 · MAXIMUM FREQUENCY',[PS(9),PE(9)],NAV);rc(0,'Bearing · fan · pump: built for 50 Hz',[T(9,3),PE(9)],{size:24,bg:'#fee2e2',w:400,x:850});
+  ng('dcmeter',{x:850,y:470,w:400,h:200,title:'OUTPUT',unit:'Hz',noPop:true,v:[[0,50],[T(9,2),50],[T(9,2)+2,100],[T(9,4),100],[T(9,4)+1.5,50]]},[T(9,2),PE(9)]);
+  rc(1,'Upper / lower limit = safe range',[T(9,4),PE(9)],{size:24,bg:'#dcfce7',w:400,x:850});
+  /* ---- P10–P11 accel/decel + quiz answer on the bottle line ---- */
+  erase(PS(10),'#e3e8ee');bg(P(10,11),'#e3e8ee');
+  const j1=T(11,5)+.4,s1=T(11,7)+.3;
+  g3('bottles',[PS(10),j1-.05],{hz:[[T(10,1),0],[T(10,1)+2.4,50],[T(10,2),50],[T(10,2)+2.4,0],[T(11,1),0],[T(11,1)+.6,40],[T(11,2),40]],fall:T(11,1)+.3,cam:[[0,.2,1.25,2.2,0,.85,0],[T(11,1),.6,1.1,1.5,.3,.88,0]]});
+  g3('bottles',[j1,s1-.05],{hz:[[j1,0],[j1+.5,50]],fall:j1+.3,cam:[[0,.6,1.1,1.5,.3,.88,0]]});
+  g3('bottles',[s1,PE(11)],{hz:[[s1,0],[s1+4,50]],cam:[[0,.6,1.1,1.5,.3,.88,0],[s1+1,.2,1.25,2.2,0,.85,0]]});
+  chip('5 · ACCELERATION / DECELERATION',[PS(10),PS(11)],NAV);rc(0,'Accel: 0 → 50 Hz in X s',[T(10,1),PS(11)],{size:26,w:400,x:850});rc(1,'Decel: 50 → 0 Hz in X s',[T(10,2),PS(11)],{size:26,w:400,x:850});
+  chip('QUIZ ANSWER',[PS(11),T(11,4)],ORG);chip('A: 40 Hz – still jerks',[T(11,1),T(11,3)],RED);chip('C: protection only',[T(11,3),T(11,4)],PUR);
+  big('B · Acceleration time ✓',[T(11,4),PE(11)],{y:40,x:700,w:540,h:96,size:40,bg:GRN});chip('1 s → jerk',[j1,s1],RED,{y:600});chip('5 s → smooth ✓',[s1,PE(11)],GRN,{y:600});
+  /* ---- P12 OC / OV ---- */
+  erase(PS(12),'#e3e8ee');bg(P(12),'#e3e8ee');
+  const oc=T(12,1)-.4,dd=T(12,2)+1.2,ov=T(12,4)-.3;
+  g3('vfdwire',P(12),{cover:[[0,1]],props:{iso:[[0,1]]},sw:[[0,1]],led:[[0,1]],disp:[D(0,'0.00'),D(T(12,0)+1,'25.0'),D(oc,'OC'),D(T(12,2),'50.0'),D(dd,'20.0'),D(ov,'OV')],mhz:[[0,0],[T(12,0)+.8,0],[oc,30],[oc+1.2,0],[T(12,2),50],[dd,50],[dd+3,8],[ov+1,0]],
+    wires:[...SUP,...MOTW.map(w=>({...w,flow:[[T(12,0)+.8,0],[T(12,0)+1,2],[oc,2],[oc+.2,0],[dd,0],[dd+.3,-1.3],[ov+.5,-1.3],[ov+.8,0]],fcol:'#fde047',glow:[[T(12,0)+.8,0],[T(12,0)+1,1],[oc,1],[oc+.3,0]]})),PE1,PE2],
+    hl:hlm(hl(['T_P','T_N'],T(12,3),ov+1.5)),cam:[[0,...BENCH],[oc-.2,...DSP],[T(12,2),...MOT],[T(12,3),...TERM],[ov-.3,...DSP],[ov+1,...BENCH]]});
+  chip('Accel too short',[PS(12),oc],RED);chip('OC · over current',[oc,T(12,2)],RED);chip('Decel too short → motor acts as generator',[T(12,2),T(12,4)],ORG);chip('OV · over voltage',[ov,PE(12)],RED);
+  ng('dcmeter',{x:860,y:440,w:380,h:200,title:'DC BUS',v:[[0,560],[dd,560],[ov,800]],noPop:true},[T(12,3),PE(12)]);
+  /* ---- P13 stop mode: ramp vs coast ---- */
+  erase(PS(13),'#e3e8ee');bg(P(13),'#e3e8ee');
+  const rs=T(13,1)+.3,cs=T(13,2)+.5;
+  g3('vfdwire',[PS(13),T(13,5)],{cover:[[0,1]],props:{iso:[[0,1]]},sw:[[0,1]],led:[[0,1]],disp:[D(0,'50.0'),D(rs+.4,'30.0'),D(rs+.9,'15.0'),D(rs+1.4,'0.00'),D(T(13,2),'50.0'),D(cs,'0.00')],
+    mhz:[[0,50],[rs,50],[rs+1.6,0],[T(13,2)-.4,0],[T(13,2),50],[cs,50],[cs+4.5,0]],wires:[...SUP,...MOTW.map(w=>({...w,flow:[[0,1],[rs+1.4,1],[rs+1.6,0],[T(13,2),1],[cs,1],[cs+.1,0]],fcol:'#fde047'})),PE1,PE2],cam:[[0,...MOT]]});
+  g3('fanroom',[T(13,5),PE(13)],{spd:[[T(13,5),1],[T(13,5)+.4,1],[PE(13),.35]]});
+  chip('6 · STOP MODE',[PS(13),T(13,1)],NAV);chip('RAMP stop – follows decel time',[T(13,1),T(13,2)],GRN);chip('COAST stop – output cut, motor free-runs',[T(13,2),T(13,4)],ORG);chip('Conveyor · lift → RAMP',[T(13,4),T(13,5)],GRN);chip('Big fan → COAST',[T(13,5),PE(13)],ORG);
+  /* ---- P14 old VFD from another machine ---- */
+  erase(PS(14),'#e3e8ee');bg(P(14),'#e3e8ee');
+  const st14=T(14,4)+.2;
+  g3('vfdwire',P(14),{cover:[[0,1]],props:{iso:[[0,1]]},sw:[[0,1]],led:[[0,1]],vx:[[T(14,1),-.5],[T(14,1)+1.6,0]],vy:[[T(14,1),.08],[T(14,1)+1.6,0]],
+    disp:[D(0,''),D(T(14,2),'P0-12'),D(T(14,2)+.8,'80.0'),D(T(14,3)+1,'P0-15'),D(T(14,3)+1.6,'0.5'),D(st14,'50.0'),D(st14+.5,'OC'),D(T(14,5),'80.0'),D(T(14,6)+.6,'rESEt'),D(T(14,6)+2,'dEF'),D(T(14,6)+3,'0.00')],
+    mhz:[[0,0],[st14,0],[st14+.5,30],[st14+.8,0],[T(14,5),0],[T(14,5)+1,80]],key:[[T(14,6)+.4,0],[T(14,6)+.6,1],[T(14,6)+2.6,1],[T(14,6)+2.9,0]],
+    wires:[...SUP.map(w=>({...w,t0:T(14,1)+1.7})),...MOTW.map(w=>({...w,t0:T(14,1)+2})),PE1,PE2],cam:[[0,...BENCH],[T(14,2),...DSP],[st14+.4,...BENCH],[T(14,5),...MOT],[T(14,6),...KEY]]});
+  chip('Old VFD from another machine',[PS(14),T(14,2)],ORG);chip('Old settings still inside',[T(14,2),st14],ORG);chip('Start → OC trip',[st14+.5,T(14,5)],RED);chip('No trip → 80 Hz: double speed!',[T(14,5),T(14,6)],RED);chip('FACTORY RESET first ✓',[T(14,6),PE(14)],GRN);
+  /* ---- P15 summary ---- */
+  erase(PS(15));bg(P(15),'#eef1f5');chip('SUMMARY',[PS(15),PE(15)],NAV);
+  ['Run command source → where RUN comes from','Frequency source → where speed comes from','Motor details → protection','Max frequency → speed limit','Accel / decel → smooth start & stop','Stop mode → ramp or coast','Old VFD → factory reset first'].forEach((t,i)=>card(330,92+i*86,880,74,(i+1)+'.  '+t,[T(15,1+i),PE(15)],{size:28}));
+  presenter([PS(15)+.1,PE(15)-.05],{poses:EP16_POSE,size:280,x:40,y:H-286,facing:1,entrance:'draw',draw:.7});
+  /* ---- P16 challenge: 4–20 mA, 12 mA → ? Hz (answer only in the pinned comment) ---- */
+  erase(PS(16),'#e3e8ee');bg(P(16),'#e3e8ee');
+  g3('vfdwire',P(16),{x:0,w:840,cover:[[0,1]],props:{iso:[[0,1]],plc:[[0,1]]},sw:[[0,1]],led:[[0,1]],plcrun:[[0,1]],disp:[D(0,'50.0'),D(T(16,3),'??.?')],mhz:[[0,30]],
+    wires:[...SUP,...MOTW,PE1,PE2,{...e15ctl('C_AI',[-.17,.1,-.03],.1,10,'#f97316',T(16,1)+.3),flow:[[T(16,1)+1.3,1]],fcol:'#fb923c'},e15ctl('C_GND',[-.18,.1,-.03],.1,11,'#111827',T(16,1)+.6)],
+    hl:hl(['C_AI'],T(16,1)+.3),cam:[[0,...PLCV],[T(16,2),...DSP],[T(16,3),...PLCV],[T(16,4),...BENCH]]});
+  chip('CHALLENGE',[PS(16),PE(16)],ORG);
+  ng('dcmeter',{x:870,y:120,w:370,h:200,title:'PLC → AI (mA)',v:[[0,4],[T(16,1)+1,4],[T(16,1)+2.5,20],[T(16,3)-.5,20],[T(16,3),12]],unit:'mA',noPop:true},[T(16,1),PE(16)]);
+  rc(0,'4 mA = 0 Hz',[T(16,1)+1,PE(16)],{y:350,w:370,x:870,size:26});rc(1,'20 mA = 50 Hz',[T(16,2),PE(16)],{y:440,w:370,x:870,size:26});
+  big('12 mA → ? Hz',[T(16,3),PE(16)],{x:870,y:540,w:370,h:90,size:38,bg:'#fef3c7'});chip('Explain your working in the comments',[T(16,4),PE(16)],BLU,{y:640});
+  presenter([T(16,4),PE(16)-.05],{poses:EP16_POSE,size:240,x:620,y:H-250,facing:-1,entrance:'draw',draw:.6});
+  /* ---- P17 CTA + end screen ---- */
+  erase(PS(17));bg([PS(17),END],'#eef1f5');ng('eqv',{key:'hand-thumbs-up',x:330,y:120,w:420,h:480,noPop:true},[PS(17),NARR+.3]);
+  card(800,130,420,90,'LIKE',[PS(17),NARR+.3],{bg:BLU,size:40});card(800,240,420,90,'SHARE',[PS(17)+1.2,NARR+.3],{bg:NG.teal,size:40});card(800,350,420,100,'SUBSCRIBE',[PS(17)+2.4,END],{bg:RED,size:44});
+  card(140,280,560,110,'Thanks for watching!',[NARR+.5,END],{size:44,bg:'#ffffff'});
+  presenter([PS(1)+.1,PE(1)-.05],{poses:EP16_POSE,size:280,x:40,y:H-286,facing:1,entrance:'draw',draw:.7});
+  presenter([PS(17)+.1,NARR+.3],{poses:EP16_POSE,size:280,x:40,y:H-286,facing:1,entrance:'draw',draw:.7});
+  S.captions=false;S.showHand=true;S.penSprite=true;S.cardsDraw=true;S.cur=0;S.pin=false;S.t=1;refresh();
+}
+async function buildEp16Short(){
+  stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('9:16');S.narrOff=0;S.art='sketch';
+  try{await document.fonts.load('700 30px InkHand')}catch(_){}try{await window.E14_MOTOR_READY;await window.E15_VFD_READY}catch(_){}
+  const A=EP16_SA,END=EP16_SNARR+.4;S.g3q=.72;
+  const s=newScene({name:'EP16 Short',style:'white',transition:'cut',trans:0,hold:0});s.minDur=END;S.scenes.push(s);
+  const K=ep10Kit(s,A,END),{ng,T,PS:PS0,card,presenter}=K,RED=NG.red,GRN=NG.grn,BLU=NG.blue;
+  const PS=k=>EP16_SON[k]!=null?EP16_SON[k]-.1:PS0(k),PE=k=>k>=5?END:PS(k+1),P=(a,b=a)=>[PS(a),PE(b)];
+  const bg=(win,col='#e3e8ee')=>ng('fill',{x:0,y:0,w:W,h:H,col,noPop:true},win);
+  const D=(t,txt)=>[t,[txt,'#ff3b2f']];
+  const BRK=[-.2,.236,.32,-.2,.236,-.04],BTN=[-.2,.07,.3,-.2,.07,-.04],DSP=[0,.14,.22,0,.135,.06],TERM=[-.01,.034,.25,-.01,.032,.05],V=[0,.07,.62,0,.06,0];
+  bg([0,PE(3)]);const pr=T(2,0)+.6;
+  ng('g3',{shot:'vfdwire',x:0,y:0,w:W,h:H,noPop:true,cover:[[0,1]],props:{iso:[[0,1]],btn:[[0,1]]},sw:[[T(1,1)+.3,0],[T(1,1)+.75,1]],led:[[T(1,1)+.8,0],[T(1,1)+.9,1]],
+    disp:[[0,['','']],D(T(1,2)-.1,'0.00')],btn:[[pr,0],[pr+.15,1],[pr+.7,1],[pr+.85,0]],mhz:[[0,0]],
+    wires:[...e15sup(['T_R','T_S','T_T'],T(0,2)-.2),...e15mot(['T_U','T_V','T_W'],T(0,3)-.2),e15pe(T(0,4)-.1),e15ctl('C_FWD',[-.175,.075,-.035],.075,7,'#1d4ed8',PS(1)),e15ctl('C_COM',[-.175,.065,-.035],.065,8,'#111827',PS(1)+.3)],
+    hl:Object.assign({},...['C_FWD','C_COM'].map(n=>({[n]:[[PS(1)+.2,0],[PS(1)+.6,1],[T(1,1),1],[T(1,1)+.4,0]]}))),
+    cam:[[0,...V],[T(0,1)+.3,...TERM],[PS(1)-.2,...BTN],[T(1,1)-.1,...BRK],[T(1,1)+1.1,...BRK],[T(1,2),...DSP],[PS(2),...BTN],[T(2,1),...V],[T(2,2),...DSP],[PS(3),...V]]},[0,PE(3)]);
+  const top=(t,win,bgc='#ffffff',sz=44)=>card(60,90,600,110,t,win,{bg:bgc,size:sz});
+  top('New VFD',[.2,T(0,1)]);top('Wiring correct ✓',[T(0,1),PS(1)],'#dcfce7');top('Button → FWD · COM',[PS(1),T(1,1)],'#dbeafe');top('Main breaker ON',[T(1,1),T(1,2)],'#fef3c7');top('Display ON',[T(1,2),PS(2)]);
+  top('RUN pressed…',[PS(2),T(2,1)],'#dbeafe');top('Motor not running',[T(2,1),T(2,2)],'#fee2e2');top('0.00',[T(2,2),PS(3)],'#fee2e2',56);
+  card(60,90,600,90,'No fault ✓',[PS(3),PE(3)],{bg:'#dcfce7',size:38});card(60,190,600,90,'No wiring mistake ✓',[T(3,1),PE(3)],{bg:'#dcfce7',size:36});
+  card(90,330,540,140,'So what is wrong?',[T(3,2),PE(3)],{size:50,bg:'#fef3c7'});card(90,500,540,100,'Your guess → COMMENT',[T(3,3),PE(3)],{size:38,bg:'#dbeafe'});
+  ng('erase',{ts:PS(4)-1.0,ed:.95,pop:.01,x:0,y:0,w:W,h:H,col:'#eef1f5',noPop:true},[PS(4)-1.0,PS(4)+.06]);bg([PS(4),END],'#eef1f5');
+  card(110,300,500,130,'ANSWER',[PS(4),PE(4)],{size:56,bg:GRN});ng('arrowdn',{x:260,y:560,w:200,h:560},[PS(4)+.6,PE(4)+.1]);card(150,450,420,100,'⬇ LINK BELOW',[PS(4)+.6,PE(4)],{bg:RED,size:40});
+  ng('eqv',{key:'hand-thumbs-up',x:400,y:320,w:300,h:340,noPop:true},[PS(5),END-.25]);card(110,180,500,110,'SUBSCRIBE',[PS(5),END-.25],{bg:RED,size:48});card(110,700,240,80,'LIKE',[PS(5)+.4,END-.25],{bg:BLU,size:34});card(370,700,240,80,'SHARE',[PS(5)+.8,END-.25],{bg:NG.teal,size:34});
+  presenter([PS(3)+.1,END],{poses:EP16_SPOSE,x:-20,y:H-356,size:340,entrance:'draw',draw:.6});
+  S.captions=false;S.showHand=true;S.penSprite=true;S.cardsDraw=true;S.cur=0;S.pin=false;S.t=1;refresh();
+}
 async function buildEp16Test(){stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('16:9');S.narrOff=0;S.art='';try{await window.E15_VFD_READY;await window.E14_MOTOR_READY}catch(_){}
   const END=44,s=newScene({name:'EP16 test',style:'white',transition:'cut',trans:0,hold:0});s.minDur=END;S.scenes.push(s);
   const add=(o,win)=>s.els.push(Object.assign({id:uid++,type:'ngd',kind:'g3',x:0,y:0,w:W,h:H,noPop:true,draw:.1,delay:0,withPrev:true,entrance:'none',motion:'none',win},o));
@@ -6969,6 +7141,8 @@ async function loadTemplate(key){S.art='';S.g3q=0;
   if(key==='hometest')return buildHomeTest();
   if(key==='ep15test')return buildEp15Test();
   if(key==='ep16test')return buildEp16Test();
+  if(key==='ep16')return buildEp16();
+  if(key==='ep16s')return buildEp16Short();
   if(key==='ep15')return buildEp15();
   if(key==='ep15s')return buildEp15Short();
   if(key==='ep14')return buildEp14();
