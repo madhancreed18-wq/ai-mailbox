@@ -2,14 +2,14 @@ Pudhu VFD. Wiring ellaam correct. R, S, T-la supply. U, V, W-la motor. Earth cor
 
 Push button FWD, COM-la connect pannirukku. Main breaker ON. Display on aagudhu.
 
-Button press pannreenga. Motor odala. Display-la 0.00 dhaan.
+Button press pannreenga. Motor odala. Display-la 0.00 dhaan. Technician sonnaar, VFD poyiduchu, padhinanjaayiram rooba.
 
-Technician sonnaar, VFD poyiduchu, pudhusu maathanum, padhinanjaayiram rooba.
+Neenga enna solluveenga? A, push button-la NO contact-ku badhila NC contact-la wire pottirukkaanga. B, VFD innum keypad mode-la irukku. C, motor winding open aagi irukku.
 
-Neenga enna solluveenga? A, VFD damage, maathanum. B, push button wire loose. C, VFD-kulla oru setting.
+Answer B. Pudhu VFD-la RUN order keypad-la irundhu dhaan varum-nu factory-laye set aagi irukkum. Run command source parameter-ai Terminal-ku maathunaa, motor odum. Padhinanjaayiram rooba save.
 
-Unga answer-ai comment-la A, B, C-nu podunga.
+Ippo ungalukku oru kelvi. Setting maathiyaachu. Button press pannaa display-la RUN light eriyudhu. Aanaa motor innum nagaradhu, zero hertz. Yen? Comment-la explain pannunga.
 
-Correct answer-ukku keezha irukkura link-la full video paarunga.
+Full video link keezha irukku.
 
 Like pannunga, share pannunga, subscribe pannunga.
