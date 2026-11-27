@@ -5460,10 +5460,19 @@ function g3VfdWire(){const B=g3Base('#dfe3e8'),{T,S,cam,M,box,cyl}=B;['left','bo
   PR.lamp=grp(.19,.2,-.04);box(.05,.05,.03,M('#e5e7eb',{r:.5}),0,0,0,PR.lamp);const lampM=new T.MeshStandardMaterial({color:'#7f1d1d',roughness:.3,emissive:'#ff2a1a',emissiveIntensity:0});const ld=new T.Mesh(new T.SphereGeometry(.016,24,16,0,Math.PI*2,0,Math.PI/2),lampM);ld.rotation.x=Math.PI/2;ld.position.z=.016;PR.lamp.add(ld);
   PR.ct=grp(.19,.09,-.04);box(.045,.075,.07,M('#e5e7eb',{r:.5}),0,0,0,PR.ct);const ctB=box(.03,.02,.01,M('#374151'),0,0,.04,PR.ct);
   PR.cap=grp(.19,-.12,-.04);const capM=M('#9ca3af',{m:.6,r:.35});const capB=cyl(.03,.03,.1,capM,0,0,0,PR.cap,32);
-  PR.plc=grp(-.2,.135,-.045);box(.095,.075,.06,M('#eceef1',{r:.5}),0,0,0,PR.plc);[-1,1].forEach(sg=>{box(.088,.012,.022,M('#2b2f36',{r:.5}),0,sg*.031,.02,PR.plc);for(let i=0;i<8;i++)box(.006,.004,.004,M('#9ca3af',{m:.7}),-.038+i*.011,sg*.031,.032,PR.plc)});
-  const plcF=e16tex(T,256,128,(g,w,h,run)=>{g.fillStyle='#eceef1';g.fillRect(0,0,w,h);g.fillStyle='#1f2937';g.font='800 40px Arial';g.textAlign='left';g.fillText('PLC',16,52);g.font='600 18px Arial';g.fillText('AO  4-20mA',16,90);
-    ['RUN','PWR'].forEach((n,i)=>{g.fillStyle=(i===1||run)?'#22c55e':'#14532d';g.beginPath();g.arc(170+i*46,40,10,0,7);g.fill();g.fillStyle='#374151';g.font='600 14px Arial';g.fillText(n,156+i*46,70)})});
-  const pf=new T.Mesh(new T.PlaneGeometry(.08,.04),new T.MeshBasicMaterial({map:plcF.t}));pf.position.z=.0305;PR.plc.add(pf);
+  PR.plc=grp(-.245,.135,-.045);const plcM=M('#e6e4de',{r:.55}),tbM=M('#1f2329',{r:.5}),scM=M('#a3a9b1',{m:.8,r:.3});
+  box(.09,.09,.06,plcM,0,0,0,PR.plc);box(.04,.09,.06,plcM,.066,0,0,PR.plc);box(.004,.05,.05,M('#9ca3af',{m:.5}),.044,0,0,PR.plc);
+  [-1,1].forEach(sg=>{box(.08,.016,.02,tbM,0,sg*.036,.022,PR.plc);for(let i=0;i<12;i++)cyl(.0022,.0022,.002,scM,-.0352+i*.0064,sg*.036,.0325,PR.plc,10).rotation.x=Math.PI/2;
+    box(.032,.016,.02,tbM,.066,sg*.036,.022,PR.plc);for(let i=0;i<4;i++)cyl(.0022,.0022,.002,scM,.0546+i*.0076,sg*.036,.0325,PR.plc,10).rotation.x=Math.PI/2});
+  [[-1,-1],[1,-1],[-1,1],[1,1]].forEach(([a,b])=>box(.01,.006,.004,plcM,a*.035+(a>0?.066:0)*0,b*.048,-.02,PR.plc));
+  const plcF=e16tex(T,512,256,(g,w,h,run)=>{g.fillStyle='#e6e4de';g.fillRect(0,0,w,h);g.strokeStyle='#b9b6ae';g.lineWidth=3;g.strokeRect(20,10,w-40,h-20);
+    g.fillStyle='#1f2937';g.font='800 64px Arial';g.textAlign='left';g.fillText('PLC',110,150);g.font='700 22px Arial';
+    [['PWR',1],['RUN',run],['ERR',0]].forEach(([n,on],i)=>{g.fillStyle=n==='ERR'?'#3f3f46':(on?'#22c55e':'#14532d');g.fillRect(40,62+i*46,16,16);g.fillStyle='#374151';g.fillText(n,64,78+i*46)});
+    ['X','Y'].forEach((r,j)=>{g.fillStyle='#1f2937';g.font='800 26px Arial';g.fillText(r,262,112+j*74);for(let i=0;i<12;i++){g.fillStyle=(run&&((j===0&&i<4)||(j===1&&i<2)))?'#22c55e':'#9ca3af';g.fillRect(290+i*17,96+j*74,10,10);g.fillStyle='#374151';g.font='600 13px Arial';g.fillText(String(i),290+i*17,90+j*74)}})});
+  const pf=new T.Mesh(new T.PlaneGeometry(.084,.042),new T.MeshBasicMaterial({map:plcF.t}));pf.position.z=.0305;PR.plc.add(pf);
+  const aoF=e16tex(T,192,256,(g,w,h,run)=>{g.fillStyle='#e6e4de';g.fillRect(0,0,w,h);g.fillStyle='#1f2937';g.font='800 26px Arial';g.textAlign='center';g.fillText('ANALOG',w/2,60);g.fillText('OUTPUT',w/2,92);g.font='700 22px Arial';g.fillText('4–20 mA',w/2,128);
+    ['AO0','AO1'].forEach((n,i)=>{g.fillStyle=run&&i===0?'#22c55e':'#14532d';g.fillRect(48,160+i*40,14,14);g.fillStyle='#374151';g.font='700 20px Arial';g.textAlign='left';g.fillText(n,72,174+i*40);g.textAlign='center'})});
+  const af=new T.Mesh(new T.PlaneGeometry(.036,.048),new T.MeshBasicMaterial({map:aoF.t}));af.position.set(.066,0,.0305);PR.plc.add(af);
   Object.values(PR).forEach(g=>g.visible=false);
   // slotted cable trunking: bottom run + left and right risers, earth bar
   const dM=M('#9aa1aa',{r:.7});const duct=(w,h,x,y)=>{const g=new T.Group();g.position.set(x,y,-.045);S.add(g);box(w,h,.05,dM,0,0,0,g);const n=Math.round(Math.max(w,h)/.012);for(let i=0;i<n;i++){const u=-.5+(i+.5)/n;if(w>h){box(.0025,h+.0004,.0504,M('#6b7280'),u*w,0,0,g)}else{box(w+.0004,.0025,.0504,M('#6b7280'),0,u*h,0,g)}}box(w*1.02,h*1.02,.002,M('#b4bac2',{r:.6}),0,0,.026,g)};
@@ -5483,7 +5492,7 @@ function g3VfdWire(){const B=g3Base('#dfe3e8'),{T,S,cam,M,box,cyl}=B;['left','bo
       if(o.dots){const fv=kv(w.flow,tl,0);o.dots.forEach((d,k)=>{d.visible=Math.abs(fv)>.05&&o.me.visible&&p>=1;if(!d.visible)return;let u=((tl*.35*Math.sign(fv)+k/6)%1+1)%1;d.position.copy(o.cv.getPointAt(u));d.scale.setScalar(Math.min(1,Math.abs(fv))*1.3)})}});
     if(V&&(e.vx||e.vy)){V.g.position.set(kv(e.vx,tl,0),kv(e.vy,tl,0),0)}
     if(P.Keypad){P.Keypad.traverse(o=>{if(o.isMesh&&o.material.emissive){o.material.emissive.set('#38bdf8');o.material.emissiveIntensity=kv(e.key,tl,0)*.5}})}
-    plcF.set(String(kv(e.plcrun,tl,0)>.5),kv(e.plcrun,tl,0)>.5);
+    plcF.set(String(kv(e.plcrun,tl,0)>.5),kv(e.plcrun,tl,0)>.5);aoF.set(String(kv(e.plcrun,tl,0)>.5),kv(e.plcrun,tl,0)>.5);
     Object.entries(hlMats).forEach(([n,ms])=>{const v=kv(e.hl&&e.hl[n],tl,0);ms.forEach(m=>{if(!m.emissive)return;m.emissive.set(E15_GRP[n]||'#06b6d4');m.emissiveIntensity=v*.9})});
     if(P.TerminalCover){const c=kv(e.cover,tl,0),TC=P.TerminalCover;TC.rotation.x=-.35*Math.min(1,c/.3);const sl=Math.max(0,c-.3)/.7;TC.position.set(0,.0615-sl*.11,.063+Math.min(1,c/.3)*.012+sl*.02);TC.visible=c<.98;TC.traverse(o=>{if(o.isMesh){o.material.transparent=true;o.material.opacity=1-sl*.85}})}
     if(P.Pot&&potQ){qa.setFromAxisAngle(Yax,-kv(e.pot,tl,0)*4.2);P.Pot.quaternion.copy(potQ).multiply(qa)}
@@ -5513,7 +5522,7 @@ function g3TvRoom(){const B=g3Base('#efe7dc'),{T,S,cam,M,box,cyl}=B;
   // TV stand
   const wd=M('#5b4636',{r:.55});box(2.2,.48,.5,wd,0,.24,-.85);box(2.1,.02,.44,M('#3f3026',{r:.5}),0,.25,-.62);
   // TV (55")
-  const TV=new T.Group();TV.position.set(0,1.18,-.92);S.add(TV);box(1.24,.72,.05,M('#111318',{r:.35,m:.2}),0,0,0,TV);box(.3,.02,.18,M('#1f2229',{m:.3}),0,-.42,.02,TV);box(.05,.08,.05,M('#1f2229',{m:.3}),0,-.38,0,TV);
+  const TV=new T.Group();TV.position.set(0,.92,-.92);S.add(TV);box(1.24,.72,.05,M('#111318',{r:.35,m:.2}),0,0,0,TV);[-1,1].forEach(sg=>{const lg=new T.Group();lg.position.set(sg*.52,-.36,0);TV.add(lg);box(.016,.1,.016,M('#1f2229',{m:.3}),0,-.02,0,lg).rotation.z=sg*.5;box(.016,.016,.16,M('#1f2229',{m:.3}),sg*.02,-.065,.0,lg)});
   const scr=e16tex(T,1024,576,(g,w,h,st,sel)=>{g.fillStyle='#000';g.fillRect(0,0,w,h);
     if(st==='pic'){const gr=g.createLinearGradient(0,0,0,h);gr.addColorStop(0,'#5fb4ff');gr.addColorStop(.6,'#bfe4ff');gr.addColorStop(.6,'#5aa64a');gr.addColorStop(1,'#2f6f2a');g.fillStyle=gr;g.fillRect(0,0,w,h);
       g.fillStyle='#ffd54a';g.beginPath();g.arc(780,120,60,0,7);g.fill();g.fillStyle='#3b7d34';g.beginPath();g.moveTo(0,360);g.quadraticCurveTo(250,230,520,350);g.quadraticCurveTo(760,250,1024,345);g.lineTo(1024,576);g.lineTo(0,576);g.fill();
@@ -5524,14 +5533,14 @@ function g3TvRoom(){const B=g3Base('#efe7dc'),{T,S,cam,M,box,cyl}=B;
   });
   const sm=new T.Mesh(new T.PlaneGeometry(1.2,.675),new T.MeshBasicMaterial({map:scr.t,toneMapped:false}));sm.position.z=.026;TV.add(sm);
   // HDMI port on the back-left of the TV
-  box(.05,.02,.01,M('#2b2f36'),-.5,-.2,-.03,TV);
+  box(.012,.12,.06,M('#24272e'),.6,-.12,-.035,TV);[0,1,2].forEach(i=>box(.004,.014,.008,M('#4b5563',{m:.5}),.607,-.07-i*.028,-.035,TV));
   // set-top box
   const STB=new T.Group();STB.position.set(.55,.505,-.72);S.add(STB);box(.26,.05,.18,M('#1c1f24',{r:.4,m:.2}),0,0,0,STB);const ledM=new T.MeshStandardMaterial({color:'#052e16',emissive:'#22c55e',emissiveIntensity:0});const led=new T.Mesh(new T.SphereGeometry(.005,12,8),ledM);led.position.set(.1,.005,.091);STB.add(led);box(.02,.012,.01,M('#2b2f36'),-.09,0,-.095,STB);
   // HDMI cable box → TV
-  const cv=new T.CatmullRomCurve3([[.43,.505,-.81],[.4,.5,-.98],[.1,.49,-1.04],[-.4,.6,-1.04],[-.5,.98,-1.0]].map(p=>new T.Vector3(...p)));const cg=new T.TubeGeometry(cv,120,.006,10,false);const cab=new T.Mesh(cg,M('#16181d',{r:.45}));S.add(cab);const cn=cg.index.count;
-  const plugA=box(.022,.014,.04,M('#2b2f36',{m:.4}),.43,.505,-.825),plugB=box(.022,.014,.04,M('#2b2f36',{m:.4}),-.5,.98,-.985);
+  const cv=new T.CatmullRomCurve3([[.43,.505,-.81],[.45,.5,-.95],[.66,.56,-1.0],[.68,.7,-.97],[.62,.85,-.955]].map(p=>new T.Vector3(...p)));const cg=new T.TubeGeometry(cv,120,.006,10,false);const cab=new T.Mesh(cg,M('#16181d',{r:.45}));S.add(cab);const cn=cg.index.count;
+  const plugA=box(.022,.014,.04,M('#2b2f36',{m:.4}),.43,.505,-.825),plugB=box(.03,.014,.02,M('#2b2f36',{m:.4}),.625,.85,-.955);
   // remote in the viewer's hand position
-  const RM=new T.Group();RM.position.set(.25,.9,.9);RM.rotation.set(-1.1,.25,0);S.add(RM);box(.05,.2,.02,M('#20242b',{r:.45}),0,0,0,RM);
+  const RM=new T.Group();RM.position.set(.25,.68,.9);RM.rotation.set(-1.1,.25,0);S.add(RM);box(.05,.2,.02,M('#20242b',{r:.45}),0,0,0,RM);
   const srcB=box(.012,.008,.006,M('#16a34a',{r:.4}),-.012,.07,.012,RM);[...Array(9)].forEach((_,i)=>box(.009,.006,.005,M('#6b7280'),(i%3-1)*.013,.03-Math.floor(i/3)*.018,.011,RM));
   const okB=box(.016,.016,.006,M('#9ca3af'),0,-.045,.012,RM);
   return{B,update(tl,e){scr.set(e15step(e.tv,tl,'nosig')+'|'+e15step(e.sel,tl,0),e15step(e.tv,tl,'nosig'),e15step(e.sel,tl,0));
@@ -5544,18 +5553,20 @@ G3_BUILD.tvroom=g3TvRoom;
 /* ---------- bottle conveyor driven by a VFD (jerk start vs smooth ramp) ---------- */
 function g3Bottles(){const B=g3Base('#e3e8ee'),{T,S,cam,M,box,cyl}=B;
   box(8,.04,4,M('#c3cad3',{r:.92}),0,-.02,0);box(8,3,.05,M('#e9edf2',{r:.95}),0,1.5,-1.2);
-  const st=M('#6b7280',{m:.6,r:.4});[-.17,.17].forEach(z=>{box(2.6,.05,.03,st,0,.82,z);[-1.2,-.4,.4,1.2].forEach(x=>box(.04,.82,.04,st,x,.41,z))});
-  const bt=e16tex(T,512,64,(g,w,h,off)=>{g.fillStyle='#2b2f36';g.fillRect(0,0,w,h);g.strokeStyle='#3b414a';g.lineWidth=6;for(let x=-64;x<w+64;x+=32){g.beginPath();g.moveTo(x+off,0);g.lineTo(x+off,h);g.stroke()}});bt.t.wrapS=T.RepeatWrapping;
-  const belt=box(2.5,.02,.3,new T.MeshStandardMaterial({map:bt.t,roughness:.8}),0,.86,0);
-  const rolls=[-1.25,1.25].map(x=>{const r=cyl(.05,.05,.32,M('#9ca3af',{m:.7,r:.3}),x,.82,0,S,24);r.rotation.x=Math.PI/2;return r});
+  const st=M('#c3c9cf',{m:.85,r:.28});[-.17,.17].forEach(z=>{box(2.6,.12,.012,st,0,.8,z);[-1.15,0,1.15].forEach(x=>{box(.05,.74,.05,st,x,.39,z);cyl(.035,.04,.02,M('#1f2937',{r:.6}),x,.01,z,S,16);cyl(.008,.008,.04,st,x,.035,z,S,8)})});
+  [-1.15,0,1.15].forEach(x=>box(.03,.03,.34,st,x,.3,0));box(2.3,.03,.03,st,0,.3,-.17);box(2.3,.03,.03,st,0,.3,.17);
+  [-.115,.115].forEach(z=>{box(2.5,.014,.01,st,0,1.0,z);[-1.1,-.55,0,.55,1.1].forEach(x=>{box(.012,.15,.012,st,x,.93,z+(z>0?.04:-.04));box(.012,.012,.05,st,x,1.0,z+(z>0?.02:-.02));cyl(.012,.012,.03,M('#111827'),x,1.02,z+(z>0?.04:-.04),S,10)})});
+  const bt=e16tex(T,512,64,(g,w,h,off)=>{g.fillStyle='#1d4ed8';g.fillRect(0,0,w,h);g.strokeStyle='#1e3a8a';g.lineWidth=4;for(let x=-64;x<w+64;x+=32){g.beginPath();g.moveTo(x+off,0);g.lineTo(x+off,h);g.stroke()}g.fillStyle='rgba(255,255,255,.12)';for(let x=-64;x<w+64;x+=32)for(let y=8;y<h;y+=16)g.fillRect(x+off+8,y,12,4)});bt.t.wrapS=T.RepeatWrapping;
+  const belt=box(2.5,.02,.22,new T.MeshStandardMaterial({map:bt.t,roughness:.6}),0,.86,0);
+  const rolls=[-1.25,1.25].map(x=>{const r=cyl(.05,.05,.24,M('#9ca3af',{m:.7,r:.3}),x,.82,0,S,24);r.rotation.x=Math.PI/2;return r});
   // drive: motor + gearbox at the right end
-  const gb=box(.16,.16,.16,M('#2563eb',{r:.5}),1.32,.7,.3);const MR=e14MotorClone();let mSpin=[];if(MR){MR.g.scale.setScalar(.9);MR.g.position.set(1.32,.7,.62);MR.g.rotation.y=Math.PI/2;S.add(MR.g);mSpin=E14_SPIN.map(n=>MR.parts[n]).filter(Boolean)}
+  const gbM=M('#6b7280',{m:.6,r:.45});const gb=box(.14,.16,.12,gbM,1.1,.72,.26);cyl(.05,.05,.08,gbM,1.1,.72,.36,S,24).rotation.x=Math.PI/2;cyl(.03,.03,.1,M('#9ca3af',{m:.8}),1.1,.8,.2,S,16).rotation.x=Math.PI/2;const MR=e14MotorClone();let mSpin=[];if(MR){MR.g.scale.setScalar(.6);MR.g.position.set(.82,.72,.3);MR.g.rotation.y=0;S.add(MR.g);mSpin=E14_SPIN.map(n=>MR.parts[n]).filter(Boolean)}
   // small VFD on a stand near the conveyor
   const V=e15Clone(window.E15_VFD);if(V){V.g.scale.setScalar(2.2);V.g.position.set(-1.55,.75,-.9);S.add(V.g)}
   const dsp=e16tex(T,512,160,(g,w,h,txt)=>{g.fillStyle='#1a1d22';g.fillRect(0,0,w,h);g.fillStyle='#ff3b2f';g.shadowColor='#ff3b2f';g.shadowBlur=18;g.font='bold 110px "IBM Plex Mono",monospace';g.textAlign='center';g.textBaseline='middle';g.fillText(txt,256,86)});
   if(V&&V.parts.Display){const dp=new T.Mesh(new T.PlaneGeometry(.046,.0138),new T.MeshBasicMaterial({map:dsp.t,toneMapped:false}));dp.position.set(0,.144,.0779);(V.parts.Display.parent||V.g).add(dp)}
   // PET bottles
-  const bm=new T.MeshPhysicalMaterial({color:'#7dd3fc',roughness:.12,transmission:.55,thickness:.02,transparent:true,opacity:.9}),capM=M('#dc2626',{r:.4}),lab=M('#f97316',{r:.6});
+  const bm=new T.MeshPhysicalMaterial({color:'#93c5fd',roughness:.1,transmission:.25,thickness:.02,transparent:true,opacity:.92}),capM=M('#1d4ed8',{r:.4}),lab=M('#e0f2fe',{r:.5});
   const N=7,bot=[...Array(N)].map((_,i)=>{const g=new T.Group();S.add(g);const p=new T.Group();g.add(p);
     cyl(.035,.035,.16,bm,0,.08,0,p,24);cyl(.016,.035,.05,bm,0,.185,0,p,24);cyl(.013,.013,.025,bm,0,.22,0,p,16);cyl(.015,.015,.012,capM,0,.238,0,p,16);cyl(.0355,.0355,.05,lab,0,.08,0,p,24);return{g,p,x0:-1.1+i*.36}});
   return{B,update(tl,e){const hz=t=>kv(e.hz,t,0);let pos=0;const n=Math.max(4,Math.ceil(tl/.02));for(let i=0;i<n;i++){const t=tl*i/n;pos+=hz(t)/50*.55*(tl/n)}
@@ -5570,11 +5581,17 @@ G3_BUILD.bottles=g3Bottles;
 function g3Plate(){const B=g3Base('#dfe5ec'),{T,S,cam,M,box}=B;box(6,.04,4,M('#c3cad3',{r:.9}),0,-.02,0);
   const MR=e14MotorClone();let mSpin=[],hm=[];if(MR){MR.g.position.set(0,0,0);S.add(MR.g);mSpin=E14_SPIN.map(n=>MR.parts[n]).filter(Boolean);MR.g.traverse(o=>{if(o.isMesh&&o.material.color){o.material.userData.c0=o.material.color.clone();hm.push(o.material)}})}
   const bb=MR?new T.Box3().setFromObject(MR.g):new T.Box3(new T.Vector3(-.2,0,-.15),new T.Vector3(.2,.3,.15));const c=bb.getCenter(new T.Vector3()),sz=bb.getSize(new T.Vector3());
-  const rows=[['kW','0.75'],['V','415'],['A','1.8'],['Hz','50'],['RPM','1440']];
-  const pl=e16tex(T,800,500,(g,w,h,hl)=>{g.fillStyle='#d4d7db';g.fillRect(0,0,w,h);g.strokeStyle='#6b7280';g.lineWidth=10;g.strokeRect(5,5,w-10,h-10);g.fillStyle='#9ca3af';[[30,30],[w-30,30],[30,h-30],[w-30,h-30]].forEach(([x,y])=>{g.beginPath();g.arc(x,y,12,0,7);g.fill()});
-    g.fillStyle='#1f2937';g.font='800 44px Arial';g.textAlign='center';g.fillText('3 ~ INDUCTION MOTOR',w/2,80);g.font='600 30px Arial';g.fillText('IP55   INS. CL F   S1   IE2',w/2,125);
-    rows.forEach(([k,v],i)=>{const x=60+(i%3)*240,y=200+Math.floor(i/3)*130;if(hl===i){g.fillStyle='#fde047';g.fillRect(x-14,y-48,226,108)}g.fillStyle='#374151';g.font='600 30px Arial';g.textAlign='left';g.fillText(k,x,y-12);g.fillStyle='#111827';g.font='800 52px Arial';g.fillText(v,x,y+40)})});
-  const plate=new T.Mesh(new T.PlaneGeometry(.12,.075),new T.MeshStandardMaterial({map:pl.t,roughness:.45,metalness:.5}));plate.position.set(c.x,c.y+sz.y*.12,bb.max.z+.004);S.add(plate);
+  const rows=[['RATED OUTPUT','0.75 kW'],['RATED VOLTAGE','Δ 240 V / Y 415 V'],['RATED CURRENT','3.1 A / 1.8 A'],['FREQUENCY','50 Hz'],['RATED SPEED','1440 RPM']];
+  const pl=e16tex(T,1024,520,(g,w,h,hl)=>{const gr=g.createLinearGradient(0,0,w,0);gr.addColorStop(0,'#c9cdd2');gr.addColorStop(.5,'#e3e6ea');gr.addColorStop(1,'#c4c8cd');g.fillStyle=gr;g.fillRect(0,0,w,h);
+    g.strokeStyle='rgba(120,126,134,.18)';g.lineWidth=1;for(let x=0;x<w;x+=3){g.beginPath();g.moveTo(x,0);g.lineTo(x,h);g.stroke()}
+    g.strokeStyle='#6b7280';g.lineWidth=10;g.strokeRect(6,6,w-12,h-12);g.fillStyle='#9ca3af';[[40,h/2],[w-40,h/2]].forEach(([x,y])=>{g.beginPath();g.arc(x,y,18,0,7);g.fill()});
+    g.fillStyle='#111827';g.font='900 52px Arial';g.textAlign='center';g.fillText('3-PHASE INDUCTION MOTOR',w/2,70);
+    const X0=90,X1=w-90,MID=470,RH=50;g.lineWidth=3;g.strokeStyle='#1f2937';
+    rows.forEach(([k,v],i)=>{const y=96+i*RH;if(hl===i){g.fillStyle='#fde047';g.fillRect(X0,y,X1-X0,RH)}g.strokeRect(X0,y,X1-X0,RH);g.beginPath();g.moveTo(MID,y);g.lineTo(MID,y+RH);g.stroke();
+      g.fillStyle='#111827';g.font='700 30px Arial';g.textAlign='left';g.fillText(k,X0+16,y+36);g.font='800 34px Arial';g.fillText(v,MID+24,y+37)});
+    const y2=96+5*RH;[['EFFICIENCY CLASS','IE2','PROTECTION','IP55'],['INSULATION CLASS','INS. F','DUTY','S1'],['FRAME 80','cos φ 0.73','EFFICIENCY','80 %']].forEach((r,j)=>{const y=y2+j*44;g.strokeRect(X0,y,X1-X0,44);
+      const xs=[X0,X0+260,X0+420,X0+640,X1];for(let q=1;q<4;q++){g.beginPath();g.moveTo(xs[q],y);g.lineTo(xs[q],y+44);g.stroke()}g.font='700 24px Arial';r.forEach((t,q)=>{g.fillStyle='#111827';g.fillText(t,xs[q]+12,y+31)})})});
+  const plate=new T.Mesh(new T.PlaneGeometry(.13,.066),new T.MeshStandardMaterial({map:pl.t,roughness:.45,metalness:.5}));plate.position.set(c.x,c.y+sz.y*.12,bb.max.z+.004);S.add(plate);
   let ang=0,lastT=null;
   return{B,update(tl,e){if(lastT==null||tl<lastT)lastT=tl;const dt=Math.min(.1,tl-lastT);lastT=tl;ang+=dt*kv(e.mhz,tl,0)/50*14;mSpin.forEach(o=>o.rotation.x=-ang);
     pl.set(e15step(e.hl,tl,-1),e15step(e.hl,tl,-1));const h=kv(e.heat,tl,0);hm.forEach(m=>{m.color.copy(m.userData.c0).lerp(new T.Color('#4a1d14'),h*.55);if(m.emissive){m.emissive.set('#ff5a1a');m.emissiveIntensity=h*.12}});
@@ -6948,13 +6965,13 @@ async function buildEp15Test(){stopAudio();S.playing=false;S.scenes=[];S.sel=nul
     wires:[{a:'T_U',b:[-.2,.2,.0],col:'#111827',t0:4,dur:1.5},{a:'C_FWD',b:[-.2,.02,.0],col:'#2563eb',t0:5,dur:1.5,r:.0012}],
     cam:[[0,0,.09,.55,0,.085,0],[4,0,.05,.22,0,.04,.05],[12,.15,.05,.7,.15,.05,0]]});
   S.captions=false;S.showHand=false;S.cur=0;S.pin=false;S.t=1;refresh()}
-const EP16_A=[[-0.05, 1.05, 0], [1.4, 3.0, 0], [3.25, 4.75, 0], [5.0, 5.9, 0], [6.2, 8.55, 0], [9.15, 10.3, 0], [10.6, 11.75, 0], [12.2, 13.35, 0], [13.55, 14.2, 0], [14.55, 16.6, 0], [17.27, 18.15, 1], [18.6, 18.85, 1], [19.25, 20.35, 1], [20.7, 21.48, 1], [22.88, 26.71, 2], [27.31, 29.31, 2], [29.96, 30.71, 2], [30.91, 31.61, 2], [32.26, 34.51, 2], [34.96, 38.09, 2], [39.59, 41.35, 3], [41.9, 45.8, 3], [46.2, 48.35, 3], [48.75, 51.15, 3], [51.45, 52.6, 3], [53.43, 55.85, 4], [56.3, 58.8, 4], [59.2, 62.4, 4], [62.6, 64.35, 4], [64.55, 66.08, 4], [66.91, 69.2, 5], [69.7, 70.9, 5], [71.3, 73.5, 5], [74.05, 78.0, 5], [78.65, 79.4, 5], [79.55, 84.28, 5], [84.97, 86.6, 6], [87.1, 90.15, 6], [90.7, 92.2, 6], [92.5, 94.25, 6], [94.55, 100.05, 6], [100.6, 103.45, 6], [103.95, 105.15, 6], [105.75, 106.6, 6], [107.05, 111.45, 6], [111.75, 112.75, 6], [113.05, 117.66, 6], [119.06, 120.77, 7], [121.17, 125.47, 7], [125.72, 127.27, 7], [128.02, 128.62, 7], [129.27, 131.97, 7], [132.67, 137.72, 7], [138.32, 143.99, 7], [145.39, 146.31, 8], [146.31, 150.9, 8], [151.15, 152.75, 8], [153.45, 155.35, 8], [155.65, 158.65, 8], [159.2, 161.65, 8], [162.15, 164.55, 8], [165.45, 166.15, 8], [167.1, 168.84, 8], [170.24, 171.31, 9], [171.71, 174.86, 9], [175.41, 177.55, 9], [177.55, 181.76, 9], [182.06, 188.31, 9], [189.71, 192.16, 10], [192.16, 194.18, 10], [194.78, 199.86, 10], [200.43, 202.83, 11], [203.03, 204.53, 11], [205.03, 206.23, 11], [206.83, 207.68, 11], [207.98, 208.83, 11], [209.38, 213.13, 11], [213.68, 213.98, 11], [213.98, 216.11, 11], [216.11, 216.82, 11], [218.22, 223.55, 12], [223.75, 224.7, 12], [225.25, 232.6, 12], [232.85, 233.65, 12], [233.9, 236.93, 12], [238.33, 239.57, 13], [239.57, 241.74, 13], [242.29, 245.04, 13], [245.44, 246.79, 13], [247.44, 249.54, 13], [250.34, 252.62, 13], [254.02, 255.66, 14], [255.96, 259.31, 14], [259.86, 261.26, 14], [261.76, 264.61, 14], [265.01, 267.51, 14], [268.01, 270.31, 14], [270.91, 274.61, 14], [276.01, 276.61, 15], [277.11, 279.26, 15], [279.71, 281.51, 15], [281.91, 283.51, 15], [283.91, 285.41, 15], [285.86, 288.46, 15], [288.81, 290.21, 15], [290.61, 292.54, 15], [293.94, 294.65, 16], [295.2, 298.5, 16], [298.9, 300.3, 16], [300.65, 303.6, 16], [304.05, 307.3, 16], [307.6, 308.93, 16], [310.33, 314.54, 17]];
-const EP16_ON={"2": 22.93, "3": 39.92, "7": 119.11, "8": 145.44, "9": 170.29, "10": 189.76, "12": 218.27, "13": 238.38, "14": 254.07, "15": 276.06, "16": 293.99, "17": 310.38};
-const EP16_POSE=[[-0.05, "talk_a"], [1.4, "explain_a"], [3.25, "talk_b"], [5.0, "point_level"], [6.2, "talk_c"], [9.15, "worry2"], [10.6, "talk_d"], [12.2, "talk_a"], [13.55, "explain_a"], [14.55, "talk_b"], [17.27, "point_level"], [18.6, "talk_c"], [19.25, "worry2"], [20.7, "talk_d"], [22.88, "talk_a"], [27.31, "explain_a"], [29.96, "talk_b"], [30.91, "point_level"], [32.26, "talk_c"], [34.96, "worry2"], [39.59, "talk_d"], [41.9, "talk_a"], [46.2, "explain_a"], [48.75, "talk_b"], [51.45, "point_level"], [53.43, "talk_c"], [56.3, "worry2"], [59.2, "talk_d"], [62.6, "talk_a"], [64.55, "explain_a"], [66.91, "talk_b"], [69.7, "point_level"], [71.3, "talk_c"], [74.05, "worry2"], [78.65, "talk_d"], [79.55, "talk_a"], [84.97, "explain_a"], [87.1, "talk_b"], [90.7, "point_level"], [92.5, "talk_c"], [94.55, "worry2"], [100.6, "talk_d"], [103.95, "talk_a"], [105.75, "explain_a"], [107.05, "talk_b"], [111.75, "point_level"], [113.05, "talk_c"], [119.06, "worry2"], [121.17, "talk_d"], [125.72, "talk_a"], [128.02, "explain_a"], [129.27, "talk_b"], [132.67, "point_level"], [138.32, "talk_c"], [145.39, "worry2"], [146.31, "talk_d"], [151.15, "talk_a"], [153.45, "explain_a"], [155.65, "talk_b"], [159.2, "point_level"], [162.15, "talk_c"], [165.45, "worry2"], [167.1, "talk_d"], [170.24, "talk_a"], [171.71, "explain_a"], [175.41, "talk_b"], [177.55, "point_level"], [182.06, "talk_c"], [189.71, "worry2"], [192.16, "talk_d"], [194.78, "talk_a"], [200.43, "explain_a"], [203.03, "talk_b"], [205.03, "point_level"], [206.83, "talk_c"], [207.98, "worry2"], [209.38, "talk_d"], [213.68, "talk_a"], [213.98, "explain_a"], [216.11, "talk_b"], [218.22, "point_level"], [223.75, "talk_c"], [225.25, "worry2"], [232.85, "talk_d"], [233.9, "talk_a"], [238.33, "explain_a"], [239.57, "talk_b"], [242.29, "point_level"], [245.44, "talk_c"], [247.44, "worry2"], [250.34, "talk_d"], [254.02, "talk_a"], [255.96, "explain_a"], [259.86, "talk_b"], [261.76, "point_level"], [265.01, "talk_c"], [268.01, "worry2"], [270.91, "talk_d"], [276.01, "talk_a"], [277.11, "explain_a"], [279.71, "talk_b"], [281.91, "point_level"], [283.91, "talk_c"], [285.86, "worry2"], [288.81, "talk_d"], [290.61, "talk_a"], [293.94, "explain_a"], [295.2, "talk_b"], [298.9, "point_level"], [300.65, "talk_c"], [304.05, "worry2"], [307.6, "talk_d"], [310.33, "talk_a"]];
-const EP16_NARR=314.83;
-const EP16_SA=[[-0.05, 0.85, 0], [1.05, 2.35, 0], [2.7, 3.95, 0], [4.05, 5.2, 0], [5.45, 6.32, 0], [6.89, 9.4, 1], [9.8, 10.68, 1], [10.68, 11.9, 1], [12.33, 13.5, 2], [13.75, 14.65, 2], [14.85, 16.78, 2], [17.35, 18.45, 3], [18.7, 20.2, 3], [20.4, 21.25, 3], [21.7, 23.02, 3], [24.17, 27.1, 4], [27.45, 29.42, 5]];
+const EP16_A=[[0.0, 1.06, 0], [1.39, 2.88, 0], [3.3, 4.56, 0], [4.95, 5.9, 0], [6.2, 8.38, 0], [9.18, 10.24, 0], [10.7, 11.75, 0], [12.1, 13.28, 0], [13.62, 14.12, 0], [14.52, 16.68, 0], [17.32, 18.14, 1], [18.61, 18.86, 1], [19.26, 20.38, 1], [20.69, 21.38, 1], [22.91, 26.71, 2], [27.33, 29.21, 2], [29.85, 30.63, 2], [30.89, 31.57, 2], [32.28, 34.53, 2], [34.93, 38.55, 2], [39.91, 41.35, 3], [41.86, 46.1, 3], [46.1, 48.35, 3], [48.76, 51.24, 3], [51.47, 52.63, 3], [53.47, 55.89, 4], [56.28, 58.81, 4], [59.2, 60.78, 4], [61.08, 64.32, 4], [64.56, 66.09, 4], [66.96, 69.08, 5], [69.69, 70.91, 5], [71.33, 73.34, 5], [73.34, 78.09, 5], [78.74, 81.14, 5], [81.88, 84.28, 5], [85.02, 86.46, 6], [87.1, 90.1, 6], [90.1, 92.1, 6], [92.5, 94.5, 6], [94.5, 100.04, 6], [100.04, 103.45, 6], [103.91, 104.9, 6], [104.9, 106.58, 6], [107.04, 112.75, 6], [113.06, 114.02, 6], [114.74, 117.68, 6], [119.09, 120.47, 7], [121.17, 125.23, 7], [125.37, 127.27, 7], [128.0, 128.59, 7], [129.41, 132.42, 7], [132.58, 137.75, 7], [138.34, 142.51, 7], [144.8, 145.45, 8], [146.23, 150.06, 8], [150.71, 151.7, 8], [151.92, 153.6, 8], [154.27, 155.05, 8], [155.86, 159.48, 8], [159.99, 162.47, 8], [162.95, 165.34, 8], [166.23, 166.97, 8], [168.39, 170.16, 9], [170.65, 171.55, 9], [171.55, 175.19, 9], [175.77, 179.31, 9], [179.95, 185.14, 9], [186.58, 189.23, 10], [189.89, 194.32, 10], [194.87, 198.23, 10], [198.96, 200.02, 11], [200.6, 203.0, 11], [203.2, 204.68, 11], [205.14, 206.4, 11], [206.68, 208.98, 11], [209.51, 212.38, 11], [212.4, 213.26, 11], [213.76, 216.34, 11], [216.36, 216.98, 11], [218.4, 222.49, 12], [222.9, 224.85, 12], [225.4, 230.86, 12], [231.34, 232.76, 12], [233.0, 235.07, 12], [236.48, 237.76, 13], [238.2, 241.58, 13], [242.12, 244.9, 13], [245.25, 246.6, 13], [246.96, 249.46, 13], [250.15, 252.45, 13], [253.84, 255.49, 14], [255.77, 259.14, 14], [259.65, 261.12, 14], [261.55, 264.48, 14], [264.79, 267.35, 14], [267.81, 270.16, 14], [270.73, 274.45, 14], [275.86, 276.48, 15], [276.91, 279.11, 15], [279.5, 281.34, 15], [281.74, 282.97, 15], [283.71, 285.32, 15], [285.68, 288.29, 15], [288.61, 290.06, 15], [290.43, 292.37, 15], [293.81, 294.52, 16], [294.98, 298.32, 16], [298.72, 299.99, 16], [299.99, 303.42, 16], [303.85, 307.14, 16], [307.34, 308.77, 16], [310.19, 314.38, 17]];
+const EP16_ON={"2": 22.93, "3": 39.92, "7": 119.11, "8": 144.92, "9": 168.39, "10": 186.58, "12": 218.41, "13": 236.5, "14": 253.89, "15": 275.88, "16": 293.81, "17": 310.2};
+const EP16_POSE=[[0.0, "talk_a"], [1.39, "explain_a"], [3.3, "talk_b"], [4.95, "point_level"], [6.2, "talk_c"], [9.18, "worry2"], [10.7, "talk_d"], [12.1, "talk_a"], [13.62, "explain_a"], [14.52, "talk_b"], [17.32, "point_level"], [18.61, "talk_c"], [19.26, "worry2"], [20.69, "talk_d"], [22.91, "talk_a"], [27.33, "explain_a"], [29.85, "talk_b"], [30.89, "point_level"], [32.28, "talk_c"], [34.93, "worry2"], [39.91, "talk_d"], [41.86, "talk_a"], [46.1, "explain_a"], [48.76, "talk_b"], [51.47, "point_level"], [53.47, "talk_c"], [56.28, "worry2"], [59.2, "talk_d"], [61.08, "talk_a"], [64.56, "explain_a"], [66.96, "talk_b"], [69.69, "point_level"], [71.33, "talk_c"], [73.34, "worry2"], [78.74, "talk_d"], [81.88, "talk_a"], [85.02, "explain_a"], [87.1, "talk_b"], [90.1, "point_level"], [92.5, "talk_c"], [94.5, "worry2"], [100.04, "talk_d"], [103.91, "talk_a"], [104.9, "explain_a"], [107.04, "talk_b"], [113.06, "point_level"], [114.74, "talk_c"], [119.09, "worry2"], [121.17, "talk_d"], [125.37, "talk_a"], [128.0, "explain_a"], [129.41, "talk_b"], [132.58, "point_level"], [138.34, "talk_c"], [144.8, "worry2"], [146.23, "talk_d"], [150.71, "talk_a"], [151.92, "explain_a"], [154.27, "talk_b"], [155.86, "point_level"], [159.99, "talk_c"], [162.95, "worry2"], [166.23, "talk_d"], [168.39, "talk_a"], [170.65, "explain_a"], [171.55, "talk_b"], [175.77, "point_level"], [179.95, "talk_c"], [186.58, "worry2"], [189.89, "talk_d"], [194.87, "talk_a"], [198.96, "explain_a"], [200.6, "talk_b"], [203.2, "point_level"], [205.14, "talk_c"], [206.68, "worry2"], [209.51, "talk_d"], [212.4, "talk_a"], [213.76, "explain_a"], [216.36, "talk_b"], [218.4, "point_level"], [222.9, "talk_c"], [225.4, "worry2"], [231.34, "talk_d"], [233.0, "talk_a"], [236.48, "explain_a"], [238.2, "talk_b"], [242.12, "point_level"], [245.25, "talk_c"], [246.96, "worry2"], [250.15, "talk_d"], [253.84, "talk_a"], [255.77, "explain_a"], [259.65, "talk_b"], [261.55, "point_level"], [264.79, "talk_c"], [267.81, "worry2"], [270.73, "talk_d"], [275.86, "talk_a"], [276.91, "explain_a"], [279.5, "talk_b"], [281.74, "point_level"], [283.71, "talk_c"], [285.68, "worry2"], [288.61, "talk_d"], [290.43, "talk_a"], [293.81, "explain_a"], [294.98, "talk_b"], [298.72, "point_level"], [299.99, "talk_c"], [303.85, "worry2"], [307.34, "talk_d"], [310.19, "talk_a"]];
+const EP16_NARR=314.65;
+const EP16_SA=[[0.0, 0.84, 0], [1.04, 2.42, 0], [2.72, 3.74, 0], [3.98, 4.98, 0], [5.52, 6.34, 0], [6.93, 9.4, 1], [9.79, 10.66, 1], [10.9, 11.92, 1], [12.38, 13.54, 2], [13.76, 14.66, 2], [14.85, 16.8, 2], [17.38, 18.45, 3], [18.68, 20.18, 3], [20.4, 21.24, 3], [21.6, 23.05, 3], [24.21, 27.11, 4], [27.49, 29.45, 5]];
 const EP16_SON={"4": 24.22};
-const EP16_SPOSE=[[-0.05, "talk_a"], [1.05, "explain_a"], [2.7, "talk_b"], [4.05, "point_level"], [5.45, "talk_c"], [6.89, "worry2"], [9.8, "talk_d"], [10.68, "talk_a"], [12.33, "explain_a"], [13.75, "talk_b"], [14.85, "point_level"], [17.35, "talk_c"], [18.7, "worry2"], [20.4, "talk_d"], [21.7, "talk_a"], [24.17, "explain_a"], [27.45, "talk_b"]];
+const EP16_SPOSE=[[0.0, "talk_a"], [1.04, "explain_a"], [2.72, "talk_b"], [3.98, "point_level"], [5.52, "talk_c"], [6.93, "worry2"], [9.79, "talk_d"], [10.9, "talk_a"], [12.38, "explain_a"], [13.76, "talk_b"], [14.85, "point_level"], [17.38, "talk_c"], [18.68, "worry2"], [20.4, "talk_d"], [21.6, "talk_a"], [24.21, "explain_a"], [27.49, "talk_b"]];
 const EP16_SNARR=29.65;
 /* ================= EP16 builders – VFD parameter setting ================= */
 async function buildEp16(){
@@ -6993,7 +7010,7 @@ async function buildEp16(){
   const sel=T(2,5)+.9;
   g3('tvroom',P(2),{cable:[[T(2,0)+1,0],[T(2,0)+3,1]],stb:[[T(2,3)-.2,0],[T(2,3),1]],tv:[[0,'off'],[T(2,1),'nosig'],[T(2,4)+.6,'menu'],[sel+1.1,'pic']],sel:[[0,0],[sel,1]],remote:[[T(2,4),1]],
     press:[[T(2,4)+.4,0],[T(2,4)+.55,1],[T(2,4)+.8,0]],ok:[[sel+.8,0],[sel+.95,1],[sel+1.1,0]],
-    cam:[[0,0,1.2,2.8,0,1.0,-.9],[T(2,0)+.6,.3,.75,.6,.1,.75,-.95],[T(2,1),0,1.2,2.6,0,1.05,-.9],[T(2,2),-.15,.85,.55,-.3,.75,-1.0],[T(2,3),.55,.62,.5,.55,.52,-.75],[T(2,4),.2,1.0,1.8,0,1.05,-.9],[sel+1.4,0,1.2,2.3,0,1.05,-.9]]});
+    cam:[[0,0,.95,2.8,0,.78,-.9],[T(2,0)+.6,.35,.65,.7,.25,.6,-.95],[T(2,1),0,.95,2.6,0,.8,-.9],[T(2,2),.85,.75,-.35,.6,.75,-.97],[T(2,3),.55,.62,.5,.55,.52,-.75],[T(2,4),.2,.8,1.8,0,.8,-.9],[sel+1.4,0,.95,2.3,0,.8,-.9]]});
   chip('HDMI connected',[T(2,0)+1,T(2,1)],NAV);chip('“No Signal”',[T(2,1),T(2,2)],RED);chip('Cable OK',[T(2,2),T(2,3)],GRN);chip('Box ON',[T(2,3),T(2,4)],GRN);chip('Input = Antenna',[T(2,4),T(2,5)],ORG);chip('Source → HDMI 1',[T(2,5),PE(2)],BLU);
   /* ---- P3–P6: same VFD bench – keypad mode, parameters, run source, frequency source ---- */
   erase(PS(3),'#e3e8ee');bg(P(3,6),'#e3e8ee');
@@ -7006,9 +7023,9 @@ async function buildEp16(){
     btn:[[T(3,2)+.6,0],[T(3,2)+.75,1],[T(3,2)+1.2,0],[T(5,3)+.3,0],[T(5,3)+.45,1],[T(5,3)+.9,0],[run5-.2,0],[run5,1],[run5+.5,0],[pz-.3,0],[pz-.15,1],[pz+.3,0]],
     mhz:[[0,0],[run5,0],[run5+2,50],[T(6,8)-.2,50],[T(6,8),0]],extpot:[[T(6,4),0],[T(6,4)+1.5,.7]],
     wires:[...SUP,...MOTW,PE1,PE2,...BTNW,{...e15ctl('C_X1',[-.155,.1,-.035],.11,9,'#0f766e',T(5,3)+.6),flow:[[T(5,3)+1.5,1],[T(5,4),0]],fcol:'#22d3ee'},
-      {a:'C_AO',b:[-.17,.17,-.02],col:'#2563eb',r:.0018,t0:T(5,4)-.2,dur:1,k:'L',ye:.17,lane:10,t1:T(5,5)+.5,flow:[[T(5,4)+.6,1],[T(5,5),1],[T(5,5)+.3,0]],fcol:'#38bdf8'},
+      {a:'C_AO',b:[-.172,.172,-.02],col:'#2563eb',r:.0018,t0:T(5,4)-.2,dur:1,k:'L',ye:.17,lane:10,t1:T(5,5)+.5,flow:[[T(5,4)+.6,1],[T(5,5),1],[T(5,5)+.3,0]],fcol:'#38bdf8'},
       {...e15ctl('C_10V',[-.175,.008,-.035],.008,9,'#dc2626',T(6,4)),t1:T(6,5)},{...e15ctl('C_AI',[-.175,0,-.035],0,10,'#f97316',T(6,4)+.3),t1:T(6,5)},{...e15ctl('C_GND',[-.175,-.008,-.035],-.008,11,'#111827',T(6,4)+.6),t1:T(6,5)},
-      {...e15ctl('C_AI',[-.21,.1,-.03],.1,12,'#f97316',T(6,4)+1),t1:T(6,5)}],
+      {...e15ctl('C_AI',[-.172,.099,-.02],.1,12,'#f97316',T(6,4)+1),t1:T(6,5)}],
     hl:hlm(hl(['C_FWD','C_COM'],T(3,2),T(3,4)),hl(['C_FWD','C_COM'],T(5,3),T(5,4)),hl(['C_10V','C_AI','C_GND'],T(6,4),T(6,5)),hl(['C_AI'],T(6,4)+1,T(6,5))),
     cam:[[0,...KEY],[T(3,2),...BTN],[T(3,3),-.08,.06,.3,-.06,.055,.03],[T(3,4),...BENCH],[T(4,0),...DSP],[T(4,2),...KEY],[T(4,4),...DSP],
       [T(5,0),...KEY],[T(5,3),-.1,.06,.42,-.08,.06,0],[T(5,4),...PLCV],[T(5,5),...DSP],[fix+.5,...BENCH],[run5+.4,...MOT],
@@ -7026,7 +7043,7 @@ async function buildEp16(){
   ng('dcmeter',{x:860,y:180,w:380,h:220,title:'MOTOR CURRENT',v:[[T(7,6),1.8],[T(7,6)+3,3.4]],unit:'A',noPop:true},[T(7,6),PE(7)]);
   /* ---- P8 conveyor quiz (answer comes in P11) ---- */
   erase(PS(8),'#e3e8ee');bg(P(8),'#e3e8ee');
-  g3('bottles',P(8),{hz:[[T(8,1)+.4,0],[T(8,1)+.9,50],[T(8,3),50],[T(8,3)+1.4,0],[T(8,3)+1.6,0],[T(8,3)+2.1,50]],fall:T(8,1)+.7,disp:[[0,'0.0'],[T(8,1)+.4,null]],cam:[[0,.2,1.25,2.2,0,.85,0],[T(8,2),.6,1.1,1.5,.3,.88,0],[T(8,4),.2,1.25,2.2,0,.85,0]]});
+  g3('bottles',P(8),{hz:[[T(8,1)+.4,0],[T(8,1)+.9,50],[T(8,3),50],[T(8,3)+1.4,0],[T(8,3)+1.6,0],[T(8,3)+2.1,50]],fall:T(8,1)+.7,disp:[[0,'0.0'],[T(8,1)+.4,null]],cam:[[0,.2,1.5,2.0,0,.86,0],[T(8,2),.55,1.35,1.35,.3,.88,0],[T(8,4),.2,1.25,2.2,0,.85,0]]});
   chip('QUIZ',[PS(8),PE(8)],ORG);
   [['A','Max frequency 50 → 40 Hz'],['B','Increase acceleration time'],['C','Set motor rated current']].forEach(([l,t],i)=>{card(70,430+i*92,80,80,l,[T(8,5+i),PE(8)],{bg:[BLU,GRN,PUR][i],size:40});card(160,430+i*92,560,80,t,[T(8,5+i)+.15,PE(8)],{size:30})});
   presenter([PS(8)+.1,PE(8)-.05],{poses:EP16_POSE,size:280,x:960,y:H-300,facing:-1,entrance:'draw',draw:.7});
@@ -7040,9 +7057,9 @@ async function buildEp16(){
   /* ---- P10–P11 accel/decel + quiz answer on the bottle line ---- */
   erase(PS(10),'#e3e8ee');bg(P(10,11),'#e3e8ee');
   const j1=T(11,5)+.4,s1=T(11,7)+.3;
-  g3('bottles',[PS(10),j1-.05],{hz:[[T(10,1),0],[T(10,1)+2.4,50],[T(10,2),50],[T(10,2)+2.4,0],[T(11,1),0],[T(11,1)+.6,40],[T(11,2),40]],fall:T(11,1)+.3,cam:[[0,.2,1.25,2.2,0,.85,0],[T(11,1),.6,1.1,1.5,.3,.88,0]]});
-  g3('bottles',[j1,s1-.05],{hz:[[j1,0],[j1+.5,50]],fall:j1+.3,cam:[[0,.6,1.1,1.5,.3,.88,0]]});
-  g3('bottles',[s1,PE(11)],{hz:[[s1,0],[s1+4,50]],cam:[[0,.6,1.1,1.5,.3,.88,0],[s1+1,.2,1.25,2.2,0,.85,0]]});
+  g3('bottles',[PS(10),j1-.05],{hz:[[T(10,1),0],[T(10,1)+2.4,50],[T(10,2),50],[T(10,2)+2.4,0],[T(11,1),0],[T(11,1)+.6,40],[T(11,2),40]],fall:T(11,1)+.3,cam:[[0,.2,1.5,2.0,0,.86,0],[T(11,1),.55,1.35,1.35,.3,.88,0]]});
+  g3('bottles',[j1,s1-.05],{hz:[[j1,0],[j1+.5,50]],fall:j1+.3,cam:[[0,.55,1.35,1.35,.3,.88,0]]});
+  g3('bottles',[s1,PE(11)],{hz:[[s1,0],[s1+4,50]],cam:[[0,.55,1.35,1.35,.3,.88,0],[s1+1,.2,1.25,2.2,0,.85,0]]});
   chip('5 · ACCELERATION / DECELERATION',[PS(10),PS(11)],NAV);rc(0,'Accel: 0 → 50 Hz in X s',[T(10,1),PS(11)],{size:26,w:400,x:850});rc(1,'Decel: 50 → 0 Hz in X s',[T(10,2),PS(11)],{size:26,w:400,x:850});
   chip('QUIZ ANSWER',[PS(11),T(11,4)],ORG);chip('A: 40 Hz – still jerks',[T(11,1),T(11,3)],RED);chip('C: protection only',[T(11,3),T(11,4)],PUR);
   big('B · Acceleration time ✓',[T(11,4),PE(11)],{y:40,x:700,w:540,h:96,size:40,bg:GRN});chip('1 s → jerk',[j1,s1],RED,{y:600});chip('5 s → smooth ✓',[s1,PE(11)],GRN,{y:600});
@@ -7076,7 +7093,7 @@ async function buildEp16(){
   /* ---- P16 challenge: 4–20 mA, 12 mA → ? Hz (answer only in the pinned comment) ---- */
   erase(PS(16),'#e3e8ee');bg(P(16),'#e3e8ee');
   g3('vfdwire',P(16),{x:0,w:840,cover:[[0,1]],props:{iso:[[0,1]],plc:[[0,1]]},sw:[[0,1]],led:[[0,1]],plcrun:[[0,1]],disp:[D(0,'50.0'),D(T(16,3),'??.?')],mhz:[[0,30]],
-    wires:[...SUP,...MOTW,PE1,PE2,{...e15ctl('C_AI',[-.17,.1,-.03],.1,10,'#f97316',T(16,1)+.3),flow:[[T(16,1)+1.3,1]],fcol:'#fb923c'},e15ctl('C_GND',[-.18,.1,-.03],.1,11,'#111827',T(16,1)+.6)],
+    wires:[...SUP,...MOTW,PE1,PE2,{...e15ctl('C_AI',[-.172,.099,-.02],.1,10,'#f97316',T(16,1)+.3),flow:[[T(16,1)+1.3,1]],fcol:'#fb923c'},e15ctl('C_GND',[-.164,.099,-.02],.1,11,'#111827',T(16,1)+.6)],
     hl:hl(['C_AI'],T(16,1)+.3),cam:[[0,...PLCV],[T(16,2),...DSP],[T(16,3),...PLCV],[T(16,4),...BENCH]]});
   chip('CHALLENGE',[PS(16),PE(16)],ORG);
   ng('dcmeter',{x:870,y:120,w:370,h:200,title:'PLC → AI (mA)',v:[[0,4],[T(16,1)+1,4],[T(16,1)+2.5,20],[T(16,3)-.5,20],[T(16,3),12]],unit:'mA',noPop:true},[T(16,1),PE(16)]);
