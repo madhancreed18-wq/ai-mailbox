@@ -5589,7 +5589,7 @@ function g3Bottles(){const B=g3Base('#e3e8ee'),{T,S,cam,M,box,cyl}=B;
 G3_BUILD.bottles=g3Bottles;
 /* ---------- motor nameplate close-up (EP14 CAD motor + riveted plate) ---------- */
 function g3Plate(){const B=g3Base('#dfe5ec'),{T,S,cam,M,box}=B;box(6,.04,4,M('#c3cad3',{r:.9}),0,-.02,0);
-  const MR=e14MotorClone();let mSpin=[],hm=[];if(MR){MR.g.position.set(0,0,0);S.add(MR.g);mSpin=E14_SPIN.map(n=>MR.parts[n]).filter(Boolean);MR.g.traverse(o=>{if(o.isMesh&&o.material.color){o.material.userData.c0=o.material.color.clone();hm.push(o.material)}})}
+  const MR=e14MotorClone();let mSpin=[],hm=[];if(MR){MR.g.position.set(0,0,0);S.add(MR.g);MR.g.updateMatrixWorld(true);MR.g.position.y-=new T.Box3().setFromObject(MR.g).min.y;MR.g.updateMatrixWorld(true);mSpin=E14_SPIN.map(n=>MR.parts[n]).filter(Boolean);MR.g.traverse(o=>{if(o.isMesh&&o.material.color){o.material.userData.c0=o.material.color.clone();hm.push(o.material)}})}
   const bb=MR?new T.Box3().setFromObject(MR.g):new T.Box3(new T.Vector3(-.2,0,-.15),new T.Vector3(.2,.3,.15));const c=bb.getCenter(new T.Vector3()),sz=bb.getSize(new T.Vector3());
   const rows=[['RATED OUTPUT','0.75 kW'],['RATED VOLTAGE','Δ 240 V / Y 415 V'],['RATED CURRENT','3.1 A / 1.8 A'],['FREQUENCY','50 Hz'],['RATED SPEED','1440 RPM']];
   const pl=e16tex(T,1024,520,(g,w,h,hl)=>{const gr=g.createLinearGradient(0,0,w,0);gr.addColorStop(0,'#c9cdd2');gr.addColorStop(.5,'#e3e6ea');gr.addColorStop(1,'#c4c8cd');g.fillStyle=gr;g.fillRect(0,0,w,h);
