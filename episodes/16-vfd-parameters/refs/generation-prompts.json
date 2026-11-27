@@ -1,0 +1,30 @@
+[
+  {
+    "name": "ref-plc-front",
+    "prompt": "Front orthographic engineering product render of generic brandless FX-style compact brick PLC with adjacent 4\u201320 mA analog output expansion module at right, connected with small expansion bridge. PLC nominal illustrative 90 mm width,90 mm height,75 mm depth, AO module 40 mm wide same height. Cream light grey plastic case, dark grey top and bottom screw terminal strips, front cover with PWR RUN ERR small LEDs and two tidy I/O indicator rows. Render straight-on front no perspective. Include fine dimension arrows width 90 mm across PLC ONLY, 40 mm across separate AO ONLY, vertical 90 mm. Text label 'PLC' and 'ANALOG OUTPUT 4\u201320 mA'. Bottom caption 'ILLUSTRATIVE DIMENSIONS \u2014 GENERIC TEACHING MODEL'. White background. Real manufacturable industrial geometry, crisp details. No logos or brands."
+  },
+  {
+    "name": "ref-plc-side",
+    "prompt": "Right side orthographic engineering render of generic brandless FX-style compact brick PLC, nominal illustrative 90 mm height and75 mm depth; pale cream housing,dark terminal strip projections at top and bottom,vent slots,DIN rail rear clip,front service cover at front. A separate small front inset shows the complete PLC with adjacent 4\u201320 mA analog output expansion module so modeller understands side connection. Main side-view shows depth 75 mm, height 90 mm with clean dimension arrows, front and rear identified. Bottom caption 'ILLUSTRATIVE DIMENSIONS \u2014 GENERIC TEACHING MODEL'. White background,no logos,no brands,no fake exact manufacturer part number."
+  },
+  {
+    "name": "ref-vfd-keypad",
+    "prompt": "Photorealistic front close-up product reference of generic compact industrial VFD keypad, no brand or logo. Off-white light grey narrow drive housing,dark charcoal keypad panel. Rectangular five-position red seven segment LED display at top shows exactly 'P0-01'. Below display status LEDs RUN and Hz, a green rectangular RUN button, red STOP button, grey PRG and ENTER buttons, triangle up and triangle down buttons. Single built-in black ribbed rotary potentiometer knob below keys on the same front panel. Show entire keypad and knob, reasonable spacing,industrial plastic not glossy toy. Neutral white studio background, sharp straight-on minimal perspective, 1600px quality. Generic teaching model not certified drawing."
+  },
+  {
+    "name": "ref-motor-nameplate",
+    "prompt": "Photoreal close-up of realistic riveted brushed aluminium rectangular nameplate on dark grey ribbed electric motor housing. No manufacturer or logos. Perfectly legible engraved industrial tabular values, coherent 3-phase induction motor example. Title '3-PHASE INDUCTION MOTOR'. Fields '0.75 kW', '\u0394 240 V / Y 415 V', '3.1 A / 1.8 A', '50 Hz', '1440 RPM', 'IE2', 'IP55', 'INS. F', 'S1', 'FRAME 80', 'cos \u03c6 0.73', 'EFF. 80%'. Small footer 'ILLUSTRATIVE NAMEPLATE'. Two metal rivets at left and right, slight brushing, sharp readable lettering,no fake certification marks. Straight-on reference,plate fills frame with narrow surrounding motor housing."
+  },
+  {
+    "name": "ref-tv-rear",
+    "prompt": "Photorealistic 3D modelling reference of rear of generic unbranded 55 inch flat panel television. Entire thin black rear housing, VESA 4 mounting holes, vent grilles, realistic central electronics bulge, two rear feet, AC power inlet away from signal ports. Right side recessed input bay with THREE side-facing HDMI female TYPE A sockets labelled HDMI 1,HDMI 2,HDMI 3 and clearly separate antenna coax socket. Include large clean inset close-up of input bay showing actual HDMI trapezoid female port shape and labels. No cables hiding ports,no brand, no logo. White studio background, gentle rear three-quarter view, recognisable realistic ports not USB shapes, whole television visible. Design reference not exact manufacturer model."
+  },
+  {
+    "name": "ref-settopbox-rear",
+    "prompt": "Photorealistic product reference of rear of generic unbranded DTH satellite set-top box, black low rectangular enclosure with ventilation on top. Rear panel ports clearly separated and labelled from left to right: 'LNB IN' threaded female F-type coaxial connector; 'HDMI OUT' one HDMI female type A trapezoid port; 'DC 12V' circular barrel power jack. No television screen, no logos,no brands,no unnecessary ports. Rear shallow three-quarter view showing top and one side,sharp port details, clean white studio background. One subject fills image with rear panel readable, real manufacturable hardware geometry."
+  },
+  {
+    "name": "ref-bottle-conveyor",
+    "prompt": "Photorealistic engineering reference of real industrial PET bottle conveyor, mostly side view with slight elevated three-quarter angle to show belt path and rail construction. Complete horizontal stainless steel conveyor assembly, long blue plastic flat-top slat chain,stainless side guide rails on adjustable posts at bottle waist,ten clear PET bottles with blue caps evenly spaced upright. At right drive end electric gearmotor with gearbox mounted beside underside and correctly coupled to conveyor drive shaft. Return belt below, realistic adjustable four legs and cross-braces, chain sprocket guards, recognizable bottle spacing. White studio background, entire conveyor visible without clipping, no people,no text,no brands,no logos. Real factory proportions not toy."
+  }
+]

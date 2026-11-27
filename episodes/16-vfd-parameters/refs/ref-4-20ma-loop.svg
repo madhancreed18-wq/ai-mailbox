@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+<defs><style>text{font-family:DejaVu Sans,sans-serif;fill:#172433} .title{font-size:38px;font-weight:bold} .h{font-size:27px;font-weight:bold} .t{font-size:24px} .s{font-size:20px} .wire{fill:none;stroke-width:8;stroke-linecap:round;stroke-linejoin:round}</style></defs>
+<rect width="1600" height="1000" fill="#fff"/>
+<text x="65" y="75" class="title">4–20 mA: PLC ANALOG OUTPUT → VFD INPUT</text>
+<text x="65" y="120" class="t">Active current output • passive current input • multimeter in series</text>
+<rect x="60" y="250" width="380" height="490" rx="16" fill="#f0eee7" stroke="#4e5964" stroke-width="4"/>
+<rect x="80" y="270" width="340" height="65" rx="6" fill="#27323b"/>
+<text x="100" y="312" class="h" style="fill:white">PLC + AO MODULE</text>
+<text x="95" y="380" class="t">4–20 mA current source</text>
+<text x="95" y="450" class="h">I OUT +</text><text x="95" y="650" class="h">I OUT − / COM</text>
+<text x="95" y="700" class="s">Module power omitted</text>
+<rect x="1140" y="250" width="400" height="490" rx="16" fill="#eeeff0" stroke="#4e5964" stroke-width="4"/>
+<rect x="1160" y="270" width="360" height="65" rx="6" fill="#27323b"/>
+<text x="1180" y="312" class="h" style="fill:white">VFD ANALOG INPUT</text>
+<text x="1190" y="380" class="t">Current input selected</text>
+<text x="1180" y="450" class="h">AI / I IN</text><text x="1180" y="650" class="h">ACM / AI COM</text>
+<text x="1180" y="700" class="s">4–20 mA mode</text>
+<rect x="600" y="210" width="350" height="510" rx="32" fill="#efbd37" stroke="#30363d" stroke-width="5"/>
+<rect x="622" y="230" width="306" height="465" rx="20" fill="#333a40"/>
+<rect x="640" y="265" width="270" height="115" rx="6" fill="#d0dfca"/>
+<text x="665" y="340" style="font-family:DejaVu Sans Mono,monospace;font-size:54px">12.00</text>
+<text x="810" y="368" class="s">mA DC</text>
+<circle cx="775" cy="477" r="62" fill="#20262b" stroke="#68747d" stroke-width="3"/>
+<path d="M775 468 L817 431" stroke="#fff" stroke-width="7" stroke-linecap="round"/>
+<text x="820" y="420" class="t" style="fill:white">mA DC</text>
+<text x="652" y="605" class="s" style="fill:white">mA</text><text x="845" y="605" class="s" style="fill:white">COM</text>
+<path class="wire" stroke="#cd3036" d="M440 440 H510 V790 H680 V650"/>
+<path class="wire" stroke="#252b31" d="M870 650 H1030 V440 H1140"/>
+<path class="wire" stroke="#25689b" d="M1140 640 H1080 V885 H440 V640"/>
+<g stroke="#27323b" stroke-width="4"><circle cx="440" cy="440" r="12" fill="#cf3439"/><circle cx="440" cy="640" r="12" fill="#4c8db6"/><circle cx="1140" cy="440" r="12" fill="#30363d"/><circle cx="1140" cy="640" r="12" fill="#4c8db6"/><circle cx="680" cy="650" r="14" fill="#cf3439"/><circle cx="870" cy="650" r="14" fill="#161c22"/></g>
+<text x="600" y="835" class="s">Red lead in fused mA jack</text>
+<text x="1110" y="815" class="s">Analog return</text>
+<rect x="60" y="925" width="1480" height="54" rx="8" fill="#edf2f6"/>
+<text x="80" y="960" class="s">Generic loop reference. Terminal names vary by model; no external loop supply is shown for this active AO.</text>
+</svg>
