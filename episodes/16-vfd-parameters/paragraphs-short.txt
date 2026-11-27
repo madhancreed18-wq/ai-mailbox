@@ -2,12 +2,10 @@ Pudhu VFD. Wiring ellaam correct. R, S, T-la supply. U, V, W-la motor. Earth cor
 
 Push button FWD, COM-la connect pannirukku. Main breaker ON. Display on aagudhu.
 
-Button press pannreenga. Motor odala. Display-la 0.00 dhaan. Technician sonnaar, VFD poyiduchu, padhinanjaayiram rooba.
+Button press pannreenga. Motor odala. Display-la 0.00 dhaan.
 
-Neenga enna solluveenga? A, push button-la NO contact-ku badhila NC contact-la wire pottirukkaanga. B, VFD innum keypad mode-la irukku. C, motor winding open aagi irukku.
+VFD fault illa. Oru wire kooda thappu illa. Appo thappu enga? Unga guess-ai comment-la sollunga.
 
-Answer B. Pudhu VFD-la RUN order keypad-la irundhu dhaan varum-nu factory-laye set aagi irukkum. Run command source parameter-ai Terminal-ku maathunaa, motor odum. Padhinanjaayiram rooba save.
-
-Indha maadhiri innum niraiya VFD settings-ai full video-la paarunga. Link keezha irukku.
+Answer-ukku keezha irukkura link-la full video paarunga.
 
 Like pannunga, share pannunga, subscribe pannunga.
