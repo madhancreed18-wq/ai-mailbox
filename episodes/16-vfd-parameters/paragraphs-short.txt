@@ -1,13 +1,15 @@
-Wiring ellaam correct. R, S, T-la supply. U, V, W-la motor. Earth correct.
+Pudhu VFD. Wiring ellaam correct. R, S, T-la supply. U, V, W-la motor. Earth correct.
 
-Push button-um FWD, COM-la correct-aa connect pannirukku. Main breaker ON. Display-um on aagudhu.
+Push button FWD, COM-la connect pannirukku. Main breaker ON. Display on aagudhu.
 
 Button press pannreenga. Motor odala. Display-la 0.00 dhaan.
 
-VFD fault illa. Oru wire kooda thappu illa. Appo thappu enga?
+Technician sonnaar, VFD poyiduchu, pudhusu maathanum, padhinanjaayiram rooba.
 
-Unga guess-ai comment-la sollunga.
+Neenga enna solluveenga? A, VFD damage, maathanum. B, push button wire loose. C, VFD-kulla oru setting.
 
-Full answer-ukku keezha irukkura link-la full video paarunga.
+Unga answer-ai comment-la A, B, C-nu podunga.
+
+Correct answer-ukku keezha irukkura link-la full video paarunga.
 
 Like pannunga, share pannunga, subscribe pannunga.
