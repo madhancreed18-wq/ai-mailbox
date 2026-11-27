@@ -1,0 +1,17 @@
+0|0|0.00|0.84|Pudhu VFD
+0|1|1.04|2.42|Wiring ellaam correct
+0|2|2.72|3.74|R, S, T-la supply
+0|3|3.98|4.98|U, V, W-la motor
+0|4|5.52|6.34|Earth correct
+1|0|6.93|9.40|Push button FWD, COM-la connect
+1|1|9.79|10.66|Main breaker ON
+1|2|10.90|11.92|Display on aagudhu
+2|0|12.38|13.54|Button press pannreenga
+2|1|13.76|14.66|Motor odala
+2|2|14.85|16.80|Display-la 0.00 dhaan
+3|0|17.38|18.45|VFD fault illa
+3|1|18.68|20.18|Oru wire kooda thappu illa
+3|2|20.40|21.24|Appo thappu enga
+3|3|21.60|23.05|Unga guess-ai comment-la sollunga
+4|0|23.55|26.45|Answer-ukku keezha irukkura link-la full
+5|0|26.83|28.79|Like pannunga, share pannunga, subscribe

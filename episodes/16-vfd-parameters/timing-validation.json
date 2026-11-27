@@ -1,0 +1,18 @@
+{
+  "long": {
+    "duration": 306.25,
+    "sha256": "df2173c0e7397b302982a000585d1d0f0c7e14ae64c243c2c70bfd8b0280949d",
+    "sentences": 113,
+    "paragraphs": 18,
+    "monotonic_nonoverlapping": true,
+    "in_original_audio_bounds": true
+  },
+  "short": {
+    "duration": 28.99,
+    "sha256": "0b8da1094a1b592f9bca2a66d0873541ad4a1a0910785831932bf67bdf92e661",
+    "sentences": 17,
+    "paragraphs": 6,
+    "monotonic_nonoverlapping": true,
+    "in_original_audio_bounds": true
+  }
+}
