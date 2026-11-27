@@ -1,0 +1,41 @@
+Wiring ellaam correct. R, S, T-la EB supply. U, V, W-la motor. Earth correct. FWD, COM terminal-ku oru push button. Main breaker ON pannreenga. Display on aagudhu. Push button-ai press pannreenga. Motor odala. Display-la 0.00 nu dhaan kaattudhu.
+
+VFD pochaa? Illa. Oru wire kooda thappu illa. Appo thappu enga?
+
+Veetla pudhu TV vaangi, set-top box-ai HDMI cable-la connect pannreenga. TV ON pannaa, screen-la No Signal. Cable correct. Box-um ON. Aanaa TV innum antenna input-la dhaan irukku. Remote-la source-ai HDMI-ku maathunaa dhaan picture varum.
+
+VFD-um adhey maadhiri dhaan. Factory-la irundhu varumbodhu, RUN command keypad-la irundhu dhaan varum-nu set aagi irukkum. Neenga push button-ai terminal-la connect panni irukkeenga. Aanaa VFD andha terminal-ai paakkave illa. Adhanaala dhaan motor odala.
+
+Indha maadhiri settings-ku dhaan parameters-nu peyar. Ella VFD-layum indha mukkiyamaana parameters irukkum. Brand-ku brand code number maarum. P0-01, F0.02 maadhiri. Aanaa meaning ellaam ore maadhiri dhaan.
+
+Mudhal parameter, Run command source. Idhula moonu option irukkum. Keypad, VFD mela irukkura RUN button. Terminal, FWD, COM-la connect panna push button, illa PLC output. Communication, Modbus maadhiri network vazhiya. Push button connect panni irundhaa, idhai Terminal-ku maathanum.
+
+Rendaavadhu, Frequency source. Motor endha speed-la odanum-nu VFD-ku yaar solluvaanga? Keypad-la irukkura up, down arrow. VFD mela irukkura potentiometer. Illa external pot, illa PLC-la irundhu AI terminal-ku varra 0 to 10 volt, illa 4 to 20 milliamp. RUN command terminal-la irundhaalum, speed keypad-la irundhu varalaam. Rendum thani thani settings.
+
+Oru quiz. Run command, Terminal. Frequency source, VFD mela irukkura potentiometer. Andha pot full-aa zero-la thirugi irukku. Push button press pannaa enna nadakkum? A, motor 50 hertz-la odum. B, display RUN kaattum, aanaa motor odaadhu. C, VFD trip aagum. Unga answer-ai manasula vechukonga.
+
+Moonaavadhu, Motor details. Motor nameplate-la irukkura kilowatt, voltage, current, frequency, RPM. Idhai appadiye VFD-la podanum. Yen theriyumaa? VFD dhaan motor-ai overload-la irundhu protect pannudhu. Rated current 1.8 amp-nu kudutha dhaan, adhukku mela current pogumbodhu VFD trip pannum. Thappaa 4 amp-nu pottaa, motor sooda aagi eriyura varaikkum VFD kammunu irukkum.
+
+Naalaavadhu, Maximum frequency. Normal-aa 50 hertz. Silar speed adhigam venum-nu 80, 100 hertz-nu vechiruvaanga. Motor bearing, fan, pump ellaam andha speed-ku design pannala. Adhanaala upper limit, lower limit vechu, speed oru range-kulla mattum maarura maadhiri pannuvaanga.
+
+Konja munnaadi ketta pot quiz. Answer B. VFD RUN order-ai vaangidum, display-la RUN light eriyum. Aanaa speed order zero hertz. Adhanaala motor nagaradhu. Pot-ai thiruppa thiruppa dhaan motor speed edukkum. Field-la idhaiyum VFD fault-nu ninaichu, technician-ai koopiduvaanga.
+
+Adutha quiz. Oru conveyor start aagumbodhu, belt mela irukkura bottle ellaam saanju vizhudhu. Running-la ellaam correct. Start aagumbodhu mattum dhaan problem. Endha parameter-ai maathuveenga? A, maximum frequency. B, acceleration time. C, stop mode. Yosichu vechukonga.
+
+Anjaavadhu, Acceleration time, deceleration time. Zero-la irundhu 50 hertz-ku vara evlo second aaganum-nu sollradhu acceleration time. 50-la irundhu zero-ku vara evlo second-nu sollradhu deceleration time.
+
+Ippo andha conveyor quiz. Answer B, acceleration time. 1 second-nu irundhaa, belt oru jerk-oda start aagum. Bottle saanju vizhum. 5 second-ku maathunaa, belt mella mella speed edukkum. Bottle nikkum.
+
+Aanaa acceleration time-ai romba kammi panna, motor current thideernu yerum. VFD OC, over current trip kaattum. Deceleration time-ai romba kammi panna, motor oru generator maadhiri maari, current-ai thirumba VFD-kulla anuppum. DC bus voltage yerum. VFD OV, over voltage trip kaattum.
+
+Innoru quiz. Vera machine-la irundhu kazhatina pazhaya VFD-ai, pudhu conveyor-la podureenga. Ulla pazhaya settings appadiye irukku. Max frequency 80 hertz, acceleration half second. Start pannaa enna aagum? A, normal-aa odum. B, jerk-oda start aagi, OC trip aagum, illa belt over speed-la odum. C, VFD on-e aagaadhu.
+
+Aaraavadhu, Stop mode. Ramp stop-na, deceleration time-ku yetha maadhiri mella nikkum. Coast stop-na, VFD output-ai appadiye cut pannidum. Motor thaane suthi suthi nikkum. Conveyor, lift maadhiri load-ku ramp stop. Periya fan-ku coast stop-um use pannuvaanga.
+
+Pazhaya VFD quiz-ku answer B. Half second acceleration-la current thideernu yerum, OC trip. Trip aagalainaa, 80 hertz-la belt rendu madangu speed-la odum. Adhanaala pazhaya VFD-na mudhalla factory reset pannittu, appuram dhaan parameters podanum.
+
+Summary paarppom. Run command source, RUN order engirundhu varudhu. Frequency source, speed engirundhu varudhu. Motor details, protection-ku. Max frequency, speed limit. Acceleration, deceleration, start, stop smooth-aa irukka. Stop mode, epdi nikkanum. Pazhaya VFD-na, mudhalla factory reset.
+
+Ungalukku oru challenge. PLC-la irundhu 4 to 20 milliamp signal AI terminal-ku varudhu. Max frequency 50 hertz. PLC 12 milliamp anuppinaa, motor evlo hertz-la odum? Comment-la sollunga. Answer pinned comment-la irukkum.
+
+Video useful-aa irundhaa like pannunga, share pannunga, Factory Decode Tamil channel-ai subscribe pannunga.
