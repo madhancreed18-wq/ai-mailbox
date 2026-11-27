@@ -1,0 +1,45 @@
+{
+  "validation": "Original full PNG bytes match Git blob SHA; all final images visually inspected before upload",
+  "files": [
+    {
+      "name": "ref-tv-rear",
+      "size": 2496931,
+      "sha": "a40e13c3ad55a66eac5fc15ce5958e71b458c77e"
+    },
+    {
+      "name": "ref-settopbox-rear",
+      "size": 2126702,
+      "sha": "dd7cd2ad2abf4f0fab2fe1332ea936715e94c86b"
+    },
+    {
+      "name": "ref-vfd-keypad",
+      "size": 2138353,
+      "sha": "4b4a765c85d8268544b53f968938ae9b2774f1bb"
+    },
+    {
+      "name": "ref-plc-side",
+      "size": 1410032,
+      "sha": "19e68995c390796bf25a849d064be220260f19ac"
+    },
+    {
+      "name": "ref-motor-nameplate",
+      "size": 3387055,
+      "sha": "0d23538af1e0e65f673ed007dbb42be9a4b2ef4b"
+    },
+    {
+      "name": "ref-bottle-conveyor",
+      "size": 1649713,
+      "sha": "a65142972d09209e55a9df2264c8a050c8dface5"
+    },
+    {
+      "name": "ref-plc-front",
+      "size": 1794058,
+      "sha": "dfd7949c8b89294a90a949fcbda9c866ba6be312"
+    },
+    {
+      "name": "ref-4-20ma-loop",
+      "size": 88209,
+      "sha": "79efd45fd9edf5a749296ca4cb0606724ee4bb0e"
+    }
+  ]
+}
