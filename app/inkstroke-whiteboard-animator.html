@@ -6984,6 +6984,10 @@ const EP16_SON={"4": 24.22};
 const EP16_SPOSE=[[0.0, "talk_a"], [1.04, "explain_a"], [2.72, "talk_b"], [3.98, "point_level"], [5.52, "talk_c"], [6.93, "worry2"], [9.79, "talk_d"], [10.9, "talk_a"], [12.38, "explain_a"], [13.76, "talk_b"], [14.85, "point_level"], [17.38, "talk_c"], [18.68, "worry2"], [20.4, "talk_d"], [21.6, "talk_a"], [24.21, "explain_a"], [27.49, "talk_b"]];
 const EP16_SNARR=29.65;
 /* ================= EP16 builders – VFD parameter setting ================= */
+/* a new card never draws over a card that is still on screen in the same place */
+function e16declutter(sc){const C=sc.els.filter(e=>e.kind==='card2'&&e.win).sort((a,b)=>a.win[0]-b.win[0]);
+  const hit=(a,b)=>a.x<b.x+b.w&&b.x<a.x+a.w&&a.y<b.y+b.h&&b.y<a.y+a.h;
+  C.forEach((a,i)=>{for(let j=i+1;j<C.length;j++){const b=C[j];if(b.win[0]>=a.win[1])continue;if(hit(a,b)){a.win=[a.win[0],Math.max(a.win[0]+.6,b.win[0]-.45)];}}})}
 async function buildEp16(){
   stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('16:9');S.narrOff=0;S.art='sketch';
   try{await document.fonts.load('700 30px InkHand')}catch(_){}try{await window.E14_MOTOR_READY;await window.E15_VFD_READY}catch(_){}
@@ -7116,7 +7120,7 @@ async function buildEp16(){
   card(140,280,560,110,'Thanks for watching!',[NARR+.5,END],{size:44,bg:'#ffffff'});
   presenter([PS(1)+.1,PE(1)-.05],{poses:EP16_POSE,size:280,x:40,y:H-286,facing:1,entrance:'draw',draw:.7});
   presenter([PS(17)+.1,NARR+.3],{poses:EP16_POSE,size:280,x:40,y:H-286,facing:1,entrance:'draw',draw:.7});
-  S.captions=false;S.showHand=true;S.penSprite=true;S.cardsDraw=true;S.cur=0;S.pin=false;S.t=1;refresh();
+  e16declutter(s);S.captions=false;S.showHand=true;S.penSprite=true;S.cardsDraw=true;S.cur=0;S.pin=false;S.t=1;refresh();
 }
 async function buildEp16Short(){
   stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('9:16');S.narrOff=0;S.art='sketch';
@@ -7143,7 +7147,7 @@ async function buildEp16Short(){
   card(110,300,500,130,'ANSWER',[PS(4),PE(4)],{size:56,bg:GRN});ng('arrowdn',{x:260,y:560,w:200,h:560},[PS(4)+.6,PE(4)+.1]);card(150,450,420,100,'⬇ LINK BELOW',[PS(4)+.6,PE(4)],{bg:RED,size:40});
   ng('eqv',{key:'hand-thumbs-up',x:400,y:320,w:300,h:340,noPop:true},[PS(5),END-.25]);card(110,180,500,110,'SUBSCRIBE',[PS(5),END-.25],{bg:RED,size:48});card(110,700,240,80,'LIKE',[PS(5)+.4,END-.25],{bg:BLU,size:34});card(370,700,240,80,'SHARE',[PS(5)+.8,END-.25],{bg:NG.teal,size:34});
   presenter([PS(3)+.1,END],{poses:EP16_SPOSE,x:-20,y:H-356,size:340,entrance:'draw',draw:.6});
-  S.captions=false;S.showHand=true;S.penSprite=true;S.cardsDraw=true;S.cur=0;S.pin=false;S.t=1;refresh();
+  e16declutter(s);S.captions=false;S.showHand=true;S.penSprite=true;S.cardsDraw=true;S.cur=0;S.pin=false;S.t=1;refresh();
 }
 async function buildEp16Test(){stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('16:9');S.narrOff=0;S.art='';try{await window.E15_VFD_READY;await window.E14_MOTOR_READY}catch(_){}
   const END=44,s=newScene({name:'EP16 test',style:'white',transition:'cut',trans:0,hold:0});s.minDur=END;S.scenes.push(s);
