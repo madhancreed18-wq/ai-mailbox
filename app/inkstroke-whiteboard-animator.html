@@ -6975,7 +6975,7 @@ async function buildEp16(){
   const hlm=(...os)=>{const r={};os.forEach(o=>Object.entries(o).forEach(([k,v])=>{r[k]=(r[k]||[]).concat(v)}));Object.values(r).forEach(v=>v.sort((a,b)=>a[0]-b[0]));return r};
   const D=(t,txt)=>[t,[txt,'#ff3b2f']];
   const BRK=[-.2,.236,.2,-.2,.236,-.04],BTN=[-.2,.07,.2,-.2,.07,-.04],KEY=[0,.12,.25,0,.115,.06],DSP=[0,.14,.22,0,.135,.06],TERM=[0,.034,.19,0,.032,.05],
-    BENCH=[.07,.06,.82,.07,.04,0],MOT=[.26,0,.62,.3,-.1,.06],PLCV=[-.14,.1,.42,-.12,.09,0];
+    BENCH=[.08,.02,1.08,.08,0,0],MOT=[.3,-.04,.62,.3,-.12,.06],PLCV=[-.14,.1,.42,-.12,.09,0];
   const SUP=e15sup(['T_R','T_S','T_T'],-9),MOTW=e15mot(['T_U','T_V','T_W'],-9),PE1=e15pe(-9),PE2=e15pem(-9);
   const BTNW=[e15ctl('C_FWD',[-.175,.075,-.035],.075,7,'#1d4ed8',-9),e15ctl('C_COM',[-.175,.065,-.035],.065,8,'#111827',-9)];
   /* ---- P0–P1 hook: correct wiring, breaker ON, RUN pressed… 0.00 ---- */
@@ -7034,9 +7034,9 @@ async function buildEp16(){
   erase(PS(9),'#e3e8ee');bg(P(9),'#e3e8ee');
   g3('vfdwire',P(9),{cover:[[0,1]],props:{iso:[[0,1]]},sw:[[0,1]],led:[[0,1]],disp:[D(0,'50.0'),D(T(9,2),'80.0'),D(T(9,2)+1.2,'100.0'),D(T(9,4),'50.0')],mhz:[[0,50],[T(9,2),50],[T(9,2)+1,80],[T(9,2)+2,100],[T(9,4),100],[T(9,4)+1.5,50]],
     wires:[...SUP,...MOTW,PE1,PE2],cam:[[0,...DSP],[T(9,1)+.6,...BENCH],[T(9,3),...MOT],[T(9,4),...BENCH]]});
-  chip('4 · MAXIMUM FREQUENCY',[PS(9),PE(9)],NAV);rc(0,'Bearing · fan · pump: built for 50 Hz',[T(9,3),PE(9)],{size:24,bg:'#fee2e2',w:400,x:850});
-  ng('dcmeter',{x:850,y:470,w:400,h:200,title:'OUTPUT',unit:'Hz',noPop:true,v:[[0,50],[T(9,2),50],[T(9,2)+2,100],[T(9,4),100],[T(9,4)+1.5,50]]},[T(9,2),PE(9)]);
-  rc(1,'Upper / lower limit = safe range',[T(9,4),PE(9)],{size:24,bg:'#dcfce7',w:400,x:850});
+  chip('4 · MAXIMUM FREQUENCY',[PS(9),PE(9)],NAV);rc(0,'Bearing · fan · pump: built for 50 Hz',[T(9,3),PE(9)],{y:330,size:24,bg:'#fee2e2',w:400,x:850});
+  ng('dcmeter',{x:850,y:100,w:400,h:200,title:'OUTPUT',unit:'Hz',noPop:true,v:[[0,50],[T(9,2),50],[T(9,2)+2,100],[T(9,4),100],[T(9,4)+1.5,50]]},[T(9,2),PE(9)]);
+  rc(1,'Upper / lower limit = safe range',[T(9,4),PE(9)],{y:420,size:24,bg:'#dcfce7',w:400,x:850});
   /* ---- P10–P11 accel/decel + quiz answer on the bottle line ---- */
   erase(PS(10),'#e3e8ee');bg(P(10,11),'#e3e8ee');
   const j1=T(11,5)+.4,s1=T(11,7)+.3;
@@ -7053,7 +7053,7 @@ async function buildEp16(){
     wires:[...SUP,...MOTW.map(w=>({...w,flow:[[T(12,0)+.8,0],[T(12,0)+1,2],[oc,2],[oc+.2,0],[dd,0],[dd+.3,-1.3],[ov+.5,-1.3],[ov+.8,0]],fcol:'#fde047',glow:[[T(12,0)+.8,0],[T(12,0)+1,1],[oc,1],[oc+.3,0]]})),PE1,PE2],
     hl:hlm(hl(['T_P','T_N'],T(12,3),ov+1.5)),cam:[[0,...BENCH],[oc-.2,...DSP],[T(12,2),...MOT],[T(12,3),...TERM],[ov-.3,...DSP],[ov+1,...BENCH]]});
   chip('Accel too short',[PS(12),oc],RED);chip('OC · over current',[oc,T(12,2)],RED);chip('Decel too short → motor acts as generator',[T(12,2),T(12,4)],ORG);chip('OV · over voltage',[ov,PE(12)],RED);
-  ng('dcmeter',{x:860,y:440,w:380,h:200,title:'DC BUS',v:[[0,560],[dd,560],[ov,800]],noPop:true},[T(12,3),PE(12)]);
+  ng('dcmeter',{x:860,y:100,w:380,h:200,title:'DC BUS',v:[[0,560],[dd,560],[ov,800]],noPop:true},[T(12,3),PE(12)]);
   /* ---- P13 stop mode: ramp vs coast ---- */
   erase(PS(13),'#e3e8ee');bg(P(13),'#e3e8ee');
   const rs=T(13,1)+.3,cs=T(13,2)+.5;
