@@ -8,8 +8,6 @@ Neenga enna solluveenga? A, push button-la NO contact-ku badhila NC contact-la w
 
 Answer B. Pudhu VFD-la RUN order keypad-la irundhu dhaan varum-nu factory-laye set aagi irukkum. Run command source parameter-ai Terminal-ku maathunaa, motor odum. Padhinanjaayiram rooba save.
 
-Ippo ungalukku oru kelvi. Setting maathiyaachu. Button press pannaa display-la RUN light eriyudhu. Aanaa motor innum nagaradhu, zero hertz. Yen? Comment-la explain pannunga.
-
-Full video link keezha irukku.
+Indha maadhiri innum niraiya VFD settings-ai full video-la paarunga. Link keezha irukku.
 
 Like pannunga, share pannunga, subscribe pannunga.
