@@ -23,16 +23,16 @@ Indha video-la:
 0:45 Why the motor did not start
 0:59 What are VFD parameters
 1:12 Run command source
-1:30 Frequency source
+1:31 Frequency source
 2:05 Motor nameplate details
-2:31 Quiz – bottles falling on the conveyor
-2:56 Maximum frequency
-3:15 Acceleration / deceleration time
-3:26 Quiz answer
+2:30 Quiz – bottles falling on the conveyor
+2:54 Maximum frequency
+3:12 Acceleration / deceleration time
+3:24 Quiz answer
 3:44 OC and OV trips
-4:04 Stop mode – ramp vs coast
-4:20 Old VFD mistake – factory reset
-4:42 Summary
+4:02 Stop mode – ramp vs coast
+4:19 Old VFD mistake – factory reset
+4:41 Summary
 4:59 Challenge
 
 #VFD #VFDParameters #ElectricalTamil #FactoryDecodeTamil #ACDrive
