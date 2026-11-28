@@ -7367,7 +7367,7 @@ async function buildEp17(){
   presenter([PS(9)+.1,PE(9)-.05],{poses:EP17_POSE,size:280,x:40,y:H-286,facing:1,entrance:'draw',draw:.7});
   /* ---- P10–P11 quiz answer: holding across X0 AND X1 ---- */
   erase(PS(10),'#e3e8ee');bg(P(10,11));
-  const s10=e17sim('wrong',T(10,2),T(10,5)+1.5,{l0:.7,fill:.25,draw:.05}),s11=e17sim('correct',T(11,4),PE(11)+1,{l0:.7,fill:.25,draw:.05,y0:1});
+  const s10=e17sim('wrong',T(10,2),T(10,5)+1.5,{l0:.7,fill:.25,draw:.05,y0:1}),s11=e17sim('correct',T(11,4),PE(11)+1,{l0:.7,fill:.25,draw:.05,y0:1});
   tank([PS(10),T(11,4)],{x:600,w:680,lvl:[[0,.7],...s10.lvl],pump:[[0,1],...s10.pump],puddle:[[T(10,4)+1.6,0],[T(10,5)+3,.8]],cam:[c7(0,SPLIT)]});
   tank([T(11,4),PE(11)],{x:600,w:680,lvl:[[0,.7],...s11.lvl],pump:[[0,1],...s11.pump],cam:[c7(0,SPLIT)]});
   lad([PS(10),T(11,4)],{title:'Overflow program',rungs:[{...E17_RUNG_BAD,bad:'par'}],st:{X0:[[0,1],...s10.X0],X1:[[0,0],...s10.X1],Y0:[[0,1],...s10.Y0]}});
