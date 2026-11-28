@@ -1,0 +1,33 @@
+Oru water bottle packing line. Ovvoru box-layum 12 bottle podanum. Operator nikkuraaru, bottle ennuraaru, box full aanadhum maathuraaru. Oru naal customer call panraanga. Oru box-la 11 bottle dhaan irukku. Innoru box-la 13. Ovvoru box-layum nashtam.
+
+Operator thappu illa. Ettu mani neram ninnu ennikittae irundhaa, yaarukkum oru edathula thappu varum. Indha ennura velaiyai PLC-kitta kuduthaa, thappe varaadhu.
+
+Cricket match-la umpire-ai paathirukkeengalaa? Ovvoru ball podumbodhum, pocket-la irundhu oru chinna kal-ai eduthu innoru pocket-ku maathuvaaru. Aaru kal maarinadhum, over mudinjiduchu-nu kai thookkuvaaru. Adutha over-ku thirumba muthalla irundhu.
+
+PLC-la idhe velaiyai pannradhu dhaan Counter. Moonu vishayam venum. Ovvoru ball maadhiri, count panna oru input. Aaru maadhiri, ethana varaikkum ennanum-nu oru set value. Adutha over maadhiri, thirumba zero-ku kondu vara oru reset.
+
+Mudhal rung. Bottle sensor X0. Adhukku pinnaadi counter C0, set value K12. Ovvoru bottle sensor munnaadi pogumbodhum, current value onnu yerum. 1, 2, 3, ippadi 12 varaikkum.
+
+Rendaavadhu rung. Current value 12-ai thottadhum, C0 contact close aagum. Andha contact-ai conveyor rung-la NC-aa vechirukkom. Adhanaala conveyor nikkum. Box full lamp eriyum.
+
+Moonaavadhu rung. Pudhu box vandhadhum, box sensor X1 ON aagum. Adhu RST C0-ai kudukkum. Current value zero aagum. C0 contact open aagum. Conveyor thirumba odum.
+
+Ippo oru quiz. Conveyor odikittu irukkumbodhu, oru bottle sensor munnaadiye maatti ninnuduchu. Sensor pathu second ON-laye irukku. PLC oru second-la nooru dhadava scan pannum. Counter ethana count pannum? A, ovvoru scan-kum onnu, aayiram count. B, onnu mattum. C, sensor OFF aagura varaikkum zero. Yosichu vechukonga.
+
+Counter-um timer-um ore maadhiri therinjaalum, rendum vera vera. Timer neraththai ennum. Counter nigazhchiyai ennum. Bottle mella vandhaalum, vegama vandhaalum, counter-ku onnu dhaan.
+
+Ippo andha quiz. Answer B. Counter sensor ON-la irukkuradha ennaadhu. OFF-la irundhu ON-ku maarura andha oru nodiyai mattum dhaan ennum. Idhukku rising edge-nu peyar. Pathu second ninnaalum, adhu oru bottle dhaan.
+
+Aanaa indha rising edge dhaan oru periya problem-ukku kaaranam. Rendu bottle idaiveli illama otti varudhu-nu vechukkonga. Sensor rendaiyum oru periya bottle-aa paakkum. ON-la irundhu OFF aagave illa. Count onnu dhaan yerum. Box-la 13 bottle pogum.
+
+Adhanaala bottle-ku naduvula gap kandippa venum. Sensor-ku munnaadi conveyor speed-ai konjam koottuvaanga, illa star wheel vechu bottle-ai thalli thalli anuppuvaanga. Gap irundhaa dhaan sensor OFF aagum.
+
+Innoru problem. Box-la 7 bottle pottirukkum podhu current cut. Normal counter power pona udane zero aagidum. Current vandhadhum thirumba 12 ennum. Box-la 19 bottle. Idhukku retentive counter use pannuvaanga. Power ponaalum count-ai marakkaadhu.
+
+Factory-la nadakkura oru mistake. Reset rung-ai marandhuduvaanga. Mudhal box 12 aanadhum conveyor nikkum. Adhukku appuram enna pannaalum odaadhu. Counter 12-laye maatti nikkum.
+
+Summary paarppom. Counter nigazhchiyai ennum. Count input, set value, reset moonum venum. Rising edge-la dhaan count aagum. Bottle-ku naduvula gap venum. Power cut-ku retentive counter. Reset rung marakkaadheenga.
+
+Ungalukku oru kelvi. Operator reset button-ai press panni pidichukittae irukkaaru. Appo bottle vandhukittae irukku. Counter count pannumaa? Yen-nu comment-la explain pannunga. Answer pinned comment-la irukkum.
+
+Video useful-aa irundhaa like pannunga, share pannunga, Factory Decode Tamil channel-ai subscribe pannunga.
