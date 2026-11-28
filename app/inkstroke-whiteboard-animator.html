@@ -2317,6 +2317,8 @@ const TPL={
  ep09s:{name:'EP09 Short – Lift button latching (9:16)',desc:'0:37 · 3D lift hook, decode, power-cut danger, CTA',style:'white',scenes:[]},
  sd3dtest:{name:'Star-Delta 3D stage test',desc:'real 3D panel, contactors, motor, ammeter, light',style:'white',scenes:[]},
  sdmgtest:{name:'Star-Delta motion graphic test',desc:'animated contactors, current, motor, ammeter, light, timer',style:'white',scenes:[]},
+ ep17:{name:'EP17 – tank level control',desc:'Ladder programming mistakes',style:'white',scenes:[]},
+ ep17s:{name:'EP17 Short',desc:'Overflow hook',style:'white',scenes:[]},
  ep16:{name:'EP16 – VFD parameters',desc:'Parameter setting',style:'white',scenes:[]},
  ep16s:{name:'EP16 Short',desc:'Motor not running hook',style:'white',scenes:[]},
  ep15:{name:'EP15 – VFD wiring (4:46)',desc:'3D VFD terminals, wiring mistakes',style:'white',scenes:[]},
@@ -5672,7 +5674,7 @@ function g3Tank(){const B=g3Base('#dfe6ee'),{T,S,cam,M,box,cyl}=B;
     drops.forEach((d,i)=>{d.visible=st.Y0&&kv(e.flowvis,tl,1)>.5;if(!d.visible)return;const u=((tl*.22+i/drops.length)%1);d.position.copy(pcv.getPointAt(u))});
     const arc=e.arc?e.arc.some(a=>tl>=a&&tl<a+.18):false;spark.material.opacity=arc?1:0;ctM.color.set(new T.Color('#e5e7eb').lerp(new T.Color('#3b2f2a'),kv(e.burnt,tl,0)));
     alarm.material.emissiveIntensity=st.Y1?(1.5+Math.sin(tl*12)):0;
-    const ov=Math.max(0,L-1)*12;fall.forEach((d,i)=>{d.visible=ov>0.01;if(!d.visible)return;const u=((tl*.9+i/fall.length)%1),a=.25+(i%8)/8*2.6;d.position.set(TX+Math.cos(a)*TR*1.1,TB+TH+.03-u*(TB+TH),Math.sin(a)*TR*1.1);});
+    const ov=Math.max(0,L-1)*12;fall.forEach((d,i)=>{d.visible=ov>0.01;if(!d.visible)return;const u=((tl*1.3+Math.floor(i/3)/8)%1),a=[.5,1.2,2.0][i%3],rr=TR*(1.04+u*u*.5);d.position.set(TX+Math.cos(a)*rr,TB+TH+.03-u*u*(TB+TH),Math.sin(a)*rr);d.scale.set(.8,1.8,.8);});
     const pu=kv(e.puddle,tl,0);pud.visible=pu>.01;pud.scale.setScalar(Math.max(.01,pu*2.2));
     g3camKeys(cam,e.cam||[[0,.1,2.2,6.8,-.1,1.55,0]],tl)}}}
 G3_BUILD.tank=g3Tank;
@@ -5680,10 +5682,10 @@ G3_BUILD.tank=g3Tank;
 /* rungs: [{items:[{t:'NO'|'NC'|'COIL'|'SET'|'RST',tag,lab}], par:{from,to,t,tag,lab}}]; e.st: {tag:[[t,v]]} */
 function drawLad17(e,c,tl){const{x,y,w}=e,RH=e.rh||170,F=(s,wt=700)=>`${wt} ${s}px "IBM Plex Sans",Arial`,ON='#22a447',OFF='#9aa5b1',INK='#1d1d1f';
   const val=t=>{const k=e.st&&e.st[t];return k?!!e15step(k,tl,0):false};
-  const H=e.rungs.reduce((a,r)=>a+(r.par?RH+60:RH),0)+40;
+  const H=e.rungs.reduce((a,r)=>a+(r.par?RH*1.6:RH),0)+(e.title?60:30);
   c.save();c.fillStyle='#fff';c.strokeStyle=INK;c.lineWidth=4;ngRR(c,x,y,w,H,16);c.fill();c.stroke();
   if(e.title){c.font=F(24,800);c.fillStyle=INK;c.textAlign='left';c.fillText(e.title,x+18,y+34)}
-  const L=x+50,R=x+w-40;let yy=y+(e.title?90:60);
+  const L=x+50,R=x+w-40;let yy=y+(e.title?100:70);
   c.lineWidth=6;c.strokeStyle=ON;c.beginPath();c.moveTo(L,y+(e.title?50:24));c.lineTo(L,y+H-16);c.stroke();c.strokeStyle=INK;c.beginPath();c.moveTo(R,y+(e.title?50:24));c.lineTo(R,y+H-16);c.stroke();
   const wire=(x1,y1,x2,y2,on)=>{c.save();c.strokeStyle=on?ON:OFF;c.lineWidth=on?6:3;if(on){c.shadowColor=ON;c.shadowBlur=10}c.beginPath();c.moveTo(x1,y1);c.lineTo(x2,y2);c.stroke();c.restore()};
   const glyph=(it,cx,cy,inOn,closed,bad,ok)=>{const out=inOn&&closed;c.save();c.fillStyle='#fff';c.fillRect(cx-30,cy-32,60,64);const col=out?ON:INK;c.strokeStyle=col;c.lineWidth=5;
@@ -5694,9 +5696,9 @@ function drawLad17(e,c,tl){const{x,y,w}=e,RH=e.rh||170,F=(s,wt=700)=>`${wt} ${s}
     c.font=F(22,800);c.fillStyle=out||(/COIL|SET|RST/.test(it.t)&&inOn)?'#15803d':'#1e3a8a';c.textAlign='center';c.fillText(it.tag,cx,cy-42);if(it.lab){c.font=F(16,600);c.fillStyle='#6b7280';c.fillText(it.lab,cx,cy+52)}
     if(bad){c.strokeStyle='#e5383b';c.lineWidth=6;c.beginPath();c.ellipse(cx,cy,48,52,0,0,7);c.stroke()}if(ok){c.strokeStyle='#22a447';c.lineWidth=6;c.beginPath();c.ellipse(cx,cy,48,52,0,0,7);c.stroke()}
     c.restore();return out};
-  e.rungs.forEach((r,ri)=>{if(r.show&&!(tl>=r.show[0]&&tl<(r.show[1]??1e9))){yy+=r.par?RH+60:RH;return}
+  e.rungs.forEach((r,ri)=>{if(r.show&&!(tl>=r.show[0]&&tl<(r.show[1]??1e9))){yy+=r.par?RH*1.6:RH;return}
     const n=r.items.length,seg=(R-L)/(n+1),X=i=>L+seg*(i+1),cy=yy;
-    if(e.scan&&tl>=e.scan[0]&&tl<=e.scan[1]){const f=(tl-e.scan[0])/(e.scan[1]-e.scan[0]),cur=Math.floor(f*e.rungs.length);if(cur===ri){c.save();c.fillStyle='rgba(245,158,11,.14)';c.fillRect(L+4,cy-70,R-L-8,(r.par?RH+60:RH)-20);c.restore()}}
+    if(e.scan&&tl>=e.scan[0]&&tl<=e.scan[1]){const f=(tl-e.scan[0])/(e.scan[1]-e.scan[0]),cur=Math.floor(f*e.rungs.length);if(cur===ri){c.save();c.fillStyle='rgba(245,158,11,.14)';c.fillRect(L+4,cy-70,R-L-8,(r.par?RH*1.6:RH)-20);c.restore()}}
     if(r.num!=null){c.font=F(18,800);c.fillStyle='#94a3b8';c.textAlign='center';c.fillText(r.num,x+24,cy+6)}
     // compute power along the series path, with an optional parallel branch from item `from` to `to`
     let p=true,px=L,pA=null,xA=0;const outs=[];
@@ -5704,11 +5706,11 @@ function drawLad17(e,c,tl){const{x,y,w}=e,RH=e.rh||170,F=(s,wt=700)=>`${wt} ${s}
       const isCoil=/COIL|SET|RST/.test(it.t);const closed=isCoil?true:(it.t==='NO'?val(it.tag):!val(it.tag));
       wire(px,cy,cx-30,cy,p);const o=glyph(it,cx,cy,p,closed,r.bad===i,r.ok===i);outs.push(o);
       p=isCoil?false:o;px=cx+30;
-      if(r.par&&i===r.par.to){const xB=cx+seg/2,by=cy+RH*.62,bc=r.par.t==='NO'?val(r.par.tag):!val(r.par.tag),bo=pA&&bc;
+      if(r.par&&i===r.par.to){const xB=cx+seg/2,by=cy+RH*.78,bc=r.par.t==='NO'?val(r.par.tag):!val(r.par.tag),bo=pA&&bc;
         wire(xA,cy,xA,by,pA);wire(xA,by,(xA+xB)/2-30,by,pA);glyph({t:r.par.t,tag:r.par.tag,lab:r.par.lab},(xA+xB)/2,by,pA,bc,r.bad==='par',r.ok==='par');wire((xA+xB)/2+30,by,xB,by,bo);wire(xB,by,xB,cy,bo);
         wire(px,cy,xB,cy,p);p=p||bo;px=xB}});
     wire(px,cy,R,cy,false);
-    yy+=r.par?RH+60:RH});
+    yy+=r.par?RH*1.6:RH});
   c.restore()}
 /* home inverter analogy – clean 2D schematic */
 function drawInverter(e,c,tl){const{x,y,w,h}=e;const bad=kv(e.bad,tl,0),smk=kv(e.smoke,tl,0);c.save();c.lineWidth=5;c.strokeStyle='#1f2430';c.font='800 30px "IBM Plex Sans",Arial';c.textAlign='center';
@@ -7270,6 +7272,149 @@ async function buildEp16Thumb(){stopAudio();S.playing=false;S.scenes=[];S.sel=nu
     wires:[...e15sup(['T_R','T_S','T_T'],-9),...e15mot(['T_U','T_V','T_W'],-9),e15pe(-9),e15pem(-9),e15ctl('C_FWD',[-.175,.075,-.035],.075,7,'#1d4ed8',-9),e15ctl('C_COM',[-.175,.065,-.035],.065,8,'#111827',-9)],cam:c});
   s.els.push(K(window.__THUMB_CAM||[[0,.06,.07,.5,.08,.04,0]]));
   S.captions=false;S.showHand=false;S.cur=0;S.pin=false;S.t=1;refresh()}
+const EP17_A=[[0.0, 1.88, 0], [2.29, 3.7, 0], [4.17, 6.31, 0], [6.75, 7.71, 0], [8.47, 12.29, 0], [12.83, 13.88, 0], [14.69, 15.69, 1], [16.03, 16.79, 1], [17.4, 18.3, 1], [18.72, 19.41, 1], [20.83, 22.3, 2], [22.92, 24.85, 2], [24.85, 26.61, 2], [26.61, 29.21, 2], [29.93, 35.15, 2], [35.15, 37.51, 2], [38.93, 40.31, 3], [40.95, 43.28, 3], [43.28, 45.42, 3], [46.07, 50.26, 3], [50.26, 52.5, 3], [52.5, 54.58, 3], [54.58, 56.71, 3], [58.96, 59.57, 4], [60.25, 64.04, 4], [64.67, 67.74, 4], [68.23, 71.75, 4], [72.32, 75.19, 4], [75.8, 77.32, 4], [77.93, 78.51, 4], [79.88, 81.82, 5], [81.82, 83.82, 5], [83.82, 88.3, 5], [88.6, 90.76, 5], [91.18, 95.0, 5], [95.38, 98.09, 5], [98.71, 99.52, 5], [99.52, 103.85, 5], [105.27, 106.47, 6], [106.47, 109.15, 6], [109.15, 114.09, 6], [114.09, 116.05, 6], [116.05, 118.53, 6], [118.53, 124.53, 6], [124.53, 126.37, 6], [126.37, 128.43, 6], [128.43, 130.49, 6], [131.48, 138.53, 7], [138.53, 144.93, 7], [145.88, 148.66, 8], [148.66, 155.32, 8], [155.32, 157.0, 8], [157.0, 161.12, 8], [161.12, 164.28, 8], [164.48, 167.85, 8], [169.26, 169.88, 9], [170.38, 173.79, 9], [174.43, 176.31, 9], [176.96, 179.64, 9], [180.25, 182.05, 9], [184.18, 185.33, 10], [185.8, 186.52, 10], [186.92, 194.91, 10], [195.26, 198.84, 10], [199.09, 202.98, 10], [203.21, 204.51, 10], [205.37, 206.31, 11], [206.82, 210.99, 11], [211.29, 212.04, 11], [212.72, 214.64, 11], [215.04, 216.85, 11], [217.27, 219.96, 11], [220.2, 222.94, 11], [224.35, 225.06, 12], [225.65, 230.44, 12], [230.88, 232.17, 12], [232.61, 234.07, 12], [234.19, 235.49, 12], [236.8, 241.06, 13]];
+const EP17_ON={"2": 20.85, "3": 38.94, "4": 59.07, "5": 79.9, "6": 105.29, "8": 146.38, "9": 169.27, "10": 184.34, "12": 224.37, "13": 236.92};
+const EP17_POSE=[[0.0, "talk_a"], [2.29, "explain_a"], [4.17, "talk_b"], [6.75, "point_level"], [8.47, "talk_c"], [12.83, "worry2"], [14.69, "talk_d"], [16.03, "talk_a"], [17.4, "explain_a"], [18.72, "talk_b"], [20.83, "point_level"], [22.92, "talk_c"], [24.85, "worry2"], [26.61, "talk_d"], [29.93, "talk_a"], [35.15, "explain_a"], [38.93, "talk_b"], [40.95, "point_level"], [43.28, "talk_c"], [46.07, "worry2"], [50.26, "talk_d"], [52.5, "talk_a"], [54.58, "explain_a"], [58.96, "talk_b"], [60.25, "point_level"], [64.67, "talk_c"], [68.23, "worry2"], [72.32, "talk_d"], [75.8, "talk_a"], [77.93, "explain_a"], [79.88, "talk_b"], [81.82, "point_level"], [83.82, "talk_c"], [88.6, "worry2"], [91.18, "talk_d"], [95.38, "talk_a"], [98.71, "explain_a"], [99.52, "talk_b"], [105.27, "point_level"], [106.47, "talk_c"], [109.15, "worry2"], [114.09, "talk_d"], [116.05, "talk_a"], [118.53, "explain_a"], [124.53, "talk_b"], [126.37, "point_level"], [128.43, "talk_c"], [131.48, "worry2"], [138.53, "talk_d"], [145.88, "talk_a"], [148.66, "explain_a"], [155.32, "talk_b"], [157.0, "point_level"], [161.12, "talk_c"], [164.48, "worry2"], [169.26, "talk_d"], [170.38, "talk_a"], [174.43, "explain_a"], [176.96, "talk_b"], [180.25, "point_level"], [184.18, "talk_c"], [185.8, "worry2"], [186.92, "talk_d"], [195.26, "talk_a"], [199.09, "explain_a"], [203.21, "talk_b"], [205.37, "point_level"], [206.82, "talk_c"], [211.29, "worry2"], [212.72, "talk_d"], [215.04, "talk_a"], [217.27, "explain_a"], [220.2, "talk_b"], [224.35, "point_level"], [225.65, "talk_c"], [230.88, "worry2"], [232.61, "talk_d"], [234.19, "talk_a"], [236.8, "explain_a"]];
+const EP17_NARR=241.32;
+const EP17_SA=[[0.0, 0.72, 0], [1.26, 3.19, 0], [3.54, 5.21, 0], [5.79, 6.67, 0], [7.21, 10.42, 0], [10.88, 11.63, 1], [12.23, 17.62, 1], [18.13, 21.99, 1], [22.87, 24.28, 2], [24.39, 25.28, 2], [25.61, 28.13, 2], [28.71, 31.49, 2], [32.19, 33.25, 3], [33.37, 34.22, 3], [34.69, 36.88, 3], [37.32, 38.5, 3], [39.66, 42.23, 4], [42.64, 44.52, 5]];
+const EP17_SON={"4": 39.68};
+const EP17_SPOSE=[[0.0, "talk_a"], [1.26, "explain_a"], [3.54, "talk_b"], [5.79, "point_level"], [7.21, "talk_c"], [10.88, "worry2"], [12.23, "talk_d"], [18.13, "talk_a"], [22.87, "explain_a"], [24.39, "talk_b"], [25.61, "point_level"], [28.71, "talk_c"], [32.19, "worry2"], [33.37, "talk_d"], [34.69, "talk_a"], [37.32, "explain_a"], [39.66, "talk_b"], [42.64, "point_level"]];
+const EP17_SNARR=44.82;
+/* ================= EP17 builders – tank level control, ladder programming mistakes ================= */
+/* tiny plant simulator: level dynamics + the chosen ladder program → keyframes for the 3D tank and the ladder */
+function e17sim(mode,t0,t1,o={}){const dt=.05,LO=.22,HI=.82;let L=o.l0??.15,Y=!!o.y0,keys={lvl:[],pump:[],X0:[],X1:[],Y0:[]},last={};
+  const push=(k,t,v)=>{if(last[k]!==v){keys[k].push([t,v]);last[k]=v}};
+  for(let t=t0;t<=t1+1e-6;t+=dt){const x0=L>=LO,x1=L>=HI;
+    if(mode==='correct')Y=(!x0||Y)&&!x1;
+    else if(mode==='wrong')Y=((!x0&&!x1)||Y);
+    else if(mode==='single')Y=!x1;
+    else if(mode==='off')Y=false;
+    const draw=(o.draw??.05)+(o.wave?Math.sin(t*7)*.04:0);L=Math.max(0,Math.min(1.08,L+((Y?(o.fill??.16):0)-draw)*dt));
+    keys.lvl.push([t,+L.toFixed(4)]);push('pump',t,Y?1:0);push('X0',t,x0?1:0);push('X1',t,x1?1:0);push('Y0',t,Y?1:0)}
+  // thin the level track
+  keys.lvl=keys.lvl.filter((k,i)=>i%4===0||i===keys.lvl.length-1);return keys}
+const E17_RUNG_OK={num:0,items:[{t:'NC',tag:'X0',lab:'Low'},{t:'NC',tag:'X1',lab:'High'},{t:'COIL',tag:'Y0',lab:'Pump'}],par:{from:0,to:0,t:'NO',tag:'Y0',lab:'Holding'}};
+const E17_RUNG_BAD={num:0,items:[{t:'NC',tag:'X0',lab:'Low'},{t:'NC',tag:'X1',lab:'High'},{t:'COIL',tag:'Y0',lab:'Pump'}],par:{from:0,to:1,t:'NO',tag:'Y0',lab:'Holding'}};
+async function buildEp17(){
+  stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('16:9');S.narrOff=0;S.art='sketch';
+  try{await document.fonts.load('700 30px InkHand')}catch(_){}try{await window.E14_MOTOR_READY}catch(_){}
+  const A=EP17_A,NARR=EP17_NARR,END=NARR+15;S.g3q=.72;
+  const s=newScene({name:'EP17 – tank level control',style:'white',transition:'cut',trans:0,hold:0});s.minDur=END;S.scenes.push(s);
+  const K=ep10Kit(s,A,NARR),{ng,T,PS:PS0,card,presenter}=K,RED=NG.red,GRN=NG.grn,BLU=NG.blue,PUR='#7c3aed',ORG='#f59e0b',NAV=NG.navy;
+  const PS=k=>EP17_ON[k]!=null?EP17_ON[k]-.12:PS0(k),PE=k=>k>=13?END:PS(k+1),P=(a,b=a)=>[PS(a),PE(b)];
+  const chip=(t,win,bg=NAV,o={})=>card(o.x??28,o.y??22,Math.min(760,64+t.length*17),62,t,[win[0],win[1]-.45],{bg,size:28,...o});
+  const bg=(win,col='#e3e8ee')=>ng('fill',{x:0,y:0,w:W,h:H,col,noPop:true},win);
+  const erase=(t,col='#eef1f5')=>ng('erase',{ts:t-1.12,ed:1.0,pop:.01,x:0,y:0,w:W,h:H,col,noPop:true},[t-1.12,t+.08]);
+  const tank=(win,o)=>ng('g3',{shot:'tank',x:0,y:0,w:W,h:H,noPop:true,...o},win);
+  const lad=(win,o)=>ng('lad17',{x:30,y:100,w:600,rh:150,noPop:true,...o},win);
+  const rc=(i,t,win,o={})=>card(o.x??740,o.y??(130+i*96),o.w??500,o.h||80,t,win,{size:o.size||30,...o});
+  const WIDE=[0,.1,2.2,6.8,-.1,1.55,0],TOP=[0,-1.1,3.6,2.6,-1.1,3.0,0],FLO=[0,-.55,3.0,1.6,-.6,2.9,0],PUMP=[0,.7,.9,2.0,.15,.4,.3],PAN=[0,2.3,1.6,.9,2.3,1.6,-2.4],SPLIT=[0,-1.9,2.4,6.2,-.7,1.7,0];
+  const c7=(t,v)=>[t,...v.slice(1)];
+  /* ---- P0–P1 hook: program “OK”, tank overflows, pump never stops ---- */
+  bg([0,PS(2)]);
+  const ov=T(0,4);
+  tank([0,PS(2)],{lvl:[[0,.55],[ov-.2,1.0],[ov+.8,1.08]],pump:[[0,1]],puddle:[[ov,0],[ov+4,1]],ripple:[[0,1]],
+    cam:[c7(0,WIDE),c7(T(0,1),PUMP),c7(T(0,2),PAN),c7(T(0,4)-.2,WIDE),c7(T(0,5),PUMP),c7(PS(1),FLO),c7(T(1,1),PAN),c7(T(1,2),WIDE)]});
+  chip('Program downloaded · 0 errors',[T(0,2),T(0,4)],GRN);chip('Night shift: OVERFLOW',[T(0,4),T(0,5)],RED);chip('Pump never stopped',[T(0,5),PS(1)],RED);
+  chip('Sensor OK',[PS(1),T(1,1)],GRN);chip('Wiring OK',[T(1,1),T(1,2)],GRN);card(340,250,600,130,'Mistake in the PROGRAM?',[T(1,2),PS(2)],{size:46,bg:'#fef3c7'});
+  presenter([T(1,2),PE(1)-.05],{poses:EP17_POSE,size:280,x:40,y:H-286,facing:1,entrance:'draw',draw:.7});
+  /* ---- P2 home overhead tank ---- */
+  erase(PS(2),'#e3e8ee');bg(P(2));
+  const h2=T(2,1),hs=e17sim('correct',h2,PE(2)+1,{l0:.2,fill:.22,draw:.06});
+  tank(P(2),{house:true,lvl:[[0,.2],...hs.lvl],pump:[[0,0],...hs.pump],cam:[c7(0,[0,-1.1,2.4,5,-1.1,1.8,0]),c7(T(2,1),[0,-.2,2.9,4.3,-1.1,2.5,0])]});
+  chip('Water low → motor ON',[T(2,1),T(2,2)],BLU);chip('Full → motor OFF',[T(2,2),T(2,3)],GRN);chip('Never switched at half-tank',[T(2,3),T(2,4)],ORG);chip('One contact in the wrong place → overflow',[T(2,5),PE(2)],RED);
+  /* ---- P3 correct program (ladder + live tank) ---- */
+  erase(PS(3),'#e3e8ee');bg(P(3));
+  const s3=e17sim('correct',T(3,6)-1.5,PE(3)+1,{l0:.3,fill:.5,draw:.18});
+  tank(P(3),{x:600,w:680,lvl:[[0,.3],...s3.lvl],pump:[[0,0],...s3.pump],cam:[c7(0,SPLIT)]});
+  lad(P(3),{title:'Correct pump rung',rungs:[E17_RUNG_OK],st:{X0:[[0,0],...s3.X0],X1:[[0,0],...s3.X1],Y0:[[0,0],...s3.Y0]}});
+  rc(0,'X0 low · X1 high',[T(3,1),T(3,3)],{x:40,y:520,w:420,size:26});rc(0,'Both ON when water touches',[T(3,2),T(3,3)],{x:40,y:610,w:520,size:24,bg:'#dbeafe'});
+  chip('Low → start · High → stop',[T(3,6),PE(3)],GRN);
+  /* ---- P4 quiz on the overflow program ---- */
+  erase(PS(4),'#e3e8ee');bg(P(4));
+  tank(P(4),{x:600,w:680,lvl:[[0,1.04]],pump:[[0,1]],puddle:[[0,.7]],ripple:[[0,1]],cam:[c7(0,SPLIT)]});
+  chip('QUIZ · overflow program',[PS(4),PE(4)],ORG);
+  [['A','Holding contact in the wrong place'],['B','X1 used as NO instead of NC'],['C','Y0 coil written twice']].forEach(([l,t],i)=>{card(60,150+i*120,90,96,l,[T(4,2+i),PE(4)],{bg:[BLU,GRN,PUR][i],size:44});card(160,150+i*120,470,96,t,[T(4,2+i)+.15,PE(4)],{size:28})});
+  presenter([T(4,5),PE(4)-.05],{poses:EP17_POSE,size:240,x:40,y:H-250,facing:1,entrance:'draw',draw:.6});
+  /* ---- P5 mistake: sensor contact type ---- */
+  erase(PS(5),'#e3e8ee');bg(P(5));
+  const f5=T(5,4),e5=T(5,5);
+  tank(P(5),{x:600,w:680,lvl:[[0,.5],[f5-.3,.95],[e5-.3,.95],[e5+1.5,.1]],pump:[[0,0],[f5,1],[e5,0]],puddle:[[f5,0],[e5,.4]],cam:[c7(0,SPLIT)]});
+  lad(P(5),{title:'Wrong: X0 as NO',rungs:[{num:0,items:[{t:'NO',tag:'X0',lab:'Low?'},{t:'NC',tag:'X1',lab:'High'},{t:'COIL',tag:'Y0',lab:'Pump'}],bad:0}],
+    st:{X0:[[0,1],[e5+.8,0]],X1:[[0,0]],Y0:[[0,0],[f5,1],[e5,0]]}});
+  chip('MISTAKE 1 · contact type',[PS(5),T(5,3)],RED);chip('Float is ON when water touches it',[T(5,3),T(5,4)],BLU);chip('Full tank → pump RUNS',[f5,e5],RED);chip('Empty tank → pump STOPS',[e5,T(5,6)],RED);chip('Upside-down!',[T(5,6),T(5,7)],RED);chip('Check sensor state in the field first',[T(5,7),PE(5)],GRN);
+  /* ---- P6–P7 double coil ---- */
+  erase(PS(6),'#eef1f5');bg(P(6,7),'#eef1f5');
+  const AUTO={num:0,items:[{t:'NC',tag:'X0',lab:'Low'},{t:'NC',tag:'X1',lab:'High'},{t:'COIL',tag:'Y0',lab:'Pump'}],par:{from:0,to:0,t:'NO',tag:'Y0',lab:'Holding'}};
+  lad([PS(6),PS(7)],{x:60,y:90,w:760,rh:160,title:'Same Y0 coil twice',scan:[T(6,4),T(6,6)],
+    rungs:[{...AUTO,ok:T(6,5)<9e9?undefined:undefined},{num:1,items:[{t:'NO',tag:'X4',lab:'Manual'},{t:'COIL',tag:'Y0',lab:'Pump'}],show:[T(6,2),1e9]}],st:{X0:[[0,0]],X1:[[0,0]],X4:[[0,0]],M9:[[0,0]],Y0:[[0,0]]}});
+  ng('dcmeter',{x:860,y:110,w:380,h:200,title:'PLC OUTPUT Y0',v:[[0,0]],unit:'(OFF)',noPop:true},[T(6,6),PS(7)]);
+  rc(0,'Rung 0 → Y0 ON',[T(6,5),PS(7)],{x:860,y:340,w:380,bg:'#dcfce7',size:26});rc(0,'Rung 1 → Y0 OFF',[T(6,5)+1.2,PS(7)],{x:860,y:430,w:380,bg:'#fee2e2',size:26});rc(0,'Last rung wins',[T(6,6),PS(7)],{x:860,y:520,w:380,bg:RED,size:30});
+  chip('MISTAKE 2 · double coil',[PS(6),T(6,3)],RED);chip('No error – only a warning',[T(6,8),PS(7)],ORG);
+  lad([PS(7),PE(7)],{x:60,y:80,w:760,rh:150,title:'Fix: one Y0 coil',st:{X0:[[0,0]],X1:[[0,0]],X4:[[0,0],[T(7,1)+1,1]],M0:[[0,0]],M1:[[0,0],[T(7,1)+1,1]],Y0:[[0,0],[T(7,1)+1,1]],M8:[[0,0]]},
+    rungs:[{num:0,items:[{t:'NC',tag:'X0',lab:'Low'},{t:'NC',tag:'X1',lab:'High'},{t:'COIL',tag:'M0',lab:'Auto'}],par:{from:0,to:0,t:'NO',tag:'M8',lab:'Holding'}},
+      {num:1,items:[{t:'NO',tag:'X4',lab:'Manual'},{t:'COIL',tag:'M1',lab:'Manual'}]},{num:2,items:[{t:'NO',tag:'M0',lab:'Auto'},{t:'COIL',tag:'Y0',lab:'Pump'}],par:{from:0,to:0,t:'NO',tag:'M1',lab:'Manual'},show:[T(7,1),1e9]}]});
+  chip('Auto path OR manual path → ONE coil',[PS(7),PE(7)],GRN);
+  /* ---- P8 SET / RST ---- */
+  erase(PS(8),'#e3e8ee');bg(P(8));
+  tank(P(8),{x:600,w:680,lvl:[[0,.5]],sump:[[0,1],[T(8,3),1],[T(8,3)+1.2,0]],pump:[[0,1]],cam:[c7(0,SPLIT),c7(T(8,3),[0,.6,1.2,2.6,.6,.3,.5])]});
+  lad(P(8),{title:'SET / RST',st:{X0:[[0,0]],X1:[[0,0]],X2:[[0,1],[T(8,3)+1.2,0]],X3:[[0,0]]},
+    rungs:[{num:0,items:[{t:'NC',tag:'X0',lab:'Low'},{t:'SET',tag:'Y0',lab:'Pump'}]},{num:1,items:[{t:'NO',tag:'X1',lab:'High'},{t:'RST',tag:'Y0',lab:'Pump'}],par:{from:0,to:0,t:'NC',tag:'X2',lab:'Sump dry'},show:[0,1e9],bad:T(8,4)<1e9?undefined:undefined}]});
+  chip('MISTAKE 3 · SET without every RST',[PS(8),T(8,3)],RED);chip('Sump empty → who resets Y0?',[T(8,3),T(8,5)],RED);chip('Every stop condition in the RST rung',[T(8,5),PE(8)],GRN);
+  /* ---- P9 summary ---- */
+  erase(PS(9));bg(P(9),'#eef1f5');chip('SUMMARY',[PS(9),PE(9)],NAV);
+  ['Check the sensor state → then NO / NC','One output coil, written once','SET → every stop condition in RST','Every contact in the right place'].forEach((t,i)=>card(330,120+i*110,880,90,(i+1)+'.  '+t,[T(9,1+i),PE(9)],{size:32}));
+  presenter([PS(9)+.1,PE(9)-.05],{poses:EP17_POSE,size:280,x:40,y:H-286,facing:1,entrance:'draw',draw:.7});
+  /* ---- P10–P11 quiz answer: holding across X0 AND X1 ---- */
+  erase(PS(10),'#e3e8ee');bg(P(10,11));
+  const s10=e17sim('wrong',T(10,2),T(10,5)+1.5,{l0:.7,fill:.25,draw:.05}),s11=e17sim('correct',T(11,4),PE(11)+1,{l0:.7,fill:.25,draw:.05,y0:1});
+  tank([PS(10),T(11,4)],{x:600,w:680,lvl:[[0,.7],...s10.lvl],pump:[[0,1],...s10.pump],puddle:[[T(10,4)+1.6,0],[T(10,5)+3,.8]],cam:[c7(0,SPLIT)]});
+  tank([T(11,4),PE(11)],{x:600,w:680,lvl:[[0,.7],...s11.lvl],pump:[[0,1],...s11.pump],cam:[c7(0,SPLIT)]});
+  lad([PS(10),T(11,4)],{title:'Overflow program',rungs:[{...E17_RUNG_BAD,bad:'par'}],st:{X0:[[0,1],...s10.X0],X1:[[0,0],...s10.X1],Y0:[[0,1],...s10.Y0]}});
+  lad([T(11,4),PE(11)],{title:'Correct: holding around X0 only',rungs:[{...E17_RUNG_OK,ok:'par'}],st:{X0:[[0,1],...s11.X0],X1:[[0,0],...s11.X1],Y0:[[0,1],...s11.Y0]}});
+  card(40,470,380,96,'Answer: A',[T(10,1),T(11,1)],{bg:GRN,size:44});chip('Holding goes around X1 too',[T(10,2),T(10,4)],RED,{y:600});chip('X1 opens… power still reaches Y0',[T(10,4),PS(11)],RED,{y:600});
+  rc(0,'B: NO on X1 → pump never fills',[T(11,1),T(11,4)],{x:40,y:470,w:560,size:24});rc(0,'C: double coil → pump never runs',[T(11,3),T(11,4)],{x:40,y:570,w:560,size:24});
+  chip('Holding only around the START contact',[T(11,5),PE(11)],GRN,{y:600});
+  /* ---- P12 audience question ---- */
+  erase(PS(12));bg(P(12),'#eef1f5');
+  lad(P(12),{x:60,y:90,w:760,rh:160,title:'Rungs swapped – manual on top',st:{X0:[[0,0]],X1:[[0,0]],X4:[[0,0]],M9:[[0,0]],Y0:[[0,0]]},
+    rungs:[{num:0,items:[{t:'NO',tag:'X4',lab:'Manual'},{t:'COIL',tag:'Y0',lab:'Pump'}]},{...AUTO,num:1}]});
+  card(860,200,380,120,'Manual button works?',[T(12,2),PE(12)],{size:34,bg:'#fef3c7'});card(860,350,380,90,'Explain in comments',[T(12,3),PE(12)],{size:30,bg:'#dbeafe'});
+  presenter([T(12,1),PE(12)-.05],{poses:EP17_POSE,size:260,x:960,y:H-280,facing:-1,entrance:'draw',draw:.6});
+  /* ---- P13 CTA + end screen ---- */
+  erase(PS(13));bg([PS(13),END],'#eef1f5');ng('eqv',{key:'hand-thumbs-up',x:330,y:120,w:420,h:480,noPop:true},[PS(13),NARR+.3]);
+  card(800,130,420,90,'LIKE',[PS(13),NARR+.3],{bg:BLU,size:40});card(800,240,420,90,'SHARE',[PS(13)+1.2,NARR+.3],{bg:NG.teal,size:40});card(800,350,420,100,'SUBSCRIBE',[PS(13)+2.4,END],{bg:RED,size:44});
+  card(140,280,560,110,'Thanks for watching!',[NARR+.5,END],{size:44,bg:'#ffffff'});
+  presenter([PS(13)+.1,NARR+.3],{poses:EP17_POSE,size:280,x:40,y:H-286,facing:1,entrance:'draw',draw:.7});
+  e16declutter(s);S.captions=false;S.showHand=true;S.penSprite=true;S.cardsDraw=true;S.cur=0;S.pin=false;S.t=1;refresh();
+}
+async function buildEp17Short(){
+  stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('9:16');S.narrOff=0;S.art='sketch';
+  try{await document.fonts.load('700 30px InkHand')}catch(_){}try{await window.E14_MOTOR_READY}catch(_){}
+  const A=EP17_SA,END=EP17_SNARR+.4;S.g3q=.72;
+  const s=newScene({name:'EP17 Short',style:'white',transition:'cut',trans:0,hold:0});s.minDur=END;S.scenes.push(s);
+  const K=ep10Kit(s,A,END),{ng,T,PS:PS0,card,presenter}=K,RED=NG.red,GRN=NG.grn,BLU=NG.blue;
+  const PS=k=>EP17_SON[k]!=null?EP17_SON[k]-.1:PS0(k),PE=k=>k>=5?END:PS(k+1),P=(a,b=a)=>[PS(a),PE(b)];
+  const bg=(win,col='#e3e8ee')=>ng('fill',{x:0,y:0,w:W,h:H,col,noPop:true},win);
+  const c7=(t,v)=>[t,...v.slice(1)];
+  bg([0,PE(3)]);
+  const sb=e17sim('wrong',PS(1),PE(3),{l0:.15,fill:.12,draw:.03});
+  ng('g3',{shot:'tank',x:0,y:H*.42,w:W,h:H*.58,noPop:true,lvl:[[0,.6],[T(0,3),.15],...sb.lvl.filter(k=>k[0]<PS(2))],pump:[[0,0],[T(0,4),1],[T(0,5),0],...sb.pump],
+    puddle:[[T(2,1),0],[T(2,3)+1,1]],ripple:[[0,1]],cam:[c7(0,[0,-.5,1.9,6.6,-.55,1.55,0]),c7(T(0,1),[0,-.8,2.6,3.2,-1.1,2.5,0]),c7(T(0,3),[0,-.5,1.9,6.6,-.55,1.55,0])]},[0,PE(3)]);
+  const lv2=[[PS(2),.6],[T(2,2),1.0],[T(2,3),1.08]];
+  s.els[s.els.length-1].lvl=[[0,.6],[T(0,3),.15],[T(0,4),.15],[T(0,5)-.2,.82],[PS(1),.5],[PS(2),.6],[T(2,2),1.0],[T(2,3),1.08]];
+  s.els[s.els.length-1].pump=[[0,0],[T(0,4),1],[T(0,5)-.2,0],[PS(2),1]];
+  ng('lad17',{x:30,y:150,w:W-60,rh:200,noPop:true,title:'The program',rungs:[E17_RUNG_BAD],st:{X0:[[0,1],[PS(2),1]],X1:[[0,0],[T(2,2),1]],Y0:[[0,1]]}},[PS(1),PE(3)]);
+  const top=(t,win,bgc='#ffffff',sz=40)=>card(60,40,600,96,t,[win[0],win[1]-.45],{bg:bgc,size:sz});
+  top('Low X0 · High X1 · Pump Y0',[.2,T(0,4)],'#ffffff',32);top('Low → START',[T(0,4),T(0,5)],'#dcfce7');top('Full → STOP',[T(0,5),PS(1)],'#dcfce7');
+  top('Holding across X0 AND X1',[T(1,3),PS(2)],'#dbeafe',30);top('Pump never stopped',[T(2,2),T(2,4)],'#fee2e2');top('OVERFLOW!',[T(2,4),PS(3)],RED,48);
+  card(60,40,600,96,'Sensor ✓  Wiring ✓',[PS(3),PE(3)],{bg:'#dcfce7',size:36});card(60,560,600,110,'Which contact is wrong?',[T(3,2),PE(3)],{bg:'#fef3c7',size:40});
+  ng('erase',{ts:PS(4)-1.0,ed:.95,pop:.01,x:0,y:0,w:W,h:H,col:'#eef1f5',noPop:true},[PS(4)-1.0,PS(4)+.06]);bg([PS(4),END],'#eef1f5');
+  card(110,300,500,130,'ANSWER',[PS(4),PE(4)],{size:56,bg:GRN});ng('arrowdn',{x:260,y:560,w:200,h:560},[PS(4)+.6,PE(4)+.1]);card(150,450,420,100,'⬇ LINK BELOW',[PS(4)+.6,PE(4)],{bg:RED,size:40});
+  ng('eqv',{key:'hand-thumbs-up',x:400,y:320,w:300,h:340,noPop:true},[PS(5),END-.25]);card(110,180,500,110,'SUBSCRIBE',[PS(5),END-.25],{bg:RED,size:48});card(110,700,240,80,'LIKE',[PS(5)+.4,END-.25],{bg:BLU,size:34});card(370,700,240,80,'SHARE',[PS(5)+.8,END-.25],{bg:NG.teal,size:34});
+  presenter([T(3,2),END],{poses:EP17_SPOSE,x:-20,y:H-356,size:340,entrance:'draw',draw:.6});
+  e16declutter(s);S.captions=false;S.showHand=true;S.penSprite=true;S.cardsDraw=true;S.cur=0;S.pin=false;S.t=1;refresh();
+}
 async function buildEp17Test(){stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect('16:9');S.narrOff=0;S.art='';try{await window.E14_MOTOR_READY}catch(_){}
   const END=40,s=newScene({name:'EP17 test',style:'white',transition:'cut',trans:0,hold:0});s.minDur=END;S.scenes.push(s);
   const add=(o,win)=>s.els.push(Object.assign({id:uid++,type:'ngd',kind:'g3',x:0,y:0,w:W,h:H,noPop:true,draw:.1,delay:0,withPrev:true,entrance:'none',motion:'none',win},o));
@@ -7292,6 +7437,8 @@ async function loadTemplate(key){S.art='';S.g3q=0;
   if(key==='ep15test')return buildEp15Test();
   if(key==='ep16test')return buildEp16Test();
   if(key==='ep17test')return buildEp17Test();
+  if(key==='ep17')return buildEp17();
+  if(key==='ep17s')return buildEp17Short();
   if(key==='ep16thumb')return buildEp16Thumb();
   if(key==='ep16')return buildEp16();
   if(key==='ep16s')return buildEp16Short();
