@@ -1,0 +1,27 @@
+Panel-la oru button-ku mattum dhaan edam irukku. Adhe button-ai press panna motor ON aaganum, thirumba press panna OFF aaganum. Program ezhudhi, button-ai press panreenga. Motor ON, OFF, ON, OFF-nu padapadakkudhu. Kai-ai eduthadhum, sila nerum ON-la nikkudhu, sila nerum OFF-la. Contactor kaththudhu, motor jerk aagudhu.
+
+Program-la oru line kooda error kaattala. Appo thappu enga?
+
+Veetla TV remote-la power button-ai yosinga. Ore button. Oru dhadava press panna TV ON. Thirumba press panna OFF. Neenga button-ai rendu second pidichaalum, TV ON-OFF-nu thudikkaadhu. Yen-na remote, button azhuthuna andha oru nodiyai mattum dhaan TV-ku anuppudhu.
+
+Namma program-la andha vishayam illa. PLC program-ai mela irundhu keezha padichu, thirumba thirumba odikittae irukkum. Idhukku scan-nu peyar. Oru second-la nooru dhadava kooda scan pannum. Neenga button-ai pidichirukkura ovvoru scan-layum, motor maarikittae irukkum.
+
+Ippo oru quiz. Oru rung. Button X0 NO contact, adhukku pinnaadi Y0 NC contact, kadaisila Y0 coil. Motor OFF-la irukkumbodhu button-ai press panni pidichukkureenga. Enna nadakkum? A, motor ON aagi, ON-laye nikkum. B, motor ON, OFF-nu vegama maarikittae irukkum. C, motor ON-e aagaadhu. Yosichu vechukonga.
+
+Idhai sari panna rendu step venum. Mudhal step, button azhuthuna andha oru nodiyai mattum pidikkanum. Rendaavadhu step, andha nodiyila motor-oda nilaiyai maathanum. ON-la irundhaa OFF, OFF-la irundhaa ON.
+
+Mudhal rung. X0, PLS M0. Button OFF-la irundhu ON aagura andha scan-la mattum, M0 oru scan neram ON aagum. Adhukku appuram button-ai evlo neram pidichaalum, M0 OFF dhaan. Idhukku one shot pulse-nu peyar.
+
+Rendaavadhu rung. M0 ON aagumbodhu Y0 OFF-la irundhaa, Y0 ON aagum. M0 ON aagumbodhu Y0 ON-la irundhaa, Y0 OFF aagum. M0 illaadha matha ellaa scan-layum, Y0 thannoda nilaiyai appadiye vechukkum. Silar PLC-la idhukku ALT-nu oru ready made instruction-e irukku.
+
+Ippo andha quiz. Answer B. Button pidichirukkura varaikkum, ovvoru scan-layum Y0 NC contact maarum, coil-um maarum. Motor ON, OFF-nu vegama maarum. Kai-ai edukkura scan-la enna nilai-yo, adhula nikkum. Adhanaala dhaan random.
+
+Pulse vechadhukku appuram, button-ai oru second pidichaalum, pathu second pidichaalum, oru press, oru maatram dhaan. TV remote maadhiriye.
+
+Factory-la nadakkura oru mistake. Indha single button-laye emergency stop-um pannalaam-nu ninaippaanga. Thappu. Emergency stop thaniyaa, NC contact-la, red mushroom button-aa irukkanum. Wire cut aanaalum motor nikkanum.
+
+Summary paarppom. PLC thirumba thirumba scan pannum. Button pidichirukkura ovvoru scan-layum logic odum. One shot pulse, azhuthuna nodiyai mattum pidikkum. Pulse vechu motor nilaiyai maathanum. Emergency stop eppavume thani.
+
+Ungalukku oru kelvi. Motor ON-la odikittu irukkumbodhu current cut aagudhu. Current thirumba vandhadhum, motor ON-la irukkumaa, OFF-la irukkumaa? Yen-nu comment-la explain pannunga. Answer pinned comment-la irukkum.
+
+Video useful-aa irundhaa like pannunga, share pannunga, Factory Decode Tamil channel-ai subscribe pannunga.

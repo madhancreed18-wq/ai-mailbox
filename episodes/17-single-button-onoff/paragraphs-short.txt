@@ -1,0 +1,11 @@
+Ore button. Oru press-la motor ON. Adutha press-la OFF. PLC-la program ezhudhinen.
+
+Button-ai press panna, motor ON, OFF, ON, OFF-nu padapadakkudhu.
+
+Kai-ai eduthadhum, sila nerum ON, sila nerum OFF.
+
+Program-la error illa. Appo thappu enga? Unga guess-ai comment-la sollunga.
+
+Answer-ukku keezha irukkura link-la full video paarunga.
+
+Like pannunga, share pannunga, subscribe pannunga.
