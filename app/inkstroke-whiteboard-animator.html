@@ -7161,6 +7161,12 @@ async function buildEp16Test(){stopAudio();S.playing=false;S.scenes=[];S.sel=nul
     wires:[...e15sup(['T_R','T_S','T_T'],-5),...e15mot(['T_U','T_V','T_W'],-5).map((w,i)=>Object.assign(w,{flow:[[38,1],[40,1],[40.5,-1]],fcol:i?'#fde047':'#fde047'})),e15ctl('C_AI',[-.21,.1,-.03],.1,9,'#f97316',33),e15ctl('C_GND',[-.2,.1,-.03],.1,10,'#111827',33.3)],
     cam:[[32,0,.12,.25,0,.13,0],[35,.05,.06,.75,.05,.04,0],[38,.12,.0,1.1,.12,-.02,0]]},[32,44]);
   S.captions=false;S.showHand=false;S.cur=0;S.pin=false;S.t=1;refresh()}
+async function buildEp16Thumb(){stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect(window.__THUMB_V?'9:16':'16:9');S.narrOff=0;S.art='';try{await window.E15_VFD_READY;await window.E14_MOTOR_READY}catch(_){}
+  const END=10,s=newScene({name:'EP16 thumb',style:'white',transition:'cut',trans:0,hold:0});s.minDur=END;S.scenes.push(s);
+  const K=(c)=>({id:uid++,type:'ngd',kind:'g3',shot:'vfdwire',x:0,y:0,w:W,h:H,noPop:true,draw:.1,delay:0,withPrev:true,entrance:'none',motion:'none',win:[0,END],cover:[[0,1]],props:{iso:[[0,1]],btn:[[0,1]]},sw:[[0,1]],led:[[0,1]],disp:[[0,['0.00','#ff3b2f']]],btn:[[0,1]],mhz:[[0,0]],
+    wires:[...e15sup(['T_R','T_S','T_T'],-9),...e15mot(['T_U','T_V','T_W'],-9),e15pe(-9),e15pem(-9),e15ctl('C_FWD',[-.175,.075,-.035],.075,7,'#1d4ed8',-9),e15ctl('C_COM',[-.175,.065,-.035],.065,8,'#111827',-9)],cam:c});
+  s.els.push(K(window.__THUMB_CAM||[[0,.06,.07,.5,.08,.04,0]]));
+  S.captions=false;S.showHand=false;S.cur=0;S.pin=false;S.t=1;refresh()}
 async function loadTemplate(key){S.art='';S.g3q=0;
   if(key==='ngd02')return buildNgd02();
   if(key==='fdtnpn')return buildFdtNpn();
@@ -7172,6 +7178,7 @@ async function loadTemplate(key){S.art='';S.g3q=0;
   if(key==='hometest')return buildHomeTest();
   if(key==='ep15test')return buildEp15Test();
   if(key==='ep16test')return buildEp16Test();
+  if(key==='ep16thumb')return buildEp16Thumb();
   if(key==='ep16')return buildEp16();
   if(key==='ep16s')return buildEp16Short();
   if(key==='ep15')return buildEp15();
