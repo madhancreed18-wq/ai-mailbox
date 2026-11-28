@@ -1,0 +1,79 @@
+0|0|0.00|1.88|Oru factory-la overhead water tank
+0|1|2.29|3.70|Pump-ai PLC control pannudhu
+0|2|4.17|6.31|Program ezhudhi, download panni, test pannaachu
+0|3|6.75|7.71|Oru error kooda illa
+0|4|8.47|12.29|Night shift-la tank overflow aagi, floor
+0|5|12.83|13.88|Pump nikkave illa
+1|0|14.69|15.69|Sensor nalla dhaan irukku
+1|1|16.03|16.79|Wiring-um correct
+1|2|17.40|18.30|Program-la thappu
+1|3|18.72|19.41|Aanaa enga
+2|0|20.32|21.79|Veetla overhead tank-ai yosinga
+2|1|22.41|24.34|Thanni kammi aanadhum motor podureenga
+2|2|24.34|26.10|Full aanadhum off panreenga
+2|3|26.10|28.70|Paadhi-la off panna maatteenga, paadhi-la thirumba
+2|4|29.42|34.64|Indha arivai PLC-ku kudukkanum-na, program-la ovvoru
+2|5|34.64|37.00|Oru contact edam maarinaa podhum, tank
+3|0|37.91|39.29|Mudhalla correct program paarppom
+3|1|39.93|42.26|X0 low sensor, X1 high sensor
+3|2|42.26|44.40|Rendum water thottaa ON aagum
+3|3|45.05|49.24|Pump rung-la X0 NC contact, adhukku
+3|4|49.24|51.48|Adhukku pinnaadi X1 NC contact
+3|5|51.48|53.56|Kadaisila Y0 pump coil
+3|6|53.56|55.69|Low-la start, high-la stop
+4|0|56.51|57.12|Ippo oru quiz
+4|1|57.80|61.59|Overflow aana andha program-la, indha moonu-la
+4|2|62.22|65.29|A, Y0 holding contact thappaana edathula
+4|3|65.78|69.30|B, X1-ku NC badhila NO contact
+4|4|69.87|72.74|C, Y0 coil program-la rendu dhadava
+4|5|73.35|74.87|Endha thappu overflow-ai kudukkum
+4|6|75.48|76.06|Yosichu vechukonga
+5|0|76.84|78.78|Program-la adhigam varra mistake onnu
+5|1|78.78|80.78|Sensor contact type-ai kozhappikkuradhu
+5|2|80.78|85.26|Low sensor-na, low aanaa ON aagum-nu
+5|3|85.56|87.72|Aanaa float, water thottaa dhaan ON
+5|4|88.14|91.96|Tank full-aa irukkumbodhu X0 ON, NO
+5|5|92.34|95.05|Tank kaali aanaa X0 OFF, pump
+5|6|95.67|96.48|Ellaame thalaikeezha
+5|7|96.48|100.81|Program ezhudhura munnaadi, sensor endha nilaiyila
+6|0|101.68|102.88|Innoru mistake, double coil
+6|1|102.88|105.56|Mudhalla auto rung-la Y0 coil irukku
+6|2|105.56|110.50|Appuram manual button venum-nu keezha innoru
+6|3|110.50|112.46|Ippo Y0 rendu edathula
+6|4|112.46|114.94|PLC mela irundhu keezha scan pannum
+6|5|114.94|120.94|Auto rung Y0-ai ON pannum, aanaa
+6|6|120.94|122.78|Kadaisi rung dhaan jeyikkum
+6|7|122.78|124.84|Auto-la pump odave odaadhu
+6|8|124.84|126.90|Program error kaattaadhu, warning mattum dhaan
+7|0|127.89|134.94|Sari panna, ore rung-la auto vazhiyum
+7|1|134.94|141.34|Illa auto-ku M0, manual-ku M1 vechu,
+8|0|141.84|144.62|Moonaavadhu mistake, SET, RESET
+8|1|144.62|151.28|Silar holding-ku badhila, X0 low-la SET
+8|2|151.28|152.96|Velai seyyum
+8|3|152.96|157.08|Aanaa sump kaali aanaalo, overflow vandhaalo,
+8|4|157.08|160.24|Andha conditions-ai RST-la serkalai-na, pump nikkaadhu
+8|5|160.44|163.81|SET use panna, ovvoru stop condition-um
+9|0|164.57|165.19|Summary paarppom
+9|1|165.69|169.10|Sensor endha nilaiyila ON-nu paathu dhaan
+9|2|169.74|171.62|Oru output coil, oru dhadava mattum
+9|3|172.27|174.95|SET use panna, ellaa stop condition-um
+9|4|175.56|177.36|Ovvoru contact-um sariyaana edathula
+10|0|178.10|179.25|Ippo andha quiz-ku varuvom
+10|1|179.72|180.44|Answer A
+10|2|180.84|188.83|Overflow aana program-la, Y0 holding contact
+10|3|189.18|192.76|Pump ON aanadhum, power holding vazhiyaa
+10|4|193.01|196.90|Water high-ai thottu X1 NC open
+10|5|197.13|198.43|Pump nikkave nikkaadhu
+11|0|199.29|200.23|B thappu illaya
+11|1|200.74|204.91|X1-ku NO pottaa, pump high-la dhaan
+11|2|205.21|205.96|Overflow aagaadhu
+11|3|206.64|208.56|C double coil-na, pump odaadhu
+11|4|208.96|210.77|Overflow-ku kaaranam A mattum dhaan
+11|5|211.19|213.88|Holding contact, start contact-ku mattum dhaan
+11|6|214.12|216.86|Stop contact eppavume holding-ku veliya, series-la
+12|0|217.76|218.47|Ungalukku oru kelvi
+12|1|219.06|223.85|Double coil program-la, auto rung-ai keezhayum
+12|2|224.29|225.58|Manual button velai seyyumaa
+12|3|226.02|227.48|Yen-nu comment-la explain pannunga
+12|4|227.60|228.90|Answer pinned comment-la irukkum
+13|0|229.76|234.02|Video useful-aa irundhaa like pannunga, share

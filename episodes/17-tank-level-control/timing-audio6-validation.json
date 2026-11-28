@@ -1,0 +1,26 @@
+{
+  "long": {
+    "filename": "long 6.wav",
+    "duration": 234.28,
+    "sample_rate": 24000,
+    "channels": 1,
+    "sha256": "e036279cdd7e754ecc6d19998ef055e58d0fc98c884164cfca641de648835b4f",
+    "sentences": 79,
+    "paragraphs": 14,
+    "positive_durations": true,
+    "chronological_nonoverlap": true,
+    "within_original_audio": true
+  },
+  "short": {
+    "filename": "shirt 6.wav",
+    "duration": 44.32,
+    "sample_rate": 24000,
+    "channels": 1,
+    "sha256": "4806f5722e4c0532ed0a6508cebc7ba85a5f002dd88adf7da3d5cd672c0cbf8b",
+    "sentences": 18,
+    "paragraphs": 6,
+    "positive_durations": true,
+    "chronological_nonoverlap": true,
+    "within_original_audio": true
+  }
+}
