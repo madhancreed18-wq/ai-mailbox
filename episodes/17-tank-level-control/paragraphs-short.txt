@@ -1,10 +1,10 @@
-PLC program ezhudhi, download panni, test pannaachu. Oru error kooda illa.
+Overhead tank. Keezha low sensor X0. Mela high sensor X1. Pump Y0. Water kurainjaa pump start, tank full aanaa pump stop.
 
-Night shift-la tank overflow aagi, floor fulla thanni. Pump nikkave illa.
+Idhu dhaan program. X0 NC contact, adhukku pinnaadi X1 NC contact, kadaisila Y0 pump coil. Indha rendu contact-kkum serthu parallel-aa oru Y0 holding contact.
 
-Sensor nalla irukku. Wiring correct.
+Download panni test pannaachu. Pump start aagudhu. Aanaa tank full aanadhukku appuram-um pump nikkala. Night shift-la overflow, floor fulla thanni.
 
-Program-la thappu. Aanaa enga? Unga guess-ai comment-la sollunga.
+Sensor nalla irukku. Wiring correct. Indha rung-la endha contact thappaana edathula irukku? Unga answer-ai comment-la sollunga.
 
 Answer-ukku keezha irukkura link-la full video paarunga.
 
