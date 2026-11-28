@@ -7425,6 +7425,10 @@ async function buildEp17Test(){stopAudio();S.playing=false;S.scenes=[];S.sel=nul
     rungs:[{num:0,items:[{t:'NC',tag:'X0',lab:'Low'},{t:'NC',tag:'X1',lab:'High'},{t:'COIL',tag:'Y0',lab:'Pump'}],par:{from:0,to:1,t:'NO',tag:'Y0',lab:'Holding'},bad:'par'},
       {num:1,items:[{t:'NO',tag:'X3',lab:'Overflow'},{t:'COIL',tag:'Y1',lab:'Alarm'}]}],scan:[33,36]});
   S.captions=false;S.showHand=false;S.cur=0;S.pin=false;S.t=1;refresh()}
+async function buildEp17Thumb(){stopAudio();S.playing=false;S.scenes=[];S.sel=null;S.music=null;setAspect(window.__THUMB_V?'9:16':'16:9');S.narrOff=0;S.art='';try{await window.E14_MOTOR_READY}catch(_){}
+  const END=10,s=newScene({name:'EP17 thumb',style:'white',transition:'cut',trans:0,hold:0});s.minDur=END;S.scenes.push(s);
+  s.els.push({id:uid++,type:'ngd',kind:'g3',shot:'tank',x:0,y:0,w:W,h:H,noPop:true,draw:.1,delay:0,withPrev:true,entrance:'none',motion:'none',win:[0,END],lvl:[[0,1.08]],pump:[[0,1]],puddle:[[0,1]],ripple:[[0,1]],cam:window.__THUMB_CAM});
+  S.captions=false;S.showHand=false;S.cur=0;S.pin=false;S.t=1;refresh()}
 async function loadTemplate(key){S.art='';S.g3q=0;
   if(key==='ngd02')return buildNgd02();
   if(key==='fdtnpn')return buildFdtNpn();
@@ -7440,6 +7444,7 @@ async function loadTemplate(key){S.art='';S.g3q=0;
   if(key==='ep17')return buildEp17();
   if(key==='ep17s')return buildEp17Short();
   if(key==='ep16thumb')return buildEp16Thumb();
+  if(key==='ep17thumb')return buildEp17Thumb();
   if(key==='ep16')return buildEp16();
   if(key==='ep16s')return buildEp16Short();
   if(key==='ep15')return buildEp15();
