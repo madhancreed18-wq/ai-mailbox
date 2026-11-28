@@ -1,0 +1,29 @@
+Oru factory-la cooling water tank. Tank-la oru float switch. Water kurainjaa pump ON, niraincha pump OFF. Simple. Aanaa pump oru rendu second ON, rendu second OFF-nu aadikittae irukku. Oru vaarathula contactor contact kariyaagi, pump motor sooda aagi trip aagudhu.
+
+Float switch nalla dhaan irukku. Wiring-um correct. Appo thappu enga?
+
+Veetla overhead tank-ai yosinga. Thanni kammi aanadhum motor podureenga. Tank full aagura varaikkum motor odum. Paadhi tank aanadhum off panna maatteenga. Full aanadhum dhaan off. Thirumba konjam kammi aanadhum udane podra maatteenga. Kaali aagura nilaikku vandhaa dhaan thirumba podureenga.
+
+Factory tank-la oru float switch mattum irundhaa, adhukku andha arivu illa. Water level andha oru point-ai thottadhum OFF. Pump nikka, konjam water use aaga, level konjam keezha irangudhu. Udane ON. Thanni alaiyaa aadinaale ON, OFF. Adhu dhaan aattam.
+
+Adhanaala rendu sensor vaippom. Keezha low level sensor X0. Mela high level sensor X1. Water low-ku keezha pona dhaan pump start. High-ai thottaa dhaan pump stop. Naduvula pump enna nilaiyila irukko, adhule irukkum.
+
+Mudhal rung. X0 NC contact. Water low sensor-ku keezha ponaa X0 OFF aagum, NC contact close aagum. Adhukku parallel-aa Y0 contact, holding. Adhukku pinnaadi X1 NC contact. Kadaisila Y0 pump coil.
+
+Ippo oru quiz. Pump ON aagi water yerudhu. Water low sensor-ai thaandi mela pogudhu. X0 ON aagudhu, NC contact open aagudhu. Pump enna aagum? A, pump udane OFF aagum. B, pump high level varaikkum odum. C, pump ON, OFF-nu aadum. Yosichu vechukonga.
+
+Water high sensor-ai thodumbodhu X1 ON aagum. X1 NC contact open aagum. Rung udayum, Y0 OFF, holding-um poyidum. Pump nikkum. Water use aagi keezha irangum. Low-ku keezha pogura varaikkum pump thirumba start aagaadhu.
+
+Ippo andha quiz. Answer B. X0 open aanaalum, parallel-la irukkura Y0 holding contact close-aave irukku. Pump odikittae irukkum. Indha holding dhaan veetla neenga panra arivu. Low-la start, high-la stop, naduvula maaradhu.
+
+Low-kum high-kum naduvula irukkura indha idaivelikku dead band-nu peyar. Idaiveli periya-dhaa irundhaa, pump start aagura dhadavai kurayum. Contactor-um motor-um romba naal varum.
+
+Factory-la nadakkura oru mistake. Keezha irukkura sump-la water illa. Aanaa overhead tank low-la irukku. Pump start aagum. Thanni illama pump odum. Dry run. Seal eriyum, pump podhum. Adhanaala sump-la oru dry run sensor X2 vechu, adhoda NO contact-ai indha rung-la series-la podanum. Sump-la water irundhaa mattum dhaan pump odum.
+
+Innoru mistake. High level sensor-la paasi pidichu maatti ninnudhu. Signal varave varaadhu. Pump stop aagaadhu, tank overflow aagum. Adhanaala high-ku mela innoru overflow sensor vechu alarm kudupaanga. Pump maximum evlo neram odalaam-nu oru timer-um vaippaanga.
+
+Summary paarppom. Oru sensor mattum vechaa pump aadum. Low-la start, high-la stop. Y0 holding contact dhaan naduvula nilaiyai pidichu vaikkum. Dead band periya-dhaa vechaa pump-ku nalladhu. Dry run-ku sump sensor. Overflow-ku alarm, timer.
+
+Ungalukku oru kelvi. Tank paadhi level-la irukku. Pump odikittu irukkumbodhu current cut. Current thirumba vandhadhum pump udane start aagumaa? Yen-nu comment-la explain pannunga. Answer pinned comment-la irukkum.
+
+Video useful-aa irundhaa like pannunga, share pannunga, Factory Decode Tamil channel-ai subscribe pannunga.
