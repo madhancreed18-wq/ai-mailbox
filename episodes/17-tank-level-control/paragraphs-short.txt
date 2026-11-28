@@ -1,10 +1,10 @@
-Tank-la oru float switch. Water kurainjaa pump ON. Niraincha pump OFF.
+PLC program ezhudhi, download panni, test pannaachu. Oru error kooda illa.
 
-Aanaa pump rendu second ON, rendu second OFF-nu aadikittae irukku.
+Night shift-la tank overflow aagi, floor fulla thanni. Pump nikkave illa.
 
-Oru vaarathula contactor kariyaagi pochu.
+Sensor nalla irukku. Wiring correct.
 
-Float switch nalla dhaan irukku. Wiring correct. Appo thappu enga? Unga guess-ai comment-la sollunga.
+Program-la thappu. Aanaa enga? Unga guess-ai comment-la sollunga.
 
 Answer-ukku keezha irukkura link-la full video paarunga.
 

@@ -1,37 +1,27 @@
-Oru factory-la cooling water tank. Tank-la oru float switch. Water kurainjaa pump ON, niraincha pump OFF. Simple. Aanaa pump oru rendu second ON, rendu second OFF-nu aadikittae irukku. Oru vaarathula contactor contact kariyaagi, pump motor sooda aagi trip aagudhu.
+Oru factory-la overhead water tank. Pump-ai PLC control pannudhu. Program ezhudhi, download panni, test pannaachu. Oru error kooda illa. Night shift-la tank overflow aagi, floor fulla thanni. Pump nikkave illa.
 
-Float switch nalla dhaan irukku. Wiring-um correct. Appo thappu enga?
+Sensor nalla dhaan irukku. Wiring-um correct. Program-la thappu. Aanaa enga?
 
-Veetla overhead tank-ai yosinga. Thanni kammi aanadhum motor podureenga. Tank full aagura varaikkum motor odum. Paadhi tank aanadhum off panna maatteenga. Full aanadhum dhaan off. Thirumba konjam kammi aanadhum udane podra maatteenga. Kaali aagura nilaikku vandhaa dhaan thirumba podureenga.
+Veetla overhead tank-ai yosinga. Thanni kammi aanadhum motor podureenga. Full aanadhum off panreenga. Paadhi-la off panna maatteenga, paadhi-la thirumba poda maatteenga. Indha arivai PLC-ku kudukkanum-na, program-la ovvoru contact-um sariyaana edathula irukkanum. Oru contact edam maarinaa podhum, tank overflow.
 
-Factory tank-la oru float switch mattum irundhaa, adhukku andha arivu illa. Water level andha oru point-ai thottadhum OFF. Pump nikka, konjam water use aaga, level konjam keezha irangudhu. Udane ON. Thanni alaiyaa aadinaale ON, OFF. Adhu dhaan aattam.
+Mudhalla correct program paarppom. X0 low sensor, X1 high sensor. Rendum water thottaa ON aagum. Pump rung-la X0 NC contact, adhukku parallel-aa Y0 holding contact. Adhukku pinnaadi X1 NC contact. Kadaisila Y0 pump coil. Low-la start, high-la stop.
 
-Idhai PLC-la sariyaa pannuvom. Mudhalla inputs, outputs. X0, tank low level sensor. X1, tank high level sensor. X2, keezha sump-la water irukkaa-nu paakkura dry run sensor. X3, tank mela overflow sensor. Outputs, Y0 pump contactor, Y1 alarm lamp. Ovvoru sensor-um water thottaa ON aagum.
+Ippo oru quiz. Overflow aana andha program-la, indha moonu-la edho onnu dhaan thappu. A, Y0 holding contact thappaana edathula irukku. B, X1-ku NC badhila NO contact pottirukkaanga. C, Y0 coil program-la rendu dhadava irukku. Endha thappu overflow-ai kudukkum? Yosichu vechukonga.
 
-Ippo ladder. Mudhal rung, pump rung. Left power rail-la irundhu aarambikkurom. Mudhalla X0 NC contact. Water low sensor-ku keezha irundhaa X0 OFF, adhanaala NC contact close. Adhaavadhu, tank kaali aanaa dhaan indha vazhi thirakkum.
+Program-la adhigam varra mistake onnu. Sensor contact type-ai kozhappikkuradhu. Low sensor-na, low aanaa ON aagum-nu ninaichu X0 NO contact poduvaanga. Aanaa float, water thottaa dhaan ON. Tank full-aa irukkumbodhu X0 ON, NO close, pump odum. Tank kaali aanaa X0 OFF, pump nikkum. Ellaame thalaikeezha. Program ezhudhura munnaadi, sensor endha nilaiyila ON-nu field-la check pannunga.
 
-Adhukku pinnaadi series-la X1 NC contact. Water high sensor-ai thottaa X1 ON aagum, NC contact open aagum, pump nikkum. Adhukku pinnaadi X2 NO contact. Sump-la water irundhaa mattum close. Adhukku pinnaadi X3 NC contact, overflow vandhaa open. Kadaisila Y0 coil. Right power rail.
+Innoru mistake, double coil. Mudhalla auto rung-la Y0 coil irukku. Appuram manual button venum-nu keezha innoru rung-la X4, Y0 coil-nu podureenga. Ippo Y0 rendu edathula. PLC mela irundhu keezha scan pannum. Auto rung Y0-ai ON pannum, aanaa keezha irukkura manual rung, button press pannala-na, Y0-ai OFF pannidum. Kadaisi rung dhaan jeyikkum. Auto-la pump odave odaadhu. Program error kaattaadhu, warning mattum dhaan.
 
-Ippo mukkiyamaana vishayam. X0 NC contact-ku parallel-aa, oru Y0 NO contact podurom. Idhukku holding contact-nu peyar. Y0 coil ON aanadhum, indha contact-um close aagum.
+Sari panna, ore rung-la auto vazhiyum manual vazhiyum parallel-aa pottu, Y0 coil-ai oru dhadava mattum podanum. Illa auto-ku M0, manual-ku M1 vechu, kadaisila M0 OR M1, Y0.
 
-Rendaavadhu rung, alarm rung. X3 NO contact, adhukku pinnaadi Y1 alarm lamp coil. Tank overflow level-ai thottaa alarm eriyum. Pump rung-la irukkura X3 NC contact pump-aiyum nirutthidum.
+Moonaavadhu mistake, SET, RESET. Silar holding-ku badhila, X0 low-la SET Y0, X1 high-la RST Y0-nu ezhudhuvaanga. Velai seyyum. Aanaa sump kaali aanaalo, overflow vandhaalo, yaar RST pannuvaanga? Andha conditions-ai RST-la serkalai-na, pump nikkaadhu. SET use panna, ovvoru stop condition-um RST rung-la irukkanum.
 
-Ippo oru quiz. Oruthar holding Y0 contact-ai X0-ku parallel-la podaama, thappaa X1-ku parallel-la pottuttaaru. Enna nadakkum? A, pump stop aagaama tank overflow aagum. B, pump low level kitta ON, OFF-nu aadum. C, onnum maaradhu, normal-aa velai seyyum. Yosichu vechukonga.
+Summary paarppom. Sensor endha nilaiyila ON-nu paathu dhaan NO, NC podanum. Oru output coil, oru dhadava mattum. SET use panna, ellaa stop condition-um RST-la. Ovvoru contact-um sariyaana edathula.
 
-Factory-la nadakkura oru mistake. X2 dry run sensor-ai podama vittuduvaanga. Sump-la water illa, aanaa tank low-la irukku. Pump start aagum. Thanni illama pump odum. Seal eriyum, pump podhum. X2 NO contact rung-la irundhaa, sump kaali aanadhum vazhi udayum, pump nikkum.
+Ippo andha quiz-ku varuvom. Answer A. Overflow aana program-la, Y0 holding contact X0-ku mattum parallel-aa illama, X0, X1 rendukkum serthu parallel-aa pottirundhaanga. Pump ON aanadhum, power holding vazhiyaa X1-ai suththi pogudhu. Water high-ai thottu X1 NC open aanaalum, Y0 coil-ku power varudhu. Pump nikkave nikkaadhu.
 
-Innoru mistake. High level sensor-la paasi pidichu, X1 signal varave varaadhu. X1 NC contact close-aave irukkum, pump nikkaadhu. Appo dhaan X3 overflow sensor kaappaathum. Pump-ai nirutthi, alarm-um eriyum.
+B thappu illaya? X1-ku NO pottaa, pump high-la dhaan odum, kaali tank-la odave odaadhu. Overflow aagaadhu. C double coil-na, pump odaadhu. Overflow-ku kaaranam A mattum dhaan. Holding contact, start contact-ku mattum dhaan parallel. Stop contact eppavume holding-ku veliya, series-la.
 
-Summary paarppom. Inputs, X0 low, X1 high, X2 dry run, X3 overflow. Pump rung, X0 NC, X1 NC, X2 NO, X3 NC, Y0 coil, X0-ku parallel-aa Y0 holding. Alarm rung, X3 NO, Y1 lamp.
-
-Ippo andha quiz-ku varuvom. Answer B. Mudhalla correct ladder-la power epdi oodudhu-nu paarppom. Tank kaali. X0 NC close, X1 NC close, X2 close, X3 close. Y0 ON, pump odum, holding Y0 contact close aagum.
-
-Water low sensor-ai thaandudhu. X0 ON aagi, NC contact open aagudhu. Aanaa power, parallel-la irukkura Y0 holding vazhiyaa pogudhu. Pump odikittae irukkum. Water high-ai thodudhu. X1 NC open. Rung udayum, Y0 OFF, holding-um open. Pump nikkum. Water keezha irangi high-ai vittu poyidum, X1 close aagum. Aanaa X0 innum open, holding-um open. Pump odaadhu. Low-ku keezha pona dhaan thirumba start.
-
-Holding-ai X1-ku parallel-la pottaa? X0 NC series-la thaniyaa nikkum, adhukku bypass illa. Water low-ai thaandina udane X0 open, pump stop. Konjam water use aanaa thirumba ON. Low level kitta pump aadum. Adhaan answer B.
-
-Low-kum high-kum naduvula irukkura indha idaivelikku dead band-nu peyar. Holding contact dhaan indha dead band-ai kudukkudhu. Idaiveli periya-dhaa irundhaa, pump start aagura dhadavai kurayum. Contactor-um motor-um romba naal varum.
-
-Ungalukku oru kelvi. Tank paadhi level-la irukku. Pump odikittu irukkumbodhu current cut. Current thirumba vandhadhum pump udane start aagumaa? Ladder-ai vechu yen-nu comment-la explain pannunga. Answer pinned comment-la irukkum.
+Ungalukku oru kelvi. Double coil program-la, auto rung-ai keezhayum manual rung-ai melayum maathi vechaa enna aagum? Manual button velai seyyumaa? Yen-nu comment-la explain pannunga. Answer pinned comment-la irukkum.
 
 Video useful-aa irundhaa like pannunga, share pannunga, Factory Decode Tamil channel-ai subscribe pannunga.
